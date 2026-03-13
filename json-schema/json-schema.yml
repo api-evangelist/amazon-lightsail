@@ -1,0 +1,7 @@
+$schema: http://json-schema.org/draft-07/schema#
+title: Amazon Lightsail API Schema
+description: >-
+  JSON Schema for the Amazon Lightsail API, providing simple virtual
+  private server management capabilities.
+type: object
+properties: {}
