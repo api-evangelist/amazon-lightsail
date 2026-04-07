@@ -1,15 +1,12 @@
 name: Amazon Lightsail
 description: >-
-  Amazon Lightsail is a virtual private server (VPS) provider and is the
-  easiest way to get started with AWS for developers, small businesses,
-  students, and other users who need a solution to build and host their
-  applications on cloud. Lightsail provides developers compute, storage,
-  and networking capacity and capabilities to deploy and manage websites
-  and web applications in the cloud. Lightsail includes everything you
-  need to launch your project quickly - instances, containers, databases,
-  content delivery network (CDN), load balancers, DNS management - for a
-  low, predictable monthly price.
-image: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
+  Amazon Lightsail is a virtual private server (VPS) provider and is the easiest way
+  to get started with AWS for developers, small businesses, students, and other users
+  who need a solution to build and host their applications on cloud. Lightsail provides
+  developers compute, storage, and networking capacity and capabilities to deploy
+  and manage websites and web applications in the cloud.
+image: 
+  https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
 url: https://apis.io/amazon-lightsail
 created: '2024-01-15'
 modified: '2026-03-16'
@@ -20,11 +17,13 @@ apis:
       The Amazon Lightsail API provides programmatic access to manage
       Lightsail resources including instances, containers, databases,
       disks, load balancers, certificates, distributions, and DNS zones.
-    image: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
+    image: 
+      https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
     baseURL: https://lightsail.amazonaws.com
     properties:
       - type: documentation
-        url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
+        url: 
+          https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
       - type: openapi
         url: openapi/openapi.yml
       - type: openapi
