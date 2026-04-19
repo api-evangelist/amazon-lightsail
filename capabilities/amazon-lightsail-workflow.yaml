@@ -1,0 +1,58 @@
+naftiko: 1.0.0-alpha1
+info:
+  label: Amazon Lightsail Workflow
+  description: Unified workflow capability for Amazon Lightsail combining resource management and operations.
+  tags:
+  - Amazon Lightsail
+  - AWS
+  - Workflow
+  created: '2026-04-19'
+  modified: '2026-04-19'
+binds:
+- namespace: env
+  keys:
+    AWS_ACCESS_KEY_ID: AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY: AWS_SECRET_ACCESS_KEY
+capability:
+  consumes:
+  - import: lightsail
+    location: ./shared/lightsail.yaml
+  exposes:
+  - type: rest
+    port: 8080
+    namespace: lightsail-api
+    description: REST API for Amazon Lightsail workflow.
+    resources: []
+  - type: mcp
+    port: 9090
+    namespace: lightsail-mcp
+    transport: http
+    description: MCP server for Amazon Lightsail.
+    tools:
+    - name: instances-create-instances
+      description: Creates one or more Amazon Lightsail instances.
+      hints:
+        readOnly: false
+        idempotent: false
+      call: lightsail.createinstances
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: instances-get-instances
+      description: Returns information about all Amazon Lightsail virtual private servers.
+      hints:
+        readOnly: true
+        idempotent: true
+      call: lightsail.getinstances
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: instances-get-instance
+      description: Returns information about a specific Amazon Lightsail instance.
+      hints:
+        readOnly: true
+        idempotent: true
+      call: lightsail.getinstance
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,74 @@
+vocabulary: 1.0.0
+info:
+  provider: Amazon Lightsail
+  description: Unified vocabulary for Amazon Lightsail API operations and capability workflows.
+  created: '2026-04-19'
+  modified: '2026-04-19'
+operational:
+  apis:
+  - namespace: lightsail
+    version: '2024-01-01'
+    status: active
+  resources:
+  - name: instances
+    api: lightsail
+    actions:
+    - create instances
+    - get instances
+    - get instance
+    - delete instance
+    - start instance
+    - stop instance
+  actions:
+  - name: create
+    http_method: POST
+    pattern: write
+  - name: list
+    http_method: GET
+    pattern: read
+  - name: describe
+    http_method: GET
+    pattern: read
+  - name: update
+    http_method: PUT
+    pattern: write
+  - name: delete
+    http_method: DELETE
+    pattern: destructive
+  authentication:
+    schemes:
+    - type: apikey
+      header: Authorization
+      description: AWS Signature Version 4
+capability:
+  workflows:
+  - name: Amazon Lightsail Workflow
+    file: capabilities/amazon-lightsail-workflow.yaml
+    description: Unified workflow for Amazon Lightsail resource management
+    apis_combined:
+    - lightsail
+    tool_count: 3
+    personas:
+    - Developer
+    - Administrator
+  personas:
+  - id: developer
+    name: Developer
+    description: Integrates API into applications
+  - id: administrator
+    name: Administrator
+    description: Manages resources and configurations
+crossReference:
+- resource: instances
+  operations:
+  - CreateInstances
+  - GetInstances
+  - GetInstance
+  - DeleteInstance
+  - StartInstance
+  - StopInstance
+  workflows:
+  - Amazon Lightsail Workflow
+  personas:
+  - Developer
+  - Administrator

@@ -1,29 +1,71 @@
-# Amazon Lightsail
+# Amazon Lightsail (amazon-lightsail)
+Amazon Lightsail offers the easiest way to get started with AWS for developers, small businesses, students, and other users who need a simple virtual private server (VPS) solution with predictable pricing.
 
-Amazon Lightsail is a virtual private server (VPS) provider and is the easiest way to get started with AWS for developers, small businesses, students, and other users who need a solution to build and host their applications on cloud. Lightsail provides developers compute, storage, and networking capacity and capabilities to deploy and manage websites and web applications in the cloud. Lightsail includes everything you need to launch your project quickly - instances, containers, databases, content delivery network (CDN), load balancers, DNS management - for a low, predictable monthly price.
+**URL:** [https://aws.amazon.com/lightsail/](https://aws.amazon.com/lightsail/)
+
+**Run:** [Capabilities Using Naftiko](https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=company-api-evangelist&utm_content=repo)
+
+## Tags:
+
+ - AWS, Cloud, VPS, Simplified Cloud, Containers
+
+## Timestamps
+
+- **Created:** 2024-01-15
+- **Modified:** 2026-04-19
 
 ## APIs
 
-- **Amazon Lightsail API** - The Amazon Lightsail API provides programmatic access to manage Lightsail resources including instances, containers, databases, disks, load balancers, certificates, distributions, and DNS zones.
+### Amazon Lightsail API
 
-## Resources
+**Human URL:** [https://aws.amazon.com/lightsail/](https://aws.amazon.com/lightsail/)
 
-### Documentation
+#### Properties
 
-- [Documentation](https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html)
-- [Getting Started](https://aws.amazon.com/lightsail/getting-started/)
+- [OpenAPI](openapi/amazon-lightsail-openapi.yml)
+- [JSONSchema](json-schema/amazon-lightsail-instance-schema.json)
+- [JSONLD](json-ld/amazon-lightsail-context.jsonld)
 
-### Specifications
+## Artifacts
 
-- [OpenAPI](openapi/openapi.yml)
-- [JSON Schema](json-schema/json-schema.yml)
-- [JSON-LD](json-ld/json-ld.yml)
+### OpenAPI
 
-### General
+- [Amazon Lightsail API](openapi/amazon-lightsail-openapi.yml)
 
-- [Pricing](https://aws.amazon.com/lightsail/pricing/)
-- [FAQ](https://aws.amazon.com/lightsail/faq/)
+### JSON Schema
+
+- [Instance](json-schema/amazon-lightsail-instance-schema.json)
+
+### JSON Structure
+
+- [Instance](json-structure/amazon-lightsail-instance-structure.json)
+
+### JSON-LD
+
+- [Amazon Lightsail Context](json-ld/amazon-lightsail-context.jsonld)
+
+### Examples
+
+- [Instance Example](examples/amazon-lightsail-instance-example.json)
+
+## Capabilities
+
+### Workflow Capabilities
+
+| Workflow | APIs Combined | Tools | Persona |
+|----------|--------------|-------|---------|
+| [Amazon Lightsail Workflow](capabilities/amazon-lightsail-workflow.yaml) | Lightsail | 6 | Developer, Small Business Owner |
+
+## Vocabulary
+
+- [Amazon Lightsail Vocabulary](vocabulary/amazon-lightsail-vocabulary.yaml)
+
+## Rules
+
+- [Amazon Lightsail Spectral Rules](rules/amazon-lightsail-spectral-rules.yml)
 
 ## Maintainers
 
-- Kin Lane - kin@apievangelist.com
+**FN:** Kin Lane
+
+**Email:** kin@apievangelist.com

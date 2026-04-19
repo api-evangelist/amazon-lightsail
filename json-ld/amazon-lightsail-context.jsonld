@@ -1,0 +1,38 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "lightsail": "https://lightsail.amazonaws.com/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "Instance": "lightsail:Instance",
+    "id": {
+      "@id": "schema:identifier",
+      "@type": "xsd:string"
+    },
+    "name": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "description": {
+      "@id": "schema:description",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "lightsail:status",
+      "@type": "xsd:string"
+    },
+    "arn": {
+      "@id": "lightsail:arn",
+      "@type": "xsd:string"
+    },
+    "createdAt": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "updatedAt": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:dateTime"
+    }
+  }
+}

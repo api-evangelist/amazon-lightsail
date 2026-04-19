@@ -1,0 +1,9 @@
+{
+  "name": "my-wordpress-site",
+  "arn": "arn:aws:service:us-east-1:123456789012:resource/example",
+  "blueprintId": "wordpress_5_7",
+  "bundleId": "micro_2_0",
+  "publicIpAddress": "54.123.45.67",
+  "privateIpAddress": "172.26.0.5",
+  "createdAt": "2025-03-15T14:30:00Z"
+}
