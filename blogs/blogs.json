@@ -1,0 +1,13 @@
+{
+  "repo": "amazon-lightsail",
+  "feeds": [
+    {
+      "source": "https://aws.amazon.com/blogs/compute/",
+      "feed_url": "https://aws.amazon.com/blogs/compute/feed/",
+      "saved": 10,
+      "title": "AWS Compute Blog"
+    }
+  ],
+  "post_count": 10,
+  "fetched": "2026-05-03T23:21:34Z"
+}
