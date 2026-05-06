@@ -1,4 +1,4 @@
-naftiko: 1.0.0-alpha1
+naftiko: 1.0.0-alpha2
 info:
   label: Amazon Lightsail Workflow
   description: Unified workflow capability for Amazon Lightsail combining resource management and operations.
@@ -7,7 +7,7 @@ info:
   - AWS
   - Workflow
   created: '2026-04-19'
-  modified: '2026-04-19'
+  modified: '2026-05-06'
 binds:
 - namespace: env
   keys:
@@ -15,8 +15,44 @@ binds:
     AWS_SECRET_ACCESS_KEY: AWS_SECRET_ACCESS_KEY
 capability:
   consumes:
-  - import: lightsail
-    location: ./shared/lightsail.yaml
+  - type: http
+    namespace: lightsail
+    baseUri: https://lightsail.us-east-1.amazonaws.com
+    description: Amazon Lightsail service.
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{AWS_ACCESS_KEY_ID}}'
+      placement: header
+    resources:
+    - name: instances
+      path: /instances
+      description: Lightsail virtual server instance management
+      operations:
+      - name: createinstances
+        method: POST
+        description: Creates one or more Amazon Lightsail instances.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: getinstances
+        method: GET
+        description: Returns information about all Amazon Lightsail virtual private servers.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: getinstance
+        method: GET
+        description: Returns information about a specific Amazon Lightsail instance.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
   exposes:
   - type: rest
     port: 8080
