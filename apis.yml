@@ -19,7 +19,7 @@ apis:
   image: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
   baseURL: https://lightsail.amazonaws.com
   properties:
-  - type: documentation
+  - type: Documentation
     url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
   - type: openapi
     url: openapi/openapi.yml
@@ -46,7 +46,7 @@ common:
   url: https://aws.amazon.com/
 - type: website
   url: https://aws.amazon.com/lightsail/
-- type: documentation
+- type: Documentation
   url: https://docs.aws.amazon.com/lightsail/
 - type: terms-of-service
   url: https://aws.amazon.com/service-terms/
@@ -64,7 +64,7 @@ common:
   url: https://portal.aws.amazon.com/billing/signup
 - type: login
   url: https://signin.aws.amazon.com/
-- type: status
+- type: StatusPage
   url: https://health.aws.amazon.com/health/status
 - type: knowledge-center
   url: https://repost.aws/knowledge-center
