@@ -1,21 +1,16 @@
 name: Amazon Lightsail
-description: >-
-  Amazon Lightsail is a virtual private server (VPS) provider and is the easiest way
-  to get started with AWS for developers, small businesses, students, and other users
-  who need a solution to build and host their applications on cloud. Lightsail provides
-  developers compute, storage, and networking capacity and capabilities to deploy
-  and manage websites and web applications in the cloud.
+description: Amazon Lightsail is a virtual private server (VPS) provider and is the easiest way to get started with AWS for
+  developers, small businesses, students, and other users who need a solution to build and host their applications on cloud.
+  Lightsail provides developers compute, storage, and networking capacity and capabilities to deploy and manage websites and
+  web applications in the cloud.
 image: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
 url: https://apis.io/amazon-lightsail
 created: '2024-01-15'
-modified: '2026-04-19'
-
+modified: '2026-05-19'
 apis:
 - name: Amazon Lightsail API
-  description: >-
-    The Amazon Lightsail API provides programmatic access to manage
-    Lightsail resources including instances, containers, databases,
-    disks, load balancers, certificates, distributions, and DNS zones.
+  description: The Amazon Lightsail API provides programmatic access to manage Lightsail resources including instances, containers,
+    databases, disks, load balancers, certificates, distributions, and DNS zones.
   image: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
   baseURL: https://lightsail.amazonaws.com
   properties:
@@ -24,8 +19,7 @@ apis:
   - type: openapi
     url: openapi/openapi.yml
   - type: openapi
-    url: >-
-      https://api.apis.guru/v2/specs/amazonaws.com/lightsail/latest/openapi.yaml
+    url: https://api.apis.guru/v2/specs/amazonaws.com/lightsail/latest/openapi.yaml
   - type: json-schema
     url: json-schema/json-schema.yml
   - type: json-ld
@@ -36,11 +30,12 @@ apis:
     url: https://aws.amazon.com/lightsail/getting-started/
   - type: faq
     url: https://aws.amazon.com/lightsail/faq/
-
   - type: JSONSchema
     url: json-schema/amazon-lightsail-instance-schema.json
   - type: JSONLD
     url: json-ld/amazon-lightsail-context.jsonld
+  - type: NaftikoCapability
+    url: capabilities/amazon-lightsail-instances.yaml
 common:
 - type: portal
   url: https://aws.amazon.com/
@@ -78,7 +73,6 @@ common:
   url: https://aws.amazon.com/security/
 - type: compliance
   url: https://aws.amazon.com/compliance/
-
 - type: Features
   data:
   - name: Simple Virtual Servers
@@ -111,8 +105,6 @@ common:
     description: Migrate Lightsail instances to EC2 when you need more control.
 - type: SpectralRules
   url: rules/amazon-lightsail-spectral-rules.yml
-- type: NaftikoCapability
-  url: capabilities/amazon-lightsail-workflow.yaml
 - type: Vocabulary
   url: vocabulary/amazon-lightsail-vocabulary.yaml
 maintainer:

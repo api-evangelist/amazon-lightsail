@@ -1,0 +1,258 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Amazon Lightsail API — Instances
+  description: 'Amazon Lightsail API — Instances. 6 operations. Lead operation: Amazon Lightsail Create Instances. Self-contained
+    Naftiko capability covering one Amazon Lightsail business surface.'
+  tags:
+  - Amazon Lightsail
+  - Instances
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    AMAZON_LIGHTSAIL_API_KEY: AMAZON_LIGHTSAIL_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: amazon-lightsail-instances
+    baseUri: https://lightsail.us-east-1.amazonaws.com
+    description: Amazon Lightsail API — Instances business capability. Self-contained, no shared references.
+    resources:
+    - name: instances
+      path: /instances
+      operations:
+      - name: createinstances
+        method: POST
+        description: Amazon Lightsail Create Instances
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: getinstances
+        method: GET
+        description: Amazon Lightsail Get Instances
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: instances-instanceName
+      path: /instances/{instanceName}
+      operations:
+      - name: getinstance
+        method: GET
+        description: Amazon Lightsail Get Instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: instanceName
+          in: path
+          type: string
+          description: The name of the instance.
+          required: true
+      - name: deleteinstance
+        method: DELETE
+        description: Amazon Lightsail Delete Instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: instanceName
+          in: path
+          type: string
+          description: The name of the instance.
+          required: true
+    - name: instances-instanceName-start
+      path: /instances/{instanceName}/start
+      operations:
+      - name: startinstance
+        method: POST
+        description: Amazon Lightsail Start Instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: instanceName
+          in: path
+          type: string
+          description: The name of the instance.
+          required: true
+    - name: instances-instanceName-stop
+      path: /instances/{instanceName}/stop
+      operations:
+      - name: stopinstance
+        method: POST
+        description: Amazon Lightsail Stop Instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: instanceName
+          in: path
+          type: string
+          description: The name of the instance.
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.AMAZON_LIGHTSAIL_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: amazon-lightsail-instances-rest
+    port: 8080
+    description: REST adapter for Amazon Lightsail API — Instances. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/instances
+      name: instances
+      description: REST surface for instances.
+      operations:
+      - method: POST
+        name: createinstances
+        description: Amazon Lightsail Create Instances
+        call: amazon-lightsail-instances.createinstances
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getinstances
+        description: Amazon Lightsail Get Instances
+        call: amazon-lightsail-instances.getinstances
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/instances/{instancename}
+      name: instances-instancename
+      description: REST surface for instances-instanceName.
+      operations:
+      - method: GET
+        name: getinstance
+        description: Amazon Lightsail Get Instance
+        call: amazon-lightsail-instances.getinstance
+        with:
+          instanceName: rest.instanceName
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteinstance
+        description: Amazon Lightsail Delete Instance
+        call: amazon-lightsail-instances.deleteinstance
+        with:
+          instanceName: rest.instanceName
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/instances/{instancename}/start
+      name: instances-instancename-start
+      description: REST surface for instances-instanceName-start.
+      operations:
+      - method: POST
+        name: startinstance
+        description: Amazon Lightsail Start Instance
+        call: amazon-lightsail-instances.startinstance
+        with:
+          instanceName: rest.instanceName
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/instances/{instancename}/stop
+      name: instances-instancename-stop
+      description: REST surface for instances-instanceName-stop.
+      operations:
+      - method: POST
+        name: stopinstance
+        description: Amazon Lightsail Stop Instance
+        call: amazon-lightsail-instances.stopinstance
+        with:
+          instanceName: rest.instanceName
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: amazon-lightsail-instances-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Amazon Lightsail API — Instances. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: amazon-lightsail-create-instances
+      description: Amazon Lightsail Create Instances
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: amazon-lightsail-instances.createinstances
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: amazon-lightsail-get-instances
+      description: Amazon Lightsail Get Instances
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: amazon-lightsail-instances.getinstances
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: amazon-lightsail-get-instance
+      description: Amazon Lightsail Get Instance
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: amazon-lightsail-instances.getinstance
+      with:
+        instanceName: tools.instanceName
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: amazon-lightsail-delete-instance
+      description: Amazon Lightsail Delete Instance
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: amazon-lightsail-instances.deleteinstance
+      with:
+        instanceName: tools.instanceName
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: amazon-lightsail-start-instance
+      description: Amazon Lightsail Start Instance
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: amazon-lightsail-instances.startinstance
+      with:
+        instanceName: tools.instanceName
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: amazon-lightsail-stop-instance
+      description: Amazon Lightsail Stop Instance
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: amazon-lightsail-instances.stopinstance
+      with:
+        instanceName: tools.instanceName
+      outputParameters:
+      - type: object
+        mapping: $.
