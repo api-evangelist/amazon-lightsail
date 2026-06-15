@@ -1,0 +1,124 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Amazon Lightsail API",
+    "version": "2024-01-01"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Instances",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Amazon Lightsail Get Instances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://lightsail.us-east-1.amazonaws.com/instances"
+          },
+          "docs": "Returns information about all Amazon Lightsail virtual private servers."
+        },
+        {
+          "info": {
+            "name": "Amazon Lightsail Create Instances",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://lightsail.us-east-1.amazonaws.com/instances"
+          },
+          "docs": "Creates one or more Amazon Lightsail instances."
+        },
+        {
+          "info": {
+            "name": "Amazon Lightsail Get Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://lightsail.us-east-1.amazonaws.com/instances/:instanceName",
+            "params": [
+              {
+                "name": "instanceName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the instance."
+              }
+            ]
+          },
+          "docs": "Returns information about a specific Amazon Lightsail instance."
+        },
+        {
+          "info": {
+            "name": "Amazon Lightsail Delete Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://lightsail.us-east-1.amazonaws.com/instances/:instanceName",
+            "params": [
+              {
+                "name": "instanceName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the instance."
+              }
+            ]
+          },
+          "docs": "Deletes an Amazon Lightsail instance."
+        },
+        {
+          "info": {
+            "name": "Amazon Lightsail Start Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://lightsail.us-east-1.amazonaws.com/instances/:instanceName/start",
+            "params": [
+              {
+                "name": "instanceName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the instance."
+              }
+            ]
+          },
+          "docs": "Starts a specific Amazon Lightsail instance."
+        },
+        {
+          "info": {
+            "name": "Amazon Lightsail Stop Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://lightsail.us-east-1.amazonaws.com/instances/:instanceName/stop",
+            "params": [
+              {
+                "name": "instanceName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the instance."
+              }
+            ]
+          },
+          "docs": "Stops a specific Amazon Lightsail instance."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

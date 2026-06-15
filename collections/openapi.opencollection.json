@@ -1,0 +1,9 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Amazon Lightsail API",
+    "version": "2016-11-28"
+  },
+  "items": [],
+  "bundled": true
+}
