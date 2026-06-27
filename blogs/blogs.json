@@ -2,12 +2,20 @@
   "repo": "amazon-lightsail",
   "feeds": [
     {
-      "source": "https://aws.amazon.com/blogs/compute/",
+      "source": "https://aws.amazon.com/blogs/compute/feed/",
       "feed_url": "https://aws.amazon.com/blogs/compute/feed/",
-      "title": "AWS Compute Blog",
-      "saved": 4
+      "title": "",
+      "saved": 5,
+      "method": "feed"
+    },
+    {
+      "source": "https://aws.amazon.com/premiumsupport/",
+      "feed_url": "https://aws.amazon.com/premiumsupport/",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
-  "post_count": 31,
-  "fetched": "2026-06-01T23:00:37Z"
+  "post_count": 40,
+  "fetched": "2026-06-27T12:03:07Z"
 }

@@ -18,60 +18,60 @@ apis:
     properties:
       - type: Documentation
         url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
-      - type: openapi
+      - type: OpenAPI
         url: openapi/openapi.yml
-      - type: openapi
+      - type: OpenAPI
         url: https://api.apis.guru/v2/specs/amazonaws.com/lightsail/latest/openapi.yaml
-      - type: json-schema
+      - type: JSONSchema
         url: json-schema/json-schema.yml
-      - type: json-ld
+      - type: JSONLD
         url: json-ld/json-ld.yml
-      - type: pricing
+      - type: Pricing
         url: https://aws.amazon.com/lightsail/pricing/
-      - type: getting-started
+      - type: GettingStarted
         url: https://aws.amazon.com/lightsail/getting-started/
-      - type: faq
+      - type: FAQ
         url: https://aws.amazon.com/lightsail/faq/
       - type: JSONSchema
         url: json-schema/amazon-lightsail-instance-schema.json
       - type: JSONLD
         url: json-ld/amazon-lightsail-context.jsonld
 common:
-  - type: portal
+  - type: Portal
     url: https://aws.amazon.com/
-  - type: website
+  - type: Website
     url: https://aws.amazon.com/lightsail/
   - type: Documentation
     url: https://docs.aws.amazon.com/lightsail/
-  - type: terms-of-service
+  - type: TermsOfService
     url: https://aws.amazon.com/service-terms/
-  - type: privacy-policy
+  - type: PrivacyPolicy
     url: https://aws.amazon.com/privacy/
-  - type: support
+  - type: Support
     url: https://aws.amazon.com/premiumsupport/
-  - type: blog
+  - type: Blog
     url: https://aws.amazon.com/blogs/compute/
   - type: github
     url: https://github.com/aws
-  - type: console
+  - type: Console
     url: https://lightsail.aws.amazon.com/
-  - type: sign-up
+  - type: Signup
     url: https://portal.aws.amazon.com/billing/signup
-  - type: login
+  - type: Login
     url: https://signin.aws.amazon.com/
   - type: StatusPage
     url: https://health.aws.amazon.com/health/status
   - type: knowledge-center
     url: https://repost.aws/knowledge-center
-  - type: youtube
+  - type: YouTube
     url: https://www.youtube.com/user/AmazonWebServices
-  - type: stack-overflow
+  - type: StackOverflow
     url: https://stackoverflow.com/questions/tagged/amazon-lightsail
-  - type: contact
+  - type: Contact
     url: https://aws.amazon.com/contact-us/
-  - type: security
+  - type: Security
     url: https://aws.amazon.com/security/
-  - type: compliance
+  - type: Compliance
     url: https://aws.amazon.com/compliance/
   - type: Features
     data:
