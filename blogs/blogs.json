@@ -5,7 +5,7 @@
       "source": "https://aws.amazon.com/blogs/compute/feed/",
       "feed_url": "https://aws.amazon.com/blogs/compute/feed/",
       "title": "",
-      "saved": 5,
+      "saved": 0,
       "method": "feed"
     },
     {
@@ -16,6 +16,6 @@
       "method": "none"
     }
   ],
-  "post_count": 40,
-  "fetched": "2026-06-27T12:03:07Z"
+  "post_count": 50,
+  "fetched": "2026-07-11T11:50:51Z"
 }
