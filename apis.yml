@@ -37,6 +37,8 @@ apis:
       - type: JSONLD
         url: json-ld/amazon-lightsail-context.jsonld
 common:
+  - type: AgenticAccess
+    url: agentic-access/amazon-lightsail-agentic-access.yml
   - type: TrustCenter
     url: security/amazon-lightsail-trust-center.yml
   - type: VulnerabilityDisclosure
