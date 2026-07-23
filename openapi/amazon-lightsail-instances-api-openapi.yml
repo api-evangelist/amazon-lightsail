@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  title: Amazon Lightsail API
+  title: Amazon Lightsail Instances API
   description: The Amazon Lightsail API provides programmatic access to manage Lightsail resources.
   version: '2024-01-01'
   contact:
@@ -167,35 +167,3 @@ components:
       name: Authorization
       in: header
       description: AWS Signature Version 4 authentication
-  schemas:
-    Instance:
-      type: object
-      description: An Amazon Lightsail virtual server instance.
-      properties:
-        name:
-          type: string
-          description: The name the user gave the instance.
-          example: my-wordpress-site
-        arn:
-          type: string
-          description: The Amazon Resource Name (ARN) of the instance.
-        blueprintId:
-          type: string
-          description: The blueprint ID of the instance.
-          example: wordpress_5_7
-        bundleId:
-          type: string
-          description: The bundle for the instance.
-          example: micro_2_0
-        publicIpAddress:
-          type: string
-          description: The public IP address of the instance.
-          example: 54.123.45.67
-        privateIpAddress:
-          type: string
-          description: The private IP address of the instance.
-          example: 172.26.0.5
-        createdAt:
-          type: string
-          description: The timestamp when the instance was created.
-          format: date-time
