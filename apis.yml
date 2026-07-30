@@ -4,39 +4,52 @@ description: >-
   developers, small businesses, students, and other users who need a solution to build and host their applications on
   cloud. Lightsail provides developers compute, storage, and networking capacity and capabilities to deploy and manage
   websites and web applications in the cloud.
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 image: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
 url: https://apis.io/amazon-lightsail
 created: '2024-01-15'
 modified: '2026-05-19'
 apis:
-  - name: Amazon Lightsail API
-    description: >-
-      The Amazon Lightsail API provides programmatic access to manage Lightsail resources including instances,
-      containers, databases, disks, load balancers, certificates, distributions, and DNS zones.
-    image: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
-    baseURL: https://lightsail.amazonaws.com
-    properties:
-      - type: Documentation
-        url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
-      - type: OpenAPI
-        url: openapi/openapi.yml
-      - type: OpenAPI
-        url: https://api.apis.guru/v2/specs/amazonaws.com/lightsail/latest/openapi.yaml
-      - type: JSONSchema
-        url: json-schema/json-schema.yml
-      - type: JSONLD
-        url: json-ld/json-ld.yml
-      - type: Pricing
-        url: https://aws.amazon.com/lightsail/pricing/
-      - type: GettingStarted
-        url: https://aws.amazon.com/lightsail/getting-started/
-      - type: FAQ
-        url: https://aws.amazon.com/lightsail/faq/
-      - type: JSONSchema
-        url: json-schema/amazon-lightsail-instance-schema.json
-      - type: JSONLD
-        url: json-ld/amazon-lightsail-context.jsonld
+- aid: amazon-lightsail:amazon-lightsail-instances-api
+  name: Amazon Lightsail Instances API
+  description: Lightsail virtual server instance management
+  baseURL: https://lightsail.amazonaws.com
+  tags:
+  - Instances
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-lightsail-instances-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
+  - type: JSONSchema
+    url: json-schema/json-schema.yml
+  - type: JSONLD
+    url: json-ld/json-ld.yml
+  - type: Pricing
+    url: https://aws.amazon.com/lightsail/pricing/
+  - type: GettingStarted
+    url: https://aws.amazon.com/lightsail/getting-started/
+  - type: FAQ
+    url: https://aws.amazon.com/lightsail/faq/
+  - type: JSONSchema
+    url: json-schema/amazon-lightsail-instance-schema.json
+  - type: JSONLD
+    url: json-ld/amazon-lightsail-context.jsonld
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/amazon-lightsail/overview
   - type: AgenticAccess
     url: agentic-access/amazon-lightsail-agentic-access.yml
   - type: TrustCenter
