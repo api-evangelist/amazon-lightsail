@@ -1,0 +1,14 @@
+{
+  "provider": "amazon-lightsail",
+  "sources": [
+    "amazon-lightsail-instances-api-openapi.yml"
+  ],
+  "outputs": [
+    "amazon-lightsail-instances-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

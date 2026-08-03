@@ -1,0 +1,1166 @@
+{
+  "info": {
+    "_postman_id": "092ca07e-5744-4455-84bb-a757bb5bdc7d",
+    "name": "Amazon Lightsail Instances API",
+    "description": "The Amazon Lightsail API provides programmatic access to manage Lightsail resources.\n\nContact Support:\n Name: AWS Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T00:47:36.000Z",
+    "updatedAt": "2026-07-28T00:47:36.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-092ca07e-5744-4455-84bb-a757bb5bdc7d"
+  },
+  "item": [
+    {
+      "name": "instances",
+      "item": [
+        {
+          "name": "{instanceName}",
+          "item": [
+            {
+              "name": "start",
+              "item": [
+                {
+                  "name": "Amazon Lightsail Start Instance",
+                  "id": "bc57c3fa-3e14-4a44-8cd0-8ebac6fb5201",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/instances/:instanceName/start",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "instances",
+                        ":instanceName",
+                        "start"
+                      ],
+                      "variable": [
+                        {
+                          "id": "53ee47fd-c6a6-463d-8787-c3dae5ab23aa",
+                          "key": "instanceName",
+                          "value": "<string>",
+                          "description": "(Required) The name of the instance."
+                        }
+                      ]
+                    },
+                    "description": "Starts a specific Amazon Lightsail instance."
+                  },
+                  "response": [
+                    {
+                      "id": "b5d9a073-eccc-449a-95e3-ab54013b8858",
+                      "name": "Success",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/instances/:instanceName/start",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "instances",
+                            ":instanceName",
+                            "start"
+                          ],
+                          "variable": [
+                            {
+                              "key": "instanceName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T00:47:36.000Z",
+                      "updatedAt": "2026-07-28T00:47:36.000Z",
+                      "uid": "35240-b5d9a073-eccc-449a-95e3-ab54013b8858"
+                    },
+                    {
+                      "id": "565ec592-81b2-4895-b789-4dc5fe4f4b66",
+                      "name": "Bad request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/instances/:instanceName/start",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "instances",
+                            ":instanceName",
+                            "start"
+                          ],
+                          "variable": [
+                            {
+                              "key": "instanceName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T00:47:36.000Z",
+                      "updatedAt": "2026-07-28T00:47:36.000Z",
+                      "uid": "35240-565ec592-81b2-4895-b789-4dc5fe4f4b66"
+                    },
+                    {
+                      "id": "be1db4b7-1289-41b7-a3f6-39819f02cff0",
+                      "name": "Access denied",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/instances/:instanceName/start",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "instances",
+                            ":instanceName",
+                            "start"
+                          ],
+                          "variable": [
+                            {
+                              "key": "instanceName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T00:47:36.000Z",
+                      "updatedAt": "2026-07-28T00:47:36.000Z",
+                      "uid": "35240-be1db4b7-1289-41b7-a3f6-39819f02cff0"
+                    },
+                    {
+                      "id": "faf232e4-05a6-4377-b1e3-cf276c9680e5",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/instances/:instanceName/start",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "instances",
+                            ":instanceName",
+                            "start"
+                          ],
+                          "variable": [
+                            {
+                              "key": "instanceName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T00:47:36.000Z",
+                      "updatedAt": "2026-07-28T00:47:36.000Z",
+                      "uid": "35240-faf232e4-05a6-4377-b1e3-cf276c9680e5"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T00:47:36.000Z",
+                  "updatedAt": "2026-07-28T00:47:36.000Z",
+                  "uid": "35240-bc57c3fa-3e14-4a44-8cd0-8ebac6fb5201"
+                }
+              ],
+              "id": "28688e4a-3ed9-47fd-84c9-00555c9d33d3",
+              "createdAt": "2026-07-28T00:47:36.000Z",
+              "updatedAt": "2026-07-28T00:47:36.000Z",
+              "uid": "35240-28688e4a-3ed9-47fd-84c9-00555c9d33d3"
+            },
+            {
+              "name": "stop",
+              "item": [
+                {
+                  "name": "Amazon Lightsail Stop Instance",
+                  "id": "e0c1e2ac-7521-4999-9b43-3c93b6f3d4b4",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/instances/:instanceName/stop",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "instances",
+                        ":instanceName",
+                        "stop"
+                      ],
+                      "variable": [
+                        {
+                          "id": "958c0d02-8231-4dbf-98ff-d4bb7cefd67e",
+                          "key": "instanceName",
+                          "value": "<string>",
+                          "description": "(Required) The name of the instance."
+                        }
+                      ]
+                    },
+                    "description": "Stops a specific Amazon Lightsail instance."
+                  },
+                  "response": [
+                    {
+                      "id": "ebe35842-a353-49ba-aa45-c2cfecb0d2d1",
+                      "name": "Success",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/instances/:instanceName/stop",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "instances",
+                            ":instanceName",
+                            "stop"
+                          ],
+                          "variable": [
+                            {
+                              "key": "instanceName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T00:47:36.000Z",
+                      "updatedAt": "2026-07-28T00:47:36.000Z",
+                      "uid": "35240-ebe35842-a353-49ba-aa45-c2cfecb0d2d1"
+                    },
+                    {
+                      "id": "7939afe5-b74e-4025-88e5-45feaf0d5bdf",
+                      "name": "Bad request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/instances/:instanceName/stop",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "instances",
+                            ":instanceName",
+                            "stop"
+                          ],
+                          "variable": [
+                            {
+                              "key": "instanceName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T00:47:36.000Z",
+                      "updatedAt": "2026-07-28T00:47:36.000Z",
+                      "uid": "35240-7939afe5-b74e-4025-88e5-45feaf0d5bdf"
+                    },
+                    {
+                      "id": "312577dd-1dbe-45ac-9f54-b1d0af5683ce",
+                      "name": "Access denied",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/instances/:instanceName/stop",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "instances",
+                            ":instanceName",
+                            "stop"
+                          ],
+                          "variable": [
+                            {
+                              "key": "instanceName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T00:47:36.000Z",
+                      "updatedAt": "2026-07-28T00:47:36.000Z",
+                      "uid": "35240-312577dd-1dbe-45ac-9f54-b1d0af5683ce"
+                    },
+                    {
+                      "id": "3dd4e3ab-eca3-40a4-90df-416c999b9b8a",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/instances/:instanceName/stop",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "instances",
+                            ":instanceName",
+                            "stop"
+                          ],
+                          "variable": [
+                            {
+                              "key": "instanceName"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T00:47:36.000Z",
+                      "updatedAt": "2026-07-28T00:47:36.000Z",
+                      "uid": "35240-3dd4e3ab-eca3-40a4-90df-416c999b9b8a"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T00:47:36.000Z",
+                  "updatedAt": "2026-07-28T00:47:36.000Z",
+                  "uid": "35240-e0c1e2ac-7521-4999-9b43-3c93b6f3d4b4"
+                }
+              ],
+              "id": "9b16a6d1-5755-4233-a855-55c33385427e",
+              "createdAt": "2026-07-28T00:47:36.000Z",
+              "updatedAt": "2026-07-28T00:47:36.000Z",
+              "uid": "35240-9b16a6d1-5755-4233-a855-55c33385427e"
+            },
+            {
+              "name": "Amazon Lightsail Get Instance",
+              "id": "3cccfd57-05c1-4db0-9b62-ae0c3bda1dce",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/instances/:instanceName",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "instances",
+                    ":instanceName"
+                  ],
+                  "variable": [
+                    {
+                      "id": "77e755e7-a0b6-4f95-9736-5f9ceb1ad8de",
+                      "key": "instanceName",
+                      "value": "<string>",
+                      "description": "(Required) The name of the instance."
+                    }
+                  ]
+                },
+                "description": "Returns information about a specific Amazon Lightsail instance."
+              },
+              "response": [
+                {
+                  "id": "10bf8bf5-4bf5-4d21-842b-7d9d3a0f3401",
+                  "name": "Success",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/instances/:instanceName",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "instances",
+                        ":instanceName"
+                      ],
+                      "variable": [
+                        {
+                          "key": "instanceName"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T00:47:36.000Z",
+                  "updatedAt": "2026-07-28T00:47:36.000Z",
+                  "uid": "35240-10bf8bf5-4bf5-4d21-842b-7d9d3a0f3401"
+                },
+                {
+                  "id": "cedd66c0-e5cf-46a0-ae44-5af14754d310",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/instances/:instanceName",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "instances",
+                        ":instanceName"
+                      ],
+                      "variable": [
+                        {
+                          "key": "instanceName"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T00:47:36.000Z",
+                  "updatedAt": "2026-07-28T00:47:36.000Z",
+                  "uid": "35240-cedd66c0-e5cf-46a0-ae44-5af14754d310"
+                },
+                {
+                  "id": "5b82a301-d551-454c-aa8b-79abf32f5b8b",
+                  "name": "Access denied",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/instances/:instanceName",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "instances",
+                        ":instanceName"
+                      ],
+                      "variable": [
+                        {
+                          "key": "instanceName"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T00:47:36.000Z",
+                  "updatedAt": "2026-07-28T00:47:36.000Z",
+                  "uid": "35240-5b82a301-d551-454c-aa8b-79abf32f5b8b"
+                },
+                {
+                  "id": "8197d300-6eb9-4a5c-a5c6-bf21b5aea367",
+                  "name": "Internal server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/instances/:instanceName",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "instances",
+                        ":instanceName"
+                      ],
+                      "variable": [
+                        {
+                          "key": "instanceName"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T00:47:36.000Z",
+                  "updatedAt": "2026-07-28T00:47:36.000Z",
+                  "uid": "35240-8197d300-6eb9-4a5c-a5c6-bf21b5aea367"
+                }
+              ],
+              "createdAt": "2026-07-28T00:47:36.000Z",
+              "updatedAt": "2026-07-28T00:47:36.000Z",
+              "uid": "35240-3cccfd57-05c1-4db0-9b62-ae0c3bda1dce"
+            },
+            {
+              "name": "Amazon Lightsail Delete Instance",
+              "id": "40d2e6bb-8f1f-4820-ae6f-727eb25bbe82",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/instances/:instanceName",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "instances",
+                    ":instanceName"
+                  ],
+                  "variable": [
+                    {
+                      "id": "96ddf315-5f71-431a-a3b5-34e1486b1a43",
+                      "key": "instanceName",
+                      "value": "<string>",
+                      "description": "(Required) The name of the instance."
+                    }
+                  ]
+                },
+                "description": "Deletes an Amazon Lightsail instance."
+              },
+              "response": [
+                {
+                  "id": "dfb2a70d-80b5-4f46-aafc-3c77f766a03a",
+                  "name": "Success",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/instances/:instanceName",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "instances",
+                        ":instanceName"
+                      ],
+                      "variable": [
+                        {
+                          "key": "instanceName"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T00:47:36.000Z",
+                  "updatedAt": "2026-07-28T00:47:36.000Z",
+                  "uid": "35240-dfb2a70d-80b5-4f46-aafc-3c77f766a03a"
+                },
+                {
+                  "id": "5c62e9dc-0d9e-496c-ab8b-0c018b00cf6c",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/instances/:instanceName",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "instances",
+                        ":instanceName"
+                      ],
+                      "variable": [
+                        {
+                          "key": "instanceName"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T00:47:36.000Z",
+                  "updatedAt": "2026-07-28T00:47:36.000Z",
+                  "uid": "35240-5c62e9dc-0d9e-496c-ab8b-0c018b00cf6c"
+                },
+                {
+                  "id": "bae9d64c-dbcc-482e-b78c-09263d2d2dbc",
+                  "name": "Access denied",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/instances/:instanceName",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "instances",
+                        ":instanceName"
+                      ],
+                      "variable": [
+                        {
+                          "key": "instanceName"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T00:47:36.000Z",
+                  "updatedAt": "2026-07-28T00:47:36.000Z",
+                  "uid": "35240-bae9d64c-dbcc-482e-b78c-09263d2d2dbc"
+                },
+                {
+                  "id": "44f8e358-85c9-4abe-97e7-4484d17c17ff",
+                  "name": "Internal server error",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/instances/:instanceName",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "instances",
+                        ":instanceName"
+                      ],
+                      "variable": [
+                        {
+                          "key": "instanceName"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T00:47:36.000Z",
+                  "updatedAt": "2026-07-28T00:47:36.000Z",
+                  "uid": "35240-44f8e358-85c9-4abe-97e7-4484d17c17ff"
+                }
+              ],
+              "createdAt": "2026-07-28T00:47:36.000Z",
+              "updatedAt": "2026-07-28T00:47:36.000Z",
+              "uid": "35240-40d2e6bb-8f1f-4820-ae6f-727eb25bbe82"
+            }
+          ],
+          "id": "03b3015d-ae32-4b64-a6fc-d924a4a10bdb",
+          "createdAt": "2026-07-28T00:47:36.000Z",
+          "updatedAt": "2026-07-28T00:47:36.000Z",
+          "uid": "35240-03b3015d-ae32-4b64-a6fc-d924a4a10bdb"
+        },
+        {
+          "name": "Amazon Lightsail Create Instances",
+          "id": "5c11b3c2-5a0a-4f54-a663-88617d91935d",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/instances",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "instances"
+              ]
+            },
+            "description": "Creates one or more Amazon Lightsail instances."
+          },
+          "response": [
+            {
+              "id": "35ac53da-6e80-4804-8317-79a57623233e",
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/instances",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "instances"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-07-28T00:47:36.000Z",
+              "updatedAt": "2026-07-28T00:47:36.000Z",
+              "uid": "35240-35ac53da-6e80-4804-8317-79a57623233e"
+            },
+            {
+              "id": "1f55db0c-f89d-4bee-927c-8e363ffcb36c",
+              "name": "Bad request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/instances",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "instances"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-07-28T00:47:36.000Z",
+              "updatedAt": "2026-07-28T00:47:36.000Z",
+              "uid": "35240-1f55db0c-f89d-4bee-927c-8e363ffcb36c"
+            },
+            {
+              "id": "5bcdf219-29b6-4bda-ba2b-cf16a5895514",
+              "name": "Access denied",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/instances",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "instances"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-07-28T00:47:36.000Z",
+              "updatedAt": "2026-07-28T00:47:36.000Z",
+              "uid": "35240-5bcdf219-29b6-4bda-ba2b-cf16a5895514"
+            },
+            {
+              "id": "0e12fd0f-d6bc-48a8-9c82-3c12853f4b0e",
+              "name": "Internal server error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/instances",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "instances"
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-07-28T00:47:36.000Z",
+              "updatedAt": "2026-07-28T00:47:36.000Z",
+              "uid": "35240-0e12fd0f-d6bc-48a8-9c82-3c12853f4b0e"
+            }
+          ],
+          "createdAt": "2026-07-28T00:47:36.000Z",
+          "updatedAt": "2026-07-28T00:47:36.000Z",
+          "uid": "35240-5c11b3c2-5a0a-4f54-a663-88617d91935d"
+        },
+        {
+          "name": "Amazon Lightsail Get Instances",
+          "id": "ffd114ea-ae0e-4549-a7cb-8f47a6a05d51",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/instances",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "instances"
+              ]
+            },
+            "description": "Returns information about all Amazon Lightsail virtual private servers."
+          },
+          "response": [
+            {
+              "id": "f814d9ed-8850-4564-9a72-c8f0be7600af",
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/instances",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "instances"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-07-28T00:47:36.000Z",
+              "updatedAt": "2026-07-28T00:47:36.000Z",
+              "uid": "35240-f814d9ed-8850-4564-9a72-c8f0be7600af"
+            },
+            {
+              "id": "10b424df-ec7d-4f46-9cbc-7f7bfad8e43f",
+              "name": "Bad request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/instances",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "instances"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-07-28T00:47:36.000Z",
+              "updatedAt": "2026-07-28T00:47:36.000Z",
+              "uid": "35240-10b424df-ec7d-4f46-9cbc-7f7bfad8e43f"
+            },
+            {
+              "id": "c41e5ce5-7ec0-4a70-b081-d3809e43a54e",
+              "name": "Access denied",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/instances",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "instances"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-07-28T00:47:36.000Z",
+              "updatedAt": "2026-07-28T00:47:36.000Z",
+              "uid": "35240-c41e5ce5-7ec0-4a70-b081-d3809e43a54e"
+            },
+            {
+              "id": "bbf62b38-67c4-4ae8-b914-701fe7d26fca",
+              "name": "Internal server error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/instances",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "instances"
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-07-28T00:47:36.000Z",
+              "updatedAt": "2026-07-28T00:47:36.000Z",
+              "uid": "35240-bbf62b38-67c4-4ae8-b914-701fe7d26fca"
+            }
+          ],
+          "createdAt": "2026-07-28T00:47:36.000Z",
+          "updatedAt": "2026-07-28T00:47:36.000Z",
+          "uid": "35240-ffd114ea-ae0e-4549-a7cb-8f47a6a05d51"
+        }
+      ],
+      "id": "1f189b8c-1f7f-4f86-8e22-cfc1f2cf750c",
+      "createdAt": "2026-07-28T00:47:36.000Z",
+      "updatedAt": "2026-07-28T00:47:36.000Z",
+      "uid": "35240-1f189b8c-1f7f-4f86-8e22-cfc1f2cf750c"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://lightsail.us-east-1.amazonaws.com"
+    }
+  ]
+}
