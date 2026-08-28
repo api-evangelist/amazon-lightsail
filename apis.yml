@@ -4,6 +4,18 @@ description: >-
   developers, small businesses, students, and other users who need a solution to build and host their applications on
   cloud. Lightsail provides developers compute, storage, and networking capacity and capabilities to deploy and manage
   websites and web applications in the cloud.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 specificationVersion: '0.23'
 accessModel:
   pricing: freemium
