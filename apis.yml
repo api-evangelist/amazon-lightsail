@@ -146,3 +146,5 @@ common:
 maintainer:
   name: Kin Lane
   email: kin@apievangelist.com
+x-parent: aws
+x-relationship: product
