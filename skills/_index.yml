@@ -1,0 +1,32 @@
+generated: '2026-09-17'
+method: generated
+source: >-
+  openapi/amazon-lightsail-openapi.yml (derived from smithy/amazon-lightsail-2016-11-28.json), plus the
+  Lightsail User Guide pages cited in each skill. Every operationId referenced was verified to exist in
+  the spec; none was invented.
+provider: Amazon Lightsail
+providerId: amazon-lightsail
+note: >-
+  Three packaged skills covering the flows an agent actually has to get right on this API: launching a
+  reachable server, making a change reversible before making it, and the container subsurface that does
+  not behave like the rest of the API. Each one carries the two facts that are easy to get wrong here —
+  a 200 is not completion (poll GetOperation), and there is no idempotency key anywhere on the surface,
+  so a retried create bills twice.
+skill_count: 3
+skills:
+- name: amazon-lightsail-launch-a-web-server
+  file: amazon-lightsail-launch-a-web-server.md
+  summary: Blueprint and bundle selection, key pair, create, wait for running, open ports, static IP, connect.
+  operations: 13
+- name: amazon-lightsail-back-up-before-you-destroy
+  file: amazon-lightsail-back-up-before-you-destroy.md
+  summary: >-
+    Manual vs automatic snapshots, the seven-day windows, promoting an automatic snapshot, restoring to a
+    new resource, and which deletes have no undo.
+  operations: 13
+- name: amazon-lightsail-deploy-a-container-service
+  file: amazon-lightsail-deploy-a-container-service.md
+  summary: >-
+    Create service, get an image in (including the lightsailctl plugin gap), deploy, poll to ACTIVE,
+    read logs, and the quota ceilings.
+  operations: 12

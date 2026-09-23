@@ -1,144 +1,1135 @@
-specification: API Commons Plans
-specificationVersion: '0.1'
-schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+generated: '2026-09-17'
+method: searched
+source: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-bundles.html (fetched 2026-09-17,
+  HTTP 200), cross-checked against https://aws.amazon.com/lightsail/pricing/
 provider: Amazon Lightsail
 providerId: amazon-lightsail
-created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
-tags: []
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
+note: 'Lightsail''s entire commercial proposition is a fixed monthly price, so its plans are instance BUNDLES,
+  not API tiers: the API itself is free to call and carries no per-request charge, no request quota and no
+  paid API tier. What a buyer picks is a bundle — vCPUs, memory, SSD storage and a monthly data-transfer allowance
+  — billed on an on-demand hourly rate capped at the monthly figure below. The IPv6-only variants are the same
+  machine without a public IPv4 address and are consistently $1.50-$4.00 a month cheaper, which is the AWS
+  public-IPv4 charge showing through. Prices below are the published us-east-1 list prices and vary by AWS
+  Region. Bundles for the other Lightsail resource types (managed databases, buckets, CDN distributions, load
+  balancers) are priced on their own pages and are not enumerated here; the API reads all of them at runtime
+  through GetBundles, GetRelationalDatabaseBundles, GetBucketBundles and GetDistributionBundles.'
+api_pricing:
+  model: free
+  detail: No charge for Lightsail API requests. Billing is for provisioned resources only.
+free_tier:
+  available: true
+  detail: AWS Free Tier includes three months free on selected Lightsail bundles for new accounts.
+  source: https://aws.amazon.com/lightsail/pricing/
+runtime_discovery:
+- operationId: GetBundles
+  description: Instance bundles available in the current Region.
+- operationId: GetRelationalDatabaseBundles
+  description: Managed database bundles.
+- operationId: GetBucketBundles
+  description: Object storage bucket bundles.
+- operationId: GetDistributionBundles
+  description: CDN distribution bundles.
+- operationId: GetCostEstimate
+  description: Estimated cost for a resource over a time period.
+plan_count: 100
 plans:
-  - id: amazon-lightsail-free
-    name: Free
-    type: freemium
-    description: Free entry tier for the Amazon Lightsail API surface. Intended for evaluation, prototyping,
-      and low-volume integrations. Real limits and pricing must be reconciled with the provider's published
-      plan documentation.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 1000
-        timeFrame: month
-        geo: global
-        domains:
-          - https://lightsail.amazonaws.com
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://lightsail.amazonaws.com
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-    elements:
-      - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
-      - name: Amazon Lightsail API
-  - id: amazon-lightsail-pro
-    name: Professional
-    type: paid
-    description: Production tier for Amazon Lightsail. Provides higher quotas, priority support, and access
-      to the broader API portfolio. Pricing placeholder; align with the provider's pricing page.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 100000
-        timeFrame: month
-        geo: global
-        domains:
-          - https://lightsail.amazonaws.com
-        unit: 1
-        price: TBD
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://lightsail.amazonaws.com
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
-        type: metered
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: global
-        domains:
-          - https://lightsail.amazonaws.com
-        unit: 1000
-        price: TBD
-        userMultiplied: false
-    elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
-      - name: Amazon Lightsail API
-  - id: amazon-lightsail-enterprise
-    name: Enterprise
-    type: enterprise
-    description: Custom-negotiated tier for Amazon Lightsail. Includes dedicated capacity, contractual
-      SLAs, security review, data residency options, and named technical account management.
-    entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: configurable
-        domains:
-          - https://lightsail.amazonaws.com
-        unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
-        geo: configurable
-        domains:
-          - https://lightsail.amazonaws.com
-        unit: 1
-        price: custom
-        userMultiplied: false
-    elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: Amazon Lightsail API
-maintainers: []
+- id: nano-0-5gb-linux-with-public-ipv4
+  name: Nano-0.5GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 5.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 0.5 GB
+  storage: 20 GB
+  data_transfer: 1 TB
+- id: micro-1gb-linux-with-public-ipv4
+  name: Micro-1GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 7.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 1 GB
+  storage: 40 GB
+  data_transfer: 2 TB
+- id: small-2gb-linux-with-public-ipv4
+  name: Small-2GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 12.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 2 GB
+  storage: 60 GB
+  data_transfer: 3 TB
+- id: medium-4gb-linux-with-public-ipv4
+  name: Medium-4GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 24.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 4 GB
+  storage: 80 GB
+  data_transfer: 4 TB
+- id: large-8gb-linux-with-public-ipv4
+  name: Large-8GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 44.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 8 GB
+  storage: 160 GB
+  data_transfer: 5 TB
+- id: xlarge-16gb-linux-with-public-ipv4
+  name: Xlarge-16GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 84.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 4
+  memory: 16 GB
+  storage: 320 GB
+  data_transfer: 6 TB
+- id: 2xlarge-32gb-linux-with-public-ipv4
+  name: 2Xlarge-32GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 164.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 8
+  memory: 32 GB
+  storage: 640 GB
+  data_transfer: 7 TB
+- id: 4xlarge-64gb-linux-with-public-ipv4
+  name: 4Xlarge-64GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 384.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 16
+  memory: 64 GB
+  storage: 1,280 GB
+  data_transfer: 8 TB
+- id: 8xlarge-128gb-linux-with-public-ipv4
+  name: 8Xlarge-128GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 884.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 32
+  memory: 128 GB
+  storage: 1,280 GB
+  data_transfer: 9 TB
+- id: 12xlarge-192gb-linux-with-public-ipv4
+  name: 12Xlarge-192GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 1324.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 48
+  memory: 192 GB
+  storage: 1,280 GB
+  data_transfer: 10 TB
+- id: 16xlarge-256gb-linux-with-public-ipv4
+  name: 16Xlarge-256GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 1764.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 64
+  memory: 256 GB
+  storage: 1,280 GB
+  data_transfer: 10 TB
+- id: memory-optimized-large-16gb-linux-with-public-ipv4
+  name: Memory-optimized Large-16GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 74.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 16 GB
+  storage: 160 GB
+  data_transfer: 5 TB
+- id: memory-optimized-xlarge-32gb-linux-with-public-ipv4
+  name: Memory-optimized Xlarge-32GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 144.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 4
+  memory: 32 GB
+  storage: 320 GB
+  data_transfer: 6 TB
+- id: memory-optimized-2xlarge-64gb-linux-with-public-ipv4
+  name: Memory-optimized 2Xlarge-64GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 294.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 8
+  memory: 64 GB
+  storage: 640 GB
+  data_transfer: 7 TB
+- id: memory-optimized-4xlarge-128gb-linux-with-public-ipv4
+  name: Memory-optimized 4Xlarge-128GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 584.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 16
+  memory: 128 GB
+  storage: 1,280 GB
+  data_transfer: 8 TB
+- id: memory-optimized-8xlarge-256gb-linux-with-public-ipv4
+  name: Memory-optimized 8Xlarge-256GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 1174.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 32
+  memory: 256 GB
+  storage: 1,280 GB
+  data_transfer: 9 TB
+- id: memory-optimized-12xlarge-384gb-linux-with-public-ipv4
+  name: Memory-optimized 12Xlarge-384GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 1764.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 48
+  memory: 384 GB
+  storage: 1,280 GB
+  data_transfer: 10 TB
+- id: memory-optimized-16xlarge-512gb-linux-with-public-ipv4
+  name: Memory-optimized 16Xlarge-512GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 2344.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 64
+  memory: 512 GB
+  storage: 1,280 GB
+  data_transfer: 10 TB
+- id: compute-optimized-large-4gb-linux-with-public-ipv4
+  name: Compute-optimized Large-4GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 42.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 4 GB
+  storage: 160 GB
+  data_transfer: 5 TB
+- id: compute-optimized-xlarge-8gb-linux-with-public-ipv4
+  name: Compute-optimized Xlarge-8GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 84.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 4
+  memory: 8 GB
+  storage: 320 GB
+  data_transfer: 6 TB
+- id: compute-optimized-2xlarge-16gb-linux-with-public-ipv4
+  name: Compute-optimized 2Xlarge-16GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 168.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 8
+  memory: 16 GB
+  storage: 640 GB
+  data_transfer: 7 TB
+- id: compute-optimized-4xlarge-32gb-linux-with-public-ipv4
+  name: Compute-optimized 4Xlarge-32GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 336.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 16
+  memory: 32 GB
+  storage: 1,280 GB
+  data_transfer: 8 TB
+- id: compute-optimized-9xlarge-72gb-linux-with-public-ipv4
+  name: Compute-optimized 9Xlarge-72GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 844.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 36
+  memory: 72 GB
+  storage: 1,280 GB
+  data_transfer: 9 TB
+- id: compute-optimized-12xlarge-96gb-linux-with-public-ipv4
+  name: Compute-optimized 12Xlarge-96GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 1126.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 48
+  memory: 96 GB
+  storage: 1,280 GB
+  data_transfer: 10 TB
+- id: compute-optimized-18xlarge-144gb-linux-with-public-ipv4
+  name: Compute-optimized 18Xlarge-144GB Linux with public IPv4
+  family: Linux/Unix bundles (with public IPv4 addressing)
+  price: 1688.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 72
+  memory: 144 GB
+  storage: 1,280 GB
+  data_transfer: 10 TB
+- id: nano-0-5gb-linux-ipv6-only
+  name: Nano-0.5GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 3.5
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 0.5 GB
+  storage: 20 GB
+  data_transfer: 1 TB
+- id: micro-1gb-linux-ipv6-only
+  name: Micro-1GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 5.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 1 GB
+  storage: 40 GB
+  data_transfer: 2 TB
+- id: small-2gb-linux-ipv6-only
+  name: Small-2GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 10.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 2 GB
+  storage: 60 GB
+  data_transfer: 3 TB
+- id: medium-4gb-linux-ipv6-only
+  name: Medium-4GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 20.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 4 GB
+  storage: 80 GB
+  data_transfer: 4 TB
+- id: large-8gb-linux-ipv6-only
+  name: Large-8GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 40.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 8 GB
+  storage: 160 GB
+  data_transfer: 5 TB
+- id: xlarge-16gb-linux-ipv6-only
+  name: Xlarge-16GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 80.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 4
+  memory: 16 GB
+  storage: 320 GB
+  data_transfer: 6 TB
+- id: 2xlarge-32gb-linux-ipv6-only
+  name: 2Xlarge-32GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 160.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 8
+  memory: 32 GB
+  storage: 640 GB
+  data_transfer: 7 TB
+- id: 4xlarge-64gb-linux-ipv6-only
+  name: 4Xlarge-64GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 380.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 16
+  memory: 64 GB
+  storage: 1,280 GB
+  data_transfer: 8 TB
+- id: 8xlarge-128gb-linux-ipv6-only
+  name: 8Xlarge-128GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 880.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 32
+  memory: 128 GB
+  storage: 1,280 GB
+  data_transfer: 9 TB
+- id: 12xlarge-192gb-linux-ipv6-only
+  name: 12Xlarge-192GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 1320.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 48
+  memory: 192 GB
+  storage: 1,280 GB
+  data_transfer: 10 TB
+- id: 16xlarge-256gb-linux-ipv6-only
+  name: 16Xlarge-256GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 1760.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 64
+  memory: 256 GB
+  storage: 1,280 GB
+  data_transfer: 10 TB
+- id: memory-optimized-large-16gb-linux-ipv6-only
+  name: Memory-optimized Large-16GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 70.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 16 GB
+  storage: 160 GB
+  data_transfer: 5 TB
+- id: memory-optimized-xlarge-32gb-linux-ipv6-only
+  name: Memory-optimized Xlarge-32GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 140.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 4
+  memory: 32 GB
+  storage: 320 GB
+  data_transfer: 6 TB
+- id: memory-optimized-2xlarge-64gb-linux-ipv6-only
+  name: Memory-optimized 2Xlarge-64GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 290.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 8
+  memory: 64 GB
+  storage: 640 GB
+  data_transfer: 7 TB
+- id: memory-optimized-4xlarge-128gb-linux-ipv6-only
+  name: Memory-optimized 4Xlarge-128GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 580.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 16
+  memory: 128 GB
+  storage: 1,280 GB
+  data_transfer: 8 TB
+- id: memory-optimized-8xlarge-256gb-linux-ipv6-only
+  name: Memory-optimized 8Xlarge-256GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 1170.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 32
+  memory: 256 GB
+  storage: 1,280 GB
+  data_transfer: 9 TB
+- id: memory-optimized-12xlarge-384gb-linux-ipv6-only
+  name: Memory-optimized 12Xlarge-384GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 1760.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 48
+  memory: 384 GB
+  storage: 1,280 GB
+  data_transfer: 10 TB
+- id: memory-optimized-16xlarge-512gb-linux-ipv6-only
+  name: Memory-optimized 16Xlarge-512GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 2340.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 64
+  memory: 512 GB
+  storage: 1,280 GB
+  data_transfer: 10 TB
+- id: compute-optimized-large-4gb-linux-ipv6-only
+  name: Compute-optimized Large-4GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 38.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 4 GB
+  storage: 160 GB
+  data_transfer: 5 TB
+- id: compute-optimized-xlarge-8gb-linux-ipv6-only
+  name: Compute-optimized Xlarge-8GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 80.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 4
+  memory: 8 GB
+  storage: 320 GB
+  data_transfer: 6 TB
+- id: compute-optimized-2xlarge-16gb-linux-ipv6-only
+  name: Compute-optimized 2Xlarge-16GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 164.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 8
+  memory: 16 GB
+  storage: 640 GB
+  data_transfer: 7 TB
+- id: compute-optimized-4xlarge-32gb-linux-ipv6-only
+  name: Compute-optimized 4Xlarge-32GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 332.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 16
+  memory: 32 GB
+  storage: 1,280 GB
+  data_transfer: 8 TB
+- id: compute-optimized-9xlarge-72gb-linux-ipv6-only
+  name: Compute-optimized 9Xlarge-72GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 840.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 36
+  memory: 72 GB
+  storage: 1,280 GB
+  data_transfer: 9 TB
+- id: compute-optimized-12xlarge-96gb-linux-ipv6-only
+  name: Compute-optimized 12Xlarge-96GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 1122.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 48
+  memory: 96 GB
+  storage: 1,280 GB
+  data_transfer: 10 TB
+- id: compute-optimized-18xlarge-144gb-linux-ipv6-only
+  name: Compute-optimized 18Xlarge-144GB Linux IPv6-only
+  family: Linux/Unix bundles (IPv6-only)
+  price: 1684.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 72
+  memory: 144 GB
+  storage: 1,280 GB
+  data_transfer: 10 TB
+- id: nano-0-5gb-windows-with-public-ipv4
+  name: Nano-0.5GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 9.5
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 0.5 GB
+  storage: 30 GB
+  data_transfer: 1 TB
+- id: micro-1gb-windows-with-public-ipv4
+  name: Micro-1GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 14.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 1 GB
+  storage: 40 GB
+  data_transfer: 2 TB
+- id: small-2gb-windows-with-public-ipv4
+  name: Small-2GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 22.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 2 GB
+  storage: 60 GB
+  data_transfer: 3 TB
+- id: medium-4gb-windows-with-public-ipv4
+  name: Medium-4GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 44.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 4 GB
+  storage: 80 GB
+  data_transfer: 4 TB
+- id: large-8gb-windows-with-public-ipv4
+  name: Large-8GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 74.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 8 GB
+  storage: 160 GB
+  data_transfer: 5 TB
+- id: xlarge-16gb-windows-with-public-ipv4
+  name: Xlarge-16GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 124.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 4
+  memory: 16 GB
+  storage: 320 GB
+  data_transfer: 6 TB
+- id: 2xlarge-32gb-windows-with-public-ipv4
+  name: 2Xlarge-32GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 244.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 8
+  memory: 32 GB
+  storage: 640 GB
+  data_transfer: 7 TB
+- id: 4xlarge-64gb-windows-with-public-ipv4
+  name: 4Xlarge-64GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 574.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 16
+  memory: 64 GB
+  storage: 1,280 GB
+  data_transfer: 8 TB
+- id: 8xlarge-128gb-windows-with-public-ipv4
+  name: 8Xlarge-128GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 1254.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 32
+  memory: 128 GB
+  storage: 1,280 GB
+  data_transfer: 9 TB
+- id: 12xlarge-192gb-windows-with-public-ipv4
+  name: 12Xlarge-192GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 1884.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 48
+  memory: 192 GB
+  storage: 1,280 GB
+  data_transfer: 10 TB
+- id: 16xlarge-256gb-windows-with-public-ipv4
+  name: 16Xlarge-256GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 2504.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 64
+  memory: 256 GB
+  storage: 1,280 GB
+  data_transfer: 10 TB
+- id: memory-optimized-large-16gb-windows-with-public-ipv4
+  name: Memory-optimized Large-16GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 134.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 16 GB
+  storage: 160 GB
+  data_transfer: 5 TB
+- id: memory-optimized-xlarge-32gb-windows-with-public-ipv4
+  name: Memory-optimized Xlarge-32GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 264.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 4
+  memory: 32 GB
+  storage: 320 GB
+  data_transfer: 6 TB
+- id: memory-optimized-2xlarge-64gb-windows-with-public-ipv4
+  name: Memory-optimized 2Xlarge-64GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 524.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 8
+  memory: 64 GB
+  storage: 640 GB
+  data_transfer: 7 TB
+- id: memory-optimized-4xlarge-128gb-windows-with-public-ipv4
+  name: Memory-optimized 4Xlarge-128GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 1044.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 16
+  memory: 128 GB
+  storage: 1,280 GB
+  data_transfer: 8 TB
+- id: memory-optimized-8xlarge-256gb-windows-with-public-ipv4
+  name: Memory-optimized 8Xlarge-256GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 2104.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 32
+  memory: 256 GB
+  storage: 1,280 GB
+  data_transfer: 9 TB
+- id: memory-optimized-12xlarge-384gb-windows-with-public-ipv4
+  name: Memory-optimized 12Xlarge-384GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 3164.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 48
+  memory: 384 GB
+  storage: 1,280 GB
+  data_transfer: 10 TB
+- id: memory-optimized-16xlarge-512gb-windows-with-public-ipv4
+  name: Memory-optimized 16Xlarge-512GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 4204.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 64
+  memory: 512 GB
+  storage: 1,280 GB
+  data_transfer: 10 TB
+- id: compute-optimized-large-4gb-windows-with-public-ipv4
+  name: Compute-optimized Large-4GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 100.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 4 GB
+  storage: 160 GB
+  data_transfer: 5 TB
+- id: compute-optimized-xlarge-8gb-windows-with-public-ipv4
+  name: Compute-optimized Xlarge-8GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 200.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 4
+  memory: 8 GB
+  storage: 320 GB
+  data_transfer: 6 TB
+- id: compute-optimized-2xlarge-16gb-windows-with-public-ipv4
+  name: Compute-optimized 2Xlarge-16GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 400.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 8
+  memory: 16 GB
+  storage: 640 GB
+  data_transfer: 7 TB
+- id: compute-optimized-4xlarge-32gb-windows-with-public-ipv4
+  name: Compute-optimized 4Xlarge-32GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 800.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 16
+  memory: 32 GB
+  storage: 1,280 GB
+  data_transfer: 8 TB
+- id: compute-optimized-9xlarge-72gb-windows-with-public-ipv4
+  name: Compute-optimized 9Xlarge-72GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 1888.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 36
+  memory: 72 GB
+  storage: 1,280 GB
+  data_transfer: 9 TB
+- id: compute-optimized-12xlarge-96gb-windows-with-public-ipv4
+  name: Compute-optimized 12Xlarge-96GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 2518.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 48
+  memory: 96 GB
+  storage: 1,280 GB
+  data_transfer: 10 TB
+- id: compute-optimized-18xlarge-144gb-windows-with-public-ipv4
+  name: Compute-optimized 18Xlarge-144GB Windows with public IPv4
+  family: Windows bundles (with public IPv4 addressing)
+  price: 3776.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 72
+  memory: 144 GB
+  storage: 1,280 GB
+  data_transfer: 10 TB
+- id: nano-0-5gb-windows-ipv6-only
+  name: Nano-0.5GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 8.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 0.5 GB
+  storage: 30 GB
+  data_transfer: 1 TB
+- id: micro-1gb-windows-ipv6-only
+  name: Micro-1GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 12.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 1 GB
+  storage: 40 GB
+  data_transfer: 2 TB
+- id: small-2gb-windows-ipv6-only
+  name: Small-2GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 20.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 2 GB
+  storage: 60 GB
+  data_transfer: 3 TB
+- id: medium-4gb-windows-ipv6-only
+  name: Medium-4GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 40.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 4 GB
+  storage: 80 GB
+  data_transfer: 4 TB
+- id: large-8gb-windows-ipv6-only
+  name: Large-8GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 70.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 8 GB
+  storage: 160 GB
+  data_transfer: 5 TB
+- id: xlarge-16gb-windows-ipv6-only
+  name: Xlarge-16GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 120.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 4
+  memory: 16 GB
+  storage: 320 GB
+  data_transfer: 6 TB
+- id: 2xlarge-32gb-windows-ipv6-only
+  name: 2Xlarge-32GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 240.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 8
+  memory: 32 GB
+  storage: 640 GB
+  data_transfer: 7 TB
+- id: 4xlarge-64gb-windows-ipv6-only
+  name: 4Xlarge-64GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 570.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 16
+  memory: 64 GB
+  storage: 1,280 GB
+  data_transfer: 8 TB
+- id: 8xlarge-128gb-windows-ipv6-only
+  name: 8Xlarge-128GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 1250.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 32
+  memory: 128 GB
+  storage: 1,280 GB
+  data_transfer: 9 TB
+- id: 12xlarge-192gb-windows-ipv6-only
+  name: 12Xlarge-192GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 1880.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 48
+  memory: 192 GB
+  storage: 1,280 GB
+  data_transfer: 10 TB
+- id: 16xlarge-256gb-windows-ipv6-only
+  name: 16Xlarge-256GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 2500.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 64
+  memory: 256 GB
+  storage: 1,280 GB
+  data_transfer: 10 TB
+- id: memory-optimized-large-16gb-windows-ipv6-only
+  name: Memory-optimized Large-16GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 130.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 16 GB
+  storage: 160 GB
+  data_transfer: 5 TB
+- id: memory-optimized-xlarge-32gb-windows-ipv6-only
+  name: Memory-optimized Xlarge-32GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 260.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 4
+  memory: 32 GB
+  storage: 320 GB
+  data_transfer: 6 TB
+- id: memory-optimized-2xlarge-64gb-windows-ipv6-only
+  name: Memory-optimized 2Xlarge-64GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 520.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 8
+  memory: 64 GB
+  storage: 640 GB
+  data_transfer: 7 TB
+- id: memory-optimized-4xlarge-128gb-windows-ipv6-only
+  name: Memory-optimized 4Xlarge-128GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 1040.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 16
+  memory: 128 GB
+  storage: 1,280 GB
+  data_transfer: 8 TB
+- id: memory-optimized-8xlarge-256gb-windows-ipv6-only
+  name: Memory-optimized 8Xlarge-256GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 2100.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 32
+  memory: 256 GB
+  storage: 1,280 GB
+  data_transfer: 9 TB
+- id: memory-optimized-12xlarge-384gb-windows-ipv6-only
+  name: Memory-optimized 12Xlarge-384GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 3160.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 48
+  memory: 384 GB
+  storage: 1,280 GB
+  data_transfer: 10 TB
+- id: memory-optimized-16xlarge-512gb-windows-ipv6-only
+  name: Memory-optimized 16Xlarge-512GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 4200.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 64
+  memory: 512 GB
+  storage: 1,280 GB
+  data_transfer: 10 TB
+- id: compute-optimized-large-4gb-windows-ipv6-only
+  name: Compute-optimized Large-4GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 96.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 2
+  memory: 4 GB
+  storage: 160 GB
+  data_transfer: 5 TB
+- id: compute-optimized-xlarge-8gb-windows-ipv6-only
+  name: Compute-optimized Xlarge-8GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 196.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 4
+  memory: 8 GB
+  storage: 320 GB
+  data_transfer: 6 TB
+- id: compute-optimized-2xlarge-16gb-windows-ipv6-only
+  name: Compute-optimized 2Xlarge-16GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 396.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 8
+  memory: 16 GB
+  storage: 640 GB
+  data_transfer: 7 TB
+- id: compute-optimized-4xlarge-32gb-windows-ipv6-only
+  name: Compute-optimized 4Xlarge-32GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 796.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 16
+  memory: 32 GB
+  storage: 1,280 GB
+  data_transfer: 8 TB
+- id: compute-optimized-9xlarge-72gb-windows-ipv6-only
+  name: Compute-optimized 9Xlarge-72GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 1884.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 36
+  memory: 72 GB
+  storage: 1,280 GB
+  data_transfer: 9 TB
+- id: compute-optimized-12xlarge-96gb-windows-ipv6-only
+  name: Compute-optimized 12Xlarge-96GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 2514.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 48
+  memory: 96 GB
+  storage: 1,280 GB
+  data_transfer: 10 TB
+- id: compute-optimized-18xlarge-144gb-windows-ipv6-only
+  name: Compute-optimized 18Xlarge-144GB Windows IPv6-only
+  family: Windows bundles (IPv6-only)
+  price: 3772.0
+  currency: USD
+  period: month
+  billing: on-demand hourly, capped at the monthly plan price
+  vcpus: 72
+  memory: 144 GB
+  storage: 1,280 GB
+  data_transfer: 10 TB

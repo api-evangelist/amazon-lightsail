@@ -1,0 +1,306 @@
+# Amazon Lightsail API Reference
+
+> Amazon Lightsail is the easiest way to get started with Amazon Web Services (AWS) for developers who need to build websites or web applications. It includes everything you need to launch your project quickly - instances (virtual private servers), container services, storage buckets, managed databases, SSD-based block storage, static IP addresses, load balancers, content delivery network (CDN) distributions, DNS management of registered domains, and resource snapshots (backups) - for a low, predictable monthly price.
+
+- [Welcome](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.md)
+- [Common Parameters](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/CommonParameters.md)
+- [Common Error Types](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/CommonErrors.md)
+
+## [Actions](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_Operations.md)
+
+- [AllocateStaticIp](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_AllocateStaticIp.md): Allocates a static IP address.
+- [AttachCertificateToDistribution](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_AttachCertificateToDistribution.md): Attaches an SSL/TLS certificate to your Amazon Lightsail content delivery network (CDN) distribution.
+- [AttachDisk](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_AttachDisk.md): Attaches a block storage disk to a running or stopped Lightsail instance and exposes it to the instance with the specified disk name.
+- [AttachInstancesToLoadBalancer](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_AttachInstancesToLoadBalancer.md): Attaches one or more Lightsail instances to a load balancer.
+- [AttachLoadBalancerTlsCertificate](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_AttachLoadBalancerTlsCertificate.md): Attaches a Transport Layer Security (TLS) certificate to your load balancer.
+- [AttachStaticIp](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_AttachStaticIp.md): Attaches a static IP address to a specific Amazon Lightsail instance.
+- [CloseInstancePublicPorts](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CloseInstancePublicPorts.md): Closes ports for a specific Amazon Lightsail instance.
+- [CopySnapshot](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CopySnapshot.md): Copies a manual snapshot of an instance or disk as another manual snapshot, or copies an automatic snapshot of an instance or disk as a manual snapshot.
+- [CreateBucket](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateBucket.md): Creates an Amazon Lightsail bucket.
+- [CreateBucketAccessKey](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateBucketAccessKey.md): Creates a new access key for the specified Amazon Lightsail bucket.
+- [CreateCertificate](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateCertificate.md): Creates an SSL/TLS certificate for an Amazon Lightsail content delivery network (CDN) distribution and a container service.
+- [CreateCloudFormationStack](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateCloudFormationStack.md): Creates an AWS CloudFormation stack, which creates a new Amazon EC2 instance from an exported Amazon Lightsail snapshot.
+- [CreateContactMethod](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateContactMethod.md): Creates an email or SMS text message contact method.
+- [CreateContainerService](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateContainerService.md): Creates an Amazon Lightsail container service.
+- [CreateContainerServiceDeployment](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateContainerServiceDeployment.md): Creates a deployment for your Amazon Lightsail container service.
+- [CreateContainerServiceRegistryLogin](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateContainerServiceRegistryLogin.md): Creates a temporary set of log in credentials that you can use to log in to the Docker process on your local machine.
+- [CreateDisk](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateDisk.md): Creates a block storage disk that can be attached to an Amazon Lightsail instance in the same Availability Zone (us-east-2a).
+- [CreateDiskFromSnapshot](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateDiskFromSnapshot.md): Creates a block storage disk from a manual or automatic snapshot of a disk.
+- [CreateDiskSnapshot](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateDiskSnapshot.md): Creates a snapshot of a block storage disk.
+- [CreateDistribution](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateDistribution.md): Creates an Amazon Lightsail content delivery network (CDN) distribution.
+- [CreateDomain](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateDomain.md): Creates a domain resource for the specified domain (example.com).
+- [CreateDomainEntry](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateDomainEntry.md): Creates one of the following domain name system (DNS) records in a domain DNS zone: Address (A), canonical name (CNAME), mail exchanger (MX), name server (NS), start of authority (SOA), service locator (SRV), or text (TXT).
+- [CreateGUISessionAccessDetails](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateGUISessionAccessDetails.md): Creates two URLs that are used to access a virtual computer’s graphical user interface (GUI) session.
+- [CreateInstances](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateInstances.md): Creates one or more Amazon Lightsail instances.
+- [CreateInstancesFromSnapshot](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateInstancesFromSnapshot.md): Creates one or more new instances from a manual or automatic snapshot of an instance.
+- [CreateInstanceSnapshot](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateInstanceSnapshot.md): Creates a snapshot of a specific virtual private server, or instance.
+- [CreateKeyPair](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateKeyPair.md): Creates a custom SSH key pair that you can use with an Amazon Lightsail instance.
+- [CreateLoadBalancer](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateLoadBalancer.md): Creates a Lightsail load balancer.
+- [CreateLoadBalancerTlsCertificate](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateLoadBalancerTlsCertificate.md): Creates an SSL/TLS certificate for an Amazon Lightsail load balancer.
+- [CreateRelationalDatabase](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateRelationalDatabase.md): Creates a new database in Amazon Lightsail.
+- [CreateRelationalDatabaseFromSnapshot](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateRelationalDatabaseFromSnapshot.md): Creates a new database from an existing database snapshot in Amazon Lightsail.
+- [CreateRelationalDatabaseSnapshot](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CreateRelationalDatabaseSnapshot.md): Creates a snapshot of your database in Amazon Lightsail.
+- [DeleteAlarm](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DeleteAlarm.md): Deletes an alarm.
+- [DeleteAutoSnapshot](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DeleteAutoSnapshot.md): Deletes an automatic snapshot of an instance or disk.
+- [DeleteBucket](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DeleteBucket.md): Deletes a Amazon Lightsail bucket.
+- [DeleteBucketAccessKey](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DeleteBucketAccessKey.md): Deletes an access key for the specified Amazon Lightsail bucket.
+- [DeleteCertificate](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DeleteCertificate.md): Deletes an SSL/TLS certificate for your Amazon Lightsail content delivery network (CDN) distribution.
+- [DeleteContactMethod](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DeleteContactMethod.md): Deletes a contact method.
+- [DeleteContainerImage](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DeleteContainerImage.md): Deletes a container image that is registered to your Amazon Lightsail container service.
+- [DeleteContainerService](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DeleteContainerService.md): Deletes your Amazon Lightsail container service.
+- [DeleteDisk](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DeleteDisk.md): Deletes the specified block storage disk.
+- [DeleteDiskSnapshot](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DeleteDiskSnapshot.md): Deletes the specified disk snapshot.
+- [DeleteDistribution](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DeleteDistribution.md): Deletes your Amazon Lightsail content delivery network (CDN) distribution.
+- [DeleteDomain](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DeleteDomain.md): Deletes the specified domain recordset and all of its domain records.
+- [DeleteDomainEntry](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DeleteDomainEntry.md): Deletes a specific domain entry.
+- [DeleteInstance](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DeleteInstance.md): Deletes an Amazon Lightsail instance.
+- [DeleteInstanceSnapshot](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DeleteInstanceSnapshot.md): Deletes a specific snapshot of a virtual private server (or instance).
+- [DeleteKeyPair](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DeleteKeyPair.md): Deletes the specified key pair by removing the public key from Amazon Lightsail.
+- [DeleteKnownHostKeys](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DeleteKnownHostKeys.md): Deletes the known host key or certificate used by the Amazon Lightsail browser-based SSH or RDP clients to authenticate an instance.
+- [DeleteLoadBalancer](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DeleteLoadBalancer.md): Deletes a Lightsail load balancer and all its associated SSL/TLS certificates.
+- [DeleteLoadBalancerTlsCertificate](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DeleteLoadBalancerTlsCertificate.md): Deletes an SSL/TLS certificate associated with a Lightsail load balancer.
+- [DeleteRelationalDatabase](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DeleteRelationalDatabase.md): Deletes a database in Amazon Lightsail.
+- [DeleteRelationalDatabaseSnapshot](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DeleteRelationalDatabaseSnapshot.md): Deletes a database snapshot in Amazon Lightsail.
+- [DetachCertificateFromDistribution](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DetachCertificateFromDistribution.md): Detaches an SSL/TLS certificate from your Amazon Lightsail content delivery network (CDN) distribution.
+- [DetachDisk](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DetachDisk.md): Detaches a stopped block storage disk from a Lightsail instance.
+- [DetachInstancesFromLoadBalancer](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DetachInstancesFromLoadBalancer.md): Detaches the specified instances from a Lightsail load balancer.
+- [DetachStaticIp](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DetachStaticIp.md): Detaches a static IP from the Amazon Lightsail instance to which it is attached.
+- [DisableAddOn](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DisableAddOn.md): Disables an add-on for an Amazon Lightsail resource.
+- [DownloadDefaultKeyPair](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DownloadDefaultKeyPair.md): Downloads the regional Amazon Lightsail default key pair.
+- [EnableAddOn](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_EnableAddOn.md): Enables or modifies an add-on for an Amazon Lightsail resource.
+- [ExportSnapshot](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ExportSnapshot.md): Exports an Amazon Lightsail instance or block storage disk snapshot to Amazon Elastic Compute Cloud (Amazon EC2).
+- [GetActiveNames](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetActiveNames.md): Returns the names of all active (not deleted) resources.
+- [GetAlarms](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetAlarms.md): Returns information about the configured alarms.
+- [GetAutoSnapshots](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetAutoSnapshots.md): Returns the available automatic snapshots for an instance or disk.
+- [GetBlueprints](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetBlueprints.md): Returns the list of available instance images, or blueprints.
+- [GetBucketAccessKeys](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetBucketAccessKeys.md): Returns the existing access key IDs for the specified Amazon Lightsail bucket.
+- [GetBucketBundles](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetBucketBundles.md): Returns the bundles that you can apply to a Amazon Lightsail bucket.
+- [GetBucketMetricData](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetBucketMetricData.md): Returns the data points of a specific metric for an Amazon Lightsail bucket.
+- [GetBuckets](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetBuckets.md): Returns information about one or more Amazon Lightsail buckets.
+- [GetBundles](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetBundles.md): Returns the bundles that you can apply to an Amazon Lightsail instance when you create it.
+- [GetCertificates](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetCertificates.md): Returns information about one or more Amazon Lightsail SSL/TLS certificates.
+- [GetCloudFormationStackRecords](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetCloudFormationStackRecords.md): Returns the CloudFormation stack record created as a result of the create cloud formation stack operation.
+- [GetContactMethods](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetContactMethods.md): Returns information about the configured contact methods.
+- [GetContainerAPIMetadata](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetContainerAPIMetadata.md): Returns information about Amazon Lightsail containers, such as the current version of the Lightsail Control (lightsailctl) plugin.
+- [GetContainerImages](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetContainerImages.md): Returns the container images that are registered to your Amazon Lightsail container service.
+- [GetContainerLog](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetContainerLog.md): Returns the log events of a container of your Amazon Lightsail container service.
+- [GetContainerServiceDeployments](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetContainerServiceDeployments.md): Returns the deployments for your Amazon Lightsail container service
+- [GetContainerServiceMetricData](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetContainerServiceMetricData.md): Returns the data points of a specific metric of your Amazon Lightsail container service.
+- [GetContainerServicePowers](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetContainerServicePowers.md): Returns the list of powers that can be specified for your Amazon Lightsail container services.
+- [GetContainerServices](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetContainerServices.md): Returns information about one or more of your Amazon Lightsail container services.
+- [GetCostEstimate](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetCostEstimate.md): Retrieves information about the cost estimate for a specified resource.
+- [GetDisk](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetDisk.md): Returns information about a specific block storage disk.
+- [GetDisks](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetDisks.md): Returns information about all block storage disks in your AWS account and region.
+- [GetDiskSnapshot](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetDiskSnapshot.md): Returns information about a specific block storage disk snapshot.
+- [GetDiskSnapshots](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetDiskSnapshots.md): Returns information about all block storage disk snapshots in your AWS account and region.
+- [GetDistributionBundles](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetDistributionBundles.md): Returns the bundles that can be applied to your Amazon Lightsail content delivery network (CDN) distributions.
+- [GetDistributionLatestCacheReset](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetDistributionLatestCacheReset.md): Returns the timestamp and status of the last cache reset of a specific Amazon Lightsail content delivery network (CDN) distribution.
+- [GetDistributionMetricData](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetDistributionMetricData.md): Returns the data points of a specific metric for an Amazon Lightsail content delivery network (CDN) distribution.
+- [GetDistributions](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetDistributions.md): Returns information about one or more of your Amazon Lightsail content delivery network (CDN) distributions.
+- [GetDomain](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetDomain.md): Returns information about a specific domain recordset.
+- [GetDomains](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetDomains.md): Returns a list of all domains in the user's account.
+- [GetExportSnapshotRecords](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetExportSnapshotRecords.md): Returns all export snapshot records created as a result of the export snapshot operation.
+- [GetInstance](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetInstance.md): Returns information about a specific Amazon Lightsail instance, which is a virtual private server.
+- [GetInstanceAccessDetails](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetInstanceAccessDetails.md): Returns temporary SSH keys you can use to connect to a specific virtual private server, or instance.
+- [GetInstanceMetricData](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetInstanceMetricData.md): Returns the data points for the specified Amazon Lightsail instance metric, given an instance name.
+- [GetInstancePortStates](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetInstancePortStates.md): Returns the firewall port states for a specific Amazon Lightsail instance, the IP addresses allowed to connect to the instance through the ports, and the protocol.
+- [GetInstances](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetInstances.md): Returns information about all Amazon Lightsail virtual private servers, or instances.
+- [GetInstanceSnapshot](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetInstanceSnapshot.md): Returns information about a specific instance snapshot.
+- [GetInstanceSnapshots](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetInstanceSnapshots.md): Returns all instance snapshots for the user's account.
+- [GetInstanceState](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetInstanceState.md): Returns the state of a specific instance.
+- [GetKeyPair](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetKeyPair.md): Returns information about a specific key pair.
+- [GetKeyPairs](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetKeyPairs.md): Returns information about all key pairs in the user's account.
+- [GetLoadBalancer](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetLoadBalancer.md): Returns information about the specified Lightsail load balancer.
+- [GetLoadBalancerMetricData](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetLoadBalancerMetricData.md): Returns information about health metrics for your Lightsail load balancer.
+- [GetLoadBalancers](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetLoadBalancers.md): Returns information about all load balancers in an account.
+- [GetLoadBalancerTlsCertificates](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetLoadBalancerTlsCertificates.md): Returns information about the TLS certificates that are associated with the specified Lightsail load balancer.
+- [GetLoadBalancerTlsPolicies](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetLoadBalancerTlsPolicies.md): Returns a list of TLS security policies that you can apply to Lightsail load balancers.
+- [GetOperation](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetOperation.md): Returns information about a specific operation.
+- [GetOperations](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetOperations.md): Returns information about all operations.
+- [GetOperationsForResource](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetOperationsForResource.md): Gets operations for a specific resource (an instance or a static IP).
+- [GetProfile](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetProfile.md): Returns information about the profile of the Amazon Lightsail account that makes the request.
+- [GetRegions](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetRegions.md): Returns a list of all valid regions for Amazon Lightsail.
+- [GetRelationalDatabase](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetRelationalDatabase.md): Returns information about a specific database in Amazon Lightsail.
+- [GetRelationalDatabaseBlueprints](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetRelationalDatabaseBlueprints.md): Returns a list of available database blueprints in Amazon Lightsail.
+- [GetRelationalDatabaseBundles](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetRelationalDatabaseBundles.md): Returns the list of bundles that are available in Amazon Lightsail.
+- [GetRelationalDatabaseEvents](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetRelationalDatabaseEvents.md): Returns a list of events for a specific database in Amazon Lightsail.
+- [GetRelationalDatabaseLogEvents](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetRelationalDatabaseLogEvents.md): Returns a list of log events for a database in Amazon Lightsail.
+- [GetRelationalDatabaseLogStreams](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetRelationalDatabaseLogStreams.md): Returns a list of available log streams for a specific database in Amazon Lightsail.
+- [GetRelationalDatabaseMasterUserPassword](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetRelationalDatabaseMasterUserPassword.md): Returns the current, previous, or pending versions of the master user password for a Lightsail database.
+- [GetRelationalDatabaseMetricData](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetRelationalDatabaseMetricData.md): Returns the data points of the specified metric for a database in Amazon Lightsail.
+- [GetRelationalDatabaseParameters](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetRelationalDatabaseParameters.md): Returns all of the runtime parameters offered by the underlying database software, or engine, for a specific database in Amazon Lightsail.
+- [GetRelationalDatabases](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetRelationalDatabases.md): Returns information about all of your databases in Amazon Lightsail.
+- [GetRelationalDatabaseSnapshot](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetRelationalDatabaseSnapshot.md): Returns information about a specific database snapshot in Amazon Lightsail.
+- [GetRelationalDatabaseSnapshots](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetRelationalDatabaseSnapshots.md): Returns information about all of your database snapshots in Amazon Lightsail.
+- [GetSetupHistory](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetSetupHistory.md): Returns detailed information for five of the most recent SetupInstanceHttps requests that were ran on the target instance.
+- [GetStaticIp](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetStaticIp.md): Returns information about an Amazon Lightsail static IP.
+- [GetStaticIps](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetStaticIps.md): Returns information about all static IPs in the user's account.
+- [ImportKeyPair](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ImportKeyPair.md): Imports a public SSH key from a specific key pair.
+- [IsVpcPeered](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_IsVpcPeered.md): Returns a Boolean value indicating whether your Lightsail VPC is peered.
+- [OpenInstancePublicPorts](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_OpenInstancePublicPorts.md): Opens ports for a specific Amazon Lightsail instance, and specifies the IP addresses allowed to connect to the instance through the ports, and the protocol.
+- [PeerVpc](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_PeerVpc.md): Peers the Lightsail VPC with the user's default VPC.
+- [PutAlarm](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_PutAlarm.md): Creates or updates an alarm, and associates it with the specified metric.
+- [PutInstancePublicPorts](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_PutInstancePublicPorts.md): Opens ports for a specific Amazon Lightsail instance, and specifies the IP addresses allowed to connect to the instance through the ports, and the protocol.
+- [RebootInstance](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_RebootInstance.md): Restarts a specific instance.
+- [RebootRelationalDatabase](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_RebootRelationalDatabase.md): Restarts a specific database in Amazon Lightsail.
+- [RegisterContainerImage](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_RegisterContainerImage.md): Registers a container image to your Amazon Lightsail container service.
+- [ReleaseStaticIp](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ReleaseStaticIp.md): Deletes a specific static IP from your account.
+- [ResetDistributionCache](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ResetDistributionCache.md): Deletes currently cached content from your Amazon Lightsail content delivery network (CDN) distribution.
+- [SendContactMethodVerification](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_SendContactMethodVerification.md): Sends a verification request to an email contact method to ensure it's owned by the requester.
+- [SetIpAddressType](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_SetIpAddressType.md): Sets the IP address type for an Amazon Lightsail resource.
+- [SetResourceAccessForBucket](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_SetResourceAccessForBucket.md): Sets the Amazon Lightsail resources that can access the specified Lightsail bucket.
+- [SetupInstanceHttps](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_SetupInstanceHttps.md): Creates an SSL/TLS certificate that secures traffic for your website.
+- [StartGUISession](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_StartGUISession.md): Initiates a graphical user interface (GUI) session that’s used to access a virtual computer’s operating system and application.
+- [StartInstance](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_StartInstance.md): Starts a specific Amazon Lightsail instance from a stopped state.
+- [StartRelationalDatabase](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_StartRelationalDatabase.md): Starts a specific database from a stopped state in Amazon Lightsail.
+- [StopGUISession](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_StopGUISession.md): Terminates a web-based Amazon DCV session that’s used to access a virtual computer’s operating system or application.
+- [StopInstance](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_StopInstance.md): Stops a specific Amazon Lightsail instance that is currently running.
+- [StopRelationalDatabase](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_StopRelationalDatabase.md): Stops a specific database that is currently running in Amazon Lightsail.
+- [TagResource](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_TagResource.md): Adds one or more tags to the specified Amazon Lightsail resource.
+- [TestAlarm](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_TestAlarm.md): Tests an alarm by displaying a banner on the Amazon Lightsail console.
+- [UnpeerVpc](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_UnpeerVpc.md): Unpeers the Lightsail VPC from the user's default VPC.
+- [UntagResource](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_UntagResource.md): Deletes the specified set of tag keys and their values from the specified Amazon Lightsail resource.
+- [UpdateBucket](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_UpdateBucket.md): Updates an existing Amazon Lightsail bucket.
+- [UpdateBucketBundle](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_UpdateBucketBundle.md): Updates the bundle, or storage plan, of an existing Amazon Lightsail bucket.
+- [UpdateContainerService](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_UpdateContainerService.md): Updates the configuration of your Amazon Lightsail container service, such as its power, scale, and public domain names.
+- [UpdateDistribution](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_UpdateDistribution.md): Updates an existing Amazon Lightsail content delivery network (CDN) distribution.
+- [UpdateDistributionBundle](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_UpdateDistributionBundle.md): Updates the bundle of your Amazon Lightsail content delivery network (CDN) distribution.
+- [UpdateDomainEntry](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_UpdateDomainEntry.md): Updates a domain recordset after it is created.
+- [UpdateInstanceMetadataOptions](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_UpdateInstanceMetadataOptions.md): Modifies the Amazon Lightsail instance metadata parameters on a running or stopped instance.
+- [UpdateLoadBalancerAttribute](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_UpdateLoadBalancerAttribute.md): Updates the specified attribute for a load balancer.
+- [UpdateRelationalDatabase](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_UpdateRelationalDatabase.md): Allows the update of one or more attributes of a database in Amazon Lightsail.
+- [UpdateRelationalDatabaseParameters](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_UpdateRelationalDatabaseParameters.md): Allows the update of one or more parameters of a database in Amazon Lightsail.
+
+
+## [Data Types](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_Types.md)
+
+- [AccessKey](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_AccessKey.md): Describes an access key for an Amazon Lightsail bucket.
+- [AccessKeyLastUsed](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_AccessKeyLastUsed.md): Describes the last time an access key was used.
+- [AccessRules](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_AccessRules.md): Describes the anonymous access permissions for an Amazon Lightsail bucket and its objects.
+- [AccountLevelBpaSync](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_AccountLevelBpaSync.md): Describes the synchronization status of the Amazon Simple Storage Service (Amazon S3) account-level block public access (BPA) feature for your Lightsail buckets.
+- [AddOn](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_AddOn.md): Describes an add-on that is enabled for an Amazon Lightsail resource.
+- [AddOnRequest](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_AddOnRequest.md): Describes a request to enable, modify, or disable an add-on for an Amazon Lightsail resource.
+- [Alarm](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_Alarm.md): Describes an alarm.
+- [AttachedDisk](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_AttachedDisk.md): Describes a block storage disk that is attached to an instance, and is included in an automatic snapshot.
+- [AutoSnapshotAddOnRequest](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_AutoSnapshotAddOnRequest.md): Describes a request to enable or modify the automatic snapshot add-on for an Amazon Lightsail instance or disk.
+- [AutoSnapshotDetails](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_AutoSnapshotDetails.md): Describes an automatic snapshot.
+- [AvailabilityZone](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_AvailabilityZone.md): Describes an Availability Zone.
+- [Blueprint](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_Blueprint.md): Describes a blueprint (a virtual private server image).
+- [Bucket](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_Bucket.md): Describes an Amazon Lightsail bucket.
+- [BucketAccessLogConfig](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_BucketAccessLogConfig.md): Describes the access log configuration for a bucket in the Amazon Lightsail object storage service.
+- [BucketBundle](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_BucketBundle.md): Describes the specifications of a bundle that can be applied to an Amazon Lightsail bucket.
+- [BucketCorsConfig](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_BucketCorsConfig.md): Describes the cross-origin resource sharing (CORS) configuration for a Lightsail bucket.
+- [BucketCorsRule](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_BucketCorsRule.md): Describes a cross-origin resource sharing (CORS) rule for a Lightsail bucket.
+- [BucketState](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_BucketState.md): Describes the state of an Amazon Lightsail bucket.
+- [Bundle](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_Bundle.md): Describes a bundle, which is a set of specs describing your virtual private server (or instance).
+- [CacheBehavior](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CacheBehavior.md): Describes the default cache behavior of an Amazon Lightsail content delivery network (CDN) distribution.
+- [CacheBehaviorPerPath](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CacheBehaviorPerPath.md): Describes the per-path cache behavior of an Amazon Lightsail content delivery network (CDN) distribution.
+- [CacheSettings](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CacheSettings.md): Describes the cache settings of an Amazon Lightsail content delivery network (CDN) distribution.
+- [Certificate](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_Certificate.md): Describes the full details of an Amazon Lightsail SSL/TLS certificate.
+- [CertificateSummary](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CertificateSummary.md): Describes an Amazon Lightsail SSL/TLS certificate.
+- [CloudFormationStackRecord](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CloudFormationStackRecord.md): Describes a CloudFormation stack record created as a result of the create cloud formation stack action.
+- [CloudFormationStackRecordSourceInfo](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CloudFormationStackRecordSourceInfo.md): Describes the source of a CloudFormation stack record (i.e., the export snapshot record).
+- [ContactMethod](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ContactMethod.md): Describes a contact method.
+- [Container](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_Container.md): Describes the settings of a container that will be launched, or that is launched, to an Amazon Lightsail container service.
+- [ContainerImage](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ContainerImage.md): Describes a container image that is registered to an Amazon Lightsail container service.
+- [ContainerService](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ContainerService.md): Describes an Amazon Lightsail container service.
+- [ContainerServiceDeployment](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ContainerServiceDeployment.md): Describes a container deployment configuration of an Amazon Lightsail container service.
+- [ContainerServiceDeploymentRequest](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ContainerServiceDeploymentRequest.md): Describes a container deployment configuration of an Amazon Lightsail container service.
+- [ContainerServiceECRImagePullerRole](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ContainerServiceECRImagePullerRole.md): Describes the activation status of the role that you can use to grant an Amazon Lightsail container service access to Amazon Elastic Container Registry (Amazon ECR) private repositories.
+- [ContainerServiceECRImagePullerRoleRequest](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ContainerServiceECRImagePullerRoleRequest.md): Describes a request to activate or deactivate the role that you can use to grant an Amazon Lightsail container service access to Amazon Elastic Container Registry (Amazon ECR) private repositories.
+- [ContainerServiceEndpoint](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ContainerServiceEndpoint.md): Describes the public endpoint configuration of a deployment of an Amazon Lightsail container service.
+- [ContainerServiceHealthCheckConfig](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ContainerServiceHealthCheckConfig.md): Describes the health check configuration of an Amazon Lightsail container service.
+- [ContainerServiceLogEvent](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ContainerServiceLogEvent.md): Describes the log events of a container of an Amazon Lightsail container service.
+- [ContainerServicePower](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ContainerServicePower.md): Describes the powers that can be specified for an Amazon Lightsail container service.
+- [ContainerServiceRegistryLogin](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ContainerServiceRegistryLogin.md): Describes the sign-in credentials for the container image registry of an Amazon Lightsail account.
+- [ContainerServiceStateDetail](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ContainerServiceStateDetail.md): Describes the current state of a container service.
+- [CookieObject](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CookieObject.md): Describes whether an Amazon Lightsail content delivery network (CDN) distribution forwards cookies to the origin and, if so, which ones.
+- [CostEstimate](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_CostEstimate.md): Describes the estimated cost for resources in your Lightsail for Research account.
+- [DestinationInfo](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DestinationInfo.md): Describes the destination of a record.
+- [Disk](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_Disk.md): Describes a block storage disk.
+- [DiskInfo](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DiskInfo.md): Describes a disk.
+- [DiskMap](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DiskMap.md): Describes a block storage disk mapping.
+- [DiskSnapshot](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DiskSnapshot.md): Describes a block storage disk snapshot.
+- [DiskSnapshotInfo](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DiskSnapshotInfo.md): Describes a disk snapshot.
+- [DistributionBundle](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DistributionBundle.md): Describes the specifications of a distribution bundle.
+- [DistributionCustomErrorResponse](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DistributionCustomErrorResponse.md): Describes a custom error response for a Lightsail distribution.
+- [DnsRecordCreationState](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DnsRecordCreationState.md): Describes the creation state of the canonical name (CNAME) records that are automatically added by Amazon Lightsail to the DNS of a domain to validate domain ownership for an SSL/TLS certificate.
+- [Domain](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_Domain.md): Describes a domain where you are storing recordsets.
+- [DomainEntry](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DomainEntry.md): Describes a domain recordset entry.
+- [DomainValidationRecord](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_DomainValidationRecord.md): Describes the domain name system (DNS) records that you must add to the DNS of your registered domain to validate ownership for an Amazon Lightsail SSL/TLS certificate.
+- [EndpointRequest](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_EndpointRequest.md): Describes the settings of a public endpoint for an Amazon Lightsail container service.
+- [EstimateByTime](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_EstimateByTime.md): An estimate that's associated with a time period.
+- [ExportSnapshotRecord](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ExportSnapshotRecord.md): Describes an export snapshot record.
+- [ExportSnapshotRecordSourceInfo](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ExportSnapshotRecordSourceInfo.md): Describes the source of an export snapshot record.
+- [HeaderObject](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_HeaderObject.md): Describes the request headers that a Lightsail distribution bases caching on.
+- [HostKeyAttributes](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_HostKeyAttributes.md): Describes the public SSH host keys or the RDP certificate.
+- [InputOrigin](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_InputOrigin.md): Describes the origin resource of an Amazon Lightsail content delivery network (CDN) distribution.
+- [Instance](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_Instance.md): Describes an instance (a virtual private server).
+- [InstanceAccessDetails](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_InstanceAccessDetails.md): The parameters for gaining temporary access to one of your Amazon Lightsail instances.
+- [InstanceEntry](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_InstanceEntry.md): Describes the Amazon Elastic Compute Cloud instance and related resources to be created using the create cloud formation stack operation.
+- [InstanceHardware](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_InstanceHardware.md): Describes the hardware for the instance.
+- [InstanceHealthSummary](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_InstanceHealthSummary.md): Describes information about the health of the instance.
+- [InstanceMetadataOptions](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_InstanceMetadataOptions.md): The metadata options for the instance.
+- [InstanceNetworking](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_InstanceNetworking.md): Describes monthly data transfer rates and port information for an instance.
+- [InstancePortInfo](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_InstancePortInfo.md): Describes information about ports for an Amazon Lightsail instance.
+- [InstancePortState](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_InstancePortState.md): Describes open ports on an instance, the IP addresses allowed to connect to the instance through the ports, and the protocol.
+- [InstanceSnapshot](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_InstanceSnapshot.md): Describes an instance snapshot.
+- [InstanceSnapshotInfo](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_InstanceSnapshotInfo.md): Describes an instance snapshot.
+- [InstanceState](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_InstanceState.md): Describes the virtual private server (or instance) status.
+- [KeyPair](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_KeyPair.md): Describes an SSH key pair.
+- [LightsailDistribution](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_LightsailDistribution.md): Describes an Amazon Lightsail content delivery network (CDN) distribution.
+- [LoadBalancer](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_LoadBalancer.md): Describes a load balancer.
+- [LoadBalancerTlsCertificate](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_LoadBalancerTlsCertificate.md): Describes a load balancer SSL/TLS certificate.
+- [LoadBalancerTlsCertificateDnsRecordCreationState](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_LoadBalancerTlsCertificateDnsRecordCreationState.md): An object that describes the state of the canonical name (CNAME) records that are automatically added by Lightsail to the DNS of the domain to validate domain ownership.
+- [LoadBalancerTlsCertificateDomainValidationOption](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_LoadBalancerTlsCertificateDomainValidationOption.md): Contains information about the domain names on an SSL/TLS certificate that you will use to validate domain ownership.
+- [LoadBalancerTlsCertificateDomainValidationRecord](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_LoadBalancerTlsCertificateDomainValidationRecord.md): Describes the validation record of each domain name in the SSL/TLS certificate.
+- [LoadBalancerTlsCertificateRenewalSummary](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_LoadBalancerTlsCertificateRenewalSummary.md): Contains information about the status of Lightsail's managed renewal for the certificate.
+- [LoadBalancerTlsCertificateSummary](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_LoadBalancerTlsCertificateSummary.md): Provides a summary of SSL/TLS certificate metadata.
+- [LoadBalancerTlsPolicy](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_LoadBalancerTlsPolicy.md): Describes the TLS security policies that are available for Lightsail load balancers.
+- [LogEvent](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_LogEvent.md): Describes a database log event.
+- [MetricDatapoint](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_MetricDatapoint.md): Describes the metric data point.
+- [MonitoredResourceInfo](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_MonitoredResourceInfo.md): Describes resource being monitored by an alarm.
+- [MonthlyTransfer](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_MonthlyTransfer.md): Describes the monthly data transfer in and out of your virtual private server (or instance).
+- [NameServersUpdateState](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_NameServersUpdateState.md): Describes the state of the name server records update made by Amazon Lightsail to an Amazon Route 53 registered domain.
+- [Operation](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_Operation.md): Describes the API operation.
+- [Origin](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_Origin.md): Describes the origin resource of an Amazon Lightsail content delivery network (CDN) distribution.
+- [PartnerInfo](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_PartnerInfo.md): An object that contains information about the Lightsail partner program membership of an Amazon Lightsail account.
+- [PasswordData](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_PasswordData.md): The password data for the Windows Server-based instance, including the ciphertext and the key pair name.
+- [PendingMaintenanceAction](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_PendingMaintenanceAction.md): Describes a pending database maintenance action.
+- [PendingModifiedRelationalDatabaseValues](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_PendingModifiedRelationalDatabaseValues.md): Describes a pending database value modification.
+- [PortInfo](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_PortInfo.md): Describes ports to open on an instance, the IP addresses allowed to connect to the instance through the ports, and the protocol.
+- [PrivateRegistryAccess](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_PrivateRegistryAccess.md): Describes the configuration for an Amazon Lightsail container service to access private container image repositories, such as Amazon Elastic Container Registry (Amazon ECR) private repositories.
+- [PrivateRegistryAccessRequest](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_PrivateRegistryAccessRequest.md): Describes a request to configure an Amazon Lightsail container service to access private container image repositories, such as Amazon Elastic Container Registry (Amazon ECR) private repositories.
+- [QueryStringObject](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_QueryStringObject.md): Describes the query string parameters that an Amazon Lightsail content delivery network (CDN) distribution to bases caching on.
+- [R53HostedZoneDeletionState](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_R53HostedZoneDeletionState.md): Describes the deletion state of an Amazon Route 53 hosted zone for a domain that is being automatically delegated to an Amazon Lightsail DNS zone.
+- [Region](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_Region.md): Describes the AWS Region.
+- [RegisteredDomainDelegationInfo](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_RegisteredDomainDelegationInfo.md): Describes the delegation state of an Amazon Route 53 registered domain to Amazon Lightsail.
+- [RelationalDatabase](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_RelationalDatabase.md): Describes a database.
+- [RelationalDatabaseBlueprint](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_RelationalDatabaseBlueprint.md): Describes a database image, or blueprint.
+- [RelationalDatabaseBundle](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_RelationalDatabaseBundle.md): Describes a database bundle.
+- [RelationalDatabaseEndpoint](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_RelationalDatabaseEndpoint.md): Describes an endpoint for a database.
+- [RelationalDatabaseEvent](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_RelationalDatabaseEvent.md): Describes an event for a database.
+- [RelationalDatabaseHardware](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_RelationalDatabaseHardware.md): Describes the hardware of a database.
+- [RelationalDatabaseParameter](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_RelationalDatabaseParameter.md): Describes the parameters of a database.
+- [RelationalDatabaseSnapshot](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_RelationalDatabaseSnapshot.md): Describes a database snapshot.
+- [RenewalSummary](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_RenewalSummary.md): Describes the status of a SSL/TLS certificate renewal managed by Amazon Lightsail.
+- [ResourceBudgetEstimate](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ResourceBudgetEstimate.md): Describes the estimated cost or usage that a budget tracks.
+- [ResourceLocation](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ResourceLocation.md): Describes the resource location.
+- [ResourceReceivingAccess](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ResourceReceivingAccess.md): Describes an Amazon Lightsail instance that has access to a Lightsail bucket.
+- [ResourceRecord](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_ResourceRecord.md): Describes the domain name system (DNS) records to add to your domain's DNS to validate it for an Amazon Lightsail certificate.
+- [Session](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_Session.md): Describes a web-based, remote graphical user interface (GUI), Amazon DCV session.
+- [SetupExecutionDetails](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_SetupExecutionDetails.md): Returns details about the commands that were run.
+- [SetupHistory](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_SetupHistory.md): Returns a list of the commands that were ran on the target resource.
+- [SetupHistoryResource](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_SetupHistoryResource.md): The Lightsail resource that SetupHistory was ran on.
+- [SetupRequest](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_SetupRequest.md): Returns information that was submitted during the SetupInstanceHttps request.
+- [StaticIp](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_StaticIp.md): Describes a static IP.
+- [StopInstanceOnIdleRequest](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_StopInstanceOnIdleRequest.md): Describes a request to create or edit the StopInstanceOnIdle add-on.
+- [Tag](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_Tag.md): Describes a tag key and optional value assigned to an Amazon Lightsail resource.
+- [TimePeriod](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_TimePeriod.md): Sets the start date and end date for retrieving a cost estimate.
+
+
+## Full content
+
+The entire guide is also available as a single markdown file, useful for feeding the full guide to an LLM in one pass:
+
+- [Complete guide (single file)](https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/full.md)

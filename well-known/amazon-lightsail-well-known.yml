@@ -1,0 +1,111 @@
+generated: '2026-09-17'
+method: probed
+source: live HTTP probes run 2026-09-17 against every host this record knows
+provider: Amazon Lightsail
+providerId: amazon-lightsail
+note: >-
+  Nine named paths probed on four hosts: the registrable domain (aws.amazon.com), the documentation host
+  (docs.aws.amazon.com), the Lightsail console host (lightsail.aws.amazon.com), and the Lightsail regional
+  API host (lightsail.us-east-1.amazonaws.com). Exactly one document is served: the RFC 9116 security.txt
+  on aws.amazon.com, saved verbatim as amazon-lightsail-security.txt — it names https://vdp.aws.security/
+  as the policy, the HackerOne program hackerone.com/aws_vdp, aws-security@amazon.com as contact, and an
+  Expires of 2026-09-24. Every other path is a genuine miss. aws.amazon.com answers 301 to the
+  trailing-slash form of each unknown /.well-known/* path and that form then returns its marketing 404
+  page, so those are recorded as 404 with the redirect noted rather than credited as a document. There is
+  no /.well-known/api-catalog, no OAuth or OpenID Connect discovery document (Lightsail authenticates with
+  AWS Signature Version 4 over IAM credentials, not OAuth — see authentication/), no ai-plugin.json, no
+  aauth-resource.json, and no A2A agent card at either the current /.well-known/agent-card.json or the
+  legacy /.well-known/agent.json path on any host. A fifth host named by apis.yml,
+  lightsail.amazonaws.com, was not probed because it does not resolve (NXDOMAIN) — see the baseURL
+  correction recorded in this pass.
+hosts:
+- host: aws.amazon.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: amazon-lightsail-security.txt
+  - path: /.well-known/openid-configuration
+    status: 404
+    note: 301 to the trailing-slash form, which returns the aws.amazon.com marketing 404 page
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    note: 301 to the trailing-slash form, which returns the aws.amazon.com marketing 404 page
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    note: 301 to the trailing-slash form, which returns the aws.amazon.com marketing 404 page
+  - path: /.well-known/api-catalog
+    status: 404
+    note: 301 to the trailing-slash form, which returns the aws.amazon.com marketing 404 page
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    note: 301 to the trailing-slash form, which returns the aws.amazon.com marketing 404 page
+  - path: /.well-known/agent-card.json
+    status: 404
+    note: 301 to the trailing-slash form, which returns the aws.amazon.com marketing 404 page
+  - path: /.well-known/agent.json
+    status: 404
+    note: 301 to the trailing-slash form, which returns the aws.amazon.com marketing 404 page
+  - path: /.well-known/aauth-resource.json
+    status: 404
+    note: 301 to the trailing-slash form, which returns the aws.amazon.com marketing 404 page
+- host: docs.aws.amazon.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+- host: lightsail.aws.amazon.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+- host: lightsail.us-east-1.amazonaws.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+    note: the Lightsail API host answers 404 UnknownOperationException (an AWS JSON service error) for every unrouted path

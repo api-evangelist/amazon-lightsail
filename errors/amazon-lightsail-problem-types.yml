@@ -1,0 +1,123 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/CommonErrors.html (fetched 2026-09-17,
+  HTTP 200) for the AWS-wide common errors, cross-checked against the eight service-specific error
+  shapes declared in smithy/amazon-lightsail-2016-11-28.json and rendered into
+  openapi/amazon-lightsail-openapi.yml as 4xx/5xx responses on all 162 operations.
+provider: Amazon Lightsail
+providerId: amazon-lightsail
+format: aws-json-1.1
+rfc9457: false
+note: >-
+  Lightsail does NOT use RFC 9457 application/problem+json. Errors come back as AWS JSON 1.1 with the
+  exception type named in the X-Amzn-ErrorType response header and the body carrying a fixed
+  four-field envelope — code, docs, message, tip — on every one of the eight service-specific
+  exceptions. That `tip` field is unusual and worth calling out: Lightsail is one of the few AWS
+  services whose error body ships human remediation text alongside the machine code, and `docs` ships
+  a link. The envelope is uniform, so an agent can parse one shape across the whole surface. Every
+  Lightsail operation declares the same eight service errors, which means error handling is
+  operation-independent: there is no per-operation error table to learn.
+envelope:
+  transport: AWS JSON 1.1 over HTTPS
+  type_header: X-Amzn-ErrorType
+  fields:
+  - name: code
+    description: The error code identifying the exception type.
+  - name: docs
+    description: A link to the Lightsail documentation for this error.
+  - name: message
+    description: Human-readable description of what went wrong.
+  - name: tip
+    description: Suggested remediation. Lightsail-specific; most AWS services do not ship this field.
+  request_id_header: x-amzn-RequestId
+problem_types:
+- type: AccessDeniedException
+  status: 403
+  category: client
+  title: Caller cannot be authenticated or used invalid credentials
+  detail: >-
+    Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to
+    access a resource.
+  remediation: Verify the IAM principal's credentials and that its policy grants the lightsail:* action being called.
+  source: smithy/amazon-lightsail-2016-11-28.json
+- type: UnauthenticatedException
+  status: 401
+  category: client
+  title: Caller has not been authenticated
+  detail: Lightsail throws this exception when the user has not been authenticated.
+  remediation: Sign the request with AWS Signature Version 4 for service name "lightsail".
+  source: smithy/amazon-lightsail-2016-11-28.json
+- type: InvalidInputException
+  status: 400
+  category: client
+  title: Input does not conform to the validation rules of an input field
+  detail: >-
+    Lightsail throws this exception when user input does not conform to the validation rules of an input
+    field. Domain and distribution APIs are only available in certain AWS Regions, so a correctly-shaped
+    request sent to the wrong regional endpoint also surfaces here.
+  remediation: >-
+    Check the field constraints in openapi/amazon-lightsail-openapi.yml, and confirm the regional
+    endpoint supports the resource type — domain and distribution operations must be called against
+    us-east-1.
+  source: smithy/amazon-lightsail-2016-11-28.json
+- type: NotFoundException
+  status: 404
+  category: client
+  title: Resource not found
+  detail: Lightsail throws this exception when it cannot find a resource.
+  remediation: Confirm the resource name and the AWS Region; Lightsail resource names are region-scoped.
+  source: smithy/amazon-lightsail-2016-11-28.json
+- type: OperationFailureException
+  status: 400
+  category: client
+  title: Operation failed to execute
+  detail: Lightsail throws this exception when an operation fails to execute.
+  remediation: >-
+    Poll GetOperation / GetOperations with the operation id returned by the call to read the failure
+    reason; asynchronous Lightsail work reports its terminal state there, not in the original response.
+  source: smithy/amazon-lightsail-2016-11-28.json
+- type: AccountSetupInProgressException
+  status: 428
+  category: client
+  title: Account is still in the setup-in-progress state
+  detail: Lightsail throws this exception when an account is still in the setup in progress state.
+  remediation: Retry after account setup completes; call GetOperations to watch the setup operation.
+  source: smithy/amazon-lightsail-2016-11-28.json
+- type: RegionSetupInProgressException
+  status: 428
+  category: client
+  title: Opt-in Region is still being set up
+  detail: >-
+    Lightsail throws this exception when an operation is performed on resources in an opt-in Region that
+    is currently being set up.
+  remediation: Retry once the opt-in Region finishes provisioning.
+  source: smithy/amazon-lightsail-2016-11-28.json
+- type: ServiceException
+  status: 500
+  category: server
+  title: General service exception
+  detail: A general service exception.
+  remediation: Retry with exponential backoff; the AWS SDKs do this automatically.
+  source: smithy/amazon-lightsail-2016-11-28.json
+common_errors:
+  source: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/CommonErrors.html
+  note: >-
+    AWS-wide errors any AWS service may return in front of the service-specific exceptions above. These
+    are not declared in the Smithy model and therefore do not appear in the OpenAPI responses.
+  types:
+  - {type: AccessDeniedException, status: 403, detail: "You don't have permission to perform this action. Verify that your IAM policy includes the required permissions."}
+  - {type: ExpiredTokenException, status: 403, detail: The security token included in the request has expired. Request a new security token and try again.}
+  - {type: IncompleteSignature, status: 403, detail: The request signature doesn't conform to AWS standards.}
+  - {type: InternalFailure, status: 500, detail: The request can't be processed right now because of an internal server issue.}
+  - {type: MalformedHttpRequestException, status: 400, detail: The request body can't be processed, typically a content-encoding mismatch.}
+  - {type: NotAuthorized, status: 401, detail: You don't have permissions to perform this action.}
+  - {type: OptInRequired, status: 403, detail: Your AWS account needs a subscription for this service.}
+  - {type: RequestAbortedException, status: 400, detail: The request was aborted before a response could be returned.}
+  - {type: RequestEntityTooLargeException, status: 413, detail: The request entity is too large.}
+  - {type: RequestTimeoutException, status: 408, detail: The server didn't receive the complete request in time.}
+  - {type: ServiceUnavailable, status: 503, detail: The service is temporarily unavailable. Try again later.}
+  - {type: ThrottlingException, status: 400, detail: "Your request rate is too high. NOTE: Lightsail returns 400, not 429, on throttling — see rate-limits/."}
+  - {type: UnknownOperationException, status: 404, detail: The action or operation isn't recognized.}
+  - {type: UnrecognizedClientException, status: 403, detail: The access key ID provided doesn't exist in our records.}
+  - {type: ValidationError, status: 400, detail: The input doesn't meet the required format or constraints.}

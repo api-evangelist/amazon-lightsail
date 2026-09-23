@@ -1,0 +1,1037 @@
+generated: '2026-09-17'
+method: derived
+source: mcp/amazon-lightsail-mcp.yml (tools/list probed live 2026-09-17) bound against openapi/amazon-lightsail-openapi.yml,
+  itself derived from smithy/amazon-lightsail-2016-11-28.json
+provider: Amazon Lightsail
+providerId: amazon-lightsail
+note: 'Amazon Lightsail has no MCP tool of its own, so this crosswalk records a shape the catalog should be
+  able to distinguish: EVERY one of the 162 published operations is rest_only, and the single binding that
+  reaches them is a generic AWS script executor. An agent cannot discover CreateInstances or GetContainerLog
+  from the MCP surface — it has to already know the boto3 client name ("lightsail") and the operation name,
+  then hand them to aws___run_script. That is a real, working path and a materially weaker one than a named
+  tool carrying the operation''s inputSchema. Confidence on the one binding is high because the executor''s
+  own inputSchema (saved verbatim in amazon-lightsail-aws-mcp-tools-list.json) documents call_boto3; confidence
+  on per-operation coverage is not a question this surface can answer, because nothing enumerates it.'
+surfaces:
+  openapi:
+  - openapi/amazon-lightsail-openapi.yml
+  smithy:
+  - smithy/amazon-lightsail-2016-11-28.json
+  graphql: null
+  mcp: https://aws-mcp.us-east-1.api.aws/mcp
+  gated: MCP tools/list is anonymous (HTTP 200); every tool CALL and every Lightsail API call requires AWS
+    SigV4/IAM credentials.
+crosswalk:
+- tool: aws___run_script
+  category: generic-executor
+  rest:
+  - AllocateStaticIp
+  - AttachCertificateToDistribution
+  - AttachDisk
+  - AttachInstancesToLoadBalancer
+  - AttachLoadBalancerTlsCertificate
+  - AttachStaticIp
+  - CloseInstancePublicPorts
+  - CopySnapshot
+  - CreateBucket
+  - CreateBucketAccessKey
+  - CreateCertificate
+  - CreateCloudFormationStack
+  - CreateContactMethod
+  - CreateContainerService
+  - CreateContainerServiceDeployment
+  - CreateContainerServiceRegistryLogin
+  - CreateDisk
+  - CreateDiskFromSnapshot
+  - CreateDiskSnapshot
+  - CreateDistribution
+  - CreateDomain
+  - CreateDomainEntry
+  - CreateGUISessionAccessDetails
+  - CreateInstanceSnapshot
+  - CreateInstances
+  - CreateInstancesFromSnapshot
+  - CreateKeyPair
+  - CreateLoadBalancer
+  - CreateLoadBalancerTlsCertificate
+  - CreateRelationalDatabase
+  - CreateRelationalDatabaseFromSnapshot
+  - CreateRelationalDatabaseSnapshot
+  - DeleteAlarm
+  - DeleteAutoSnapshot
+  - DeleteBucket
+  - DeleteBucketAccessKey
+  - DeleteCertificate
+  - DeleteContactMethod
+  - DeleteContainerImage
+  - DeleteContainerService
+  - DeleteDisk
+  - DeleteDiskSnapshot
+  - DeleteDistribution
+  - DeleteDomain
+  - DeleteDomainEntry
+  - DeleteInstance
+  - DeleteInstanceSnapshot
+  - DeleteKeyPair
+  - DeleteKnownHostKeys
+  - DeleteLoadBalancer
+  - DeleteLoadBalancerTlsCertificate
+  - DeleteRelationalDatabase
+  - DeleteRelationalDatabaseSnapshot
+  - DetachCertificateFromDistribution
+  - DetachDisk
+  - DetachInstancesFromLoadBalancer
+  - DetachStaticIp
+  - DisableAddOn
+  - DownloadDefaultKeyPair
+  - EnableAddOn
+  - ExportSnapshot
+  - GetActiveNames
+  - GetAlarms
+  - GetAutoSnapshots
+  - GetBlueprints
+  - GetBucketAccessKeys
+  - GetBucketBundles
+  - GetBucketMetricData
+  - GetBuckets
+  - GetBundles
+  - GetCertificates
+  - GetCloudFormationStackRecords
+  - GetContactMethods
+  - GetContainerAPIMetadata
+  - GetContainerImages
+  - GetContainerLog
+  - GetContainerServiceDeployments
+  - GetContainerServiceMetricData
+  - GetContainerServicePowers
+  - GetContainerServices
+  - GetCostEstimate
+  - GetDisk
+  - GetDiskSnapshot
+  - GetDiskSnapshots
+  - GetDisks
+  - GetDistributionBundles
+  - GetDistributionLatestCacheReset
+  - GetDistributionMetricData
+  - GetDistributions
+  - GetDomain
+  - GetDomains
+  - GetExportSnapshotRecords
+  - GetInstance
+  - GetInstanceAccessDetails
+  - GetInstanceMetricData
+  - GetInstancePortStates
+  - GetInstanceSnapshot
+  - GetInstanceSnapshots
+  - GetInstanceState
+  - GetInstances
+  - GetKeyPair
+  - GetKeyPairs
+  - GetLoadBalancer
+  - GetLoadBalancerMetricData
+  - GetLoadBalancerTlsCertificates
+  - GetLoadBalancerTlsPolicies
+  - GetLoadBalancers
+  - GetOperation
+  - GetOperations
+  - GetOperationsForResource
+  - GetProfile
+  - GetRegions
+  - GetRelationalDatabase
+  - GetRelationalDatabaseBlueprints
+  - GetRelationalDatabaseBundles
+  - GetRelationalDatabaseEvents
+  - GetRelationalDatabaseLogEvents
+  - GetRelationalDatabaseLogStreams
+  - GetRelationalDatabaseMasterUserPassword
+  - GetRelationalDatabaseMetricData
+  - GetRelationalDatabaseParameters
+  - GetRelationalDatabaseSnapshot
+  - GetRelationalDatabaseSnapshots
+  - GetRelationalDatabases
+  - GetSetupHistory
+  - GetStaticIp
+  - GetStaticIps
+  - ImportKeyPair
+  - IsVpcPeered
+  - OpenInstancePublicPorts
+  - PeerVpc
+  - PutAlarm
+  - PutInstancePublicPorts
+  - RebootInstance
+  - RebootRelationalDatabase
+  - RegisterContainerImage
+  - ReleaseStaticIp
+  - ResetDistributionCache
+  - SendContactMethodVerification
+  - SetIpAddressType
+  - SetResourceAccessForBucket
+  - SetupInstanceHttps
+  - StartGUISession
+  - StartInstance
+  - StartRelationalDatabase
+  - StopGUISession
+  - StopInstance
+  - StopRelationalDatabase
+  - TagResource
+  - TestAlarm
+  - UnpeerVpc
+  - UntagResource
+  - UpdateBucket
+  - UpdateBucketBundle
+  - UpdateContainerService
+  - UpdateDistribution
+  - UpdateDistributionBundle
+  - UpdateDomainEntry
+  - UpdateInstanceMetadataOptions
+  - UpdateLoadBalancerAttribute
+  - UpdateRelationalDatabase
+  - UpdateRelationalDatabaseParameters
+  binding: generic
+  confidence: high
+  note: Executes Python in an AWS-hosted sandbox with call_boto3. Every Lightsail operation is reachable as
+    boto3.client("lightsail").<operation>, but none is named, typed or discoverable as a tool.
+- tool: aws___search_documentation
+  category: documentation
+  rest: []
+  binding: documentation
+  confidence: high
+  note: Searches the Amazon Lightsail User Guide and API Reference. Reads about operations; calls none.
+- tool: aws___read_documentation
+  category: documentation
+  rest: []
+  binding: documentation
+  confidence: high
+  note: Fetches a Lightsail documentation page as markdown. Reads about operations; calls none.
+mcp_only:
+- tool: aws___get_tasks
+  reason: MCP session bookkeeping for long-running run_script tasks. No Lightsail equivalent.
+- tool: aws___get_presigned_url
+  reason: Amazon S3 pre-signed URL helper. Lightsail buckets use their own CreateBucketAccessKey / GetBucketAccessKeys
+    operations instead.
+- tool: aws___list_regions
+  reason: AWS-wide region list. Lightsail answers the Lightsail-scoped version first-party with GetRegions,
+    which the tool does not call.
+- tool: aws___get_regional_availability
+  reason: AWS-wide resource availability. Lightsail bundle availability per region comes from GetBundles /
+    GetBlueprints instead.
+- tool: aws___retrieve_skill
+  reason: Returns pre-built AWS agent SOPs. Not bound to any Lightsail operation.
+rest_only:
+- operationId: AllocateStaticIp
+  tag: Static IPs
+  method: POST
+  path: /ls/api/2016-11-28/AllocateStaticIp
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: AttachCertificateToDistribution
+  tag: Distributions
+  method: POST
+  path: /ls/api/2016-11-28/AttachCertificateToDistribution
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: AttachDisk
+  tag: Block Storage
+  method: POST
+  path: /ls/api/2016-11-28/AttachDisk
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: AttachInstancesToLoadBalancer
+  tag: Load Balancers
+  method: POST
+  path: /ls/api/2016-11-28/AttachInstancesToLoadBalancer
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: AttachLoadBalancerTlsCertificate
+  tag: Certificates
+  method: POST
+  path: /ls/api/2016-11-28/AttachLoadBalancerTlsCertificate
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: AttachStaticIp
+  tag: Static IPs
+  method: POST
+  path: /ls/api/2016-11-28/AttachStaticIp
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CloseInstancePublicPorts
+  tag: Instances
+  method: POST
+  path: /ls/api/2016-11-28/CloseInstancePublicPorts
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CopySnapshot
+  tag: Snapshots
+  method: POST
+  path: /ls/api/2016-11-28/CopySnapshot
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CreateBucket
+  tag: Buckets
+  method: POST
+  path: /ls/api/2016-11-28/CreateBucket
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CreateBucketAccessKey
+  tag: Buckets
+  method: POST
+  path: /ls/api/2016-11-28/CreateBucketAccessKey
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CreateCertificate
+  tag: Certificates
+  method: POST
+  path: /ls/api/2016-11-28/CreateCertificate
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CreateCloudFormationStack
+  tag: Account
+  method: POST
+  path: /ls/api/2016-11-28/CreateCloudFormationStack
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CreateContactMethod
+  tag: Contact Methods
+  method: POST
+  path: /ls/api/2016-11-28/CreateContactMethod
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CreateContainerService
+  tag: Container Services
+  method: POST
+  path: /ls/api/2016-11-28/container-services
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CreateContainerServiceDeployment
+  tag: Container Services
+  method: POST
+  path: /ls/api/2016-11-28/container-services/{serviceName}/deployments
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CreateContainerServiceRegistryLogin
+  tag: Container Services
+  method: POST
+  path: /ls/api/2016-11-28/container-registry-login
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CreateDisk
+  tag: Block Storage
+  method: POST
+  path: /ls/api/2016-11-28/CreateDisk
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CreateDiskFromSnapshot
+  tag: Snapshots
+  method: POST
+  path: /ls/api/2016-11-28/CreateDiskFromSnapshot
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CreateDiskSnapshot
+  tag: Snapshots
+  method: POST
+  path: /ls/api/2016-11-28/CreateDiskSnapshot
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CreateDistribution
+  tag: Distributions
+  method: POST
+  path: /ls/api/2016-11-28/CreateDistribution
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CreateDomain
+  tag: Domains
+  method: POST
+  path: /ls/api/2016-11-28/CreateDomain
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CreateDomainEntry
+  tag: Domains
+  method: POST
+  path: /ls/api/2016-11-28/CreateDomainEntry
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CreateGUISessionAccessDetails
+  tag: Account
+  method: POST
+  path: /ls/api/2016-11-28/create-gui-session-access-details
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CreateInstanceSnapshot
+  tag: Snapshots
+  method: POST
+  path: /ls/api/2016-11-28/CreateInstanceSnapshot
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CreateInstances
+  tag: Instances
+  method: POST
+  path: /ls/api/2016-11-28/CreateInstances
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CreateInstancesFromSnapshot
+  tag: Snapshots
+  method: POST
+  path: /ls/api/2016-11-28/CreateInstancesFromSnapshot
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CreateKeyPair
+  tag: Key Pairs
+  method: POST
+  path: /ls/api/2016-11-28/CreateKeyPair
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CreateLoadBalancer
+  tag: Load Balancers
+  method: POST
+  path: /ls/api/2016-11-28/CreateLoadBalancer
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CreateLoadBalancerTlsCertificate
+  tag: Certificates
+  method: POST
+  path: /ls/api/2016-11-28/CreateLoadBalancerTlsCertificate
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CreateRelationalDatabase
+  tag: Relational Databases
+  method: POST
+  path: /ls/api/2016-11-28/CreateRelationalDatabase
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CreateRelationalDatabaseFromSnapshot
+  tag: Relational Databases
+  method: POST
+  path: /ls/api/2016-11-28/CreateRelationalDatabaseFromSnapshot
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: CreateRelationalDatabaseSnapshot
+  tag: Relational Databases
+  method: POST
+  path: /ls/api/2016-11-28/CreateRelationalDatabaseSnapshot
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DeleteAlarm
+  tag: Alarms
+  method: DELETE
+  path: /ls/api/2016-11-28/DeleteAlarm/{alarmName}
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DeleteAutoSnapshot
+  tag: Snapshots
+  method: POST
+  path: /ls/api/2016-11-28/DeleteAutoSnapshot
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DeleteBucket
+  tag: Buckets
+  method: POST
+  path: /ls/api/2016-11-28/DeleteBucket
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DeleteBucketAccessKey
+  tag: Buckets
+  method: POST
+  path: /ls/api/2016-11-28/DeleteBucketAccessKey
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DeleteCertificate
+  tag: Certificates
+  method: POST
+  path: /ls/api/2016-11-28/DeleteCertificate
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DeleteContactMethod
+  tag: Contact Methods
+  method: POST
+  path: /ls/api/2016-11-28/DeleteContactMethod
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DeleteContainerImage
+  tag: Container Services
+  method: DELETE
+  path: /ls/api/2016-11-28/container-services/{serviceName}/images/{image}
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DeleteContainerService
+  tag: Container Services
+  method: DELETE
+  path: /ls/api/2016-11-28/container-services/{serviceName}
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DeleteDisk
+  tag: Block Storage
+  method: POST
+  path: /ls/api/2016-11-28/DeleteDisk
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DeleteDiskSnapshot
+  tag: Snapshots
+  method: POST
+  path: /ls/api/2016-11-28/DeleteDiskSnapshot
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DeleteDistribution
+  tag: Distributions
+  method: POST
+  path: /ls/api/2016-11-28/DeleteDistribution
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DeleteDomain
+  tag: Domains
+  method: POST
+  path: /ls/api/2016-11-28/DeleteDomain
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DeleteDomainEntry
+  tag: Domains
+  method: POST
+  path: /ls/api/2016-11-28/DeleteDomainEntry
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DeleteInstance
+  tag: Instances
+  method: POST
+  path: /ls/api/2016-11-28/DeleteInstance
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DeleteInstanceSnapshot
+  tag: Snapshots
+  method: POST
+  path: /ls/api/2016-11-28/DeleteInstanceSnapshot
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DeleteKeyPair
+  tag: Key Pairs
+  method: POST
+  path: /ls/api/2016-11-28/DeleteKeyPair
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DeleteKnownHostKeys
+  tag: Account
+  method: POST
+  path: /ls/api/2016-11-28/DeleteKnownHostKeys
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DeleteLoadBalancer
+  tag: Load Balancers
+  method: POST
+  path: /ls/api/2016-11-28/DeleteLoadBalancer
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DeleteLoadBalancerTlsCertificate
+  tag: Certificates
+  method: POST
+  path: /ls/api/2016-11-28/DeleteLoadBalancerTlsCertificate
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DeleteRelationalDatabase
+  tag: Relational Databases
+  method: POST
+  path: /ls/api/2016-11-28/DeleteRelationalDatabase
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DeleteRelationalDatabaseSnapshot
+  tag: Relational Databases
+  method: POST
+  path: /ls/api/2016-11-28/DeleteRelationalDatabaseSnapshot
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DetachCertificateFromDistribution
+  tag: Distributions
+  method: POST
+  path: /ls/api/2016-11-28/DetachCertificateFromDistribution
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DetachDisk
+  tag: Block Storage
+  method: POST
+  path: /ls/api/2016-11-28/DetachDisk
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DetachInstancesFromLoadBalancer
+  tag: Load Balancers
+  method: POST
+  path: /ls/api/2016-11-28/DetachInstancesFromLoadBalancer
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DetachStaticIp
+  tag: Static IPs
+  method: POST
+  path: /ls/api/2016-11-28/DetachStaticIp
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DisableAddOn
+  tag: Account
+  method: POST
+  path: /ls/api/2016-11-28/DisableAddOn
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: DownloadDefaultKeyPair
+  tag: Key Pairs
+  method: POST
+  path: /ls/api/2016-11-28/DownloadDefaultKeyPair
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: EnableAddOn
+  tag: Account
+  method: POST
+  path: /ls/api/2016-11-28/EnableAddOn
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: ExportSnapshot
+  tag: Snapshots
+  method: POST
+  path: /ls/api/2016-11-28/ExportSnapshot
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetActiveNames
+  tag: Account
+  method: POST
+  path: /ls/api/2016-11-28/GetActiveNames
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetAlarms
+  tag: Alarms
+  method: GET
+  path: /ls/api/2016-11-28/GetAlarms
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetAutoSnapshots
+  tag: Snapshots
+  method: POST
+  path: /ls/api/2016-11-28/GetAutoSnapshots
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetBlueprints
+  tag: Blueprints
+  method: POST
+  path: /ls/api/2016-11-28/GetBlueprints
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetBucketAccessKeys
+  tag: Buckets
+  method: POST
+  path: /ls/api/2016-11-28/GetBucketAccessKeys
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetBucketBundles
+  tag: Buckets
+  method: POST
+  path: /ls/api/2016-11-28/GetBucketBundles
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetBucketMetricData
+  tag: Buckets
+  method: POST
+  path: /ls/api/2016-11-28/GetBucketMetricData
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetBuckets
+  tag: Buckets
+  method: POST
+  path: /ls/api/2016-11-28/GetBuckets
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetBundles
+  tag: Bundles
+  method: POST
+  path: /ls/api/2016-11-28/GetBundles
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetCertificates
+  tag: Certificates
+  method: POST
+  path: /ls/api/2016-11-28/GetCertificates
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetCloudFormationStackRecords
+  tag: Account
+  method: POST
+  path: /ls/api/2016-11-28/GetCloudFormationStackRecords
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetContactMethods
+  tag: Contact Methods
+  method: GET
+  path: /ls/api/2016-11-28/GetContactMethods
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetContainerAPIMetadata
+  tag: Container Services
+  method: GET
+  path: /ls/api/2016-11-28/container-api-metadata
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetContainerImages
+  tag: Container Services
+  method: GET
+  path: /ls/api/2016-11-28/container-services/{serviceName}/images
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetContainerLog
+  tag: Container Services
+  method: GET
+  path: /ls/api/2016-11-28/container-services/{serviceName}/containers/{containerName}/log
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetContainerServiceDeployments
+  tag: Container Services
+  method: GET
+  path: /ls/api/2016-11-28/container-services/{serviceName}/deployments
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetContainerServiceMetricData
+  tag: Container Services
+  method: GET
+  path: /ls/api/2016-11-28/container-services/{serviceName}/metrics
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetContainerServicePowers
+  tag: Container Services
+  method: GET
+  path: /ls/api/2016-11-28/container-service-powers
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetContainerServices
+  tag: Container Services
+  method: GET
+  path: /ls/api/2016-11-28/container-services
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetCostEstimate
+  tag: Cost Estimate
+  method: POST
+  path: /budgettracker/getCostEstimate
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetDisk
+  tag: Block Storage
+  method: POST
+  path: /ls/api/2016-11-28/GetDisk
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetDiskSnapshot
+  tag: Snapshots
+  method: POST
+  path: /ls/api/2016-11-28/GetDiskSnapshot
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetDiskSnapshots
+  tag: Snapshots
+  method: POST
+  path: /ls/api/2016-11-28/GetDiskSnapshots
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetDisks
+  tag: Block Storage
+  method: POST
+  path: /ls/api/2016-11-28/GetDisks
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetDistributionBundles
+  tag: Distributions
+  method: POST
+  path: /ls/api/2016-11-28/GetDistributionBundles
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetDistributionLatestCacheReset
+  tag: Distributions
+  method: POST
+  path: /ls/api/2016-11-28/GetDistributionLatestCacheReset
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetDistributionMetricData
+  tag: Distributions
+  method: POST
+  path: /ls/api/2016-11-28/GetDistributionMetricData
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetDistributions
+  tag: Distributions
+  method: POST
+  path: /ls/api/2016-11-28/GetDistributions
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetDomain
+  tag: Domains
+  method: POST
+  path: /ls/api/2016-11-28/GetDomain
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetDomains
+  tag: Domains
+  method: POST
+  path: /ls/api/2016-11-28/GetDomains
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetExportSnapshotRecords
+  tag: Snapshots
+  method: POST
+  path: /ls/api/2016-11-28/GetExportSnapshotRecords
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetInstance
+  tag: Instances
+  method: POST
+  path: /ls/api/2016-11-28/GetInstance
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetInstanceAccessDetails
+  tag: Instances
+  method: POST
+  path: /ls/api/2016-11-28/GetInstanceAccessDetails
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetInstanceMetricData
+  tag: Instances
+  method: POST
+  path: /ls/api/2016-11-28/GetInstanceMetricData
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetInstancePortStates
+  tag: Instances
+  method: POST
+  path: /ls/api/2016-11-28/GetInstancePortStates
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetInstanceSnapshot
+  tag: Snapshots
+  method: POST
+  path: /ls/api/2016-11-28/GetInstanceSnapshot
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetInstanceSnapshots
+  tag: Snapshots
+  method: POST
+  path: /ls/api/2016-11-28/GetInstanceSnapshots
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetInstanceState
+  tag: Instances
+  method: POST
+  path: /ls/api/2016-11-28/GetInstanceState
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetInstances
+  tag: Instances
+  method: POST
+  path: /ls/api/2016-11-28/GetInstances
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetKeyPair
+  tag: Key Pairs
+  method: POST
+  path: /ls/api/2016-11-28/GetKeyPair
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetKeyPairs
+  tag: Key Pairs
+  method: POST
+  path: /ls/api/2016-11-28/GetKeyPairs
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetLoadBalancer
+  tag: Load Balancers
+  method: POST
+  path: /ls/api/2016-11-28/GetLoadBalancer
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetLoadBalancerMetricData
+  tag: Load Balancers
+  method: POST
+  path: /ls/api/2016-11-28/GetLoadBalancerMetricData
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetLoadBalancerTlsCertificates
+  tag: Certificates
+  method: POST
+  path: /ls/api/2016-11-28/GetLoadBalancerTlsCertificates
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetLoadBalancerTlsPolicies
+  tag: Load Balancers
+  method: POST
+  path: /ls/api/2016-11-28/GetLoadBalancerTlsPolicies
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetLoadBalancers
+  tag: Load Balancers
+  method: POST
+  path: /ls/api/2016-11-28/GetLoadBalancers
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetOperation
+  tag: Operations
+  method: POST
+  path: /ls/api/2016-11-28/GetOperation
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetOperations
+  tag: Operations
+  method: POST
+  path: /ls/api/2016-11-28/GetOperations
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetOperationsForResource
+  tag: Operations
+  method: POST
+  path: /ls/api/2016-11-28/GetOperationsForResource
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetProfile
+  tag: Account
+  method: GET
+  path: /ls/api/2016-11-28/GetProfile
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetRegions
+  tag: Regions
+  method: POST
+  path: /ls/api/2016-11-28/GetRegions
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetRelationalDatabase
+  tag: Relational Databases
+  method: POST
+  path: /ls/api/2016-11-28/GetRelationalDatabase
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetRelationalDatabaseBlueprints
+  tag: Relational Databases
+  method: POST
+  path: /ls/api/2016-11-28/GetRelationalDatabaseBlueprints
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetRelationalDatabaseBundles
+  tag: Relational Databases
+  method: POST
+  path: /ls/api/2016-11-28/GetRelationalDatabaseBundles
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetRelationalDatabaseEvents
+  tag: Relational Databases
+  method: POST
+  path: /ls/api/2016-11-28/GetRelationalDatabaseEvents
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetRelationalDatabaseLogEvents
+  tag: Relational Databases
+  method: POST
+  path: /ls/api/2016-11-28/GetRelationalDatabaseLogEvents
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetRelationalDatabaseLogStreams
+  tag: Relational Databases
+  method: POST
+  path: /ls/api/2016-11-28/GetRelationalDatabaseLogStreams
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetRelationalDatabaseMasterUserPassword
+  tag: Relational Databases
+  method: POST
+  path: /ls/api/2016-11-28/GetRelationalDatabaseMasterUserPassword
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetRelationalDatabaseMetricData
+  tag: Relational Databases
+  method: POST
+  path: /ls/api/2016-11-28/GetRelationalDatabaseMetricData
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetRelationalDatabaseParameters
+  tag: Relational Databases
+  method: POST
+  path: /ls/api/2016-11-28/GetRelationalDatabaseParameters
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetRelationalDatabaseSnapshot
+  tag: Relational Databases
+  method: POST
+  path: /ls/api/2016-11-28/GetRelationalDatabaseSnapshot
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetRelationalDatabaseSnapshots
+  tag: Relational Databases
+  method: POST
+  path: /ls/api/2016-11-28/GetRelationalDatabaseSnapshots
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetRelationalDatabases
+  tag: Relational Databases
+  method: POST
+  path: /ls/api/2016-11-28/GetRelationalDatabases
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetSetupHistory
+  tag: Setup
+  method: POST
+  path: /ls/api/2016-11-28/get-setup-history
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetStaticIp
+  tag: Static IPs
+  method: POST
+  path: /ls/api/2016-11-28/GetStaticIp
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: GetStaticIps
+  tag: Static IPs
+  method: POST
+  path: /ls/api/2016-11-28/GetStaticIps
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: ImportKeyPair
+  tag: Key Pairs
+  method: POST
+  path: /ls/api/2016-11-28/ImportKeyPair
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: IsVpcPeered
+  tag: Account
+  method: POST
+  path: /ls/api/2016-11-28/IsVpcPeered
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: OpenInstancePublicPorts
+  tag: Instances
+  method: POST
+  path: /ls/api/2016-11-28/OpenInstancePublicPorts
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: PeerVpc
+  tag: Account
+  method: POST
+  path: /ls/api/2016-11-28/PeerVpc
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: PutAlarm
+  tag: Alarms
+  method: POST
+  path: /ls/api/2016-11-28/PutAlarm
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: PutInstancePublicPorts
+  tag: Instances
+  method: POST
+  path: /ls/api/2016-11-28/PutInstancePublicPorts
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: RebootInstance
+  tag: Instances
+  method: POST
+  path: /ls/api/2016-11-28/RebootInstance
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: RebootRelationalDatabase
+  tag: Relational Databases
+  method: POST
+  path: /ls/api/2016-11-28/RebootRelationalDatabase
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: RegisterContainerImage
+  tag: Container Services
+  method: POST
+  path: /ls/api/2016-11-28/container-services/{serviceName}/images
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: ReleaseStaticIp
+  tag: Static IPs
+  method: POST
+  path: /ls/api/2016-11-28/ReleaseStaticIp
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: ResetDistributionCache
+  tag: Distributions
+  method: POST
+  path: /ls/api/2016-11-28/ResetDistributionCache
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: SendContactMethodVerification
+  tag: Contact Methods
+  method: POST
+  path: /ls/api/2016-11-28/SendContactMethodVerification
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: SetIpAddressType
+  tag: Account
+  method: POST
+  path: /ls/api/2016-11-28/SetIpAddressType
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: SetResourceAccessForBucket
+  tag: Buckets
+  method: POST
+  path: /ls/api/2016-11-28/SetResourceAccessForBucket
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: SetupInstanceHttps
+  tag: Instances
+  method: POST
+  path: /ls/api/2016-11-28/setup-instance-https
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: StartGUISession
+  tag: Account
+  method: POST
+  path: /ls/api/2016-11-28/start-gui-session
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: StartInstance
+  tag: Instances
+  method: POST
+  path: /ls/api/2016-11-28/StartInstance
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: StartRelationalDatabase
+  tag: Relational Databases
+  method: POST
+  path: /ls/api/2016-11-28/StartRelationalDatabase
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: StopGUISession
+  tag: Account
+  method: POST
+  path: /ls/api/2016-11-28/stop-gui-session
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: StopInstance
+  tag: Instances
+  method: POST
+  path: /ls/api/2016-11-28/StopInstance
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: StopRelationalDatabase
+  tag: Relational Databases
+  method: POST
+  path: /ls/api/2016-11-28/StopRelationalDatabase
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: TagResource
+  tag: Tags
+  method: POST
+  path: /ls/api/2016-11-28/TagResource
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: TestAlarm
+  tag: Alarms
+  method: GET
+  path: /ls/api/2016-11-28/TestAlarm/{alarmName}
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: UnpeerVpc
+  tag: Account
+  method: POST
+  path: /ls/api/2016-11-28/UnpeerVpc
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: UntagResource
+  tag: Tags
+  method: POST
+  path: /ls/api/2016-11-28/UntagResource
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: UpdateBucket
+  tag: Buckets
+  method: POST
+  path: /ls/api/2016-11-28/UpdateBucket
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: UpdateBucketBundle
+  tag: Buckets
+  method: POST
+  path: /ls/api/2016-11-28/UpdateBucketBundle
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: UpdateContainerService
+  tag: Container Services
+  method: PATCH
+  path: /ls/api/2016-11-28/container-services/{serviceName}
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: UpdateDistribution
+  tag: Distributions
+  method: POST
+  path: /ls/api/2016-11-28/UpdateDistribution
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: UpdateDistributionBundle
+  tag: Distributions
+  method: POST
+  path: /ls/api/2016-11-28/UpdateDistributionBundle
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: UpdateDomainEntry
+  tag: Domains
+  method: POST
+  path: /ls/api/2016-11-28/UpdateDomainEntry
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: UpdateInstanceMetadataOptions
+  tag: Instances
+  method: POST
+  path: /ls/api/2016-11-28/UpdateInstanceMetadataOptions
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: UpdateLoadBalancerAttribute
+  tag: Load Balancers
+  method: POST
+  path: /ls/api/2016-11-28/UpdateLoadBalancerAttribute
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: UpdateRelationalDatabase
+  tag: Relational Databases
+  method: POST
+  path: /ls/api/2016-11-28/UpdateRelationalDatabase
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+- operationId: UpdateRelationalDatabaseParameters
+  tag: Relational Databases
+  method: POST
+  path: /ls/api/2016-11-28/UpdateRelationalDatabaseParameters
+  reason: No named MCP tool. Reachable only through the generic aws___run_script executor.
+coverage:
+  operations_total: 162
+  operations_with_named_tool: 0
+  operations_reachable_via_generic_executor: 162
+  mcp_tools_total: 8
+  mcp_tools_bound_to_amazon_lightsail: 1
+  named_tool_coverage_pct: 0.0

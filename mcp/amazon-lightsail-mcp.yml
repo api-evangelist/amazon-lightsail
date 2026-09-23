@@ -1,0 +1,114 @@
+generated: '2026-09-17'
+method: searched
+status: published
+source: >-
+  https://github.com/awslabs/mcp (AWS Labs, first-party) and
+  https://docs.aws.amazon.com/aws-mcp/latest/userguide/what-is-mcp-server.html — both hosted tool lists
+  read live by anonymous JSON-RPC tools/list on 2026-09-17 (HTTP 200) and saved verbatim alongside this
+  file.
+provider: Amazon Lightsail
+providerId: amazon-lightsail
+note: >-
+  AWS ships NO Amazon Lightsail-specific MCP server. There is no create_instance tool, no
+  get_instances tool, and no Lightsail tool namespace anywhere in the awslabs/mcp catalog — a grep of
+  the repository README, which indexes every server AWS Labs publishes, returns nothing for
+  "lightsail". Lightsail is reachable through AWS's two general-purpose first-party servers, which
+  expose AWS APIs GENERICALLY — a sandboxed script/boto3 executor and a documentation reader — so an
+  agent drives Lightsail the way it would drive any AWS service, by naming the boto3 client
+  "lightsail" inside aws___run_script or by shelling `aws lightsail ...`. That distinction is the
+  finding: the servers are real, first-party and answered tools/list anonymously, but Lightsail's 162
+  operations have no per-operation tool surface of their own. Recorded as published on the strength of
+  the servers, not on the strength of Lightsail's own agent affordances.
+deployment:
+  mode: both
+  endpoint: https://aws-mcp.us-east-1.api.aws/mcp
+  install: uvx awslabs.aws-api-mcp-server@latest
+  package: https://pypi.org/project/awslabs.aws-api-mcp-server/
+  auth: api-key
+  verified: probed
+  note: >-
+    `auth: api-key` means AWS SigV4 / IAM credentials. tools/list answered anonymously (HTTP 200, real
+    inputSchemas, saved verbatim) but every tool CALL executes against the caller's own AWS credentials
+    under IAM permissions with CloudTrail logging. The remote endpoint is normally reached through a
+    local signing proxy, which performs the SigV4 signing; a bare MCP client POSTing to the URL can list
+    tools but cannot execute a Lightsail operation.
+servers:
+- name: AWS MCP Server
+  status: preview
+  transport: http
+  url: https://aws-mcp.us-east-1.api.aws/mcp
+  docs: https://docs.aws.amazon.com/aws-mcp/latest/userguide/what-is-mcp-server.html
+  hosted_by: AWS
+  tools_list_status: 200
+  tool_count: 8
+  tools_file: amazon-lightsail-aws-mcp-tools-list.json
+  covers_amazon_lightsail: true
+  coverage_note: >-
+    Via aws___run_script, which executes Python in a sandbox with AWS API access through call_boto3 —
+    Lightsail's 162 operations are invoked as boto3 "lightsail" calls, not as named MCP tools.
+- name: AWS Knowledge MCP Server
+  status: published
+  transport: http
+  url: https://knowledge-mcp.global.api.aws
+  docs: https://github.com/awslabs/mcp/tree/main/src/aws-knowledge-mcp-server
+  hosted_by: AWS
+  tools_list_status: 200
+  tool_count: 5
+  tools_file: amazon-lightsail-aws-knowledge-mcp-tools-list.json
+  covers_amazon_lightsail: documentation-only
+  coverage_note: >-
+    Read-only AWS documentation search and fetch. Returns the Amazon Lightsail User Guide and API
+    Reference as markdown; it cannot call the Lightsail API.
+- name: awslabs.aws-api-mcp-server
+  status: published
+  transport: stdio
+  install: uvx awslabs.aws-api-mcp-server@latest
+  package: https://pypi.org/project/awslabs.aws-api-mcp-server/
+  package_version: 1.5.5
+  package_published: '2026-09-08'
+  repository: https://github.com/awslabs/mcp/tree/main/src/aws-api-mcp-server
+  hosted_by: AWS Labs
+  covers_amazon_lightsail: true
+  coverage_note: >-
+    Generates and executes AWS CLI commands, so every `aws lightsail <command>` in cli/ is in scope.
+    Local install; not an agent-reachable endpoint on its own.
+tools:
+- name: aws___run_script
+  description: Execute Python in a sandboxed environment with AWS API access via call_boto3.
+  server: AWS MCP Server
+  amazon_lightsail_binding: generic-executor
+- name: aws___get_tasks
+  description: Poll the status of long-running tasks started by run_script.
+  server: AWS MCP Server
+  amazon_lightsail_binding: none
+- name: aws___get_presigned_url
+  description: Generate pre-signed S3 URLs for uploading or downloading files.
+  server: AWS MCP Server
+  amazon_lightsail_binding: adjacent
+  binding_note: >-
+    Lightsail has its own object storage (buckets) with its own access-key operations
+    (CreateBucketAccessKey, GetBucketAccessKeys); this tool is the generic Amazon S3 equivalent and is
+    not wired to Lightsail buckets.
+- name: aws___get_regional_availability
+  description: Report AWS resource availability per region.
+  server: AWS MCP Server, AWS Knowledge MCP Server
+  amazon_lightsail_binding: adjacent
+  binding_note: >-
+    Lightsail answers the same question first-party through GetRegions; the MCP tool reports AWS-wide
+    regional availability, not Lightsail bundle availability.
+- name: aws___list_regions
+  description: List AWS regions.
+  server: AWS MCP Server, AWS Knowledge MCP Server
+  amazon_lightsail_binding: adjacent
+- name: aws___read_documentation
+  description: Fetch full AWS documentation pages as markdown.
+  server: AWS MCP Server, AWS Knowledge MCP Server
+  amazon_lightsail_binding: documentation
+- name: aws___search_documentation
+  description: Search AWS documentation and return verbatim page chunks.
+  server: AWS MCP Server, AWS Knowledge MCP Server
+  amazon_lightsail_binding: documentation
+- name: aws___retrieve_skill
+  description: Retrieve a pre-built AWS Agent SOP / skill for a task.
+  server: AWS MCP Server, AWS Knowledge MCP Server
+  amazon_lightsail_binding: none

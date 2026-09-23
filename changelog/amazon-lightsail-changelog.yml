@@ -1,0 +1,73 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  https://docs.aws.amazon.com/lightsail/latest/userguide/document-history.html (fetched 2026-09-17,
+  HTTP 200) and its RSS feed
+  https://docs.aws.amazon.com/lightsail/latest/userguide/document_history.rss (HTTP 200)
+provider: Amazon Lightsail
+providerId: amazon-lightsail
+scheme: dated documentation history
+feed: https://docs.aws.amazon.com/lightsail/latest/userguide/document_history.rss
+url: https://docs.aws.amazon.com/lightsail/latest/userguide/document-history.html
+current_version: '2016-11-28'
+note: >-
+  Lightsail publishes a dated documentation history, not an API changelog: the entries record what
+  changed in the docs, and a service change is visible only where it forced a doc change. The page is
+  itself young — its first entry, on 2025-07-30, is the announcement that Lightsail started tracking
+  documentation updates at all — so there is no history before that date, and the seven entries below
+  are the complete published record rather than a recent window. None of them is a breaking API change;
+  every one is additive (new bundles, CORS support on buckets, a new Region) or editorial. Broader
+  service announcements appear in the AWS What's New feed and the AWS Compute Blog, neither of which is
+  Lightsail-scoped. The most recent entry is 2025-10-31, ten and a half months before this pass.
+breaking_changes_recorded: 0
+entry_count: 7
+entries:
+- date: '2025-10-31'
+  title: Plesk quick start guide updates
+  type: documentation
+  breaking: false
+  description: Updated the quick start guide to create a Plesk instance in Lightsail.
+  url: https://docs.aws.amazon.com/lightsail/latest/userguide/set-up-and-configure-plesk-stack-on-lightsail.html
+- date: '2025-10-31'
+  title: New instance bundles
+  type: addition
+  breaking: false
+  description: Added larger instance bundles for both Linux/Unix and Windows instances in Lightsail.
+  url: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-bundles.html
+- date: '2025-10-31'
+  title: Instance bundles page
+  type: documentation
+  breaking: false
+  description: Added a new page detailing instance bundle information in this documentation.
+  url: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-bundles.html
+- date: '2025-10-15'
+  title: Lightsail added CORS support
+  type: addition
+  breaking: false
+  description: Lightsail now has CORS support for Lightsail buckets.
+  url: https://docs.aws.amazon.com/lightsail/latest/userguide/configure-cors.html
+- date: '2025-10-02'
+  title: Blueprint quick start guide updates
+  type: documentation
+  breaking: false
+  description: Updated multiple quick start guides with revised snapshot and static IP related content.
+  url: https://docs.aws.amazon.com/lightsail/latest/userguide/quick-start-chapter.html
+- date: '2025-07-31'
+  title: Lightsail AWS Region expansion
+  type: addition
+  breaking: false
+  description: Lightsail is now available in the Asia Pacific (Jakarta) Region.
+  url: https://docs.aws.amazon.com/lightsail/latest/userguide/understanding-regions-and-availability-zones-in-amazon-lightsail.html
+- date: '2025-07-30'
+  title: Lightsail started tracking documentation updates
+  type: documentation
+  breaking: false
+  description: Initial publication of this document history page.
+  url: https://docs.aws.amazon.com/lightsail/latest/userguide/document-history.html
+other_feeds:
+- name: AWS What's New
+  url: https://aws.amazon.com/new/
+  scope: All AWS services; filterable to Lightsail. Not Lightsail-specific.
+- name: AWS Compute Blog
+  url: https://aws.amazon.com/blogs/compute/
+  scope: All AWS compute services. Not Lightsail-specific.

@@ -1,0 +1,324 @@
+overlay: 1.0.0
+info:
+  title: Amazon Lightsail — API Evangelist enhancements
+  version: 1.0.0
+  x-generated: '2026-09-17'
+  x-method: generated
+  x-source: openapi/amazon-lightsail-openapi.yml
+  description: 'Overlay of the annotations this profile adds on top of the Lightsail contract. It never mutates
+    the source spec: applying it adds tag descriptions the AWS Smithy model does not carry, cross references
+    to the derived artifacts, the runtime-semantics facts an agent needs before it calls (no idempotency, throttling
+    as 400), and a destructive-action flag with its reversal path on every delete operation.'
+extends: openapi/amazon-lightsail-openapi.yml
+actions:
+- target: $.info
+  description: Point readers at the artifacts this profile derives from the contract.
+  update:
+    x-api-evangelist:
+      profile: https://apis.io/amazon-lightsail
+      smithy-source: smithy/amazon-lightsail-2016-11-28.json
+      conventions: conventions/amazon-lightsail-conventions.yml
+      errors: errors/amazon-lightsail-problem-types.yml
+      rate-limits: rate-limits/amazon-lightsail-rate-limits.yml
+      data-model: data-model/amazon-lightsail-data-model.yml
+      skills: skills/_index.yml
+- target: $.tags[?(@.name=='Account')]
+  description: Describe the Account tag.
+  update:
+    description: Account-level settings, regions opt-in, key-value tagging and the operation log.
+- target: $.tags[?(@.name=='Alarms')]
+  description: Describe the Alarms tag.
+  update:
+    description: CloudWatch-backed alarms on Lightsail resource metrics, and the contact methods they notify.
+- target: $.tags[?(@.name=='Block Storage')]
+  description: Describe the Block Storage tag.
+  update:
+    description: SSD block storage disks, attachment to instances, and disk snapshots.
+- target: $.tags[?(@.name=='Blueprints')]
+  description: Describe the Blueprints tag.
+  update:
+    description: Pre-built application and OS images an instance can be launched from.
+- target: $.tags[?(@.name=='Buckets')]
+  description: Describe the Buckets tag.
+  update:
+    description: Lightsail object storage buckets, access keys, and bucket bundles.
+- target: $.tags[?(@.name=='Bundles')]
+  description: Describe the Bundles tag.
+  update:
+    description: The priced hardware plans (vCPU, memory, storage, transfer) a resource is created on.
+- target: $.tags[?(@.name=='Certificates')]
+  description: Describe the Certificates tag.
+  update:
+    description: SSL/TLS certificates for distributions and container services.
+- target: $.tags[?(@.name=='Contact Methods')]
+  description: Describe the Contact Methods tag.
+  update:
+    description: Email and SMS destinations that alarm notifications are sent to.
+- target: $.tags[?(@.name=='Container Services')]
+  description: Describe the Container Services tag.
+  update:
+    description: Lightsail container services, deployments, registered images and logs.
+- target: $.tags[?(@.name=='Cost Estimate')]
+  description: Describe the Cost Estimate tag.
+  update:
+    description: Estimated cost of a resource over a time period.
+- target: $.tags[?(@.name=='Distributions')]
+  description: Describe the Distributions tag.
+  update:
+    description: CloudFront-backed CDN distributions in front of Lightsail origins.
+- target: $.tags[?(@.name=='Domains')]
+  description: Describe the Domains tag.
+  update:
+    description: DNS zones and records Lightsail manages. us-east-1 only.
+- target: $.tags[?(@.name=='Instances')]
+  description: Describe the Instances tag.
+  update:
+    description: Virtual private servers — create, state, ports, access details, metrics and snapshots.
+- target: $.tags[?(@.name=='Key Pairs')]
+  description: Describe the Key Pairs tag.
+  update:
+    description: SSH key pairs used to reach Linux/Unix instances.
+- target: $.tags[?(@.name=='Load Balancers')]
+  description: Describe the Load Balancers tag.
+  update:
+    description: Lightsail load balancers, attached instances and TLS certificates.
+- target: $.tags[?(@.name=='Operations')]
+  description: Describe the Operations tag.
+  update:
+    description: The asynchronous operation log. Most mutating calls return operation records to poll here.
+- target: $.tags[?(@.name=='Regions')]
+  description: Describe the Regions tag.
+  update:
+    description: AWS Regions and Availability Zones Lightsail serves.
+- target: $.tags[?(@.name=='Relational Databases')]
+  description: Describe the Relational Databases tag.
+  update:
+    description: Managed MySQL and PostgreSQL databases, parameters, logs, snapshots and point-in-time restore.
+- target: $.tags[?(@.name=='Setup')]
+  description: Describe the Setup tag.
+  update:
+    description: Instance setup helpers, including HTTPS certificate setup history.
+- target: $.tags[?(@.name=='Snapshots')]
+  description: Describe the Snapshots tag.
+  update:
+    description: Manual and automatic snapshots of instances, disks and databases, and restore from them.
+- target: $.tags[?(@.name=='Static IPs')]
+  description: Describe the Static IPs tag.
+  update:
+    description: Static public IPv4 addresses and their attachment to instances.
+- target: $.tags[?(@.name=='Tags')]
+  description: Describe the Tags tag.
+  update:
+    description: Key-value tags applied to Lightsail resources.
+- target: $.paths.*.*
+  description: 'Record the runtime semantics the contract does not state: no replay protection anywhere on
+    this surface, and throttling arrives as HTTP 400.'
+  update:
+    x-idempotency:
+      supported: false
+      mechanism: null
+      note: 0 of 162 operations carry smithy.api#idempotent and no request member is an idempotency token.
+        A retried create bills twice.
+    x-rate-limit:
+      exhaustion_status: 400
+      error: ThrottlingException
+      headers: []
+      note: HTTP 400, not 429, and no RateLimit-* headers.
+- target: $.paths.*.*[?(@.operationId=='DeleteAlarm')]
+  description: Flag DeleteAlarm as destructive and state what can reverse it.
+  update:
+    x-agentic-access:
+      action_class: destructive
+      consequence: high
+      reversal: Restore from a MANUAL snapshot (CreateInstancesFromSnapshot / CreateDiskFromSnapshot / CreateRelationalDatabaseFromSnapshot).
+        Automatic snapshots are deleted with the source resource, so they are not an undo.
+      escalation: confirm-before-call
+- target: $.paths.*.*[?(@.operationId=='DeleteAutoSnapshot')]
+  description: Flag DeleteAutoSnapshot as destructive and state what can reverse it.
+  update:
+    x-agentic-access:
+      action_class: destructive
+      consequence: high
+      reversal: Restore from a MANUAL snapshot (CreateInstancesFromSnapshot / CreateDiskFromSnapshot / CreateRelationalDatabaseFromSnapshot).
+        Automatic snapshots are deleted with the source resource, so they are not an undo.
+      escalation: confirm-before-call
+- target: $.paths.*.*[?(@.operationId=='DeleteBucket')]
+  description: Flag DeleteBucket as destructive and state what can reverse it.
+  update:
+    x-agentic-access:
+      action_class: destructive
+      consequence: high
+      reversal: Restore from a MANUAL snapshot (CreateInstancesFromSnapshot / CreateDiskFromSnapshot / CreateRelationalDatabaseFromSnapshot).
+        Automatic snapshots are deleted with the source resource, so they are not an undo.
+      escalation: confirm-before-call
+- target: $.paths.*.*[?(@.operationId=='DeleteBucketAccessKey')]
+  description: Flag DeleteBucketAccessKey as destructive and state what can reverse it.
+  update:
+    x-agentic-access:
+      action_class: destructive
+      consequence: high
+      reversal: Restore from a MANUAL snapshot (CreateInstancesFromSnapshot / CreateDiskFromSnapshot / CreateRelationalDatabaseFromSnapshot).
+        Automatic snapshots are deleted with the source resource, so they are not an undo.
+      escalation: confirm-before-call
+- target: $.paths.*.*[?(@.operationId=='DeleteCertificate')]
+  description: Flag DeleteCertificate as destructive and state what can reverse it.
+  update:
+    x-agentic-access:
+      action_class: destructive
+      consequence: high
+      reversal: Restore from a MANUAL snapshot (CreateInstancesFromSnapshot / CreateDiskFromSnapshot / CreateRelationalDatabaseFromSnapshot).
+        Automatic snapshots are deleted with the source resource, so they are not an undo.
+      escalation: confirm-before-call
+- target: $.paths.*.*[?(@.operationId=='DeleteContactMethod')]
+  description: Flag DeleteContactMethod as destructive and state what can reverse it.
+  update:
+    x-agentic-access:
+      action_class: destructive
+      consequence: high
+      reversal: Restore from a MANUAL snapshot (CreateInstancesFromSnapshot / CreateDiskFromSnapshot / CreateRelationalDatabaseFromSnapshot).
+        Automatic snapshots are deleted with the source resource, so they are not an undo.
+      escalation: confirm-before-call
+- target: $.paths.*.*[?(@.operationId=='DeleteContainerImage')]
+  description: Flag DeleteContainerImage as destructive and state what can reverse it.
+  update:
+    x-agentic-access:
+      action_class: destructive
+      consequence: high
+      reversal: Restore from a MANUAL snapshot (CreateInstancesFromSnapshot / CreateDiskFromSnapshot / CreateRelationalDatabaseFromSnapshot).
+        Automatic snapshots are deleted with the source resource, so they are not an undo.
+      escalation: confirm-before-call
+- target: $.paths.*.*[?(@.operationId=='DeleteContainerService')]
+  description: Flag DeleteContainerService as destructive and state what can reverse it.
+  update:
+    x-agentic-access:
+      action_class: destructive
+      consequence: high
+      reversal: Restore from a MANUAL snapshot (CreateInstancesFromSnapshot / CreateDiskFromSnapshot / CreateRelationalDatabaseFromSnapshot).
+        Automatic snapshots are deleted with the source resource, so they are not an undo.
+      escalation: confirm-before-call
+- target: $.paths.*.*[?(@.operationId=='DeleteDisk')]
+  description: Flag DeleteDisk as destructive and state what can reverse it.
+  update:
+    x-agentic-access:
+      action_class: destructive
+      consequence: high
+      reversal: Restore from a MANUAL snapshot (CreateInstancesFromSnapshot / CreateDiskFromSnapshot / CreateRelationalDatabaseFromSnapshot).
+        Automatic snapshots are deleted with the source resource, so they are not an undo.
+      escalation: confirm-before-call
+- target: $.paths.*.*[?(@.operationId=='DeleteDiskSnapshot')]
+  description: Flag DeleteDiskSnapshot as destructive and state what can reverse it.
+  update:
+    x-agentic-access:
+      action_class: destructive
+      consequence: high
+      reversal: Restore from a MANUAL snapshot (CreateInstancesFromSnapshot / CreateDiskFromSnapshot / CreateRelationalDatabaseFromSnapshot).
+        Automatic snapshots are deleted with the source resource, so they are not an undo.
+      escalation: confirm-before-call
+- target: $.paths.*.*[?(@.operationId=='DeleteDistribution')]
+  description: Flag DeleteDistribution as destructive and state what can reverse it.
+  update:
+    x-agentic-access:
+      action_class: destructive
+      consequence: high
+      reversal: Restore from a MANUAL snapshot (CreateInstancesFromSnapshot / CreateDiskFromSnapshot / CreateRelationalDatabaseFromSnapshot).
+        Automatic snapshots are deleted with the source resource, so they are not an undo.
+      escalation: confirm-before-call
+- target: $.paths.*.*[?(@.operationId=='DeleteDomain')]
+  description: Flag DeleteDomain as destructive and state what can reverse it.
+  update:
+    x-agentic-access:
+      action_class: destructive
+      consequence: high
+      reversal: Restore from a MANUAL snapshot (CreateInstancesFromSnapshot / CreateDiskFromSnapshot / CreateRelationalDatabaseFromSnapshot).
+        Automatic snapshots are deleted with the source resource, so they are not an undo.
+      escalation: confirm-before-call
+- target: $.paths.*.*[?(@.operationId=='DeleteDomainEntry')]
+  description: Flag DeleteDomainEntry as destructive and state what can reverse it.
+  update:
+    x-agentic-access:
+      action_class: destructive
+      consequence: high
+      reversal: Restore from a MANUAL snapshot (CreateInstancesFromSnapshot / CreateDiskFromSnapshot / CreateRelationalDatabaseFromSnapshot).
+        Automatic snapshots are deleted with the source resource, so they are not an undo.
+      escalation: confirm-before-call
+- target: $.paths.*.*[?(@.operationId=='DeleteInstance')]
+  description: Flag DeleteInstance as destructive and state what can reverse it.
+  update:
+    x-agentic-access:
+      action_class: destructive
+      consequence: high
+      reversal: Restore from a MANUAL snapshot (CreateInstancesFromSnapshot / CreateDiskFromSnapshot / CreateRelationalDatabaseFromSnapshot).
+        Automatic snapshots are deleted with the source resource, so they are not an undo.
+      escalation: confirm-before-call
+- target: $.paths.*.*[?(@.operationId=='DeleteInstanceSnapshot')]
+  description: Flag DeleteInstanceSnapshot as destructive and state what can reverse it.
+  update:
+    x-agentic-access:
+      action_class: destructive
+      consequence: high
+      reversal: Restore from a MANUAL snapshot (CreateInstancesFromSnapshot / CreateDiskFromSnapshot / CreateRelationalDatabaseFromSnapshot).
+        Automatic snapshots are deleted with the source resource, so they are not an undo.
+      escalation: confirm-before-call
+- target: $.paths.*.*[?(@.operationId=='DeleteKeyPair')]
+  description: Flag DeleteKeyPair as destructive and state what can reverse it.
+  update:
+    x-agentic-access:
+      action_class: destructive
+      consequence: high
+      reversal: Restore from a MANUAL snapshot (CreateInstancesFromSnapshot / CreateDiskFromSnapshot / CreateRelationalDatabaseFromSnapshot).
+        Automatic snapshots are deleted with the source resource, so they are not an undo.
+      escalation: confirm-before-call
+- target: $.paths.*.*[?(@.operationId=='DeleteKnownHostKeys')]
+  description: Flag DeleteKnownHostKeys as destructive and state what can reverse it.
+  update:
+    x-agentic-access:
+      action_class: destructive
+      consequence: high
+      reversal: Restore from a MANUAL snapshot (CreateInstancesFromSnapshot / CreateDiskFromSnapshot / CreateRelationalDatabaseFromSnapshot).
+        Automatic snapshots are deleted with the source resource, so they are not an undo.
+      escalation: confirm-before-call
+- target: $.paths.*.*[?(@.operationId=='DeleteLoadBalancer')]
+  description: Flag DeleteLoadBalancer as destructive and state what can reverse it.
+  update:
+    x-agentic-access:
+      action_class: destructive
+      consequence: high
+      reversal: Restore from a MANUAL snapshot (CreateInstancesFromSnapshot / CreateDiskFromSnapshot / CreateRelationalDatabaseFromSnapshot).
+        Automatic snapshots are deleted with the source resource, so they are not an undo.
+      escalation: confirm-before-call
+- target: $.paths.*.*[?(@.operationId=='DeleteLoadBalancerTlsCertificate')]
+  description: Flag DeleteLoadBalancerTlsCertificate as destructive and state what can reverse it.
+  update:
+    x-agentic-access:
+      action_class: destructive
+      consequence: high
+      reversal: Restore from a MANUAL snapshot (CreateInstancesFromSnapshot / CreateDiskFromSnapshot / CreateRelationalDatabaseFromSnapshot).
+        Automatic snapshots are deleted with the source resource, so they are not an undo.
+      escalation: confirm-before-call
+- target: $.paths.*.*[?(@.operationId=='DeleteRelationalDatabase')]
+  description: Flag DeleteRelationalDatabase as destructive and state what can reverse it.
+  update:
+    x-agentic-access:
+      action_class: destructive
+      consequence: high
+      reversal: Restore from a MANUAL snapshot (CreateInstancesFromSnapshot / CreateDiskFromSnapshot / CreateRelationalDatabaseFromSnapshot).
+        Automatic snapshots are deleted with the source resource, so they are not an undo.
+      escalation: confirm-before-call
+- target: $.paths.*.*[?(@.operationId=='DeleteRelationalDatabaseSnapshot')]
+  description: Flag DeleteRelationalDatabaseSnapshot as destructive and state what can reverse it.
+  update:
+    x-agentic-access:
+      action_class: destructive
+      consequence: high
+      reversal: Restore from a MANUAL snapshot (CreateInstancesFromSnapshot / CreateDiskFromSnapshot / CreateRelationalDatabaseFromSnapshot).
+        Automatic snapshots are deleted with the source resource, so they are not an undo.
+      escalation: confirm-before-call
+- target: $.paths.*.*[?(@.operationId=='ReleaseStaticIp')]
+  description: Flag ReleaseStaticIp as destructive and state what can reverse it.
+  update:
+    x-agentic-access:
+      action_class: destructive
+      consequence: high
+      reversal: Restore from a MANUAL snapshot (CreateInstancesFromSnapshot / CreateDiskFromSnapshot / CreateRelationalDatabaseFromSnapshot).
+        Automatic snapshots are deleted with the source resource, so they are not an undo.
+      escalation: confirm-before-call

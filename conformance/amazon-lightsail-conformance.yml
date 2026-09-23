@@ -1,0 +1,116 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  Derived from smithy/amazon-lightsail-2016-11-28.json and openapi/amazon-lightsail-openapi.yml, and
+  searched against https://aws.amazon.com/compliance/programs/ (HTTP 200),
+  https://aws.amazon.com/.well-known/security.txt (HTTP 200) and
+  https://docs.aws.amazon.com/general/latest/gr/lightsail.html (HTTP 200), all fetched 2026-09-17.
+provider: Amazon Lightsail
+providerId: amazon-lightsail
+note: >-
+  Virtual private server hosting has no market-wide interface standard — there is no SCIM, FHIR, OData
+  or OpenRTB equivalent for "launch me a VPS", and the closest thing to one (OpenStack Compute, CIMI)
+  is not something Lightsail claims or implements. So domain_standard is recorded as absent rather than
+  stretched to fit, which under the reward-only rule costs Lightsail nothing. What Lightsail does
+  conform to is AWS's own house protocol: AWS JSON 1.1 over SigV4, self-described in a Smithy 2.0 model
+  AWS publishes at github.com/aws/api-models-aws — a real, versioned, machine-readable contract that
+  most of this catalog's providers do not have, even though it is not an OpenAPI. The compliance
+  certifications below are AWS-wide programs that cover Lightsail as an in-scope service; they are
+  attested by AWS Artifact, not by a Lightsail-specific audit.
+domain_standard:
+  declared: false
+  note: No domain interface standard exists for VPS/cloud compute provisioning that this contract declares or implements.
+conformance:
+- id: aws-sigv4
+  name: AWS Signature Version 4
+  conforms: true
+  evidence: >-
+    aws.auth#sigv4 trait with name "lightsail" on the service shape in
+    smithy/amazon-lightsail-2016-11-28.json; signing parameters documented at
+    https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/CommonParameters.html
+- id: aws-json-1.1
+  name: AWS JSON 1.1 protocol
+  conforms: true
+  evidence: aws.protocols#awsJson1_1 trait on the service shape in smithy/amazon-lightsail-2016-11-28.json
+- id: smithy-2.0
+  name: Smithy 2.0 service model
+  conforms: true
+  evidence: >-
+    AWS publishes the Lightsail service model as Smithy 2.0 at
+    https://github.com/aws/api-models-aws/blob/main/models/lightsail/service/2016-11-28/lightsail-2016-11-28.json
+    — captured verbatim in smithy/ and transformed to openapi/ in this repository.
+- id: openapi
+  name: OpenAPI 3.x
+  conforms: false
+  evidence: >-
+    AWS publishes no OpenAPI for Lightsail. The spec in openapi/ is a mechanical transform of the AWS
+    Smithy model performed by API Evangelist, not a provider-published contract.
+- id: oauth2
+  name: OAuth 2.0
+  conforms: false
+  evidence: >-
+    No OAuth flows in the service model and no /.well-known/oauth-authorization-server on any Lightsail
+    host (all 404, see well-known/). Authorization is AWS IAM over SigV4.
+- id: oidc
+  name: OpenID Connect
+  conforms: false
+  evidence: No /.well-known/openid-configuration on any host probed 2026-09-17 (all 404).
+- id: rfc9457
+  name: 'RFC 9457: Problem Details for HTTP APIs'
+  conforms: false
+  evidence: >-
+    Errors are AWS JSON 1.1 with a code/docs/message/tip envelope and X-Amzn-ErrorType, not
+    application/problem+json. See errors/amazon-lightsail-problem-types.yml.
+- id: rfc8594
+  name: 'RFC 8594: Sunset HTTP header'
+  conforms: false
+  evidence: No Sunset or Deprecation response header is documented or returned. See lifecycle/.
+- id: rfc9116
+  name: 'RFC 9116: security.txt'
+  conforms: true
+  evidence: >-
+    https://aws.amazon.com/.well-known/security.txt returns 200 with Policy, Contact, Encryption,
+    Preferred-Languages and Expires fields. Saved verbatim in well-known/amazon-lightsail-security.txt.
+- id: idempotency
+  name: Request idempotency / replay protection
+  conforms: false
+  evidence: >-
+    0 of 162 operations carry smithy.api#idempotent and no request member carries
+    smithy.api#idempotencyToken in smithy/amazon-lightsail-2016-11-28.json. See conventions/.
+- id: pagination
+  name: Cursor pagination
+  conforms: true
+  evidence: >-
+    pageToken / nextPageToken on 29 request and 28 result shapes in the service model. Note that the
+    @paginated trait is absent, so generated SDK auto-paginators do not apply.
+- id: ipv6-dual-stack
+  name: IPv6 / dual-stack endpoints
+  conforms: true
+  evidence: >-
+    Every Lightsail Region publishes a dual-stack endpoint lightsail.{region}.api.aws alongside the
+    IPv4 endpoint — https://docs.aws.amazon.com/general/latest/gr/lightsail.html
+- id: fips-140
+  name: FIPS 140 validated endpoints
+  conforms: partial
+  evidence: >-
+    AWS offers FIPS endpoints for some services in some Regions; the Lightsail endpoints and quotas
+    page documents the endpoint types available per Region.
+compliance:
+  attested_by: AWS Artifact — AWS-wide programs covering Lightsail as an in-scope service
+  source: https://aws.amazon.com/compliance/programs/
+  certifications:
+  - SOC 1
+  - SOC 2
+  - SOC 3
+  - ISO/IEC 27001
+  - ISO/IEC 27017
+  - ISO/IEC 27018
+  - PCI DSS Level 1
+  - HIPAA eligible
+  - FedRAMP
+  - GDPR
+  - FIPS 140
+  note: >-
+    These are AWS programs, not a Lightsail-specific audit. Service-in-scope status per program is
+    published in the AWS Services in Scope list; a buyer with a compliance obligation should confirm
+    Lightsail's status per program there rather than treating this list as a Lightsail certification.

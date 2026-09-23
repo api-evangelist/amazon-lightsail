@@ -1,0 +1,123 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  Registry metadata endpoints queried unauthenticated on 2026-09-17 (registry.npmjs.org, pypi.org,
+  rubygems.org, crates.io, api.nuget.org, repo1.maven.org, proxy.golang.org, repo.packagist.org),
+  cross-checked against https://aws.amazon.com/developer/tools/ and
+  https://docs.aws.amazon.com/lightsail/latest/userguide/lightsail-how-to-set-up-and-configure-aws-cli.html
+provider: Amazon Lightsail
+providerId: amazon-lightsail
+note: >-
+  Amazon Lightsail ships no standalone SDK. Every first-party client is a per-service module inside the
+  AWS SDK for that language, generated from the same Smithy 2.0 service model captured in smithy/ and
+  released on the AWS SDK's own near-daily train — which is why every version below was published within
+  three days of this probe. Three languages carry Lightsail inside an aggregate package instead of a
+  per-service artifact: Python (boto3, client name "lightsail"), PHP (aws/aws-sdk-php) and the AWS CLI
+  (`aws lightsail`, see cli/).
+official_sdk_count: 8
+packages:
+- name: '@aws-sdk/client-lightsail'
+  registry: npm
+  language: JavaScript/TypeScript
+  official: true
+  scope: Lightsail (per-service client)
+  url: https://www.npmjs.com/package/@aws-sdk/client-lightsail
+  repository: https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-lightsail
+  install: npm install @aws-sdk/client-lightsail
+  version: 3.1135.0
+  published: '2026-09-17'
+- name: boto3
+  registry: pypi
+  language: Python
+  official: true
+  scope: Lightsail via the aggregate AWS SDK (boto3.client("lightsail"))
+  url: https://pypi.org/project/boto3/
+  repository: https://github.com/boto/boto3
+  install: pip install boto3
+  version: 1.43.97
+  published: '2026-09-17'
+- name: aws-sdk-lightsail
+  registry: rubygems
+  language: Ruby
+  official: true
+  scope: Lightsail (per-service gem)
+  url: https://rubygems.org/gems/aws-sdk-lightsail
+  repository: https://github.com/aws/aws-sdk-ruby/tree/version-3/gems/aws-sdk-lightsail
+  install: gem install aws-sdk-lightsail
+  version: 1.137.0
+  published: '2026-09-11'
+- name: aws-sdk-lightsail
+  registry: crates.io
+  language: Rust
+  official: true
+  scope: Lightsail (per-service crate)
+  url: https://crates.io/crates/aws-sdk-lightsail
+  repository: https://github.com/awslabs/aws-sdk-rust
+  install: cargo add aws-sdk-lightsail
+  version: 1.125.0
+  published: '2026-09-16'
+- name: AWSSDK.Lightsail
+  registry: nuget
+  language: .NET
+  official: true
+  scope: Lightsail (per-service package)
+  url: https://www.nuget.org/packages/AWSSDK.Lightsail
+  repository: https://github.com/aws/aws-sdk-net
+  install: dotnet add package AWSSDK.Lightsail
+  version: 4.0.102.1
+  published: '2026-09-14'
+  note: Version and date read from the paged NuGet registration index (registration5-gz-semver2).
+- name: software.amazon.awssdk:lightsail
+  registry: maven
+  language: Java
+  official: true
+  scope: Lightsail (per-service artifact, AWS SDK for Java 2.x)
+  url: https://central.sonatype.com/artifact/software.amazon.awssdk/lightsail
+  repository: https://github.com/aws/aws-sdk-java-v2
+  install: 'implementation "software.amazon.awssdk:lightsail:2.55.0"'
+  version: 2.55.0
+  published: '2026-09-17'
+  note: Date read from repo1.maven.org maven-metadata.xml lastUpdated (20260917210302).
+- name: github.com/aws/aws-sdk-go-v2/service/lightsail
+  registry: pkg.go.dev
+  language: Go
+  official: true
+  scope: Lightsail (per-service module)
+  url: https://pkg.go.dev/github.com/aws/aws-sdk-go-v2/service/lightsail
+  repository: https://github.com/aws/aws-sdk-go-v2
+  install: go get github.com/aws/aws-sdk-go-v2/service/lightsail
+  version: v1.66.0
+  published: '2026-09-11'
+- name: aws/aws-sdk-php
+  registry: packagist
+  language: PHP
+  official: true
+  scope: Lightsail via the aggregate AWS SDK ($sdk->createLightsail())
+  url: https://packagist.org/packages/aws/aws-sdk-php
+  repository: https://github.com/aws/aws-sdk-php
+  install: composer require aws/aws-sdk-php
+  version: 3.395.5
+  published: '2026-09-17'
+- name: awscli
+  registry: pypi
+  language: CLI (Python)
+  official: true
+  scope: '`aws lightsail <command>` — the command surface catalogued in cli/'
+  url: https://pypi.org/project/awscli/
+  repository: https://github.com/aws/aws-cli
+  install: pip install awscli
+  version: 1.46.1
+  published: '2026-08-27'
+  note: >-
+    AWS CLI v1 on PyPI. AWS CLI v2 — the version AWS recommends and the one whose `aws lightsail`
+    surface cli/ documents — is distributed as a signed platform installer from
+    https://awscli.amazonaws.com/, not through a package registry, so it has no metadata endpoint to
+    query and is recorded here only through its v1 PyPI sibling.
+currency:
+  assessment: current
+  note: >-
+    Every Lightsail client module was republished within six days of this probe. There is no abandonment
+    signal here, and there cannot be a useful one: the AWS SDKs regenerate from the Smithy model in
+    smithy/ on a near-daily release train shared by ~400 services, so an SDK release date measures the
+    train, not Lightsail's own activity. The dated signal that DOES track Lightsail is the documentation
+    history in changelog/, whose most recent entry is 2025-10-31.

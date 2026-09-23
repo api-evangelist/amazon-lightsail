@@ -1,85 +1,212 @@
-specification: API Commons Rate Limits
-specificationVersion: '0.1'
-schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+generated: '2026-09-17'
+method: searched
+source: https://docs.aws.amazon.com/general/latest/gr/lightsail.html (service quotas table, fetched 2026-09-17
+  HTTP 200) and https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/CommonErrors.html (throttling
+  response, fetched 2026-09-17 HTTP 200)
 provider: Amazon Lightsail
 providerId: amazon-lightsail
-created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
-tags:
-  - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Amazon Lightsail API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
-responseCodes:
-  throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
-limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Amazon Lightsail API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Amazon Lightsail API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Amazon Lightsail API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Amazon Lightsail API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Amazon Lightsail API
-policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
-maintainers: []
+note: 'Two different things are usually collapsed into ''rate limits'' and Lightsail publishes only one of
+  them. There is NO published request-rate limit: AWS documents no requests-per-second figure, no burst, no
+  window and no RateLimit-* or X-RateLimit-* response headers for Lightsail, and the API returns no such header
+  on an unauthenticated probe. The only runtime throttling signal is the error itself — a ThrottlingException
+  carrying HTTP status 400, NOT 429, which is the detail most likely to break a generic retry handler, since
+  a 400 normally means ''do not retry''. AWS SDKs special-case it and retry with exponential backoff. What
+  Lightsail DOES publish, and publishes well, is 34 resource service quotas — per-Region, per-account ceilings
+  on how many instances, disks, distributions and so on an account may hold. Two of them are adjustable through
+  the Service Quotas console. Those are recorded below as quotas, not as rate limits, because an agent pacing
+  its calls cannot use them.'
+limit_count: 0
+limits: []
+throttling:
+  documented_rate_limit: false
+  error_type: ThrottlingException
+  status_code: 400
+  status_note: Lightsail returns HTTP 400 on throttling, not 429.
+  retry_after_header: null
+  rate_limit_headers: []
+  headers_note: No RateLimit-*, X-RateLimit-* or Retry-After header is documented or observed.
+  client_behavior: The AWS SDKs automatically retry a ThrottlingException with exponential backoff and jitter.
+  source: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/CommonErrors.html
+quota_count: 34
+quotas_note: Resource ceilings, not request pacing. "Each supported Region" means the quota applies independently
+  in every AWS Region the account uses. New AWS accounts may start below these defaults.
+quotas_source: https://docs.aws.amazon.com/general/latest/gr/lightsail.html
+quotas:
+- name: Allowed cookies per cache behavior for a distribution
+  default: '10'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of allowed cookies per cache behavior.
+- name: Allowed headers per cache behavior for a distribution
+  default: '10'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of allowed headers per cache behavior.
+- name: Allowed query strings per cache behavior for a distribution
+  default: '10'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of allowed query strings per cache behavior.
+- name: Block storage disks per instance
+  default: '15'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of block storage disks that can be attached per instance.
+- name: Container service certificates
+  default: '4'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of certificates that can be attached per container service.
+- name: Container service custom domains
+  default: '4'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of custom domains per container service.
+- name: Container service deployment containers
+  default: '10'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of containers per deployment on a container service.
+- name: Container service deployment versions
+  default: '50'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of deployment versions per container service.
+- name: Container service logs storage days
+  default: '4'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of days that container service logs are stored.
+- name: Container service nodes
+  default: '20'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of nodes per container service.
+- name: Container service stored container images
+  default: '150'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of stored container images per container service.
+- name: Container services
+  default: '100'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of container services per region.
+- name: Custom domain names per distribution
+  default: '10'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of custom domain names per distribution. You can specify up to 10 domains
+    for a Lightsail SSL/TLS certificate. You can then use the certificate to enable custom domains on your
+    Lightsail distribution.
+- name: DNS zones (or domains)
+  default: '6'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of DNS zones (or domains) per account.
+- name: Data transfer rate per distribution
+  default: '150'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum data transfer rate (in GB per second) per distribution.
+- name: Databases
+  default: '40'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of databases per region.
+- name: Default behaviors (default cache behavior) per distribution
+  default: '1'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of default behaviors (default cache behavior) per distribution.
+- name: Directory and file overrides per distribution
+  default: '25'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of directory and file overrides per distribution. You can create up to 25
+    directory and file overrides, and you can specify one cache behavior per override.
+- name: Distributions
+  default: '20'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of distributions per account.
+- name: Instances
+  default: '20'
+  scope: per AWS Region, per account
+  adjustable: true
+  increase_url: https://console.aws.amazon.com/servicequotas/home/services/lightsail/quotas/L-4259AF9B
+  description: The maximum number of vCPUs per Region for Lightsail instances.
+- name: Load balancers
+  default: '10'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of load balancers per region.
+- name: Maximum active certificates
+  default: '10'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of active certificates per region, per account.
+- name: Maximum block storage disk space
+  default: 16,000 Gigabytes
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum amount of disk space (in GB) per block storage disk.
+- name: Maximum buckets per account
+  default: '20'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of buckets per account
+- name: Maximum certificates
+  default: '20'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of certificates per region, per account in the last 365 days.
+- name: Maximum keys per bucket
+  default: '2'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of keys per bucket
+- name: Minimum block storage disk space
+  default: 8 Gigabytes
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The minimum amount of disk space (in GB) per block storage disk.
+- name: Origins per distribution
+  default: '1'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of origins per distribution. You can specify one instance or one load balancer
+    per distribution.
+- name: Parallel RDP connections using the browser-based RDP client
+  default: '1'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of parallel RDP connections using the browser-based RDP client per region,
+    per account.
+- name: Parallel SSH connections using the browser-based SSH client
+  default: '5'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of parallel SSH connections using the browser-based SSH client per region,
+    per account.
+- name: Response timeout per origin for a distribution
+  default: 60 Seconds
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The response timeout per origin (4-60 seconds).
+- name: Static IP addresses
+  default: '5'
+  scope: per AWS Region, per account
+  adjustable: true
+  increase_url: https://console.aws.amazon.com/servicequotas/home/services/lightsail/quotas/L-BBF0F260
+  description: The maximum number of static IP addresses per region.
+- name: Tags
+  default: '50'
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum number of tags per resource.
+- name: Total attached block storage disk space
+  default: 20,000 Gigabytes
+  scope: per AWS Region, per account
+  adjustable: false
+  description: The maximum amount of attached block storage disk space (in GB) per region.

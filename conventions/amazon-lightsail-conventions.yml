@@ -1,0 +1,151 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  Derived from smithy/amazon-lightsail-2016-11-28.json and openapi/amazon-lightsail-openapi.yml, and
+  searched against https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/CommonParameters.html,
+  .../CommonErrors.html,
+  https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-automatic-snapshots.html
+  and .../amazon-lightsail-creating-a-database-from-point-in-time-backup.html — all fetched 2026-09-17,
+  all HTTP 200.
+provider: Amazon Lightsail
+providerId: amazon-lightsail
+transport:
+  protocol: AWS JSON 1.1
+  method: POST for most operations; the container-service and alarm subsurface also uses GET, DELETE and PATCH
+  content_type: application/x-amz-json-1.1
+  target_header: 'X-Amz-Target: Lightsail_20161128.<OperationName>'
+  base_url: https://lightsail.{region}.amazonaws.com (IPv4) or https://lightsail.{region}.api.aws (dual-stack)
+  note: >-
+    Lightsail is regional and resource names are region-scoped: the same instance name can exist in two
+    Regions and they are different instances. Domain and distribution operations are only available
+    against us-east-1 regardless of where the resources they touch live — a request that is otherwise
+    valid returns InvalidInputException when sent to the wrong Region.
+authentication:
+  style: AWS Signature Version 4 (IAM)
+  service_name: lightsail
+  header: 'Authorization: AWS4-HMAC-SHA256 Credential=... SignedHeaders=... Signature=...'
+  temporary_credentials_header: X-Amz-Security-Token
+  oauth: false
+  see: authentication/amazon-lightsail-authentication.yml
+idempotency:
+  coverage: none
+  mechanism: null
+  header: null
+  note: >-
+    Lightsail publishes no replay protection. There is no Idempotency-Key header, no client-token
+    parameter, and — checked directly in the AWS service model rather than inferred from prose — not one
+    of the 162 operations carries Smithy's @idempotent trait and not one request member carries
+    @idempotencyToken. That is unusual even inside AWS, where client tokens are the house pattern. The
+    practical consequence for an agent is specific and expensive: a retried CreateInstances after a
+    timeout creates a SECOND instance that bills, and there is no server-side key to make the second
+    call a no-op. The only available guard is client-side — Lightsail resource names are unique within a
+    Region, so a create that reuses the same name fails with InvalidInputException rather than
+    duplicating, which turns the caller's chosen name into an accidental idempotency key for creates but
+    does nothing for deletes, attaches, or state changes.
+  evidence: smithy/amazon-lightsail-2016-11-28.json (0 of 162 operations carry smithy.api#idempotent)
+reversibility:
+  grade: verified
+  note: >-
+    Lightsail's write surface is broadly reversible and two of the reversal paths carry an explicitly
+    stated window. What is NOT reversible is deletion of a resource that has no snapshot: DeleteInstance,
+    DeleteDisk and DeleteRelationalDatabase destroy the resource, and the automatic snapshots attached
+    to it are deleted with it, so an agent that wants an undo must create a MANUAL snapshot first —
+    manual snapshots survive the source resource, automatic ones do not.
+  surfaces:
+  - write: StartInstance / StopInstance
+    reversal: StopInstance reverses StartInstance and vice versa
+    operationIds: [StartInstance, StopInstance, RebootInstance]
+    window: unbounded — instance state is freely reversible while the instance exists
+    grade: documented
+  - write: AttachDisk / AttachStaticIp / AttachInstancesToLoadBalancer / AttachCertificateToDistribution
+    reversal: DetachDisk / DetachStaticIp / DetachInstancesFromLoadBalancer / DetachCertificateFromDistribution
+    operationIds: [DetachDisk, DetachStaticIp, DetachInstancesFromLoadBalancer, DetachCertificateFromDistribution]
+    window: unbounded while both resources exist
+    grade: documented
+  - write: AllocateStaticIp
+    reversal: ReleaseStaticIp
+    operationIds: [ReleaseStaticIp]
+    window: unbounded, but the address is not re-reservable once released
+    grade: documented
+  - write: EnableAddOn
+    reversal: DisableAddOn
+    operationIds: [DisableAddOn]
+    window: unbounded
+    grade: documented
+  - write: DeleteInstance / DeleteDisk (with a snapshot taken first)
+    reversal: CreateInstancesFromSnapshot / CreateDiskFromSnapshot
+    operationIds: [CreateInstancesFromSnapshot, CreateDiskFromSnapshot, CopySnapshot]
+    window: >-
+      Automatic snapshots: the latest SEVEN daily automatic snapshots are retained before the oldest is
+      replaced, and ALL automatic snapshots are deleted when the source resource is deleted. Manual
+      snapshots have no expiry and survive deletion of the source.
+    window_source: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-configuring-automatic-snapshots.html
+    grade: verified
+  - write: DeleteRelationalDatabase and any destructive database change
+    reversal: CreateRelationalDatabaseFromSnapshot — restore to a point in time
+    operationIds: [CreateRelationalDatabaseFromSnapshot, CreateRelationalDatabaseSnapshot]
+    window: >-
+      Point-in-time backups are available in 5-minute increments for the previous SEVEN days, restoring
+      to a NEW database rather than in place.
+    window_source: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-creating-a-database-from-point-in-time-backup.html
+    grade: verified
+  - write: DeleteInstance / DeleteDisk / DeleteBucket with no snapshot
+    reversal: none
+    operationIds: []
+    window: none — destructive and permanent
+    grade: none
+dry_run_mode:
+  available: false
+  note: >-
+    No dry-run, validate-only or preview parameter exists on any Lightsail operation. The nearest
+    affordance is GetCostEstimate, which prices a resource without creating it, and the fact that most
+    creates return an operation id that can be watched with GetOperation — but that is observation after
+    the fact, not rehearsal before it.
+pagination:
+  style: opaque cursor token
+  request_param: pageToken
+  response_field: nextPageToken
+  page_size_param: null
+  coverage: 29 of 162 request shapes accept pageToken; 28 result shapes return nextPageToken
+  note: >-
+    Cursor pagination with no client-settable page size: pass the nextPageToken from the previous
+    response as pageToken and stop when it is absent. The Smithy model does NOT carry the @paginated
+    trait on any operation, so SDK auto-paginators and generated clients will not paginate Lightsail for
+    you — the loop is the caller's to write even though the fields are there.
+filtering_and_expansion:
+  sparse_fields: false
+  expansion: false
+  note: >-
+    Responses are fixed shapes. A handful of list operations accept a scoping query parameter
+    (GetAlarms monitoredResourceName/alarmName, GetContainerServices serviceName,
+    GetContactMethods protocols), and GetContainerServiceMetricData takes a metric, period and time
+    range, but there is no general filter, field-selection or expansion mechanism.
+metadata:
+  supported: true
+  mechanism: key/value tags
+  shapes_with_tags: 37
+  operationIds: [TagResource, UntagResource]
+  quota: 50 tags per resource, per Region
+  note: Tags are the only user-defined metadata; there is no free-form metadata object on resources.
+request_tracing:
+  request_id_header: x-amzn-RequestId
+  note: >-
+    Every response carries an AWS request id. Asynchronous work carries a SECOND identifier: most
+    mutating operations return one or more `operation` records with their own id and status, and
+    GetOperation / GetOperations / GetOperationsForResource are how a caller follows the work to a
+    terminal state. Treating the 200 on the original call as completion is the most common integration
+    error against this API.
+  operationIds: [GetOperation, GetOperations, GetOperationsForResource]
+versioning:
+  scheme: dated API version in the path and target header (2016-11-28)
+  see: lifecycle/amazon-lightsail-lifecycle.yml
+errors:
+  envelope: 'AWS JSON 1.1 with code / docs / message / tip; type named in X-Amzn-ErrorType'
+  rfc9457: false
+  see: errors/amazon-lightsail-problem-types.yml
+rate_limit_signaling:
+  headers: []
+  exhaustion_status: 400
+  error_type: ThrottlingException
+  note: HTTP 400 on throttling, not 429, and no RateLimit-* headers. See rate-limits/.
+  see: rate-limits/amazon-lightsail-rate-limits.yml

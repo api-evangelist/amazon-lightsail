@@ -1,0 +1,306 @@
+generated: '2026-09-17'
+method: searched
+source: https://docs.aws.amazon.com/cli/latest/reference/lightsail/index.html (AWS CLI 2.36.48 command reference,
+  fetched 2026-09-17 HTTP 200) and https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-install-software.html
+  (HTTP 200); the command list is the 1:1 kebab-case projection of the 162 operations in openapi/amazon-lightsail-openapi.yml,
+  which is how the AWS CLI is generated from the same service model.
+provider: Amazon Lightsail
+providerId: amazon-lightsail
+name: AWS CLI — lightsail
+binary: aws
+namespace: aws lightsail
+official: true
+note: 'Lightsail has no CLI of its own; it is a namespace inside the AWS CLI, generated from the same Smithy
+  model as the SDKs, so every one of the 162 API operations has a command and the mapping is mechanical (GetInstances
+  -> `aws lightsail get-instances`). There IS a second, Lightsail-specific first-party binary: lightsailctl,
+  the Lightsail Control plugin, which the AWS CLI shells out to when a container-service command needs to push
+  a local container image. Without it, `aws lightsail push-container-image` does not work — which makes it
+  the one piece of Lightsail tooling a container user must install separately and the most common setup failure
+  on that surface.'
+install:
+- method: AWS CLI v2 installer
+  platform: macOS / Linux / Windows
+  url: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+  note: Signed platform installer from awscli.amazonaws.com. The version AWS recommends.
+- method: pip
+  platform: any
+  command: pip install awscli
+  note: AWS CLI v1 only; see packages/.
+plugins:
+- name: lightsailctl
+  description: Lightsail Control plugin. Required by the AWS CLI to push a local container image to a Lightsail
+    container service.
+  official: true
+  url: https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-install-software.html
+  required_for:
+  - push-container-image
+auth:
+  mechanism: AWS IAM credentials via `aws configure`, environment variables, SSO or an instance role
+  profile_flag: --profile
+  region_flag: --region
+  note: Lightsail is regional; --region is load-bearing, and domain/distribution commands must target us-east-1.
+common_flags:
+- --region
+- --profile
+- --output json|text|table
+- --query <JMESPath>
+- --no-cli-pager
+- --debug
+command_count: 162
+command_groups:
+- name: Account
+  command_count: 14
+  commands:
+  - create-cloud-formation-stack
+  - create-g-u-i-session-access-details
+  - delete-known-host-keys
+  - disable-add-on
+  - enable-add-on
+  - get-active-names
+  - get-cloud-formation-stack-records
+  - get-profile
+  - is-vpc-peered
+  - peer-vpc
+  - set-ip-address-type
+  - start-g-u-i-session
+  - stop-g-u-i-session
+  - unpeer-vpc
+- name: Alarms
+  command_count: 4
+  commands:
+  - delete-alarm
+  - get-alarms
+  - put-alarm
+  - test-alarm
+- name: Block Storage
+  command_count: 6
+  commands:
+  - attach-disk
+  - create-disk
+  - delete-disk
+  - detach-disk
+  - get-disk
+  - get-disks
+- name: Blueprints
+  command_count: 1
+  commands:
+  - get-blueprints
+- name: Buckets
+  command_count: 11
+  commands:
+  - create-bucket
+  - create-bucket-access-key
+  - delete-bucket
+  - delete-bucket-access-key
+  - get-bucket-access-keys
+  - get-bucket-bundles
+  - get-bucket-metric-data
+  - get-buckets
+  - set-resource-access-for-bucket
+  - update-bucket
+  - update-bucket-bundle
+- name: Bundles
+  command_count: 1
+  commands:
+  - get-bundles
+- name: Certificates
+  command_count: 7
+  commands:
+  - attach-load-balancer-tls-certificate
+  - create-certificate
+  - create-load-balancer-tls-certificate
+  - delete-certificate
+  - delete-load-balancer-tls-certificate
+  - get-certificates
+  - get-load-balancer-tls-certificates
+- name: Contact Methods
+  command_count: 4
+  commands:
+  - create-contact-method
+  - delete-contact-method
+  - get-contact-methods
+  - send-contact-method-verification
+- name: Container Services
+  command_count: 14
+  commands:
+  - create-container-service
+  - create-container-service-deployment
+  - create-container-service-registry-login
+  - delete-container-image
+  - delete-container-service
+  - get-container-a-p-i-metadata
+  - get-container-images
+  - get-container-log
+  - get-container-service-deployments
+  - get-container-service-metric-data
+  - get-container-service-powers
+  - get-container-services
+  - register-container-image
+  - update-container-service
+- name: Cost Estimate
+  command_count: 1
+  commands:
+  - get-cost-estimate
+- name: Distributions
+  command_count: 11
+  commands:
+  - attach-certificate-to-distribution
+  - create-distribution
+  - delete-distribution
+  - detach-certificate-from-distribution
+  - get-distribution-bundles
+  - get-distribution-latest-cache-reset
+  - get-distribution-metric-data
+  - get-distributions
+  - reset-distribution-cache
+  - update-distribution
+  - update-distribution-bundle
+- name: Domains
+  command_count: 7
+  commands:
+  - create-domain
+  - create-domain-entry
+  - delete-domain
+  - delete-domain-entry
+  - get-domain
+  - get-domains
+  - update-domain-entry
+- name: Instances
+  command_count: 16
+  commands:
+  - close-instance-public-ports
+  - create-instances
+  - delete-instance
+  - get-instance
+  - get-instance-access-details
+  - get-instance-metric-data
+  - get-instance-port-states
+  - get-instance-state
+  - get-instances
+  - open-instance-public-ports
+  - put-instance-public-ports
+  - reboot-instance
+  - setup-instance-https
+  - start-instance
+  - stop-instance
+  - update-instance-metadata-options
+- name: Key Pairs
+  command_count: 6
+  commands:
+  - create-key-pair
+  - delete-key-pair
+  - download-default-key-pair
+  - get-key-pair
+  - get-key-pairs
+  - import-key-pair
+- name: Load Balancers
+  command_count: 9
+  commands:
+  - attach-instances-to-load-balancer
+  - create-load-balancer
+  - delete-load-balancer
+  - detach-instances-from-load-balancer
+  - get-load-balancer
+  - get-load-balancer-metric-data
+  - get-load-balancer-tls-policies
+  - get-load-balancers
+  - update-load-balancer-attribute
+- name: Operations
+  command_count: 3
+  commands:
+  - get-operation
+  - get-operations
+  - get-operations-for-resource
+- name: Regions
+  command_count: 1
+  commands:
+  - get-regions
+- name: Relational Databases
+  command_count: 22
+  commands:
+  - create-relational-database
+  - create-relational-database-from-snapshot
+  - create-relational-database-snapshot
+  - delete-relational-database
+  - delete-relational-database-snapshot
+  - get-relational-database
+  - get-relational-database-blueprints
+  - get-relational-database-bundles
+  - get-relational-database-events
+  - get-relational-database-log-events
+  - get-relational-database-log-streams
+  - get-relational-database-master-user-password
+  - get-relational-database-metric-data
+  - get-relational-database-parameters
+  - get-relational-database-snapshot
+  - get-relational-database-snapshots
+  - get-relational-databases
+  - reboot-relational-database
+  - start-relational-database
+  - stop-relational-database
+  - update-relational-database
+  - update-relational-database-parameters
+- name: Setup
+  command_count: 1
+  commands:
+  - get-setup-history
+- name: Snapshots
+  command_count: 15
+  commands:
+  - copy-snapshot
+  - create-disk-from-snapshot
+  - create-disk-snapshot
+  - create-instance-snapshot
+  - create-instances-from-snapshot
+  - delete-auto-snapshot
+  - delete-disk-snapshot
+  - delete-instance-snapshot
+  - export-snapshot
+  - get-auto-snapshots
+  - get-disk-snapshot
+  - get-disk-snapshots
+  - get-export-snapshot-records
+  - get-instance-snapshot
+  - get-instance-snapshots
+- name: Static IPs
+  command_count: 6
+  commands:
+  - allocate-static-ip
+  - attach-static-ip
+  - detach-static-ip
+  - get-static-ip
+  - get-static-ips
+  - release-static-ip
+- name: Tags
+  command_count: 2
+  commands:
+  - tag-resource
+  - untag-resource
+key_flows:
+- name: Launch a WordPress instance
+  commands:
+  - aws lightsail get-blueprints
+  - aws lightsail get-bundles
+  - aws lightsail create-instances
+  - aws lightsail get-instance-state
+  - aws lightsail open-instance-public-ports
+- name: Back up and restore
+  commands:
+  - aws lightsail create-instance-snapshot
+  - aws lightsail get-instance-snapshots
+  - aws lightsail create-instances-from-snapshot
+- name: Deploy a container service
+  commands:
+  - aws lightsail create-container-service
+  - aws lightsail push-container-image
+  - aws lightsail create-container-service-deployment
+  - aws lightsail get-container-log
+- name: Watch asynchronous work
+  commands:
+  - aws lightsail get-operation
+  - aws lightsail get-operations-for-resource
+cli_only_commands:
+- command: aws lightsail push-container-image
+  note: Not an API operation. A CLI-side composite implemented by the lightsailctl plugin that uploads a local
+    image and then registers it; the API equivalent is RegisterContainerImage, which expects an image already
+    in place.

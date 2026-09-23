@@ -1,16 +1,68 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/amazon-lightsail-openapi.yml
+generated: '2026-09-17'
+method: searched
+source: >-
+  https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/CommonParameters.html (fetched
+  2026-09-17, HTTP 200) and the aws.auth#sigv4 trait in smithy/amazon-lightsail-2016-11-28.json,
+  rendered into openapi/amazon-lightsail-openapi.yml.
+docs: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/CommonParameters.html
+provider: Amazon Lightsail
+providerId: amazon-lightsail
 summary:
   types:
-  - apiKey
+  - sigv4
   api_key_in:
   - header
+  oauth: false
+  openid_connect: false
+  mutual_tls: false
+note: >-
+  Lightsail has exactly one authentication mechanism and no alternative: AWS Signature Version 4 over
+  IAM credentials, with service name "lightsail". There is no API key you can paste into a header, no
+  OAuth flow, no personal access token, and no scope surface — authorization is expressed entirely as
+  IAM policy on lightsail:* actions, which is why scopes/ is deliberately absent from this repository
+  rather than empty. The practical consequence for an agent is that credentials cannot be delegated
+  per-call: whatever IAM principal signs the request carries its full policy, so least privilege has to
+  be arranged in advance by issuing a narrowly-scoped role, not negotiated at call time. Every call is
+  recorded in CloudTrail under the event source lightsail.amazonaws.com.
 schemes:
 - name: sigv4
-  type: apiKey
+  type: sigv4
   in: header
   parameter: Authorization
-  description: AWS Signature Version 4 authentication
+  algorithm: AWS4-HMAC-SHA256
+  service_name: lightsail
+  description: >-
+    Sign each request with AWS Signature Version 4. The Authorization header carries the credential
+    scope (access key / date / region / service / aws4_request), the signed header list and the
+    signature. Requests may alternatively carry the signature in query-string form using X-Amz-Algorithm,
+    X-Amz-Credential, X-Amz-Date, X-Amz-SignedHeaders and X-Amz-Signature.
+  temporary_credentials:
+    supported: true
+    header: X-Amz-Security-Token
+    note: Required when signing with temporary credentials from AWS STS (assumed roles, SSO, instance profiles).
   sources:
+  - smithy/amazon-lightsail-2016-11-28.json
   - openapi/amazon-lightsail-openapi.yml
+  - https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/CommonParameters.html
+authorization:
+  model: AWS IAM policy
+  actions_prefix: 'lightsail:'
+  scopes_published: false
+  note: >-
+    Permissions are IAM actions (lightsail:GetInstances, lightsail:CreateInstances, ...), one per API
+    operation, attachable to users and roles and constrainable by resource ARN and condition keys.
+    There is no OAuth scope document to enumerate.
+  audit: CloudTrail, event source lightsail.amazonaws.com
+failure_modes:
+- exception: UnauthenticatedException
+  status: 401
+  cause: Request was not signed, or the signature could not be validated.
+- exception: AccessDeniedException
+  status: 403
+  cause: Signed correctly but the IAM principal's policy does not allow the action.
+- exception: ExpiredTokenException
+  status: 403
+  cause: Temporary STS credentials expired. Re-assume the role.
+- exception: IncompleteSignature
+  status: 403
+  cause: Malformed SigV4 signature — usually a clock skew or a canonical-request mistake.

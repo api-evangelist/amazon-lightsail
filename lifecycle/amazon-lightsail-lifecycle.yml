@@ -1,0 +1,79 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html,
+  https://docs.aws.amazon.com/lightsail/latest/userguide/document-history.html,
+  https://health.aws.amazon.com/health/status and
+  https://docs.aws.amazon.com/general/latest/gr/lightsail.html — all fetched 2026-09-17, all HTTP 200 —
+  with the deprecated members read from smithy/amazon-lightsail-2016-11-28.json.
+provider: Amazon Lightsail
+providerId: amazon-lightsail
+versioning:
+  scheme: dated-api-version
+  current: '2016-11-28'
+  in_url: true
+  note: >-
+    The API version is the date in the operation path (/ls/api/2016-11-28/...) and in the X-Amz-Target
+    header prefix (Lightsail_20161128.). It has not changed since the service launched in 2016 — AWS
+    evolves a service API additively under one dated version rather than cutting v2, so an integration
+    written against 2016-11-28 still runs. There is no version negotiation header and no way to pin an
+    older shape: additive changes arrive in place.
+  source: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    Lightsail publishes no RFC 8594 Sunset or Deprecation response header and no dated per-operation
+    retirement schedule. Deprecation is expressed in the service model instead: the Smithy model marks
+    individual members deprecated and the SDKs and documentation carry that through. No Lightsail
+    OPERATION is deprecated — all 162 are current. Five request/response MEMBERS are marked deprecated
+    in the model and are listed below; each is still accepted, which is the AWS pattern — the field
+    stops being meaningful before it stops being present.
+  deprecated_operations: []
+  deprecated_members:
+  - shape: CreateInstancesRequest
+    member: customImageName
+    note: Marked deprecated in the AWS Smithy service model; still present in the request shape.
+  - shape: Disk
+    member: attachmentState
+    note: Marked deprecated in the AWS Smithy service model; still returned.
+  - shape: Disk
+    member: gbInUse
+    note: Marked deprecated in the AWS Smithy service model; still returned.
+  - shape: DomainEntry
+    member: options
+    note: Marked deprecated in the AWS Smithy service model; still present.
+  - shape: GetOperationsForResourceResult
+    member: nextPageCount
+    note: Marked deprecated in the AWS Smithy service model; still returned.
+  source: smithy/amazon-lightsail-2016-11-28.json
+status_page:
+  published: true
+  url: https://health.aws.amazon.com/health/status
+  http_status: 200
+  type: AWS Health Dashboard — service health
+  scope: All AWS services and Regions, filterable to Lightsail; there is no Lightsail-only status page.
+  history: true
+  subscribe: RSS per service/Region from the AWS Health Dashboard; account-scoped events via AWS Health.
+sla:
+  published: true
+  url: https://aws.amazon.com/legal/service-level-agreements/
+  http_status: 200
+  service_specific_page: false
+  note: >-
+    Lightsail is covered by an AWS service level agreement listed on the AWS SLA index, which was
+    fetched on 2026-09-17 (HTTP 200) and names Lightsail. There is no aws.amazon.com/lightsail/sla/
+    page — that URL returns the AWS marketing 404 — so the SLA is reachable only through the shared
+    legal index, one step further from the product than most AWS services put it.
+support:
+  url: https://aws.amazon.com/premiumsupport/
+  community: https://repost.aws/
+  note: Paid AWS Support plans plus the free AWS re:Post community.
+regional_lifecycle:
+  note: >-
+    Lightsail is regional and its footprint changes over time — 20 Regions serve the API today, and the
+    documentation history records Asia Pacific (Jakarta) being added on 2025-07-31. Domain and
+    distribution operations are only available in us-east-1, so a Region's presence in the endpoint
+    table does not mean every operation works there.
+  source: https://docs.aws.amazon.com/general/latest/gr/lightsail.html
