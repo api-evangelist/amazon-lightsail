@@ -1,0 +1,2832 @@
+openapi: 3.2.0
+info:
+  title: Amazon Lightsail Relational Databases API
+  description: Amazon Lightsail is the easiest way to get started with Amazon Web Services (AWS) for developers who need to build websites or web applications.
+  version: '2016-11-28'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/premiumsupport/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  x-logo:
+    url: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
+  x-generated-from: AWS Smithy 2.0 service model (https://github.com/aws/api-models-aws) — mechanical transform, no hand-authored operations
+servers:
+- url: https://lightsail.us-east-1.amazonaws.com
+  description: Amazon Lightsail regional endpoint (us-east-1). Lightsail is regional — one endpoint per AWS Region, lightsail.{region}.amazonaws.com (IPv4) or lightsail.{region}.api.aws (dual-stack). See https://docs.aws.amazon.com/general/latest/gr/lightsail.html
+security:
+- sigv4: []
+tags:
+- name: Relational Databases
+paths:
+  /ls/api/2016-11-28/CreateRelationalDatabase:
+    post:
+      operationId: CreateRelationalDatabase
+      summary: Creates a new database in Amazon Lightsail
+      description: Creates a new database in Amazon Lightsail. The create relational database operation supports tag-based access control via request tags. For more information, see the Amazon Lightsail Developer Guide .
+      tags:
+      - Relational Databases
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/CreateRelationalDatabaseRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/CreateRelationalDatabaseResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.CreateRelationalDatabase
+  /ls/api/2016-11-28/CreateRelationalDatabaseFromSnapshot:
+    post:
+      operationId: CreateRelationalDatabaseFromSnapshot
+      summary: Creates a new database from an existing database snapshot in Amazon Lightsail
+      description: Creates a new database from an existing database snapshot in Amazon Lightsail. You can create a new database from a snapshot in if something goes wrong with your original database, or to change it to a different plan, such as a high availability or standard plan. The create relational database from snapshot operation supports tag-based access control via request tags and resource tags applied to the resource identified by relationalDatabaseSnapshotName. For more information, see the Amazon Lightsail Developer Guide .
+      tags:
+      - Relational Databases
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/CreateRelationalDatabaseFromSnapshotRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/CreateRelationalDatabaseFromSnapshotResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.CreateRelationalDatabaseFromSnapshot
+  /ls/api/2016-11-28/CreateRelationalDatabaseSnapshot:
+    post:
+      operationId: CreateRelationalDatabaseSnapshot
+      summary: Creates a snapshot of your database in Amazon Lightsail
+      description: Creates a snapshot of your database in Amazon Lightsail. You can use snapshots for backups, to make copies of a database, and to save data before deleting a database. The create relational database snapshot operation supports tag-based access control via request tags. For more information, see the Amazon Lightsail Developer Guide .
+      tags:
+      - Relational Databases
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/CreateRelationalDatabaseSnapshotRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/CreateRelationalDatabaseSnapshotResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.CreateRelationalDatabaseSnapshot
+  /ls/api/2016-11-28/DeleteRelationalDatabase:
+    post:
+      operationId: DeleteRelationalDatabase
+      summary: Deletes a database in Amazon Lightsail
+      description: Deletes a database in Amazon Lightsail. The delete relational database operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the Amazon Lightsail Developer Guide .
+      tags:
+      - Relational Databases
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/DeleteRelationalDatabaseRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/DeleteRelationalDatabaseResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.DeleteRelationalDatabase
+  /ls/api/2016-11-28/DeleteRelationalDatabaseSnapshot:
+    post:
+      operationId: DeleteRelationalDatabaseSnapshot
+      summary: Deletes a database snapshot in Amazon Lightsail
+      description: Deletes a database snapshot in Amazon Lightsail. The delete relational database snapshot operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the Amazon Lightsail Developer Guide .
+      tags:
+      - Relational Databases
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/DeleteRelationalDatabaseSnapshotRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/DeleteRelationalDatabaseSnapshotResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.DeleteRelationalDatabaseSnapshot
+  /ls/api/2016-11-28/GetRelationalDatabase:
+    post:
+      operationId: GetRelationalDatabase
+      summary: Returns information about a specific database in Amazon Lightsail
+      description: Returns information about a specific database in Amazon Lightsail.
+      tags:
+      - Relational Databases
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/GetRelationalDatabaseRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/GetRelationalDatabaseResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.GetRelationalDatabase
+  /ls/api/2016-11-28/GetRelationalDatabaseBlueprints:
+    post:
+      operationId: GetRelationalDatabaseBlueprints
+      summary: Returns a list of available database blueprints in Amazon Lightsail
+      description: Returns a list of available database blueprints in Amazon Lightsail. A blueprint describes the major engine version of a database. You can use a blueprint ID to create a new database that runs a specific database engine.
+      tags:
+      - Relational Databases
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/GetRelationalDatabaseBlueprintsRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/GetRelationalDatabaseBlueprintsResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.GetRelationalDatabaseBlueprints
+  /ls/api/2016-11-28/GetRelationalDatabaseBundles:
+    post:
+      operationId: GetRelationalDatabaseBundles
+      summary: Returns the list of bundles that are available in Amazon Lightsail
+      description: Returns the list of bundles that are available in Amazon Lightsail. A bundle describes the performance specifications for a database. You can use a bundle ID to create a new database with explicit performance specifications.
+      tags:
+      - Relational Databases
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/GetRelationalDatabaseBundlesRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/GetRelationalDatabaseBundlesResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.GetRelationalDatabaseBundles
+  /ls/api/2016-11-28/GetRelationalDatabaseEvents:
+    post:
+      operationId: GetRelationalDatabaseEvents
+      summary: Returns a list of events for a specific database in Amazon Lightsail
+      description: Returns a list of events for a specific database in Amazon Lightsail.
+      tags:
+      - Relational Databases
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/GetRelationalDatabaseEventsRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/GetRelationalDatabaseEventsResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.GetRelationalDatabaseEvents
+  /ls/api/2016-11-28/GetRelationalDatabaseLogEvents:
+    post:
+      operationId: GetRelationalDatabaseLogEvents
+      summary: Returns a list of log events for a database in Amazon Lightsail
+      description: Returns a list of log events for a database in Amazon Lightsail.
+      tags:
+      - Relational Databases
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/GetRelationalDatabaseLogEventsRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/GetRelationalDatabaseLogEventsResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.GetRelationalDatabaseLogEvents
+  /ls/api/2016-11-28/GetRelationalDatabaseLogStreams:
+    post:
+      operationId: GetRelationalDatabaseLogStreams
+      summary: Returns a list of available log streams for a specific database in Amazon…
+      description: Returns a list of available log streams for a specific database in Amazon Lightsail.
+      tags:
+      - Relational Databases
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/GetRelationalDatabaseLogStreamsRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/GetRelationalDatabaseLogStreamsResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.GetRelationalDatabaseLogStreams
+  /ls/api/2016-11-28/GetRelationalDatabaseMasterUserPassword:
+    post:
+      operationId: GetRelationalDatabaseMasterUserPassword
+      summary: Returns the current, previous, or pending versions of the master user password…
+      description: Returns the current, previous, or pending versions of the master user password for a Lightsail database. The GetRelationalDatabaseMasterUserPassword operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName.
+      tags:
+      - Relational Databases
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/GetRelationalDatabaseMasterUserPasswordRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/GetRelationalDatabaseMasterUserPasswordResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.GetRelationalDatabaseMasterUserPassword
+  /ls/api/2016-11-28/GetRelationalDatabaseMetricData:
+    post:
+      operationId: GetRelationalDatabaseMetricData
+      summary: Returns the data points of the specified metric for a database in Amazon…
+      description: Returns the data points of the specified metric for a database in Amazon Lightsail. Metrics report the utilization of your resources, and the error counts generated by them. Monitor and collect metric data regularly to maintain the reliability, availability, and performance of your resources.
+      tags:
+      - Relational Databases
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/GetRelationalDatabaseMetricDataRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/GetRelationalDatabaseMetricDataResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.GetRelationalDatabaseMetricData
+  /ls/api/2016-11-28/GetRelationalDatabaseParameters:
+    post:
+      operationId: GetRelationalDatabaseParameters
+      summary: Returns all of the runtime parameters offered by the underlying database…
+      description: Returns all of the runtime parameters offered by the underlying database software, or engine, for a specific database in Amazon Lightsail. In addition to the parameter names and values, this operation returns other information about each parameter. This information includes whether changes require a reboot, whether the parameter is modifiable, the allowed values, and the data types.
+      tags:
+      - Relational Databases
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/GetRelationalDatabaseParametersRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/GetRelationalDatabaseParametersResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.GetRelationalDatabaseParameters
+  /ls/api/2016-11-28/GetRelationalDatabaseSnapshot:
+    post:
+      operationId: GetRelationalDatabaseSnapshot
+      summary: Returns information about a specific database snapshot in Amazon Lightsail
+      description: Returns information about a specific database snapshot in Amazon Lightsail.
+      tags:
+      - Relational Databases
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/GetRelationalDatabaseSnapshotRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/GetRelationalDatabaseSnapshotResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.GetRelationalDatabaseSnapshot
+  /ls/api/2016-11-28/GetRelationalDatabaseSnapshots:
+    post:
+      operationId: GetRelationalDatabaseSnapshots
+      summary: Returns information about all of your database snapshots in Amazon Lightsail
+      description: Returns information about all of your database snapshots in Amazon Lightsail.
+      tags:
+      - Relational Databases
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/GetRelationalDatabaseSnapshotsRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/GetRelationalDatabaseSnapshotsResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.GetRelationalDatabaseSnapshots
+  /ls/api/2016-11-28/GetRelationalDatabases:
+    post:
+      operationId: GetRelationalDatabases
+      summary: Returns information about all of your databases in Amazon Lightsail
+      description: Returns information about all of your databases in Amazon Lightsail.
+      tags:
+      - Relational Databases
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/GetRelationalDatabasesRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/GetRelationalDatabasesResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.GetRelationalDatabases
+  /ls/api/2016-11-28/RebootRelationalDatabase:
+    post:
+      operationId: RebootRelationalDatabase
+      summary: Restarts a specific database in Amazon Lightsail
+      description: Restarts a specific database in Amazon Lightsail. The reboot relational database operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the Amazon Lightsail Developer Guide .
+      tags:
+      - Relational Databases
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/RebootRelationalDatabaseRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/RebootRelationalDatabaseResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.RebootRelationalDatabase
+  /ls/api/2016-11-28/StartRelationalDatabase:
+    post:
+      operationId: StartRelationalDatabase
+      summary: Starts a specific database from a stopped state in Amazon Lightsail
+      description: Starts a specific database from a stopped state in Amazon Lightsail. To restart a database, use the reboot relational database operation. The start relational database operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the Amazon Lightsail Developer Guide .
+      tags:
+      - Relational Databases
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/StartRelationalDatabaseRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/StartRelationalDatabaseResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.StartRelationalDatabase
+  /ls/api/2016-11-28/StopRelationalDatabase:
+    post:
+      operationId: StopRelationalDatabase
+      summary: Stops a specific database that is currently running in Amazon Lightsail
+      description: Stops a specific database that is currently running in Amazon Lightsail. If you don't manually start your database instance after it has been stopped for seven consecutive days, Amazon Lightsail automatically starts it for you. This action helps ensure that your database instance doesn't fall behind on any required maintenance updates. The stop relational database operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the Amazon Lightsail Developer Guide .
+      tags:
+      - Relational Databases
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/StopRelationalDatabaseRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/StopRelationalDatabaseResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.StopRelationalDatabase
+  /ls/api/2016-11-28/UpdateRelationalDatabase:
+    post:
+      operationId: UpdateRelationalDatabase
+      summary: Allows the update of one or more attributes of a database in Amazon Lightsail
+      description: Allows the update of one or more attributes of a database in Amazon Lightsail. Updates are applied immediately, or in cases where the updates could result in an outage, are applied during the database's predefined maintenance window. The update relational database operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the Amazon Lightsail Developer Guide .
+      tags:
+      - Relational Databases
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/UpdateRelationalDatabaseRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UpdateRelationalDatabaseResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.UpdateRelationalDatabase
+  /ls/api/2016-11-28/UpdateRelationalDatabaseParameters:
+    post:
+      operationId: UpdateRelationalDatabaseParameters
+      summary: Allows the update of one or more parameters of a database in Amazon Lightsail
+      description: 'Allows the update of one or more parameters of a database in Amazon Lightsail. Parameter updates don''t cause outages; therefore, their application is not subject to the preferred maintenance window. However, there are two ways in which parameter updates are applied: dynamic or pending-reboot . Parameters marked with a dynamic apply type are applied immediately. Parameters marked with a pending-reboot apply type are applied only after the database is rebooted using the reboot relational database operation. The update relational database parameters operation supports tag-based access control via resource tags applied to the resource identified by relationalDatabaseName. For more information, see the Amazon Lightsail Developer Guide .'
+      tags:
+      - Relational Databases
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/UpdateRelationalDatabaseParametersRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UpdateRelationalDatabaseParametersResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.UpdateRelationalDatabaseParameters
+components:
+  schemas:
+    GetRelationalDatabaseRequest:
+      type: object
+      properties:
+        relationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the database that you are looking up.
+      required:
+      - relationalDatabaseName
+    StopRelationalDatabaseResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    StartRelationalDatabaseRequest:
+      type: object
+      properties:
+        relationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of your database to start.
+      required:
+      - relationalDatabaseName
+    ResourceLocation:
+      type: object
+      properties:
+        availabilityZone:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The Availability Zone. Follows the format us-east-2a (case-sensitive).
+        regionName:
+          allOf:
+          - $ref: '#/components/schemas/RegionName'
+          description: The Amazon Web Services Region name.
+      description: Describes the resource location.
+    RelationalDatabaseParameter:
+      type: object
+      properties:
+        allowedValues:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Specifies the valid range of values for the parameter.
+        applyMethod:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Indicates when parameter updates are applied. Can be immediate or pending-reboot .
+        applyType:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Specifies the engine-specific parameter type.
+        dataType:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Specifies the valid data type for the parameter.
+        description:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Provides a description of the parameter.
+        isModifiable:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the parameter can be modified.
+        parameterName:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Specifies the name of the parameter.
+        parameterValue:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Specifies the value of the parameter.
+      description: Describes the parameters of a database.
+    RelationalDatabaseList:
+      type: array
+      items:
+        $ref: '#/components/schemas/RelationalDatabase'
+    OperationType:
+      type: string
+      enum:
+      - DeleteKnownHostKeys
+      - DeleteInstance
+      - CreateInstance
+      - StopInstance
+      - StartInstance
+      - RebootInstance
+      - OpenInstancePublicPorts
+      - PutInstancePublicPorts
+      - CloseInstancePublicPorts
+      - AllocateStaticIp
+      - ReleaseStaticIp
+      - AttachStaticIp
+      - DetachStaticIp
+      - UpdateDomainEntry
+      - DeleteDomainEntry
+      - CreateDomain
+      - DeleteDomain
+      - CreateInstanceSnapshot
+      - DeleteInstanceSnapshot
+      - CreateInstancesFromSnapshot
+      - CreateLoadBalancer
+      - DeleteLoadBalancer
+      - AttachInstancesToLoadBalancer
+      - DetachInstancesFromLoadBalancer
+      - UpdateLoadBalancerAttribute
+      - CreateLoadBalancerTlsCertificate
+      - DeleteLoadBalancerTlsCertificate
+      - AttachLoadBalancerTlsCertificate
+      - CreateDisk
+      - DeleteDisk
+      - AttachDisk
+      - DetachDisk
+      - CreateDiskSnapshot
+      - DeleteDiskSnapshot
+      - CreateDiskFromSnapshot
+      - CreateRelationalDatabase
+      - UpdateRelationalDatabase
+      - DeleteRelationalDatabase
+      - CreateRelationalDatabaseFromSnapshot
+      - CreateRelationalDatabaseSnapshot
+      - DeleteRelationalDatabaseSnapshot
+      - UpdateRelationalDatabaseParameters
+      - StartRelationalDatabase
+      - RebootRelationalDatabase
+      - StopRelationalDatabase
+      - EnableAddOn
+      - DisableAddOn
+      - PutAlarm
+      - GetAlarms
+      - DeleteAlarm
+      - TestAlarm
+      - CreateContactMethod
+      - GetContactMethods
+      - SendContactMethodVerification
+      - DeleteContactMethod
+      - CreateDistribution
+      - UpdateDistribution
+      - DeleteDistribution
+      - ResetDistributionCache
+      - AttachCertificateToDistribution
+      - DetachCertificateFromDistribution
+      - UpdateDistributionBundle
+      - SetIpAddressType
+      - CreateCertificate
+      - DeleteCertificate
+      - CreateContainerService
+      - UpdateContainerService
+      - DeleteContainerService
+      - CreateContainerServiceDeployment
+      - CreateContainerServiceRegistryLogin
+      - RegisterContainerImage
+      - DeleteContainerImage
+      - CreateBucket
+      - DeleteBucket
+      - CreateBucketAccessKey
+      - DeleteBucketAccessKey
+      - UpdateBucketBundle
+      - UpdateBucket
+      - SetResourceAccessForBucket
+      - UpdateInstanceMetadataOptions
+      - StartGUISession
+      - StopGUISession
+      - SetupInstanceHttps
+      - GetProfile
+    TagKey:
+      type: string
+    CreateRelationalDatabaseRequest:
+      type: object
+      properties:
+        relationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: 'The name to use for your new Lightsail database resource. Constraints: Must contain from 2 to 255 alphanumeric characters, or hyphens. The first and last character must be a letter or number.'
+        availabilityZone:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The Availability Zone in which to create your new database. Use the us-east-2a case-sensitive format. You can get a list of Availability Zones by using the get regions operation. Be sure to add the include relational database Availability Zones parameter to your request.
+        relationalDatabaseBlueprintId:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The blueprint ID for your new database. A blueprint describes the major engine version of a database. You can get a list of database blueprints IDs by using the get relational database blueprints operation.
+        relationalDatabaseBundleId:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The bundle ID for your new database. A bundle describes the performance specifications for your database. You can get a list of database bundle IDs by using the get relational database bundles operation.
+        masterDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: 'The meaning of this parameter differs according to the database engine you use. MySQL The name of the database to create when the Lightsail database resource is created. If this parameter isn''t specified, no database is created in the database resource. Constraints: Must contain 1 to 64 letters or numbers. Must begin with a letter. Subsequent characters can be letters, underscores, or digits (0- 9). Can''t be a word reserved by the specified database engine. For more information about reserved words in MySQL, see the Keywords and Reserved Words articles for MySQL 5.6 , MySQL 5.7 , and MySQL 8.0 . PostgreSQL The name of the database to create when the Lightsail database resource is created. If this parameter isn''t specified, a database named postgres is created in the database resource. Constraints: Must contain 1 to 63 letters or numbers. Must begin with a letter. Subsequent characters can be letters, underscores, or digits (0- 9). Can''t be a word reserved by the specified database engine. For more information about reserved words in PostgreSQL, see the SQL Key Words articles for PostgreSQL 9.6 , PostgreSQL 10 , PostgreSQL 11 , and PostgreSQL 12 .'
+        masterUsername:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: 'The name for the master user. MySQL Constraints: Required for MySQL. Must be 1 to 16 letters or numbers. Can contain underscores. First character must be a letter. Can''t be a reserved word for the chosen database engine. For more information about reserved words in MySQL 5.6 or 5.7, see the Keywords and Reserved Words articles for MySQL 5.6 , MySQL 5.7 , or MySQL 8.0 . PostgreSQL Constraints: Required for PostgreSQL. Must be 1 to 63 letters or numbers. Can contain underscores. First character must be a letter. Can''t be a reserved word for the chosen database engine. For more information about reserved words in MySQL 5.6 or 5.7, see the Keywords and Reserved Words articles for PostgreSQL 9.6 , PostgreSQL 10 , PostgreSQL 11 , and PostgreSQL 12 .'
+        masterUserPassword:
+          allOf:
+          - $ref: '#/components/schemas/SensitiveString'
+          description: 'The password for the master user. The password can include any printable ASCII character except "/", """, or "@". It cannot contain spaces. MySQL Constraints: Must contain from 8 to 41 characters. PostgreSQL Constraints: Must contain from 8 to 128 characters.'
+        preferredBackupWindow:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: 'The daily time range during which automated backups are created for your new database if automated backups are enabled. The default is a 30-minute window selected at random from an 8-hour block of time for each AWS Region. For more information about the preferred backup window time blocks for each region, see the Working With Backups guide in the Amazon Relational Database Service documentation. Constraints: Must be in the hh24:mi-hh24:mi format. Example: 16:00-16:30 Specified in Coordinated Universal Time (UTC). Must not conflict with the preferred maintenance window. Must be at least 30 minutes.'
+        preferredMaintenanceWindow:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: 'The weekly time range during which system maintenance can occur on your new database. The default is a 30-minute window selected at random from an 8-hour block of time for each AWS Region, occurring on a random day of the week. Constraints: Must be in the ddd:hh24:mi-ddd:hh24:mi format. Valid days: Mon, Tue, Wed, Thu, Fri, Sat, Sun. Must be at least 30 minutes. Specified in Coordinated Universal Time (UTC). Example: Tue:17:00-Tue:17:30'
+        publiclyAccessible:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: Specifies the accessibility options for your new database. A value of true specifies a database that is available to resources outside of your Lightsail account. A value of false specifies a database that is available only to your Lightsail resources in the same region as your database.
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values to add to the resource during create. Use the TagResource action to tag a resource after it's created.
+      required:
+      - relationalDatabaseName
+      - relationalDatabaseBlueprintId
+      - relationalDatabaseBundleId
+      - masterDatabaseName
+      - masterUsername
+    ServiceException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: A general service exception.
+    Operation:
+      type: object
+      properties:
+        id:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The ID of the operation.
+        resourceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The resource name.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The resource type.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the operation was initialized ( 1479816991.349 ).
+        location:
+          allOf:
+          - $ref: '#/components/schemas/ResourceLocation'
+          description: The Amazon Web Services Region and Availability Zone.
+        isTerminal:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the operation is terminal.
+        operationDetails:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Details about the operation ( Debian-1GB-Ohio-1 ).
+        operationType:
+          allOf:
+          - $ref: '#/components/schemas/OperationType'
+          description: The type of operation.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/OperationStatus'
+          description: The status of the operation.
+        statusChangedAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the status was changed ( 1479816991.349 ).
+        errorCode:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The error code.
+        errorDetails:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The error details.
+      description: Describes the API operation.
+    TagList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Tag'
+    LogEventList:
+      type: array
+      items:
+        $ref: '#/components/schemas/LogEvent'
+    RegionSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Regions and Availability Zones for Lightsail
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
+      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
+    GetRelationalDatabaseBlueprintsResult:
+      type: object
+      properties:
+        blueprints:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabaseBlueprintList'
+          description: An object describing the result of your get relational database blueprints request.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetRelationalDatabaseBlueprints request and specify the next page token using the pageToken parameter.
+    CreateRelationalDatabaseFromSnapshotRequest:
+      type: object
+      properties:
+        relationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: 'The name to use for your new Lightsail database resource. Constraints: Must contain from 2 to 255 alphanumeric characters, or hyphens. The first and last character must be a letter or number.'
+        availabilityZone:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The Availability Zone in which to create your new database. Use the us-east-2a case-sensitive format. You can get a list of Availability Zones by using the get regions operation. Be sure to add the include relational database Availability Zones parameter to your request.
+        publiclyAccessible:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: Specifies the accessibility options for your new database. A value of true specifies a database that is available to resources outside of your Lightsail account. A value of false specifies a database that is available only to your Lightsail resources in the same region as your database.
+        relationalDatabaseSnapshotName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the database snapshot from which to create your new database.
+        relationalDatabaseBundleId:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The bundle ID for your new database. A bundle describes the performance specifications for your database. You can get a list of database bundle IDs by using the get relational database bundles operation. When creating a new database from a snapshot, you cannot choose a bundle that is smaller than the bundle of the source database.
+        sourceRelationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the source database.
+        restoreTime:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: 'The date and time to restore your database from. Constraints: Must be before the latest restorable time for the database. Cannot be specified if the use latest restorable time parameter is true . Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you wish to use a restore time of October 1, 2018, at 8 PM UTC, then you input 1538424000 as the restore time.'
+        useLatestRestorableTime:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: 'Specifies whether your database is restored from the latest backup time. A value of true restores from the latest backup time. Default: false Constraints: Cannot be specified if the restore time parameter is provided.'
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values to add to the resource during create. Use the TagResource action to tag a resource after it's created.
+      required:
+      - relationalDatabaseName
+    DeleteRelationalDatabaseResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    ResourceType:
+      type: string
+      enum:
+      - ContainerService
+      - Instance
+      - StaticIp
+      - KeyPair
+      - InstanceSnapshot
+      - Domain
+      - PeeredVpc
+      - LoadBalancer
+      - LoadBalancerTlsCertificate
+      - Disk
+      - DiskSnapshot
+      - RelationalDatabase
+      - RelationalDatabaseSnapshot
+      - ExportSnapshotRecord
+      - CloudFormationStackRecord
+      - Alarm
+      - ContactMethod
+      - Distribution
+      - Certificate
+      - Bucket
+    GetRelationalDatabaseSnapshotsRequest:
+      type: object
+      properties:
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetRelationalDatabaseSnapshots request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+    UnauthenticatedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user has not been authenticated.
+    RelationalDatabaseEventList:
+      type: array
+      items:
+        $ref: '#/components/schemas/RelationalDatabaseEvent'
+    RelationalDatabaseEvent:
+      type: object
+      properties:
+        resource:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The database that the database event relates to.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the database event was created.
+        message:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The message of the database event.
+        eventCategories:
+          allOf:
+          - $ref: '#/components/schemas/StringList'
+          description: The category that the database event belongs to.
+      description: Describes an event for a database.
+    GetRelationalDatabaseResult:
+      type: object
+      properties:
+        relationalDatabase:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabase'
+          description: An object describing the specified database.
+    RelationalDatabasePasswordVersion:
+      type: string
+      enum:
+      - CURRENT
+      - PREVIOUS
+      - PENDING
+    OperationStatus:
+      type: string
+      enum:
+      - NotStarted
+      - Started
+      - Failed
+      - Completed
+      - Succeeded
+    integer:
+      type: integer
+    double:
+      type: number
+    PendingMaintenanceAction:
+      type: object
+      properties:
+        action:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The type of pending database maintenance action.
+        description:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: Additional detail about the pending database maintenance action.
+        currentApplyDate:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The effective date of the pending database maintenance action.
+      description: Describes a pending database maintenance action.
+    GetRelationalDatabasesRequest:
+      type: object
+      properties:
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetRelationalDatabases request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+    GetRelationalDatabaseLogStreamsRequest:
+      type: object
+      properties:
+        relationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of your database for which to get log streams.
+      required:
+      - relationalDatabaseName
+    UpdateRelationalDatabaseParametersRequest:
+      type: object
+      properties:
+        relationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of your database for which to update parameters.
+        parameters:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabaseParameterList'
+          description: The database parameters to update.
+      required:
+      - relationalDatabaseName
+      - parameters
+    InvalidInputException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
+    DeleteRelationalDatabaseRequest:
+      type: object
+      properties:
+        relationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the database that you are deleting.
+        skipFinalSnapshot:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: 'Determines whether a final database snapshot is created before your database is deleted. If true is specified, no database snapshot is created. If false is specified, a database snapshot is created before your database is deleted. You must specify the final relational database snapshot name parameter if the skip final snapshot parameter is false . Default: false'
+        finalRelationalDatabaseSnapshotName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: 'The name of the database snapshot created if skip final snapshot is false , which is the default value for that parameter. Specifying this parameter and also specifying the skip final snapshot parameter to true results in an error. Constraints: Must contain from 2 to 255 alphanumeric characters, or hyphens. The first and last character must be a letter or number.'
+      required:
+      - relationalDatabaseName
+    MetricStatisticList:
+      type: array
+      items:
+        $ref: '#/components/schemas/MetricStatistic'
+    StopRelationalDatabaseRequest:
+      type: object
+      properties:
+        relationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of your database to stop.
+        relationalDatabaseSnapshotName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of your new database snapshot to be created before stopping your database.
+      required:
+      - relationalDatabaseName
+    GetRelationalDatabaseMasterUserPasswordRequest:
+      type: object
+      properties:
+        relationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of your database for which to get the master user password.
+        passwordVersion:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabasePasswordVersion'
+          description: 'The password version to return. Specifying CURRENT or PREVIOUS returns the current or previous passwords respectively. Specifying PENDING returns the newest version of the password that will rotate to CURRENT . After the PENDING password rotates to CURRENT , the PENDING password is no longer available. Default: CURRENT'
+      required:
+      - relationalDatabaseName
+    NotFoundException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when it cannot find a resource.
+    Tag:
+      type: object
+      properties:
+        key:
+          allOf:
+          - $ref: '#/components/schemas/TagKey'
+          description: 'The key of the tag. Constraints: Tag keys accept a maximum of 128 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+        value:
+          allOf:
+          - $ref: '#/components/schemas/TagValue'
+          description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+      description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
+    string:
+      type: string
+    NonEmptyString:
+      type: string
+      pattern: \S
+    CreateRelationalDatabaseResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    RelationalDatabaseBundle:
+      type: object
+      properties:
+        bundleId:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The ID for the database bundle.
+        name:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The name for the database bundle.
+        price:
+          allOf:
+          - $ref: '#/components/schemas/float'
+          description: The cost of the database bundle in US currency.
+        ramSizeInGb:
+          allOf:
+          - $ref: '#/components/schemas/float'
+          description: The amount of RAM in GB (for example, 2.0 ) for the database bundle.
+        diskSizeInGb:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The size of the disk for the database bundle.
+        transferPerMonthInGb:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The data transfer rate per month in GB for the database bundle.
+        cpuCount:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The number of virtual CPUs (vCPUs) for the database bundle.
+        isEncrypted:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the database bundle is encrypted.
+        isActive:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the database bundle is active.
+      description: Describes a database bundle. A bundle describes the performance specifications of the database.
+    RelationalDatabaseSnapshot:
+      type: object
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the database snapshot.
+        arn:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Amazon Resource Name (ARN) of the database snapshot.
+        supportCode:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The support code for the database snapshot. Include this code in your email to support when you have questions about a database snapshot in Lightsail. This code enables our support team to look up your Lightsail information more easily.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the database snapshot was created.
+        location:
+          allOf:
+          - $ref: '#/components/schemas/ResourceLocation'
+          description: The Region name and Availability Zone where the database snapshot is located.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The Lightsail resource type.
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values for the resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
+        engine:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The software of the database snapshot (for example, MySQL )
+        engineVersion:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The database engine version for the database snapshot (for example, 5.7.23 ).
+        sizeInGb:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The size of the disk in GB (for example, 32 ) for the database snapshot.
+        state:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The state of the database snapshot.
+        fromRelationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The name of the source database from which the database snapshot was created.
+        fromRelationalDatabaseArn:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Amazon Resource Name (ARN) of the database from which the database snapshot was created.
+        fromRelationalDatabaseBundleId:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The bundle ID of the database from which the database snapshot was created.
+        fromRelationalDatabaseBlueprintId:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The blueprint ID of the database from which the database snapshot was created. A blueprint describes the major engine version of a database.
+      description: Describes a database snapshot.
+    AccessDeniedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
+    UpdateRelationalDatabaseResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    DeleteRelationalDatabaseSnapshotRequest:
+      type: object
+      properties:
+        relationalDatabaseSnapshotName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the database snapshot that you are deleting.
+      required:
+      - relationalDatabaseSnapshotName
+    GetRelationalDatabaseParametersRequest:
+      type: object
+      properties:
+        relationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of your database for which to get parameters.
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetRelationalDatabaseParameters request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+      required:
+      - relationalDatabaseName
+    GetRelationalDatabaseMetricDataRequest:
+      type: object
+      properties:
+        relationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of your database from which to get metric data.
+        metricName:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabaseMetricName'
+          description: 'The metric for which you want to return information. Valid relational database metric names are listed below, along with the most useful statistics to include in your request, and the published unit value. All relational database metric data is available in 1-minute (60 seconds) granularity. CPUUtilization - The percentage of CPU utilization currently in use on the database. Statistics : The most useful statistics are Maximum and Average . Unit : The published unit is Percent . DatabaseConnections - The number of database connections in use. Statistics : The most useful statistics are Maximum and Sum . Unit : The published unit is Count . DiskQueueDepth - The number of outstanding IOs (read/write requests) that are waiting to access the disk. Statistics : The most useful statistic is Sum . Unit : The published unit is Count . FreeStorageSpace - The amount of available storage space. Statistics : The most useful statistic is Sum . Unit : The published unit is Bytes . NetworkReceiveThroughput - The incoming (Receive) network traffic on the database, including both customer database traffic and AWS traffic used for monitoring and replication. Statistics : The most useful statistic is Average . Unit : The published unit is Bytes/Second . NetworkTransmitThroughput - The outgoing (Transmit) network traffic on the database, including both customer database traffic and AWS traffic used for monitoring and replication. Statistics : The most useful statistic is Average . Unit : The published unit is Bytes/Second .'
+        period:
+          allOf:
+          - $ref: '#/components/schemas/MetricPeriod'
+          description: The granularity, in seconds, of the returned data points. All relational database metric data is available in 1-minute (60 seconds) granularity.
+        startTime:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: 'The start of the time interval from which to get metric data. Constraints: Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you wish to use a start time of October 1, 2018, at 8 PM UTC, then you input 1538424000 as the start time.'
+        endTime:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: 'The end of the time interval from which to get metric data. Constraints: Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you wish to use an end time of October 1, 2018, at 8 PM UTC, then you input 1538424000 as the end time.'
+        unit:
+          allOf:
+          - $ref: '#/components/schemas/MetricUnit'
+          description: The unit for the metric data request. Valid units depend on the metric data being requested. For the valid units with each available metric, see the metricName parameter.
+        statistics:
+          allOf:
+          - $ref: '#/components/schemas/MetricStatisticList'
+          description: 'The statistic for the metric. The following statistics are available: Minimum - The lowest value observed during the specified period. Use this value to determine low volumes of activity for your application. Maximum - The highest value observed during the specified period. Use this value to determine high volumes of activity for your application. Sum - All values submitted for the matching metric added together. You can use this statistic to determine the total volume of a metric. Average - The value of Sum / SampleCount during the specified period. By comparing this statistic with the Minimum and Maximum values, you can determine the full scope of a metric and how close the average use is to the Minimum and Maximum values. This comparison helps you to know when to increase or decrease your resources. SampleCount - The count, or number, of data points used for the statistical calculation.'
+      required:
+      - relationalDatabaseName
+      - metricName
+      - period
+      - startTime
+      - endTime
+      - unit
+      - statistics
+    StartRelationalDatabaseResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    GetRelationalDatabaseLogStreamsResult:
+      type: object
+      properties:
+        logStreams:
+          allOf:
+          - $ref: '#/components/schemas/StringList'
+          description: An object describing the result of your get relational database log streams request.
+    GetRelationalDatabaseEventsRequest:
+      type: object
+      properties:
+        relationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the database from which to get events.
+        durationInMinutes:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: 'The number of minutes in the past from which to retrieve events. For example, to get all events from the past 2 hours, enter 120. Default: 60 The minimum is 1 and the maximum is 14 days (20160 minutes).'
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetRelationalDatabaseEvents request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+      required:
+      - relationalDatabaseName
+    RelationalDatabaseBlueprintList:
+      type: array
+      items:
+        $ref: '#/components/schemas/RelationalDatabaseBlueprint'
+    RelationalDatabaseParameterList:
+      type: array
+      items:
+        $ref: '#/components/schemas/RelationalDatabaseParameter'
+    RegionName:
+      type: string
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-west-3
+      - eu-central-1
+      - eu-north-1
+      - eu-south-2
+      - ca-central-1
+      - ap-east-1
+      - ap-south-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+      - ap-northeast-2
+      - ap-southeast-3
+      - ap-southeast-5
+      - sa-east-1
+    GetRelationalDatabaseParametersResult:
+      type: object
+      properties:
+        parameters:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabaseParameterList'
+          description: An object describing the result of your get relational database parameters request.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetRelationalDatabaseParameters request and specify the next page token using the pageToken parameter.
+    OperationFailureException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an operation fails to execute.
+    GetRelationalDatabaseMasterUserPasswordResult:
+      type: object
+      properties:
+        masterUserPassword:
+          allOf:
+          - $ref: '#/components/schemas/SensitiveString'
+          description: The master user password for the password version specified.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the specified version of the master user password was created.
+    GetRelationalDatabaseBundlesResult:
+      type: object
+      properties:
+        bundles:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabaseBundleList'
+          description: An object describing the result of your get relational database bundles request.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetRelationalDatabaseBundles request and specify the next page token using the pageToken parameter.
+    RebootRelationalDatabaseResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    DeleteRelationalDatabaseSnapshotResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    MetricDatapointList:
+      type: array
+      items:
+        $ref: '#/components/schemas/MetricDatapoint'
+    RelationalDatabase:
+      type: object
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The unique name of the database resource in Lightsail.
+        arn:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Amazon Resource Name (ARN) of the database.
+        supportCode:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The support code for the database. Include this code in your email to support when you have questions about a database in Lightsail. This code enables our support team to look up your Lightsail information more easily.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the database was created. Formatted in Unix time.
+        location:
+          allOf:
+          - $ref: '#/components/schemas/ResourceLocation'
+          description: The Region name and Availability Zone where the database is located.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The Lightsail resource type for the database (for example, RelationalDatabase ).
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values for the resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
+        relationalDatabaseBlueprintId:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The blueprint ID for the database. A blueprint describes the major engine version of a database.
+        relationalDatabaseBundleId:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The bundle ID for the database. A bundle describes the performance specifications for your database.
+        masterDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The name of the master database created when the Lightsail database resource is created.
+        hardware:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabaseHardware'
+          description: Describes the hardware of the database.
+        state:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: Describes the current state of the database.
+        secondaryAvailabilityZone:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Describes the secondary Availability Zone of a high availability database. The secondary database is used for failover support of a high availability database.
+        backupRetentionEnabled:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether automated backup retention is enabled for the database.
+        pendingModifiedValues:
+          allOf:
+          - $ref: '#/components/schemas/PendingModifiedRelationalDatabaseValues'
+          description: Describes pending database value modifications.
+        engine:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The database software (for example, MySQL ).
+        engineVersion:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The database engine version (for example, 5.7.23 ).
+        latestRestorableTime:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The latest point in time to which the database can be restored. Formatted in Unix time.
+        masterUsername:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The master user name of the database.
+        parameterApplyStatus:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The status of parameter updates for the database.
+        preferredBackupWindow:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The daily time range during which automated backups are created for the database (for example, 16:00-16:30 ).
+        preferredMaintenanceWindow:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The weekly time range during which system maintenance can occur on the database. In the format ddd:hh24:mi-ddd:hh24:mi . For example, Tue:17:00-Tue:17:30 .
+        publiclyAccessible:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the database is publicly accessible.
+        masterEndpoint:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabaseEndpoint'
+          description: The master endpoint for the database.
+        pendingMaintenanceActions:
+          allOf:
+          - $ref: '#/components/schemas/PendingMaintenanceActionList'
+          description: Describes the pending maintenance actions for the database.
+        caCertificateIdentifier:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The certificate associated with the database.
+      description: Describes a database.
+    RelationalDatabaseHardware:
+      type: object
+      properties:
+        cpuCount:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The number of vCPUs for the database.
+        diskSizeInGb:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The size of the disk for the database.
+        ramSizeInGb:
+          allOf:
+          - $ref: '#/components/schemas/float'
+          description: The amount of RAM in GB for the database.
+      description: Describes the hardware of a database.
+    GetRelationalDatabaseEventsResult:
+      type: object
+      properties:
+        relationalDatabaseEvents:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabaseEventList'
+          description: An object describing the result of your get relational database events request.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetRelationalDatabaseEvents request and specify the next page token using the pageToken parameter.
+    UpdateRelationalDatabaseParametersResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    GetRelationalDatabaseMetricDataResult:
+      type: object
+      properties:
+        metricName:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabaseMetricName'
+          description: The name of the metric returned.
+        metricData:
+          allOf:
+          - $ref: '#/components/schemas/MetricDatapointList'
+          description: An array of objects that describe the metric data returned.
+    IsoDate:
+      type: string
+      format: date-time
+    float:
+      type: number
+    GetRelationalDatabaseSnapshotResult:
+      type: object
+      properties:
+        relationalDatabaseSnapshot:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabaseSnapshot'
+          description: An object describing the specified database snapshot.
+    GetRelationalDatabaseLogEventsRequest:
+      type: object
+      properties:
+        relationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of your database for which to get log events.
+        logStreamName:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The name of the log stream. Use the get relational database log streams operation to get a list of available log streams.
+        startTime:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: 'The start of the time interval from which to get log events. Constraints: Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you wish to use a start time of October 1, 2018, at 8 PM UTC, then you input 1538424000 as the start time.'
+        endTime:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: 'The end of the time interval from which to get log events. Constraints: Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you wish to use an end time of October 1, 2018, at 8 PM UTC, then you input 1538424000 as the end time.'
+        startFromHead:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: Parameter to specify if the log should start from head or tail. If true is specified, the log event starts from the head of the log. If false is specified, the log event starts from the tail of the log. For PostgreSQL, the default value of false is the only option available.
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next or previous page of results from your request. To get a page token, perform an initial GetRelationalDatabaseLogEvents request. If your results are paginated, the response will return a next forward token and/or next backward token that you can specify as the page token in a subsequent request.
+      required:
+      - relationalDatabaseName
+      - logStreamName
+    GetRelationalDatabaseBundlesRequest:
+      type: object
+      properties:
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetRelationalDatabaseBundles request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+        includeInactive:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value that indicates whether to include inactive (unavailable) bundles in the response of your request.
+    CreateRelationalDatabaseSnapshotRequest:
+      type: object
+      properties:
+        relationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the database on which to base your new snapshot.
+        relationalDatabaseSnapshotName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: 'The name for your new database snapshot. Constraints: Must contain from 2 to 255 alphanumeric characters, or hyphens. The first and last character must be a letter or number.'
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values to add to the resource during create. Use the TagResource action to tag a resource after it's created.
+      required:
+      - relationalDatabaseName
+      - relationalDatabaseSnapshotName
+    RelationalDatabaseBlueprint:
+      type: object
+      properties:
+        blueprintId:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The ID for the database blueprint.
+        engine:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabaseEngine'
+          description: The database software of the database blueprint (for example, MySQL ).
+        engineVersion:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The database engine version for the database blueprint (for example, 5.7.23 ).
+        engineDescription:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The description of the database engine for the database blueprint.
+        engineVersionDescription:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The description of the database engine version for the database blueprint.
+        isEngineDefault:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the engine version is the default for the database blueprint.
+      description: Describes a database image, or blueprint. A blueprint describes the major engine version of a database.
+    MetricStatistic:
+      type: string
+      enum:
+      - Minimum
+      - Maximum
+      - Sum
+      - Average
+      - SampleCount
+    CreateRelationalDatabaseFromSnapshotResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    RelationalDatabaseEngine:
+      type: string
+      enum:
+      - mysql
+    MetricUnit:
+      type: string
+      enum:
+      - Seconds
+      - Microseconds
+      - Milliseconds
+      - Bytes
+      - Kilobytes
+      - Megabytes
+      - Gigabytes
+      - Terabytes
+      - Bits
+      - Kilobits
+      - Megabits
+      - Gigabits
+      - Terabits
+      - Percent
+      - Count
+      - Bytes/Second
+      - Kilobytes/Second
+      - Megabytes/Second
+      - Gigabytes/Second
+      - Terabytes/Second
+      - Bits/Second
+      - Kilobits/Second
+      - Megabits/Second
+      - Gigabits/Second
+      - Terabits/Second
+      - Count/Second
+      - None
+    RelationalDatabaseBundleList:
+      type: array
+      items:
+        $ref: '#/components/schemas/RelationalDatabaseBundle'
+    PendingMaintenanceActionList:
+      type: array
+      items:
+        $ref: '#/components/schemas/PendingMaintenanceAction'
+    RebootRelationalDatabaseRequest:
+      type: object
+      properties:
+        relationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of your database to reboot.
+      required:
+      - relationalDatabaseName
+    TagValue:
+      type: string
+    GetRelationalDatabaseSnapshotRequest:
+      type: object
+      properties:
+        relationalDatabaseSnapshotName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the database snapshot for which to get information.
+      required:
+      - relationalDatabaseSnapshotName
+    CreateRelationalDatabaseSnapshotResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    ResourceName:
+      type: string
+      pattern: ^\w[\w\-]*\w$
+    GetRelationalDatabaseBlueprintsRequest:
+      type: object
+      properties:
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetRelationalDatabaseBlueprints request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+    SensitiveString:
+      type: string
+    RelationalDatabaseMetricName:
+      type: string
+      enum:
+      - CPUUtilization
+      - DatabaseConnections
+      - DiskQueueDepth
+      - FreeStorageSpace
+      - NetworkReceiveThroughput
+      - NetworkTransmitThroughput
+      - FreeableMemory
+      - SwapUsage
+    UpdateRelationalDatabaseRequest:
+      type: object
+      properties:
+        relationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of your Lightsail database resource to update.
+        masterUserPassword:
+          allOf:
+          - $ref: '#/components/schemas/SensitiveString'
+          description: 'The password for the master user. The password can include any printable ASCII character except "/", """, or "@". My SQL Constraints: Must contain from 8 to 41 characters. PostgreSQL Constraints: Must contain from 8 to 128 characters.'
+        rotateMasterUserPassword:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: When true , the master user password is changed to a new strong password generated by Lightsail. Use the get relational database master user password operation to get the new password.
+        preferredBackupWindow:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: 'The daily time range during which automated backups are created for your database if automated backups are enabled. Constraints: Must be in the hh24:mi-hh24:mi format. Example: 16:00-16:30 Specified in Coordinated Universal Time (UTC). Must not conflict with the preferred maintenance window. Must be at least 30 minutes.'
+        preferredMaintenanceWindow:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: 'The weekly time range during which system maintenance can occur on your database. The default is a 30-minute window selected at random from an 8-hour block of time for each Amazon Web Services Region, occurring on a random day of the week. Constraints: Must be in the ddd:hh24:mi-ddd:hh24:mi format. Valid days: Mon, Tue, Wed, Thu, Fri, Sat, Sun. Must be at least 30 minutes. Specified in Coordinated Universal Time (UTC). Example: Tue:17:00-Tue:17:30'
+        enableBackupRetention:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: When true , enables automated backup retention for your database. Updates are applied during the next maintenance window because this can result in an outage.
+        disableBackupRetention:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: When true , disables automated backup retention for your database. Disabling backup retention deletes all automated database backups. Before disabling this, you may want to create a snapshot of your database using the create relational database snapshot operation. Updates are applied during the next maintenance window because this can result in an outage.
+        publiclyAccessible:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: Specifies the accessibility options for your database. A value of true specifies a database that is available to resources outside of your Lightsail account. A value of false specifies a database that is available only to your Lightsail resources in the same region as your database.
+        applyImmediately:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: 'When true , applies changes immediately. When false , applies changes during the preferred maintenance window. Some changes may cause an outage. Default: false'
+        caCertificateIdentifier:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Indicates the certificate that needs to be associated with the database.
+        relationalDatabaseBlueprintId:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: This parameter is used to update the major version of the database. Enter the blueprintId for the major version that you want to update to. Use the GetRelationalDatabaseBlueprints action to get a list of available blueprint IDs.
+      required:
+      - relationalDatabaseName
+    GetRelationalDatabasesResult:
+      type: object
+      properties:
+        relationalDatabases:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabaseList'
+          description: An object describing the result of your get relational databases request.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetRelationalDatabases request and specify the next page token using the pageToken parameter.
+    boolean:
+      type: boolean
+    MetricDatapoint:
+      type: object
+      properties:
+        average:
+          allOf:
+          - $ref: '#/components/schemas/double'
+          description: The average.
+        maximum:
+          allOf:
+          - $ref: '#/components/schemas/double'
+          description: The maximum.
+        minimum:
+          allOf:
+          - $ref: '#/components/schemas/double'
+          description: The minimum.
+        sampleCount:
+          allOf:
+          - $ref: '#/components/schemas/double'
+          description: The sample count.
+        sum:
+          allOf:
+          - $ref: '#/components/schemas/double'
+          description: The sum.
+        timestamp:
+          allOf:
+          - $ref: '#/components/schemas/timestamp'
+          description: The timestamp ( 1479816991.349 ).
+        unit:
+          allOf:
+          - $ref: '#/components/schemas/MetricUnit'
+          description: The unit.
+      description: Describes the metric data point.
+    GetRelationalDatabaseSnapshotsResult:
+      type: object
+      properties:
+        relationalDatabaseSnapshots:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabaseSnapshotList'
+          description: An object describing the result of your get relational database snapshots request.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetRelationalDatabaseSnapshots request and specify the next page token using the pageToken parameter.
+    StringList:
+      type: array
+      items:
+        $ref: '#/components/schemas/string'
+    MetricPeriod:
+      type: integer
+      minimum: 60
+      maximum: 86400
+    timestamp:
+      type: string
+      format: date-time
+    RelationalDatabaseEndpoint:
+      type: object
+      properties:
+        port:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: Specifies the port that the database is listening on.
+        address:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: Specifies the DNS address of the database.
+      description: Describes an endpoint for a database.
+    RelationalDatabaseSnapshotList:
+      type: array
+      items:
+        $ref: '#/components/schemas/RelationalDatabaseSnapshot'
+    OperationList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Operation'
+    GetRelationalDatabaseLogEventsResult:
+      type: object
+      properties:
+        resourceLogEvents:
+          allOf:
+          - $ref: '#/components/schemas/LogEventList'
+          description: An object describing the result of your get relational database log events request.
+        nextBackwardToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: A token used for advancing to the previous page of results from your get relational database log events request.
+        nextForwardToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: A token used for advancing to the next page of results from your get relational database log events request.
+    AccountSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an account is still in the setup in progress state.
+    LogEvent:
+      type: object
+      properties:
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the database log event was created.
+        message:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The message of the database log event.
+      description: Describes a database log event.
+    PendingModifiedRelationalDatabaseValues:
+      type: object
+      properties:
+        masterUserPassword:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The password for the master user of the database.
+        engineVersion:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The database engine version.
+        backupRetentionEnabled:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether automated backup retention is enabled.
+      description: Describes a pending database value modification.
+  securitySchemes:
+    sigv4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4. Sign each request with IAM credentials for service name "lightsail"; the Authorization header carries the AWS4-HMAC-SHA256 credential scope, signed headers and signature. Temporary STS credentials additionally require X-Amz-Security-Token. See https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/CommonParameters.html
+externalDocs:
+  description: Amazon Lightsail API Reference
+  url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html

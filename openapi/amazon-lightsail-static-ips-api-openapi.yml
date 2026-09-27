@@ -1,0 +1,871 @@
+openapi: 3.2.0
+info:
+  title: Amazon Lightsail Static IPs API
+  description: Amazon Lightsail is the easiest way to get started with Amazon Web Services (AWS) for developers who need to build websites or web applications.
+  version: '2016-11-28'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/premiumsupport/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  x-logo:
+    url: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
+  x-generated-from: AWS Smithy 2.0 service model (https://github.com/aws/api-models-aws) — mechanical transform, no hand-authored operations
+servers:
+- url: https://lightsail.us-east-1.amazonaws.com
+  description: Amazon Lightsail regional endpoint (us-east-1). Lightsail is regional — one endpoint per AWS Region, lightsail.{region}.amazonaws.com (IPv4) or lightsail.{region}.api.aws (dual-stack). See https://docs.aws.amazon.com/general/latest/gr/lightsail.html
+security:
+- sigv4: []
+tags:
+- name: Static IPs
+paths:
+  /ls/api/2016-11-28/AllocateStaticIp:
+    post:
+      operationId: AllocateStaticIp
+      summary: Allocates a static IP address
+      description: Allocates a static IP address.
+      tags:
+      - Static IPs
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/AllocateStaticIpRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AllocateStaticIpResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.AllocateStaticIp
+  /ls/api/2016-11-28/AttachStaticIp:
+    post:
+      operationId: AttachStaticIp
+      summary: Attaches a static IP address to a specific Amazon Lightsail instance
+      description: Attaches a static IP address to a specific Amazon Lightsail instance.
+      tags:
+      - Static IPs
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/AttachStaticIpRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AttachStaticIpResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.AttachStaticIp
+  /ls/api/2016-11-28/DetachStaticIp:
+    post:
+      operationId: DetachStaticIp
+      summary: Detaches a static IP from the Amazon Lightsail instance to which it is attached
+      description: Detaches a static IP from the Amazon Lightsail instance to which it is attached.
+      tags:
+      - Static IPs
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/DetachStaticIpRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/DetachStaticIpResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.DetachStaticIp
+  /ls/api/2016-11-28/GetStaticIp:
+    post:
+      operationId: GetStaticIp
+      summary: Returns information about an Amazon Lightsail static IP
+      description: Returns information about an Amazon Lightsail static IP.
+      tags:
+      - Static IPs
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/GetStaticIpRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/GetStaticIpResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.GetStaticIp
+  /ls/api/2016-11-28/GetStaticIps:
+    post:
+      operationId: GetStaticIps
+      summary: Returns information about all static IPs in the user's account
+      description: Returns information about all static IPs in the user's account.
+      tags:
+      - Static IPs
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/GetStaticIpsRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/GetStaticIpsResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.GetStaticIps
+  /ls/api/2016-11-28/ReleaseStaticIp:
+    post:
+      operationId: ReleaseStaticIp
+      summary: Deletes a specific static IP from your account
+      description: Deletes a specific static IP from your account.
+      tags:
+      - Static IPs
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/ReleaseStaticIpRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ReleaseStaticIpResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.ReleaseStaticIp
+components:
+  schemas:
+    StaticIp:
+      type: object
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the static IP ( StaticIP-Ohio-EXAMPLE ).
+        arn:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Amazon Resource Name (ARN) of the static IP ( arn:aws:lightsail:us-east-2:123456789101:StaticIp/9cbb4a9e-f8e3-4dfe-b57e-12345EXAMPLE ).
+        supportCode:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The support code. Include this code in your email to support when you have questions about an instance or another resource in Lightsail. This code enables our support team to look up your Lightsail information more easily.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the static IP was created ( 1479735304.222 ).
+        location:
+          allOf:
+          - $ref: '#/components/schemas/ResourceLocation'
+          description: The region and Availability Zone where the static IP was created.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The resource type (usually StaticIp ).
+        ipAddress:
+          allOf:
+          - $ref: '#/components/schemas/IpAddress'
+          description: The static IP address.
+        attachedTo:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The instance where the static IP is attached ( Amazon_Linux-1GB-Ohio-1 ).
+        isAttached:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the static IP is attached.
+      description: Describes a static IP.
+    AttachStaticIpResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    OperationStatus:
+      type: string
+      enum:
+      - NotStarted
+      - Started
+      - Failed
+      - Completed
+      - Succeeded
+    ResourceLocation:
+      type: object
+      properties:
+        availabilityZone:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The Availability Zone. Follows the format us-east-2a (case-sensitive).
+        regionName:
+          allOf:
+          - $ref: '#/components/schemas/RegionName'
+          description: The Amazon Web Services Region name.
+      description: Describes the resource location.
+    ResourceName:
+      type: string
+      pattern: ^\w[\w\-]*\w$
+    AccessDeniedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
+    AllocateStaticIpResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    IpAddress:
+      type: string
+      pattern: ^([0-9]{1,3}\.){3}[0-9]{1,3}$
+    ReleaseStaticIpRequest:
+      type: object
+      properties:
+        staticIpName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the static IP to delete.
+      required:
+      - staticIpName
+    AllocateStaticIpRequest:
+      type: object
+      properties:
+        staticIpName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the static IP address.
+      required:
+      - staticIpName
+    RegionName:
+      type: string
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-west-3
+      - eu-central-1
+      - eu-north-1
+      - eu-south-2
+      - ca-central-1
+      - ap-east-1
+      - ap-south-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+      - ap-northeast-2
+      - ap-southeast-3
+      - ap-southeast-5
+      - sa-east-1
+    OperationType:
+      type: string
+      enum:
+      - DeleteKnownHostKeys
+      - DeleteInstance
+      - CreateInstance
+      - StopInstance
+      - StartInstance
+      - RebootInstance
+      - OpenInstancePublicPorts
+      - PutInstancePublicPorts
+      - CloseInstancePublicPorts
+      - AllocateStaticIp
+      - ReleaseStaticIp
+      - AttachStaticIp
+      - DetachStaticIp
+      - UpdateDomainEntry
+      - DeleteDomainEntry
+      - CreateDomain
+      - DeleteDomain
+      - CreateInstanceSnapshot
+      - DeleteInstanceSnapshot
+      - CreateInstancesFromSnapshot
+      - CreateLoadBalancer
+      - DeleteLoadBalancer
+      - AttachInstancesToLoadBalancer
+      - DetachInstancesFromLoadBalancer
+      - UpdateLoadBalancerAttribute
+      - CreateLoadBalancerTlsCertificate
+      - DeleteLoadBalancerTlsCertificate
+      - AttachLoadBalancerTlsCertificate
+      - CreateDisk
+      - DeleteDisk
+      - AttachDisk
+      - DetachDisk
+      - CreateDiskSnapshot
+      - DeleteDiskSnapshot
+      - CreateDiskFromSnapshot
+      - CreateRelationalDatabase
+      - UpdateRelationalDatabase
+      - DeleteRelationalDatabase
+      - CreateRelationalDatabaseFromSnapshot
+      - CreateRelationalDatabaseSnapshot
+      - DeleteRelationalDatabaseSnapshot
+      - UpdateRelationalDatabaseParameters
+      - StartRelationalDatabase
+      - RebootRelationalDatabase
+      - StopRelationalDatabase
+      - EnableAddOn
+      - DisableAddOn
+      - PutAlarm
+      - GetAlarms
+      - DeleteAlarm
+      - TestAlarm
+      - CreateContactMethod
+      - GetContactMethods
+      - SendContactMethodVerification
+      - DeleteContactMethod
+      - CreateDistribution
+      - UpdateDistribution
+      - DeleteDistribution
+      - ResetDistributionCache
+      - AttachCertificateToDistribution
+      - DetachCertificateFromDistribution
+      - UpdateDistributionBundle
+      - SetIpAddressType
+      - CreateCertificate
+      - DeleteCertificate
+      - CreateContainerService
+      - UpdateContainerService
+      - DeleteContainerService
+      - CreateContainerServiceDeployment
+      - CreateContainerServiceRegistryLogin
+      - RegisterContainerImage
+      - DeleteContainerImage
+      - CreateBucket
+      - DeleteBucket
+      - CreateBucketAccessKey
+      - DeleteBucketAccessKey
+      - UpdateBucketBundle
+      - UpdateBucket
+      - SetResourceAccessForBucket
+      - UpdateInstanceMetadataOptions
+      - StartGUISession
+      - StopGUISession
+      - SetupInstanceHttps
+      - GetProfile
+    OperationFailureException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an operation fails to execute.
+    boolean:
+      type: boolean
+    InvalidInputException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
+    ServiceException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: A general service exception.
+    DetachStaticIpRequest:
+      type: object
+      properties:
+        staticIpName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the static IP to detach from the instance.
+      required:
+      - staticIpName
+    AttachStaticIpRequest:
+      type: object
+      properties:
+        staticIpName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the static IP.
+        instanceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The instance name to which you want to attach the static IP address.
+      required:
+      - staticIpName
+      - instanceName
+    DetachStaticIpResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    Operation:
+      type: object
+      properties:
+        id:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The ID of the operation.
+        resourceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The resource name.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The resource type.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the operation was initialized ( 1479816991.349 ).
+        location:
+          allOf:
+          - $ref: '#/components/schemas/ResourceLocation'
+          description: The Amazon Web Services Region and Availability Zone.
+        isTerminal:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the operation is terminal.
+        operationDetails:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Details about the operation ( Debian-1GB-Ohio-1 ).
+        operationType:
+          allOf:
+          - $ref: '#/components/schemas/OperationType'
+          description: The type of operation.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/OperationStatus'
+          description: The status of the operation.
+        statusChangedAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the status was changed ( 1479816991.349 ).
+        errorCode:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The error code.
+        errorDetails:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The error details.
+      description: Describes the API operation.
+    NotFoundException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when it cannot find a resource.
+    RegionSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Regions and Availability Zones for Lightsail
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
+      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
+    IsoDate:
+      type: string
+      format: date-time
+    GetStaticIpsResult:
+      type: object
+      properties:
+        staticIps:
+          allOf:
+          - $ref: '#/components/schemas/StaticIpList'
+          description: An array of key-value pairs containing information about your get static IPs request.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetStaticIps request and specify the next page token using the pageToken parameter.
+    string:
+      type: string
+    ResourceType:
+      type: string
+      enum:
+      - ContainerService
+      - Instance
+      - StaticIp
+      - KeyPair
+      - InstanceSnapshot
+      - Domain
+      - PeeredVpc
+      - LoadBalancer
+      - LoadBalancerTlsCertificate
+      - Disk
+      - DiskSnapshot
+      - RelationalDatabase
+      - RelationalDatabaseSnapshot
+      - ExportSnapshotRecord
+      - CloudFormationStackRecord
+      - Alarm
+      - ContactMethod
+      - Distribution
+      - Certificate
+      - Bucket
+    NonEmptyString:
+      type: string
+      pattern: \S
+    OperationList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Operation'
+    GetStaticIpsRequest:
+      type: object
+      properties:
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetStaticIps request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+    AccountSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an account is still in the setup in progress state.
+    GetStaticIpRequest:
+      type: object
+      properties:
+        staticIpName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the static IP in Lightsail.
+      required:
+      - staticIpName
+    UnauthenticatedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user has not been authenticated.
+    ReleaseStaticIpResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    GetStaticIpResult:
+      type: object
+      properties:
+        staticIp:
+          allOf:
+          - $ref: '#/components/schemas/StaticIp'
+          description: An array of key-value pairs containing information about the requested static IP.
+    StaticIpList:
+      type: array
+      items:
+        $ref: '#/components/schemas/StaticIp'
+  securitySchemes:
+    sigv4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4. Sign each request with IAM credentials for service name "lightsail"; the Authorization header carries the AWS4-HMAC-SHA256 credential scope, signed headers and signature. Temporary STS credentials additionally require X-Amz-Security-Token. See https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/CommonParameters.html
+externalDocs:
+  description: Amazon Lightsail API Reference
+  url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html

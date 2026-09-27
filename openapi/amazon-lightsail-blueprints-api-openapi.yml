@@ -1,0 +1,306 @@
+openapi: 3.2.0
+info:
+  title: Amazon Lightsail Blueprints API
+  description: Amazon Lightsail is the easiest way to get started with Amazon Web Services (AWS) for developers who need to build websites or web applications.
+  version: '2016-11-28'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/premiumsupport/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  x-logo:
+    url: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
+  x-generated-from: AWS Smithy 2.0 service model (https://github.com/aws/api-models-aws) — mechanical transform, no hand-authored operations
+servers:
+- url: https://lightsail.us-east-1.amazonaws.com
+  description: Amazon Lightsail regional endpoint (us-east-1). Lightsail is regional — one endpoint per AWS Region, lightsail.{region}.amazonaws.com (IPv4) or lightsail.{region}.api.aws (dual-stack). See https://docs.aws.amazon.com/general/latest/gr/lightsail.html
+security:
+- sigv4: []
+tags:
+- name: Blueprints
+paths:
+  /ls/api/2016-11-28/GetBlueprints:
+    post:
+      operationId: GetBlueprints
+      summary: Returns the list of available instance images, or blueprints
+      description: Returns the list of available instance images, or blueprints . You can use a blueprint to create a new instance already running a specific operating system, as well as a preinstalled app or development stack. The software each instance is running depends on the blueprint image you choose. Use active blueprints when creating new instances. Inactive blueprints are listed to support customers with existing instances and are not necessarily available to create new instances. Blueprints are marked inactive when they become outdated due to operating system updates or new application releases.
+      tags:
+      - Blueprints
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/GetBlueprintsRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/GetBlueprintsResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.GetBlueprints
+components:
+  schemas:
+    InstancePlatform:
+      type: string
+      enum:
+      - LINUX_UNIX
+      - WINDOWS
+    ResourceName:
+      type: string
+      pattern: ^\w[\w\-]*\w$
+    AppCategory:
+      type: string
+      enum:
+      - LfR
+    integer:
+      type: integer
+    BlueprintList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Blueprint'
+    BlueprintType:
+      type: string
+      enum:
+      - os
+      - app
+    OperationFailureException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an operation fails to execute.
+    boolean:
+      type: boolean
+    InvalidInputException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
+    ServiceException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: A general service exception.
+    GetBlueprintsRequest:
+      type: object
+      properties:
+        includeInactive:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value that indicates whether to include inactive (unavailable) blueprints in the response of your request.
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetBlueprints request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+        appCategory:
+          allOf:
+          - $ref: '#/components/schemas/AppCategory'
+          description: Returns a list of blueprints that are specific to Lightsail for Research. You must use this parameter to view Lightsail for Research blueprints.
+    NotFoundException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when it cannot find a resource.
+    RegionSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Regions and Availability Zones for Lightsail
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
+      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
+    Blueprint:
+      type: object
+      properties:
+        blueprintId:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The ID for the virtual private server image ( app_wordpress_x_x or app_lamp_x_x ).
+        name:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The friendly name of the blueprint ( Amazon Linux ).
+        group:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The group name of the blueprint ( amazon-linux ).
+        type:
+          allOf:
+          - $ref: '#/components/schemas/BlueprintType'
+          description: The type of the blueprint ( os or app ).
+        description:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The description of the blueprint.
+        isActive:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the blueprint is active. Inactive blueprints are listed to support customers with existing instances but are not necessarily available for launch of new instances. Blueprints are marked inactive when they become outdated due to operating system updates or new application releases.
+        minPower:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The minimum bundle power required to run this blueprint. For example, you need a bundle with a power value of 500 or more to create an instance that uses a blueprint with a minimum power value of 500. 0 indicates that the blueprint runs on all instance sizes.
+        version:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The version number of the operating system, application, or stack ( 2016.03.0 ).
+        versionCode:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The version code.
+        productUrl:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The product URL to learn more about the image or blueprint.
+        licenseUrl:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The end-user license agreement URL for the image or blueprint.
+        platform:
+          allOf:
+          - $ref: '#/components/schemas/InstancePlatform'
+          description: The operating system platform (either Linux/Unix-based or Windows Server-based) of the blueprint.
+        appCategory:
+          allOf:
+          - $ref: '#/components/schemas/AppCategory'
+          description: Virtual computer blueprints that are supported by Lightsail for Research. This parameter only applies to Lightsail for Research resources.
+      description: Describes a blueprint (a virtual private server image).
+    string:
+      type: string
+    NonEmptyString:
+      type: string
+      pattern: \S
+    AccountSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an account is still in the setup in progress state.
+    UnauthenticatedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user has not been authenticated.
+    GetBlueprintsResult:
+      type: object
+      properties:
+        blueprints:
+          allOf:
+          - $ref: '#/components/schemas/BlueprintList'
+          description: An array of key-value pairs that contains information about the available blueprints.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetBlueprints request and specify the next page token using the pageToken parameter.
+    AccessDeniedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
+  securitySchemes:
+    sigv4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4. Sign each request with IAM credentials for service name "lightsail"; the Authorization header carries the AWS4-HMAC-SHA256 credential scope, signed headers and signature. Temporary STS credentials additionally require X-Amz-Security-Token. See https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/CommonParameters.html
+externalDocs:
+  description: Amazon Lightsail API Reference
+  url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html

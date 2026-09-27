@@ -1,0 +1,290 @@
+openapi: 3.2.0
+info:
+  title: Amazon Lightsail Regions API
+  description: Amazon Lightsail is the easiest way to get started with Amazon Web Services (AWS) for developers who need to build websites or web applications.
+  version: '2016-11-28'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/premiumsupport/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  x-logo:
+    url: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
+  x-generated-from: AWS Smithy 2.0 service model (https://github.com/aws/api-models-aws) — mechanical transform, no hand-authored operations
+servers:
+- url: https://lightsail.us-east-1.amazonaws.com
+  description: Amazon Lightsail regional endpoint (us-east-1). Lightsail is regional — one endpoint per AWS Region, lightsail.{region}.amazonaws.com (IPv4) or lightsail.{region}.api.aws (dual-stack). See https://docs.aws.amazon.com/general/latest/gr/lightsail.html
+security:
+- sigv4: []
+tags:
+- name: Regions
+paths:
+  /ls/api/2016-11-28/GetRegions:
+    post:
+      operationId: GetRegions
+      summary: Returns a list of all valid regions for Amazon Lightsail
+      description: Returns a list of all valid regions for Amazon Lightsail. Use the include availability zones parameter to also return the Availability Zones in a region.
+      tags:
+      - Regions
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/GetRegionsRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/GetRegionsResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '428':
+          description: AccountSetupInProgressException, RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/AccountSetupInProgressException'
+                - $ref: '#/components/schemas/RegionSetupInProgressException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.GetRegions
+components:
+  schemas:
+    string:
+      type: string
+    AvailabilityZoneList:
+      type: array
+      items:
+        $ref: '#/components/schemas/AvailabilityZone'
+    NonEmptyString:
+      type: string
+      pattern: \S
+    InvalidInputException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
+    GetRegionsRequest:
+      type: object
+      properties:
+        includeAvailabilityZones:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: 'A Boolean value indicating whether to also include Availability Zones in your get regions request. Availability Zones are indicated with a letter: us-east-2a .'
+        includeRelationalDatabaseAvailabilityZones:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether to also include Availability Zones for databases in your get regions request. Availability Zones are indicated with a letter ( us-east-2a ).
+    AccountSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an account is still in the setup in progress state.
+    NotFoundException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when it cannot find a resource.
+    RegionName:
+      type: string
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-west-3
+      - eu-central-1
+      - eu-north-1
+      - eu-south-2
+      - ca-central-1
+      - ap-east-1
+      - ap-south-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+      - ap-northeast-2
+      - ap-southeast-3
+      - ap-southeast-5
+      - sa-east-1
+    UnauthenticatedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user has not been authenticated.
+    OperationFailureException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an operation fails to execute.
+    GetRegionsResult:
+      type: object
+      properties:
+        regions:
+          allOf:
+          - $ref: '#/components/schemas/RegionList'
+          description: An array of key-value pairs containing information about your get regions request.
+    AccessDeniedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
+    AvailabilityZone:
+      type: object
+      properties:
+        zoneName:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The name of the Availability Zone. The format is us-east-2a (case-sensitive).
+        state:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The state of the Availability Zone.
+      description: Describes an Availability Zone. This is returned only as part of a GetRegions request.
+    RegionSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Regions and Availability Zones for Lightsail
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
+      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
+    boolean:
+      type: boolean
+    Region:
+      type: object
+      properties:
+        continentCode:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The continent code ( NA , meaning North America).
+        description:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The description of the Amazon Web Services Region ( This region is recommended to serve users in the eastern United States and eastern Canada ).
+        displayName:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The display name ( Ohio ).
+        name:
+          allOf:
+          - $ref: '#/components/schemas/RegionName'
+          description: The region name ( us-east-2 ).
+        availabilityZones:
+          allOf:
+          - $ref: '#/components/schemas/AvailabilityZoneList'
+          description: The Availability Zones. Follows the format us-east-2a (case-sensitive).
+        relationalDatabaseAvailabilityZones:
+          allOf:
+          - $ref: '#/components/schemas/AvailabilityZoneList'
+          description: The Availability Zones for databases. Follows the format us-east-2a (case-sensitive).
+      description: Describes the Amazon Web Services Region.
+    RegionList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Region'
+    ServiceException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: A general service exception.
+  securitySchemes:
+    sigv4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4. Sign each request with IAM credentials for service name "lightsail"; the Authorization header carries the AWS4-HMAC-SHA256 credential scope, signed headers and signature. Temporary STS credentials additionally require X-Amz-Security-Token. See https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/CommonParameters.html
+externalDocs:
+  description: Amazon Lightsail API Reference
+  url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html

@@ -2,21 +2,45 @@
   "provider": "amazon-lightsail",
   "sources": [
     "_original/amazon-lightsail-openapi.yml",
-    "_original/openapi.yml"
+    "_original/openapi.yml",
+    "amazon-lightsail-openapi.yml"
   ],
   "outputs": [
-    "amazon-lightsail-instances-api-openapi.yml"
+    "amazon-lightsail-instances-api-openapi.yml",
+    "amazon-lightsail-account-api-openapi.yml",
+    "amazon-lightsail-alarms-api-openapi.yml",
+    "amazon-lightsail-block-storage-api-openapi.yml",
+    "amazon-lightsail-blueprints-api-openapi.yml",
+    "amazon-lightsail-buckets-api-openapi.yml",
+    "amazon-lightsail-bundles-api-openapi.yml",
+    "amazon-lightsail-certificates-api-openapi.yml",
+    "amazon-lightsail-contact-methods-api-openapi.yml",
+    "amazon-lightsail-container-services-api-openapi.yml",
+    "amazon-lightsail-cost-estimate-api-openapi.yml",
+    "amazon-lightsail-distributions-api-openapi.yml",
+    "amazon-lightsail-domains-api-openapi.yml",
+    "amazon-lightsail-key-pairs-api-openapi.yml",
+    "amazon-lightsail-load-balancers-api-openapi.yml",
+    "amazon-lightsail-operations-api-openapi.yml",
+    "amazon-lightsail-regions-api-openapi.yml",
+    "amazon-lightsail-relational-databases-api-openapi.yml",
+    "amazon-lightsail-setup-api-openapi.yml",
+    "amazon-lightsail-snapshots-api-openapi.yml",
+    "amazon-lightsail-static-ips-api-openapi.yml",
+    "amazon-lightsail-tags-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "archived openapi/amazon-lightsail-openapi.yml"
+  ],
   "errors": [],
   "warnings": [],
   "notes": [
     "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "amazon-lightsail-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
-    "apis.yml register: already-registered"
+    "amazon-lightsail-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tag 'Instances' spans 2 source specs (amazon-lightsail-openapi.yml, amazon-lightsail-openapi.yml): per-path servers applied",
+    "apis.yml register: written (+22 apis, 22 total)"
   ],
-  "skipped": [
-    "amazon-lightsail-instances-api-openapi.yml: previously refined output, superseded by openapi/_original/"
-  ]
+  "skipped": []
 }

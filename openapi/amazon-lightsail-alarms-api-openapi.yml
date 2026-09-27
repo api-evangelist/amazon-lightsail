@@ -1,0 +1,930 @@
+openapi: 3.2.0
+info:
+  title: Amazon Lightsail Alarms API
+  description: Amazon Lightsail is the easiest way to get started with Amazon Web Services (AWS) for developers who need to build websites or web applications.
+  version: '2016-11-28'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/premiumsupport/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  x-logo:
+    url: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
+  x-generated-from: AWS Smithy 2.0 service model (https://github.com/aws/api-models-aws) — mechanical transform, no hand-authored operations
+servers:
+- url: https://lightsail.us-east-1.amazonaws.com
+  description: Amazon Lightsail regional endpoint (us-east-1). Lightsail is regional — one endpoint per AWS Region, lightsail.{region}.amazonaws.com (IPv4) or lightsail.{region}.api.aws (dual-stack). See https://docs.aws.amazon.com/general/latest/gr/lightsail.html
+security:
+- sigv4: []
+tags:
+- name: Alarms
+paths:
+  /ls/api/2016-11-28/DeleteAlarm/{alarmName}:
+    delete:
+      operationId: DeleteAlarm
+      summary: Deletes an alarm
+      description: Deletes an alarm. An alarm is used to monitor a single metric for one of your resources. When a metric condition is met, the alarm can notify you by email, SMS text message, and a banner displayed on the Amazon Lightsail console. For more information, see Alarms in Amazon Lightsail .
+      tags:
+      - Alarms
+      parameters:
+      - name: alarmName
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/ResourceName'
+        description: The name of the alarm to delete.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/DeleteAlarmResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '428':
+          description: RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/RegionSetupInProgressException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.DeleteAlarm
+  /ls/api/2016-11-28/GetAlarms:
+    get:
+      operationId: GetAlarms
+      summary: Returns information about the configured alarms
+      description: Returns information about the configured alarms. Specify an alarm name in your request to return information about a specific alarm, or specify a monitored resource name to return information about all alarms for a specific resource. An alarm is used to monitor a single metric for one of your resources. When a metric condition is met, the alarm can notify you by email, SMS text message, and a banner displayed on the Amazon Lightsail console. For more information, see Alarms in Amazon Lightsail .
+      tags:
+      - Alarms
+      parameters:
+      - name: alarmName
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/ResourceName'
+        description: The name of the alarm. Specify an alarm name to return information about a specific alarm.
+      - name: pageToken
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/string'
+        description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetAlarms request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+      - name: monitoredResourceName
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/ResourceName'
+        description: The name of the Lightsail resource being monitored by the alarm. Specify a monitored resource name to return information about all alarms for a specific resource.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/GetAlarmsResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '428':
+          description: RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/RegionSetupInProgressException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.GetAlarms
+  /ls/api/2016-11-28/PutAlarm:
+    post:
+      operationId: PutAlarm
+      summary: Creates or updates an alarm, and associates it with the specified metric
+      description: Creates or updates an alarm, and associates it with the specified metric. An alarm is used to monitor a single metric for one of your resources. When a metric condition is met, the alarm can notify you by email, SMS text message, and a banner displayed on the Amazon Lightsail console. For more information, see Alarms in Amazon Lightsail . When this action creates an alarm, the alarm state is immediately set to INSUFFICIENT_DATA . The alarm is then evaluated and its state is set appropriately. Any actions associated with the new state are then executed. When you update an existing alarm, its state is left unchanged, but the update completely overwrites the previous configuration of the alarm. The alarm is then evaluated with the updated configuration. The put alarm operation supports tag-based access control via request tags. For more information, see the Lightsail Developer Guide .
+      tags:
+      - Alarms
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              $ref: '#/components/schemas/PutAlarmRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/PutAlarmResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '428':
+          description: RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/RegionSetupInProgressException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.PutAlarm
+  /ls/api/2016-11-28/TestAlarm/{alarmName}:
+    get:
+      operationId: TestAlarm
+      summary: Tests an alarm by displaying a banner on the Amazon Lightsail console
+      description: Tests an alarm by displaying a banner on the Amazon Lightsail console. If a notification trigger is configured for the specified alarm, the test also sends a notification to the notification protocol ( Email and/or SMS ) configured for the alarm. An alarm is used to monitor a single metric for one of your resources. When a metric condition is met, the alarm can notify you by email, SMS text message, and a banner displayed on the Amazon Lightsail console. For more information, see Alarms in Amazon Lightsail .
+      tags:
+      - Alarms
+      parameters:
+      - name: alarmName
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/ResourceName'
+        description: The name of the alarm to test.
+      - name: state
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/AlarmState'
+        description: 'The alarm state to test. An alarm has the following possible states that can be tested: ALARM - The metric is outside of the defined threshold. INSUFFICIENT_DATA - The alarm has just started, the metric is not available, or not enough data is available for the metric to determine the alarm state. OK - The metric is within the defined threshold.'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/TestAlarmResult'
+        '403':
+          description: AccessDeniedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedException'
+        '400':
+          description: InvalidInputException, OperationFailureException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/InvalidInputException'
+                - $ref: '#/components/schemas/OperationFailureException'
+        '404':
+          description: NotFoundException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+        '428':
+          description: RegionSetupInProgressException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/RegionSetupInProgressException'
+        '500':
+          description: ServiceException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/ServiceException'
+        '401':
+          description: UnauthenticatedException
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedException'
+      x-amz-target: Lightsail_20161128.TestAlarm
+components:
+  schemas:
+    ContactProtocolsList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ContactProtocol'
+    MetricUnit:
+      type: string
+      enum:
+      - Seconds
+      - Microseconds
+      - Milliseconds
+      - Bytes
+      - Kilobytes
+      - Megabytes
+      - Gigabytes
+      - Terabytes
+      - Bits
+      - Kilobits
+      - Megabits
+      - Gigabits
+      - Terabits
+      - Percent
+      - Count
+      - Bytes/Second
+      - Kilobytes/Second
+      - Megabytes/Second
+      - Gigabytes/Second
+      - Terabytes/Second
+      - Bits/Second
+      - Kilobits/Second
+      - Megabits/Second
+      - Gigabits/Second
+      - Terabits/Second
+      - Count/Second
+      - None
+    NotificationTriggerList:
+      type: array
+      items:
+        $ref: '#/components/schemas/AlarmState'
+    TagValue:
+      type: string
+    OperationStatus:
+      type: string
+      enum:
+      - NotStarted
+      - Started
+      - Failed
+      - Completed
+      - Succeeded
+    ResourceLocation:
+      type: object
+      properties:
+        availabilityZone:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The Availability Zone. Follows the format us-east-2a (case-sensitive).
+        regionName:
+          allOf:
+          - $ref: '#/components/schemas/RegionName'
+          description: The Amazon Web Services Region name.
+      description: Describes the resource location.
+    Alarm:
+      type: object
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the alarm.
+        arn:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Amazon Resource Name (ARN) of the alarm.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the alarm was created.
+        location:
+          allOf:
+          - $ref: '#/components/schemas/ResourceLocation'
+          description: An object that lists information about the location of the alarm.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The Lightsail resource type of the alarm.
+        supportCode:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The support code. Include this code in your email to support when you have questions about your Lightsail alarm. This code enables our support team to look up your Lightsail information more easily.
+        monitoredResourceInfo:
+          allOf:
+          - $ref: '#/components/schemas/MonitoredResourceInfo'
+          description: An object that lists information about the resource monitored by the alarm.
+        comparisonOperator:
+          allOf:
+          - $ref: '#/components/schemas/ComparisonOperator'
+          description: The arithmetic operation used when comparing the specified statistic and threshold.
+        evaluationPeriods:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The number of periods over which data is compared to the specified threshold.
+        period:
+          allOf:
+          - $ref: '#/components/schemas/MetricPeriod'
+          description: The period, in seconds, over which the statistic is applied.
+        threshold:
+          allOf:
+          - $ref: '#/components/schemas/double'
+          description: The value against which the specified statistic is compared.
+        datapointsToAlarm:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The number of data points that must not within the specified threshold to trigger the alarm.
+        treatMissingData:
+          allOf:
+          - $ref: '#/components/schemas/TreatMissingData'
+          description: 'Specifies how the alarm handles missing data points. An alarm can treat missing data in the following ways: breaching - Assume the missing data is not within the threshold. Missing data counts towards the number of times the metric is not within the threshold. notBreaching - Assume the missing data is within the threshold. Missing data does not count towards the number of times the metric is not within the threshold. ignore - Ignore the missing data. Maintains the current alarm state. missing - Missing data is treated as missing.'
+        statistic:
+          allOf:
+          - $ref: '#/components/schemas/MetricStatistic'
+          description: 'The statistic for the metric associated with the alarm. The following statistics are available: Minimum - The lowest value observed during the specified period. Use this value to determine low volumes of activity for your application. Maximum - The highest value observed during the specified period. Use this value to determine high volumes of activity for your application. Sum - All values submitted for the matching metric added together. You can use this statistic to determine the total volume of a metric. Average - The value of Sum / SampleCount during the specified period. By comparing this statistic with the Minimum and Maximum values, you can determine the full scope of a metric and how close the average use is to the Minimum and Maximum values. This comparison helps you to know when to increase or decrease your resources. SampleCount - The count, or number, of data points used for the statistical calculation.'
+        metricName:
+          allOf:
+          - $ref: '#/components/schemas/MetricName'
+          description: The name of the metric associated with the alarm.
+        state:
+          allOf:
+          - $ref: '#/components/schemas/AlarmState'
+          description: 'The current state of the alarm. An alarm has the following possible states: ALARM - The metric is outside of the defined threshold. INSUFFICIENT_DATA - The alarm has just started, the metric is not available, or not enough data is available for the metric to determine the alarm state. OK - The metric is within the defined threshold.'
+        unit:
+          allOf:
+          - $ref: '#/components/schemas/MetricUnit'
+          description: The unit of the metric associated with the alarm.
+        contactProtocols:
+          allOf:
+          - $ref: '#/components/schemas/ContactProtocolsList'
+          description: The contact protocols for the alarm, such as Email , SMS (text messaging), or both.
+        notificationTriggers:
+          allOf:
+          - $ref: '#/components/schemas/NotificationTriggerList'
+          description: The alarm states that trigger a notification.
+        notificationEnabled:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: Indicates whether the alarm is enabled.
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values for the resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
+      description: Describes an alarm. An alarm is a way to monitor your Lightsail resource metrics. For more information, see Alarms in Amazon Lightsail .
+    ResourceName:
+      type: string
+      pattern: ^\w[\w\-]*\w$
+    integer:
+      type: integer
+    ContactProtocol:
+      type: string
+      enum:
+      - Email
+      - SMS
+    double:
+      type: number
+    MetricName:
+      type: string
+      enum:
+      - CPUUtilization
+      - NetworkIn
+      - NetworkOut
+      - StatusCheckFailed
+      - StatusCheckFailed_Instance
+      - StatusCheckFailed_System
+      - ClientTLSNegotiationErrorCount
+      - HealthyHostCount
+      - UnhealthyHostCount
+      - HTTPCode_LB_4XX_Count
+      - HTTPCode_LB_5XX_Count
+      - HTTPCode_Instance_2XX_Count
+      - HTTPCode_Instance_3XX_Count
+      - HTTPCode_Instance_4XX_Count
+      - HTTPCode_Instance_5XX_Count
+      - InstanceResponseTime
+      - RejectedConnectionCount
+      - RequestCount
+      - DatabaseConnections
+      - DiskQueueDepth
+      - FreeStorageSpace
+      - NetworkReceiveThroughput
+      - NetworkTransmitThroughput
+      - FreeableMemory
+      - SwapUsage
+      - BurstCapacityTime
+      - BurstCapacityPercentage
+    RegionName:
+      type: string
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-west-3
+      - eu-central-1
+      - eu-north-1
+      - eu-south-2
+      - ca-central-1
+      - ap-east-1
+      - ap-south-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+      - ap-northeast-2
+      - ap-southeast-3
+      - ap-southeast-5
+      - sa-east-1
+    OperationType:
+      type: string
+      enum:
+      - DeleteKnownHostKeys
+      - DeleteInstance
+      - CreateInstance
+      - StopInstance
+      - StartInstance
+      - RebootInstance
+      - OpenInstancePublicPorts
+      - PutInstancePublicPorts
+      - CloseInstancePublicPorts
+      - AllocateStaticIp
+      - ReleaseStaticIp
+      - AttachStaticIp
+      - DetachStaticIp
+      - UpdateDomainEntry
+      - DeleteDomainEntry
+      - CreateDomain
+      - DeleteDomain
+      - CreateInstanceSnapshot
+      - DeleteInstanceSnapshot
+      - CreateInstancesFromSnapshot
+      - CreateLoadBalancer
+      - DeleteLoadBalancer
+      - AttachInstancesToLoadBalancer
+      - DetachInstancesFromLoadBalancer
+      - UpdateLoadBalancerAttribute
+      - CreateLoadBalancerTlsCertificate
+      - DeleteLoadBalancerTlsCertificate
+      - AttachLoadBalancerTlsCertificate
+      - CreateDisk
+      - DeleteDisk
+      - AttachDisk
+      - DetachDisk
+      - CreateDiskSnapshot
+      - DeleteDiskSnapshot
+      - CreateDiskFromSnapshot
+      - CreateRelationalDatabase
+      - UpdateRelationalDatabase
+      - DeleteRelationalDatabase
+      - CreateRelationalDatabaseFromSnapshot
+      - CreateRelationalDatabaseSnapshot
+      - DeleteRelationalDatabaseSnapshot
+      - UpdateRelationalDatabaseParameters
+      - StartRelationalDatabase
+      - RebootRelationalDatabase
+      - StopRelationalDatabase
+      - EnableAddOn
+      - DisableAddOn
+      - PutAlarm
+      - GetAlarms
+      - DeleteAlarm
+      - TestAlarm
+      - CreateContactMethod
+      - GetContactMethods
+      - SendContactMethodVerification
+      - DeleteContactMethod
+      - CreateDistribution
+      - UpdateDistribution
+      - DeleteDistribution
+      - ResetDistributionCache
+      - AttachCertificateToDistribution
+      - DetachCertificateFromDistribution
+      - UpdateDistributionBundle
+      - SetIpAddressType
+      - CreateCertificate
+      - DeleteCertificate
+      - CreateContainerService
+      - UpdateContainerService
+      - DeleteContainerService
+      - CreateContainerServiceDeployment
+      - CreateContainerServiceRegistryLogin
+      - RegisterContainerImage
+      - DeleteContainerImage
+      - CreateBucket
+      - DeleteBucket
+      - CreateBucketAccessKey
+      - DeleteBucketAccessKey
+      - UpdateBucketBundle
+      - UpdateBucket
+      - SetResourceAccessForBucket
+      - UpdateInstanceMetadataOptions
+      - StartGUISession
+      - StopGUISession
+      - SetupInstanceHttps
+      - GetProfile
+    OperationFailureException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an operation fails to execute.
+    TagKey:
+      type: string
+    MonitoredResourceInfo:
+      type: object
+      properties:
+        arn:
+          allOf:
+          - $ref: '#/components/schemas/ResourceArn'
+          description: The Amazon Resource Name (ARN) of the resource being monitored.
+        name:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the Lightsail resource being monitored.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The Lightsail resource type of the resource being monitored. Instances, load balancers, and relational databases are the only Lightsail resources that can currently be monitored by alarms.
+      description: Describes resource being monitored by an alarm. An alarm is a way to monitor your Amazon Lightsail resource metrics. For more information, see Alarms in Amazon Lightsail .
+    boolean:
+      type: boolean
+    ServiceException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: A general service exception.
+    InvalidInputException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
+    GetAlarmsResult:
+      type: object
+      properties:
+        alarms:
+          allOf:
+          - $ref: '#/components/schemas/AlarmsList'
+          description: An array of objects that describe the alarms.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetAlarms request and specify the next page token using the pageToken parameter.
+    ResourceArn:
+      type: string
+      pattern: ^arn:(aws[^:]*):([a-zA-Z0-9-]+):([a-z0-9-]+):([0-9]+):([a-zA-Z]+)/([a-zA-Z0-9-]+)$
+    PutAlarmRequest:
+      type: object
+      properties:
+        alarmName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name for the alarm. Specify the name of an existing alarm to update, and overwrite the previous configuration of the alarm.
+        metricName:
+          allOf:
+          - $ref: '#/components/schemas/MetricName'
+          description: 'The name of the metric to associate with the alarm. You can configure up to two alarms per metric. The following metrics are available for each resource type: Instances : BurstCapacityPercentage , BurstCapacityTime , CPUUtilization , NetworkIn , NetworkOut , StatusCheckFailed , StatusCheckFailed_Instance , and StatusCheckFailed_System . Load balancers : ClientTLSNegotiationErrorCount , HealthyHostCount , UnhealthyHostCount , HTTPCode_LB_4XX_Count , HTTPCode_LB_5XX_Count , HTTPCode_Instance_2XX_Count , HTTPCode_Instance_3XX_Count , HTTPCode_Instance_4XX_Count , HTTPCode_Instance_5XX_Count , InstanceResponseTime , RejectedConnectionCount , and RequestCount . Relational databases : CPUUtilization , DatabaseConnections , DiskQueueDepth , FreeStorageSpace , NetworkReceiveThroughput , and NetworkTransmitThroughput . For more information about these metrics, see Metrics available in Lightsail .'
+        monitoredResourceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the Lightsail resource that will be monitored. Instances, load balancers, and relational databases are the only Lightsail resources that can currently be monitored by alarms.
+        comparisonOperator:
+          allOf:
+          - $ref: '#/components/schemas/ComparisonOperator'
+          description: The arithmetic operation to use when comparing the specified statistic to the threshold. The specified statistic value is used as the first operand.
+        threshold:
+          allOf:
+          - $ref: '#/components/schemas/double'
+          description: The value against which the specified statistic is compared.
+        evaluationPeriods:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The number of most recent periods over which data is compared to the specified threshold. If you are setting an "M out of N" alarm, this value ( evaluationPeriods ) is the N. If you are setting an alarm that requires that a number of consecutive data points be breaching to trigger the alarm, this value specifies the rolling period of time in which data points are evaluated. Each evaluation period is five minutes long. For example, specify an evaluation period of 24 to evaluate a metric over a rolling period of two hours. You can specify a minimum valuation period of 1 (5 minutes), and a maximum evaluation period of 288 (24 hours).
+        datapointsToAlarm:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The number of data points that must be not within the specified threshold to trigger the alarm. If you are setting an "M out of N" alarm, this value ( datapointsToAlarm ) is the M.
+        treatMissingData:
+          allOf:
+          - $ref: '#/components/schemas/TreatMissingData'
+          description: 'Sets how this alarm will handle missing data points. An alarm can treat missing data in the following ways: breaching - Assume the missing data is not within the threshold. Missing data counts towards the number of times the metric is not within the threshold. notBreaching - Assume the missing data is within the threshold. Missing data does not count towards the number of times the metric is not within the threshold. ignore - Ignore the missing data. Maintains the current alarm state. missing - Missing data is treated as missing. If treatMissingData is not specified, the default behavior of missing is used.'
+        contactProtocols:
+          allOf:
+          - $ref: '#/components/schemas/ContactProtocolsList'
+          description: The contact protocols to use for the alarm, such as Email , SMS (text messaging), or both. A notification is sent via the specified contact protocol if notifications are enabled for the alarm, and when the alarm is triggered. A notification is not sent if a contact protocol is not specified, if the specified contact protocol is not configured in the Amazon Web Services Region, or if notifications are not enabled for the alarm using the notificationEnabled paramater. Use the CreateContactMethod action to configure a contact protocol in an Amazon Web Services Region.
+        notificationTriggers:
+          allOf:
+          - $ref: '#/components/schemas/NotificationTriggerList'
+          description: 'The alarm states that trigger a notification. An alarm has the following possible states: ALARM - The metric is outside of the defined threshold. INSUFFICIENT_DATA - The alarm has just started, the metric is not available, or not enough data is available for the metric to determine the alarm state. OK - The metric is within the defined threshold. When you specify a notification trigger, the ALARM state must be specified. The INSUFFICIENT_DATA and OK states can be specified in addition to the ALARM state. If you specify OK as an alarm trigger, a notification is sent when the alarm switches from an ALARM or INSUFFICIENT_DATA alarm state to an OK state. This can be thought of as an all clear alarm notification. If you specify INSUFFICIENT_DATA as the alarm trigger, a notification is sent when the alarm switches from an OK or ALARM alarm state to an INSUFFICIENT_DATA state. The notification trigger defaults to ALARM if you don''t specify this parameter.'
+        notificationEnabled:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: Indicates whether the alarm is enabled. Notifications are enabled by default if you don't specify this parameter.
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values to add to the alarm during create. Use the TagResource action to tag a resource after it's created.
+      required:
+      - alarmName
+      - metricName
+      - monitoredResourceName
+      - comparisonOperator
+      - threshold
+      - evaluationPeriods
+    ComparisonOperator:
+      type: string
+      enum:
+      - GreaterThanOrEqualToThreshold
+      - GreaterThanThreshold
+      - LessThanThreshold
+      - LessThanOrEqualToThreshold
+    Operation:
+      type: object
+      properties:
+        id:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The ID of the operation.
+        resourceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The resource name.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The resource type.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the operation was initialized ( 1479816991.349 ).
+        location:
+          allOf:
+          - $ref: '#/components/schemas/ResourceLocation'
+          description: The Amazon Web Services Region and Availability Zone.
+        isTerminal:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the operation is terminal.
+        operationDetails:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Details about the operation ( Debian-1GB-Ohio-1 ).
+        operationType:
+          allOf:
+          - $ref: '#/components/schemas/OperationType'
+          description: The type of operation.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/OperationStatus'
+          description: The status of the operation.
+        statusChangedAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the status was changed ( 1479816991.349 ).
+        errorCode:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The error code.
+        errorDetails:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The error details.
+      description: Describes the API operation.
+    TagList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Tag'
+    NotFoundException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when it cannot find a resource.
+    RegionSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Regions and Availability Zones for Lightsail
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
+      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
+    MetricPeriod:
+      type: integer
+      minimum: 60
+      maximum: 86400
+    AlarmState:
+      type: string
+      enum:
+      - OK
+      - ALARM
+      - INSUFFICIENT_DATA
+    IsoDate:
+      type: string
+      format: date-time
+    Tag:
+      type: object
+      properties:
+        key:
+          allOf:
+          - $ref: '#/components/schemas/TagKey'
+          description: 'The key of the tag. Constraints: Tag keys accept a maximum of 128 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+        value:
+          allOf:
+          - $ref: '#/components/schemas/TagValue'
+          description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+      description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
+    AlarmsList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Alarm'
+    PutAlarmResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    string:
+      type: string
+    ResourceType:
+      type: string
+      enum:
+      - ContainerService
+      - Instance
+      - StaticIp
+      - KeyPair
+      - InstanceSnapshot
+      - Domain
+      - PeeredVpc
+      - LoadBalancer
+      - LoadBalancerTlsCertificate
+      - Disk
+      - DiskSnapshot
+      - RelationalDatabase
+      - RelationalDatabaseSnapshot
+      - ExportSnapshotRecord
+      - CloudFormationStackRecord
+      - Alarm
+      - ContactMethod
+      - Distribution
+      - Certificate
+      - Bucket
+    NonEmptyString:
+      type: string
+      pattern: \S
+    OperationList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Operation'
+    TreatMissingData:
+      type: string
+      enum:
+      - breaching
+      - notBreaching
+      - ignore
+      - missing
+    DeleteAlarmResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    UnauthenticatedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user has not been authenticated.
+    AccessDeniedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
+    TestAlarmResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    MetricStatistic:
+      type: string
+      enum:
+      - Minimum
+      - Maximum
+      - Sum
+      - Average
+      - SampleCount
+  securitySchemes:
+    sigv4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4. Sign each request with IAM credentials for service name "lightsail"; the Authorization header carries the AWS4-HMAC-SHA256 credential scope, signed headers and signature. Temporary STS credentials additionally require X-Amz-Security-Token. See https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/CommonParameters.html
+externalDocs:
+  description: Amazon Lightsail API Reference
+  url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html

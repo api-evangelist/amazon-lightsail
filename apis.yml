@@ -35,50 +35,566 @@ url: https://apis.io/amazon-lightsail
 created: '2024-01-15'
 modified: '2026-09-17'
 apis:
-- aid: amazon-lightsail:amazon-lightsail-instances-api
-  name: Amazon Lightsail API
+- aid: amazon-lightsail:amazon-lightsail-account-api
+  name: Amazon Lightsail Account API
+  description: The Account API from Amazon Lightsail — 14 operation(s) for account.
   humanURL: https://aws.amazon.com/lightsail/
-  image: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
-  description: The Amazon Lightsail API — 162 operations covering instances (virtual private servers), container
-    services, object storage buckets, managed MySQL and PostgreSQL databases, block storage disks, static IP addresses,
-    load balancers, CDN distributions, SSL/TLS certificates, DNS zones, alarms and snapshots. AWS JSON 1.1 over
-    AWS Signature Version 4; regional endpoints.
   baseURL: https://lightsail.us-east-1.amazonaws.com
   tags:
-  - Instances
-  - Container Services
-  - Buckets
-  - Relational Databases
-  - Block Storage
-  - Load Balancer
-  - Distributions
-  - Domains
-  - Static IPs
-  - Snapshots
-  - Certificates
-  - Alarms
-  tags_raw:
-  - Instances
-  - Container Services
-  - Buckets
-  - Relational Databases
-  - Block Storage
-  - Load Balancers
-  - Distributions
-  - Domains
-  - Static IPs
-  - Snapshots
-  - Certificates
+  - Account
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-lightsail-account-api-openapi.yml
+  - type: Smithy
+    url: smithy/amazon-lightsail-2016-11-28.json
+  - type: APIReference
+    url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html
+  - type: Documentation
+    url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
+  - type: GettingStarted
+    url: https://aws.amazon.com/lightsail/getting-started/
+  - type: Pricing
+    url: https://aws.amazon.com/lightsail/pricing/
+  - type: FAQ
+    url: https://aws.amazon.com/lightsail/faq/
+  - type: JSONSchema
+    url: json-schema/amazon-lightsail-instance-schema.json
+  - type: JSONLD
+    url: json-ld/amazon-lightsail-context.jsonld
+- aid: amazon-lightsail:amazon-lightsail-alarms-api
+  name: Amazon Lightsail Alarms API
+  description: The Alarms API from Amazon Lightsail — 4 operation(s) for alarms.
+  humanURL: https://aws.amazon.com/lightsail/
+  baseURL: https://lightsail.us-east-1.amazonaws.com
+  tags:
   - Alarms
   properties:
   - type: OpenAPI
-    name: OpenAPI (derived from the AWS Smithy service model, 162 operations)
-    url: openapi/amazon-lightsail-openapi.yml
+    url: openapi/amazon-lightsail-alarms-api-openapi.yml
   - type: Smithy
-    name: AWS-published Smithy 2.0 service model (162 operations)
     url: smithy/amazon-lightsail-2016-11-28.json
-  - type: Overlay
-    url: overlays/amazon-lightsail-overlay.yaml
+  - type: APIReference
+    url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html
+  - type: Documentation
+    url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
+  - type: GettingStarted
+    url: https://aws.amazon.com/lightsail/getting-started/
+  - type: Pricing
+    url: https://aws.amazon.com/lightsail/pricing/
+  - type: FAQ
+    url: https://aws.amazon.com/lightsail/faq/
+  - type: JSONSchema
+    url: json-schema/amazon-lightsail-instance-schema.json
+  - type: JSONLD
+    url: json-ld/amazon-lightsail-context.jsonld
+- aid: amazon-lightsail:amazon-lightsail-blueprints-api
+  name: Amazon Lightsail Blueprints API
+  description: The Blueprints API from Amazon Lightsail — 1 operation(s) for blueprints.
+  humanURL: https://aws.amazon.com/lightsail/
+  baseURL: https://lightsail.us-east-1.amazonaws.com
+  tags:
+  - Blueprints
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-lightsail-blueprints-api-openapi.yml
+  - type: Smithy
+    url: smithy/amazon-lightsail-2016-11-28.json
+  - type: APIReference
+    url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html
+  - type: Documentation
+    url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
+  - type: GettingStarted
+    url: https://aws.amazon.com/lightsail/getting-started/
+  - type: Pricing
+    url: https://aws.amazon.com/lightsail/pricing/
+  - type: FAQ
+    url: https://aws.amazon.com/lightsail/faq/
+  - type: JSONSchema
+    url: json-schema/amazon-lightsail-instance-schema.json
+  - type: JSONLD
+    url: json-ld/amazon-lightsail-context.jsonld
+- aid: amazon-lightsail:amazon-lightsail-buckets-api
+  name: Amazon Lightsail Buckets API
+  description: The Buckets API from Amazon Lightsail — 11 operation(s) for buckets.
+  humanURL: https://aws.amazon.com/lightsail/
+  baseURL: https://lightsail.us-east-1.amazonaws.com
+  tags:
+  - Buckets
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-lightsail-buckets-api-openapi.yml
+  - type: Smithy
+    url: smithy/amazon-lightsail-2016-11-28.json
+  - type: APIReference
+    url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html
+  - type: Documentation
+    url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
+  - type: GettingStarted
+    url: https://aws.amazon.com/lightsail/getting-started/
+  - type: Pricing
+    url: https://aws.amazon.com/lightsail/pricing/
+  - type: FAQ
+    url: https://aws.amazon.com/lightsail/faq/
+  - type: JSONSchema
+    url: json-schema/amazon-lightsail-instance-schema.json
+  - type: JSONLD
+    url: json-ld/amazon-lightsail-context.jsonld
+- aid: amazon-lightsail:amazon-lightsail-bundles-api
+  name: Amazon Lightsail Bundles API
+  description: The Bundles API from Amazon Lightsail — 1 operation(s) for bundles.
+  humanURL: https://aws.amazon.com/lightsail/
+  baseURL: https://lightsail.us-east-1.amazonaws.com
+  tags:
+  - Bundles
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-lightsail-bundles-api-openapi.yml
+  - type: Smithy
+    url: smithy/amazon-lightsail-2016-11-28.json
+  - type: APIReference
+    url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html
+  - type: Documentation
+    url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
+  - type: GettingStarted
+    url: https://aws.amazon.com/lightsail/getting-started/
+  - type: Pricing
+    url: https://aws.amazon.com/lightsail/pricing/
+  - type: FAQ
+    url: https://aws.amazon.com/lightsail/faq/
+  - type: JSONSchema
+    url: json-schema/amazon-lightsail-instance-schema.json
+  - type: JSONLD
+    url: json-ld/amazon-lightsail-context.jsonld
+- aid: amazon-lightsail:amazon-lightsail-certificates-api
+  name: Amazon Lightsail Certificates API
+  description: The Certificates API from Amazon Lightsail — 7 operation(s) for certificates.
+  humanURL: https://aws.amazon.com/lightsail/
+  baseURL: https://lightsail.us-east-1.amazonaws.com
+  tags:
+  - Certificates
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-lightsail-certificates-api-openapi.yml
+  - type: Smithy
+    url: smithy/amazon-lightsail-2016-11-28.json
+  - type: APIReference
+    url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html
+  - type: Documentation
+    url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
+  - type: GettingStarted
+    url: https://aws.amazon.com/lightsail/getting-started/
+  - type: Pricing
+    url: https://aws.amazon.com/lightsail/pricing/
+  - type: FAQ
+    url: https://aws.amazon.com/lightsail/faq/
+  - type: JSONSchema
+    url: json-schema/amazon-lightsail-instance-schema.json
+  - type: JSONLD
+    url: json-ld/amazon-lightsail-context.jsonld
+- aid: amazon-lightsail:amazon-lightsail-contact-methods-api
+  name: Amazon Lightsail Contact Methods API
+  description: The Contact Methods API from Amazon Lightsail — 4 operation(s) for contact methods.
+  humanURL: https://aws.amazon.com/lightsail/
+  baseURL: https://lightsail.us-east-1.amazonaws.com
+  tags:
+  - Contact Methods
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-lightsail-contact-methods-api-openapi.yml
+  - type: Smithy
+    url: smithy/amazon-lightsail-2016-11-28.json
+  - type: APIReference
+    url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html
+  - type: Documentation
+    url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
+  - type: GettingStarted
+    url: https://aws.amazon.com/lightsail/getting-started/
+  - type: Pricing
+    url: https://aws.amazon.com/lightsail/pricing/
+  - type: FAQ
+    url: https://aws.amazon.com/lightsail/faq/
+  - type: JSONSchema
+    url: json-schema/amazon-lightsail-instance-schema.json
+  - type: JSONLD
+    url: json-ld/amazon-lightsail-context.jsonld
+- aid: amazon-lightsail:amazon-lightsail-container-services-api
+  name: Amazon Lightsail Container Services API
+  description: >-
+    The Container Services API from Amazon Lightsail — 10 operation(s) for container services.
+  humanURL: https://aws.amazon.com/lightsail/
+  baseURL: https://lightsail.us-east-1.amazonaws.com
+  tags:
+  - Container Services
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-lightsail-container-services-api-openapi.yml
+  - type: Smithy
+    url: smithy/amazon-lightsail-2016-11-28.json
+  - type: APIReference
+    url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html
+  - type: Documentation
+    url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
+  - type: GettingStarted
+    url: https://aws.amazon.com/lightsail/getting-started/
+  - type: Pricing
+    url: https://aws.amazon.com/lightsail/pricing/
+  - type: FAQ
+    url: https://aws.amazon.com/lightsail/faq/
+  - type: JSONSchema
+    url: json-schema/amazon-lightsail-instance-schema.json
+  - type: JSONLD
+    url: json-ld/amazon-lightsail-context.jsonld
+- aid: amazon-lightsail:amazon-lightsail-cost-estimate-api
+  name: Amazon Lightsail Cost Estimate API
+  description: The Cost Estimate API from Amazon Lightsail — 1 operation(s) for cost estimate.
+  humanURL: https://aws.amazon.com/lightsail/
+  baseURL: https://lightsail.us-east-1.amazonaws.com
+  tags:
+  - Cost Estimate
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-lightsail-cost-estimate-api-openapi.yml
+  - type: Smithy
+    url: smithy/amazon-lightsail-2016-11-28.json
+  - type: APIReference
+    url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html
+  - type: Documentation
+    url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
+  - type: GettingStarted
+    url: https://aws.amazon.com/lightsail/getting-started/
+  - type: Pricing
+    url: https://aws.amazon.com/lightsail/pricing/
+  - type: FAQ
+    url: https://aws.amazon.com/lightsail/faq/
+  - type: JSONSchema
+    url: json-schema/amazon-lightsail-instance-schema.json
+  - type: JSONLD
+    url: json-ld/amazon-lightsail-context.jsonld
+- aid: amazon-lightsail:amazon-lightsail-distributions-api
+  name: Amazon Lightsail Distributions API
+  description: The Distributions API from Amazon Lightsail — 11 operation(s) for distributions.
+  humanURL: https://aws.amazon.com/lightsail/
+  baseURL: https://lightsail.us-east-1.amazonaws.com
+  tags:
+  - Distributions
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-lightsail-distributions-api-openapi.yml
+  - type: Smithy
+    url: smithy/amazon-lightsail-2016-11-28.json
+  - type: APIReference
+    url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html
+  - type: Documentation
+    url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
+  - type: GettingStarted
+    url: https://aws.amazon.com/lightsail/getting-started/
+  - type: Pricing
+    url: https://aws.amazon.com/lightsail/pricing/
+  - type: FAQ
+    url: https://aws.amazon.com/lightsail/faq/
+  - type: JSONSchema
+    url: json-schema/amazon-lightsail-instance-schema.json
+  - type: JSONLD
+    url: json-ld/amazon-lightsail-context.jsonld
+- aid: amazon-lightsail:amazon-lightsail-domains-api
+  name: Amazon Lightsail Domains API
+  description: The Domains API from Amazon Lightsail — 7 operation(s) for domains.
+  humanURL: https://aws.amazon.com/lightsail/
+  baseURL: https://lightsail.us-east-1.amazonaws.com
+  tags:
+  - Domains
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-lightsail-domains-api-openapi.yml
+  - type: Smithy
+    url: smithy/amazon-lightsail-2016-11-28.json
+  - type: APIReference
+    url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html
+  - type: Documentation
+    url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
+  - type: GettingStarted
+    url: https://aws.amazon.com/lightsail/getting-started/
+  - type: Pricing
+    url: https://aws.amazon.com/lightsail/pricing/
+  - type: FAQ
+    url: https://aws.amazon.com/lightsail/faq/
+  - type: JSONSchema
+    url: json-schema/amazon-lightsail-instance-schema.json
+  - type: JSONLD
+    url: json-ld/amazon-lightsail-context.jsonld
+- aid: amazon-lightsail:amazon-lightsail-instances-api
+  name: Amazon Lightsail Instances API
+  description: Lightsail virtual server instance management
+  humanURL: https://aws.amazon.com/lightsail/
+  baseURL: https://lightsail.us-east-1.amazonaws.com
+  tags:
+  - Instances
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-lightsail-instances-api-openapi.yml
+  - type: Smithy
+    url: smithy/amazon-lightsail-2016-11-28.json
+  - type: APIReference
+    url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html
+  - type: Documentation
+    url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
+  - type: GettingStarted
+    url: https://aws.amazon.com/lightsail/getting-started/
+  - type: Pricing
+    url: https://aws.amazon.com/lightsail/pricing/
+  - type: FAQ
+    url: https://aws.amazon.com/lightsail/faq/
+  - type: JSONSchema
+    url: json-schema/amazon-lightsail-instance-schema.json
+  - type: JSONLD
+    url: json-ld/amazon-lightsail-context.jsonld
+- aid: amazon-lightsail:amazon-lightsail-load-balancers-api
+  name: Amazon Lightsail Load Balancers API
+  description: The Load Balancers API from Amazon Lightsail — 9 operation(s) for load balancers.
+  humanURL: https://aws.amazon.com/lightsail/
+  baseURL: https://lightsail.us-east-1.amazonaws.com
+  tags:
+  - Load Balancers
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-lightsail-load-balancers-api-openapi.yml
+  - type: Smithy
+    url: smithy/amazon-lightsail-2016-11-28.json
+  - type: APIReference
+    url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html
+  - type: Documentation
+    url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
+  - type: GettingStarted
+    url: https://aws.amazon.com/lightsail/getting-started/
+  - type: Pricing
+    url: https://aws.amazon.com/lightsail/pricing/
+  - type: FAQ
+    url: https://aws.amazon.com/lightsail/faq/
+  - type: JSONSchema
+    url: json-schema/amazon-lightsail-instance-schema.json
+  - type: JSONLD
+    url: json-ld/amazon-lightsail-context.jsonld
+- aid: amazon-lightsail:amazon-lightsail-operations-api
+  name: Amazon Lightsail Operations API
+  description: The Operations API from Amazon Lightsail — 3 operation(s) for operations.
+  humanURL: https://aws.amazon.com/lightsail/
+  baseURL: https://lightsail.us-east-1.amazonaws.com
+  tags:
+  - Operations
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-lightsail-operations-api-openapi.yml
+  - type: Smithy
+    url: smithy/amazon-lightsail-2016-11-28.json
+  - type: APIReference
+    url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html
+  - type: Documentation
+    url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
+  - type: GettingStarted
+    url: https://aws.amazon.com/lightsail/getting-started/
+  - type: Pricing
+    url: https://aws.amazon.com/lightsail/pricing/
+  - type: FAQ
+    url: https://aws.amazon.com/lightsail/faq/
+  - type: JSONSchema
+    url: json-schema/amazon-lightsail-instance-schema.json
+  - type: JSONLD
+    url: json-ld/amazon-lightsail-context.jsonld
+- aid: amazon-lightsail:amazon-lightsail-regions-api
+  name: Amazon Lightsail Regions API
+  description: The Regions API from Amazon Lightsail — 1 operation(s) for regions.
+  humanURL: https://aws.amazon.com/lightsail/
+  baseURL: https://lightsail.us-east-1.amazonaws.com
+  tags:
+  - Regions
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-lightsail-regions-api-openapi.yml
+  - type: Smithy
+    url: smithy/amazon-lightsail-2016-11-28.json
+  - type: APIReference
+    url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html
+  - type: Documentation
+    url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
+  - type: GettingStarted
+    url: https://aws.amazon.com/lightsail/getting-started/
+  - type: Pricing
+    url: https://aws.amazon.com/lightsail/pricing/
+  - type: FAQ
+    url: https://aws.amazon.com/lightsail/faq/
+  - type: JSONSchema
+    url: json-schema/amazon-lightsail-instance-schema.json
+  - type: JSONLD
+    url: json-ld/amazon-lightsail-context.jsonld
+- aid: amazon-lightsail:amazon-lightsail-relational-databases-api
+  name: Amazon Lightsail Relational Databases API
+  description: >-
+    The Relational Databases API from Amazon Lightsail — 22 operation(s) for relational databases.
+  humanURL: https://aws.amazon.com/lightsail/
+  baseURL: https://lightsail.us-east-1.amazonaws.com
+  tags:
+  - Relational Databases
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-lightsail-relational-databases-api-openapi.yml
+  - type: Smithy
+    url: smithy/amazon-lightsail-2016-11-28.json
+  - type: APIReference
+    url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html
+  - type: Documentation
+    url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
+  - type: GettingStarted
+    url: https://aws.amazon.com/lightsail/getting-started/
+  - type: Pricing
+    url: https://aws.amazon.com/lightsail/pricing/
+  - type: FAQ
+    url: https://aws.amazon.com/lightsail/faq/
+  - type: JSONSchema
+    url: json-schema/amazon-lightsail-instance-schema.json
+  - type: JSONLD
+    url: json-ld/amazon-lightsail-context.jsonld
+- aid: amazon-lightsail:amazon-lightsail-setup-api
+  name: Amazon Lightsail Setup API
+  description: The Setup API from Amazon Lightsail — 1 operation(s) for setup.
+  humanURL: https://aws.amazon.com/lightsail/
+  baseURL: https://lightsail.us-east-1.amazonaws.com
+  tags:
+  - Setup
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-lightsail-setup-api-openapi.yml
+  - type: Smithy
+    url: smithy/amazon-lightsail-2016-11-28.json
+  - type: APIReference
+    url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html
+  - type: Documentation
+    url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
+  - type: GettingStarted
+    url: https://aws.amazon.com/lightsail/getting-started/
+  - type: Pricing
+    url: https://aws.amazon.com/lightsail/pricing/
+  - type: FAQ
+    url: https://aws.amazon.com/lightsail/faq/
+  - type: JSONSchema
+    url: json-schema/amazon-lightsail-instance-schema.json
+  - type: JSONLD
+    url: json-ld/amazon-lightsail-context.jsonld
+- aid: amazon-lightsail:amazon-lightsail-snapshots-api
+  name: Amazon Lightsail Snapshots API
+  description: The Snapshots API from Amazon Lightsail — 15 operation(s) for snapshots.
+  humanURL: https://aws.amazon.com/lightsail/
+  baseURL: https://lightsail.us-east-1.amazonaws.com
+  tags:
+  - Snapshots
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-lightsail-snapshots-api-openapi.yml
+  - type: Smithy
+    url: smithy/amazon-lightsail-2016-11-28.json
+  - type: APIReference
+    url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html
+  - type: Documentation
+    url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
+  - type: GettingStarted
+    url: https://aws.amazon.com/lightsail/getting-started/
+  - type: Pricing
+    url: https://aws.amazon.com/lightsail/pricing/
+  - type: FAQ
+    url: https://aws.amazon.com/lightsail/faq/
+  - type: JSONSchema
+    url: json-schema/amazon-lightsail-instance-schema.json
+  - type: JSONLD
+    url: json-ld/amazon-lightsail-context.jsonld
+- aid: amazon-lightsail:amazon-lightsail-static-ips-api
+  name: Amazon Lightsail Static IPs API
+  description: The Static IPs API from Amazon Lightsail — 6 operation(s) for static ips.
+  humanURL: https://aws.amazon.com/lightsail/
+  baseURL: https://lightsail.us-east-1.amazonaws.com
+  tags:
+  - Static IPs
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-lightsail-static-ips-api-openapi.yml
+  - type: Smithy
+    url: smithy/amazon-lightsail-2016-11-28.json
+  - type: APIReference
+    url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html
+  - type: Documentation
+    url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
+  - type: GettingStarted
+    url: https://aws.amazon.com/lightsail/getting-started/
+  - type: Pricing
+    url: https://aws.amazon.com/lightsail/pricing/
+  - type: FAQ
+    url: https://aws.amazon.com/lightsail/faq/
+  - type: JSONSchema
+    url: json-schema/amazon-lightsail-instance-schema.json
+  - type: JSONLD
+    url: json-ld/amazon-lightsail-context.jsonld
+- aid: amazon-lightsail:amazon-lightsail-tags-api
+  name: Amazon Lightsail Tags API
+  description: The Tags API from Amazon Lightsail — 2 operation(s) for tags.
+  humanURL: https://aws.amazon.com/lightsail/
+  baseURL: https://lightsail.us-east-1.amazonaws.com
+  tags:
+  - Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-lightsail-tags-api-openapi.yml
+  - type: Smithy
+    url: smithy/amazon-lightsail-2016-11-28.json
+  - type: APIReference
+    url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html
+  - type: Documentation
+    url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
+  - type: GettingStarted
+    url: https://aws.amazon.com/lightsail/getting-started/
+  - type: Pricing
+    url: https://aws.amazon.com/lightsail/pricing/
+  - type: FAQ
+    url: https://aws.amazon.com/lightsail/faq/
+  - type: JSONSchema
+    url: json-schema/amazon-lightsail-instance-schema.json
+  - type: JSONLD
+    url: json-ld/amazon-lightsail-context.jsonld
+- aid: amazon-lightsail:amazon-lightsail-blockstorage-api
+  name: Amazon Lightsail Blockstorage API
+  description: The blockstorage API from Amazon Lightsail — 6 operation(s) for blockstorage.
+  humanURL: https://aws.amazon.com/lightsail/
+  baseURL: https://lightsail.us-east-1.amazonaws.com
+  tags:
+  - blockstorage
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-lightsail-blockstorage-api-openapi.yml
+  - type: Smithy
+    url: smithy/amazon-lightsail-2016-11-28.json
+  - type: APIReference
+    url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html
+  - type: Documentation
+    url: https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html
+  - type: GettingStarted
+    url: https://aws.amazon.com/lightsail/getting-started/
+  - type: Pricing
+    url: https://aws.amazon.com/lightsail/pricing/
+  - type: FAQ
+    url: https://aws.amazon.com/lightsail/faq/
+  - type: JSONSchema
+    url: json-schema/amazon-lightsail-instance-schema.json
+  - type: JSONLD
+    url: json-ld/amazon-lightsail-context.jsonld
+- aid: amazon-lightsail:amazon-lightsail-keypairs-api
+  name: Amazon Lightsail Keypairs API
+  description: The Keypairs API from Amazon Lightsail — 6 operation(s) for keypairs.
+  humanURL: https://aws.amazon.com/lightsail/
+  baseURL: https://lightsail.us-east-1.amazonaws.com
+  tags:
+  - Keypairs
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-lightsail-keypairs-api-openapi.yml
+  - type: Smithy
+    url: smithy/amazon-lightsail-2016-11-28.json
   - type: APIReference
     url: https://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/Welcome.html
   - type: Documentation
@@ -94,6 +610,8 @@ apis:
   - type: JSONLD
     url: json-ld/amazon-lightsail-context.jsonld
 common:
+- type: Overlay
+  url: overlays/amazon-lightsail-overlay.yaml
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/amazon-lightsail/overview
 - type: AgenticAccess
@@ -234,7 +752,7 @@ common:
 maintainer:
   name: Kin Lane
   email: kin@apievangelist.com
-x-parent: aws
+x-parent: amazon-web-services
 x-relationship: product
 tags:
 - Cloud
