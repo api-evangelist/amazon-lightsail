@@ -83,94 +83,6 @@ paths:
       x-amz-target: Lightsail_20161128.GetBundles
 components:
   schemas:
-    BundleList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Bundle'
-    InstancePlatform:
-      type: string
-      enum:
-      - LINUX_UNIX
-      - WINDOWS
-    AppCategory:
-      type: string
-      enum:
-      - LfR
-    integer:
-      type: integer
-    AppCategoryList:
-      type: array
-      items:
-        $ref: '#/components/schemas/AppCategory'
-    OperationFailureException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when an operation fails to execute.
-    boolean:
-      type: boolean
-    ServiceException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: A general service exception.
-    InvalidInputException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
-    InstancePlatformList:
-      type: array
-      items:
-        $ref: '#/components/schemas/InstancePlatform'
-    GetBundlesRequest:
-      type: object
-      properties:
-        includeInactive:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value that indicates whether to include inactive (unavailable) bundles in the response of your request.
-        pageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetBundles request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
-        appCategory:
-          allOf:
-          - $ref: '#/components/schemas/AppCategory'
-          description: Returns a list of bundles that are specific to Lightsail for Research. You must use this parameter to view Lightsail for Research bundles.
-    NotFoundException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when it cannot find a resource.
     RegionSetupInProgressException:
       type: object
       properties:
@@ -187,25 +99,7 @@ components:
           - $ref: '#/components/schemas/string'
           description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
       description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
-    GetBundlesResult:
-      type: object
-      properties:
-        bundles:
-          allOf:
-          - $ref: '#/components/schemas/BundleList'
-          description: An array of key-value pairs that contains information about the available bundles.
-        nextPageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetBundles request and specify the next page token using the pageToken parameter.
-    float:
-      type: number
-    string:
-      type: string
-    NonEmptyString:
-      type: string
-      pattern: \S
-    AccountSetupInProgressException:
+    ServiceException:
       type: object
       properties:
         code:
@@ -216,7 +110,9 @@ components:
           $ref: '#/components/schemas/string'
         tip:
           $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when an account is still in the setup in progress state.
+      description: A general service exception.
+    string:
+      type: string
     UnauthenticatedException:
       type: object
       properties:
@@ -229,7 +125,11 @@ components:
         tip:
           $ref: '#/components/schemas/string'
       description: Lightsail throws this exception when the user has not been authenticated.
-    AccessDeniedException:
+    BundleList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Bundle'
+    OperationFailureException:
       type: object
       properties:
         code:
@@ -240,7 +140,7 @@ components:
           $ref: '#/components/schemas/string'
         tip:
           $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
+      description: Lightsail throws this exception when an operation fails to execute.
     Bundle:
       type: object
       properties:
@@ -297,6 +197,106 @@ components:
           - $ref: '#/components/schemas/integer'
           description: An integer that indicates the public ipv4 address count included in the bundle, the value is either 0 or 1.
       description: Describes a bundle, which is a set of specs describing your virtual private server (or instance ).
+    GetBundlesResult:
+      type: object
+      properties:
+        bundles:
+          allOf:
+          - $ref: '#/components/schemas/BundleList'
+          description: An array of key-value pairs that contains information about the available bundles.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetBundles request and specify the next page token using the pageToken parameter.
+    float:
+      type: number
+    InvalidInputException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
+    integer:
+      type: integer
+    boolean:
+      type: boolean
+    AppCategoryList:
+      type: array
+      items:
+        $ref: '#/components/schemas/AppCategory'
+    GetBundlesRequest:
+      type: object
+      properties:
+        includeInactive:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value that indicates whether to include inactive (unavailable) bundles in the response of your request.
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetBundles request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+        appCategory:
+          allOf:
+          - $ref: '#/components/schemas/AppCategory'
+          description: Returns a list of bundles that are specific to Lightsail for Research. You must use this parameter to view Lightsail for Research bundles.
+    NonEmptyString:
+      type: string
+      pattern: \S
+    AccountSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an account is still in the setup in progress state.
+    InstancePlatformList:
+      type: array
+      items:
+        $ref: '#/components/schemas/InstancePlatform'
+    InstancePlatform:
+      type: string
+      enum:
+      - LINUX_UNIX
+      - WINDOWS
+    AccessDeniedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
+    NotFoundException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when it cannot find a resource.
+    AppCategory:
+      type: string
+      enum:
+      - LfR
   securitySchemes:
     sigv4:
       type: apiKey

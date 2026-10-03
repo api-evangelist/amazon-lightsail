@@ -388,76 +388,10 @@ paths:
       x-amz-target: Lightsail_20161128.GetDisks
 components:
   schemas:
-    AddOnRequest:
-      type: object
-      properties:
-        addOnType:
-          allOf:
-          - $ref: '#/components/schemas/AddOnType'
-          description: The add-on type.
-        autoSnapshotAddOnRequest:
-          allOf:
-          - $ref: '#/components/schemas/AutoSnapshotAddOnRequest'
-          description: An object that represents additional parameters when enabling or modifying the automatic snapshot add-on.
-        stopInstanceOnIdleRequest:
-          allOf:
-          - $ref: '#/components/schemas/StopInstanceOnIdleRequest'
-          description: An object that represents additional parameters when enabling or modifying the StopInstanceOnIdle add-on. This object only applies to Lightsail for Research resources.
-      required:
-      - addOnType
-      description: Describes a request to enable, modify, or disable an add-on for an Amazon Lightsail resource. An additional cost may be associated with enabling add-ons. For more information, see the Lightsail pricing page .
-    GetDisksResult:
-      type: object
-      properties:
-        disks:
-          allOf:
-          - $ref: '#/components/schemas/DiskList'
-          description: An array of objects containing information about all block storage disks.
-        nextPageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetDisks request and specify the next page token using the pageToken parameter.
-    GetDisksRequest:
-      type: object
-      properties:
-        pageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetDisks request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
     TagValue:
       type: string
-    OperationStatus:
+    TagKey:
       type: string
-      enum:
-      - NotStarted
-      - Started
-      - Failed
-      - Completed
-      - Succeeded
-    ResourceLocation:
-      type: object
-      properties:
-        availabilityZone:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The Availability Zone. Follows the format us-east-2a (case-sensitive).
-        regionName:
-          allOf:
-          - $ref: '#/components/schemas/RegionName'
-          description: The Amazon Web Services Region name.
-      description: Describes the resource location.
-    StopInstanceOnIdleRequest:
-      type: object
-      properties:
-        threshold:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The value to compare with the duration.
-        duration:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The amount of idle time in minutes after which your virtual computer will automatically stop.
-      description: Describes a request to create or edit the StopInstanceOnIdle add-on. This add-on only applies to Lightsail for Research resources.
     DeleteDiskRequest:
       type: object
       properties:
@@ -471,41 +405,391 @@ components:
           description: A Boolean value to indicate whether to delete all add-ons for the disk.
       required:
       - diskName
+    ServiceException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: A general service exception.
+    RegionSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Regions and Availability Zones for Lightsail
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
+      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
+    TimeOfDay:
+      type: string
+      pattern: ^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$
+    string:
+      type: string
+    Disk:
+      type: object
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The unique name of the disk.
+        arn:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Amazon Resource Name (ARN) of the disk.
+        supportCode:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The support code. Include this code in your email to support when you have questions about an instance or another resource in Lightsail. This code enables our support team to look up your Lightsail information more easily.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The date when the disk was created.
+        location:
+          allOf:
+          - $ref: '#/components/schemas/ResourceLocation'
+          description: The AWS Region and Availability Zone where the disk is located.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The Lightsail resource type ( Disk ).
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values for the resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
+        addOns:
+          allOf:
+          - $ref: '#/components/schemas/AddOnList'
+          description: An array of objects representing the add-ons enabled on the disk.
+        sizeInGb:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The size of the disk in GB.
+        isSystemDisk:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether this disk is a system disk (has an operating system loaded on it).
+        iops:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The input/output operations per second (IOPS) of the disk.
+        path:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The disk path.
+        state:
+          allOf:
+          - $ref: '#/components/schemas/DiskState'
+          description: Describes the status of the disk.
+        attachedTo:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The resources to which the disk is attached.
+        isAttached:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the disk is attached.
+        attachmentState:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: (Discontinued) The attachment state of the disk. In releases prior to November 14, 2017, this parameter returned attached for system disks in the API response. It is now discontinued, but still included in the response. Use isAttached instead.
+        gbInUse:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: (Discontinued) The number of GB in use by the disk. In releases prior to November 14, 2017, this parameter was not included in the API response. It is now discontinued.
+        autoMountStatus:
+          allOf:
+          - $ref: '#/components/schemas/AutoMountStatus'
+          description: The status of automatically mounting a storage disk to a virtual computer. This parameter only applies to Lightsail for Research resources.
+      description: Describes a block storage disk.
+    GetDisksResult:
+      type: object
+      properties:
+        disks:
+          allOf:
+          - $ref: '#/components/schemas/DiskList'
+          description: An array of objects containing information about all block storage disks.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetDisks request and specify the next page token using the pageToken parameter.
+    IsoDate:
+      type: string
+      format: date-time
+    GetDiskResult:
+      type: object
+      properties:
+        disk:
+          allOf:
+          - $ref: '#/components/schemas/Disk'
+          description: An object containing information about the disk.
     ResourceName:
       type: string
       pattern: ^\w[\w\-]*\w$
+    Operation:
+      type: object
+      properties:
+        id:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The ID of the operation.
+        resourceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The resource name.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The resource type.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the operation was initialized ( 1479816991.349 ).
+        location:
+          allOf:
+          - $ref: '#/components/schemas/ResourceLocation'
+          description: The Amazon Web Services Region and Availability Zone.
+        isTerminal:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the operation is terminal.
+        operationDetails:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Details about the operation ( Debian-1GB-Ohio-1 ).
+        operationType:
+          allOf:
+          - $ref: '#/components/schemas/OperationType'
+          description: The type of operation.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/OperationStatus'
+          description: The status of the operation.
+        statusChangedAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the status was changed ( 1479816991.349 ).
+        errorCode:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The error code.
+        errorDetails:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The error details.
+      description: Describes the API operation.
+    AddOnType:
+      type: string
+      enum:
+      - AutoSnapshot
+      - StopInstanceOnIdle
+    UnauthenticatedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user has not been authenticated.
+    OperationList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Operation'
+    OperationFailureException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an operation fails to execute.
+    DiskState:
+      type: string
+      enum:
+      - pending
+      - error
+      - available
+      - in-use
+      - unknown
+    AddOn:
+      type: object
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The name of the add-on.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The status of the add-on.
+        snapshotTimeOfDay:
+          allOf:
+          - $ref: '#/components/schemas/TimeOfDay'
+          description: The daily time when an automatic snapshot is created. The time shown is in HH:00 format, and in Coordinated Universal Time (UTC). The snapshot is automatically created between the time shown and up to 45 minutes after.
+        nextSnapshotTimeOfDay:
+          allOf:
+          - $ref: '#/components/schemas/TimeOfDay'
+          description: The next daily time an automatic snapshot will be created. The time shown is in HH:00 format, and in Coordinated Universal Time (UTC). The snapshot is automatically created between the time shown and up to 45 minutes after.
+        threshold:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The trigger threshold of the action. This add-on only applies to Lightsail for Research resources.
+        duration:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The amount of idle time in minutes after which your virtual computer will automatically stop. This add-on only applies to Lightsail for Research resources.
+      description: Describes an add-on that is enabled for an Amazon Lightsail resource.
+    DiskList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Disk'
+    AttachDiskRequest:
+      type: object
+      properties:
+        diskName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The unique Lightsail disk name ( my-disk ).
+        instanceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the Lightsail instance where you want to utilize the storage disk.
+        diskPath:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The disk path to expose to the instance ( /dev/xvdf ).
+        autoMounting:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value used to determine the automatic mounting of a storage volume to a virtual computer. The default value is False . This value only applies to Lightsail for Research resources.
+      required:
+      - diskName
+      - instanceName
+      - diskPath
     integer:
       type: integer
-    DetachDiskResult:
+    StopInstanceOnIdleRequest:
+      type: object
+      properties:
+        threshold:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The value to compare with the duration.
+        duration:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The amount of idle time in minutes after which your virtual computer will automatically stop.
+      description: Describes a request to create or edit the StopInstanceOnIdle add-on. This add-on only applies to Lightsail for Research resources.
+    InvalidInputException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
+    AutoMountStatus:
+      type: string
+      enum:
+      - Failed
+      - Pending
+      - Mounted
+      - NotMounted
+    AddOnRequestList:
+      type: array
+      items:
+        $ref: '#/components/schemas/AddOnRequest'
+    DeleteDiskResult:
       type: object
       properties:
         operations:
           allOf:
           - $ref: '#/components/schemas/OperationList'
           description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    RegionName:
-      type: string
-      enum:
-      - us-east-1
-      - us-east-2
-      - us-west-1
-      - us-west-2
-      - eu-west-1
-      - eu-west-2
-      - eu-west-3
-      - eu-central-1
-      - eu-north-1
-      - eu-south-2
-      - ca-central-1
-      - ap-east-1
-      - ap-south-1
-      - ap-southeast-1
-      - ap-southeast-2
-      - ap-northeast-1
-      - ap-northeast-2
-      - ap-southeast-3
-      - ap-southeast-5
-      - sa-east-1
+    AddOnList:
+      type: array
+      items:
+        $ref: '#/components/schemas/AddOn'
+    boolean:
+      type: boolean
+    ResourceLocation:
+      type: object
+      properties:
+        availabilityZone:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The Availability Zone. Follows the format us-east-2a (case-sensitive).
+        regionName:
+          allOf:
+          - $ref: '#/components/schemas/RegionName'
+          description: The Amazon Web Services Region name.
+      description: Describes the resource location.
+    AutoSnapshotAddOnRequest:
+      type: object
+      properties:
+        snapshotTimeOfDay:
+          allOf:
+          - $ref: '#/components/schemas/TimeOfDay'
+          description: 'The daily time when an automatic snapshot will be created. Constraints: Must be in HH:00 format, and in an hourly increment. Specified in Coordinated Universal Time (UTC). The snapshot will be automatically created between the time specified and up to 45 minutes after.'
+      description: 'Describes a request to enable or modify the automatic snapshot add-on for an Amazon Lightsail instance or disk. When you modify the automatic snapshot time for a resource, it is typically effective immediately except under the following conditions: If an automatic snapshot has been created for the current day, and you change the snapshot time to a later time of day, then the new snapshot time will be effective the following day. This ensures that two snapshots are not created for the current day. If an automatic snapshot has not yet been created for the current day, and you change the snapshot time to an earlier time of day, then the new snapshot time will be effective the following day and a snapshot is automatically created at the previously set time for the current day. This ensures that a snapshot is created for the current day. If an automatic snapshot has not yet been created for the current day, and you change the snapshot time to a time that is within 30 minutes from your current time, then the new snapshot time will be effective the following day and a snapshot is automatically created at the previously set time for the current day. This ensures that a snapshot is created for the current day, because 30 minutes is required between your current time and the new snapshot time that you specify. If an automatic snapshot is scheduled to be created within 30 minutes from your current time and you change the snapshot time, then the new snapshot time will be effective the following day and a snapshot is automatically created at the previously set time for the current day. This ensures that a snapshot is created for the current day, because 30 minutes is required between your current time and the new snapshot time that you specify.'
+    CreateDiskResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    CreateDiskRequest:
+      type: object
+      properties:
+        diskName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The unique Lightsail disk name ( my-disk ).
+        availabilityZone:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Availability Zone where you want to create the disk ( us-east-2a ). Use the same Availability Zone as the Lightsail instance to which you want to attach the disk. Use the get regions operation to list the Availability Zones where Lightsail is currently available.
+        sizeInGb:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The size of the disk in GB ( 32 ).
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values to add to the resource during create. Use the TagResource action to tag a resource after it's created.
+        addOns:
+          allOf:
+          - $ref: '#/components/schemas/AddOnRequestList'
+          description: An array of objects that represent the add-ons to enable for the new disk.
+      required:
+      - diskName
+      - availabilityZone
+      - sizeInGb
     OperationType:
       type: string
       enum:
@@ -593,119 +877,6 @@ components:
       - StopGUISession
       - SetupInstanceHttps
       - GetProfile
-    OperationFailureException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when an operation fails to execute.
-    AttachDiskRequest:
-      type: object
-      properties:
-        diskName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The unique Lightsail disk name ( my-disk ).
-        instanceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the Lightsail instance where you want to utilize the storage disk.
-        diskPath:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The disk path to expose to the instance ( /dev/xvdf ).
-        autoMounting:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value used to determine the automatic mounting of a storage volume to a virtual computer. The default value is False . This value only applies to Lightsail for Research resources.
-      required:
-      - diskName
-      - instanceName
-      - diskPath
-    Disk:
-      type: object
-      properties:
-        name:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The unique name of the disk.
-        arn:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The Amazon Resource Name (ARN) of the disk.
-        supportCode:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The support code. Include this code in your email to support when you have questions about an instance or another resource in Lightsail. This code enables our support team to look up your Lightsail information more easily.
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The date when the disk was created.
-        location:
-          allOf:
-          - $ref: '#/components/schemas/ResourceLocation'
-          description: The AWS Region and Availability Zone where the disk is located.
-        resourceType:
-          allOf:
-          - $ref: '#/components/schemas/ResourceType'
-          description: The Lightsail resource type ( Disk ).
-        tags:
-          allOf:
-          - $ref: '#/components/schemas/TagList'
-          description: The tag keys and optional values for the resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
-        addOns:
-          allOf:
-          - $ref: '#/components/schemas/AddOnList'
-          description: An array of objects representing the add-ons enabled on the disk.
-        sizeInGb:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The size of the disk in GB.
-        isSystemDisk:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value indicating whether this disk is a system disk (has an operating system loaded on it).
-        iops:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The input/output operations per second (IOPS) of the disk.
-        path:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The disk path.
-        state:
-          allOf:
-          - $ref: '#/components/schemas/DiskState'
-          description: Describes the status of the disk.
-        attachedTo:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The resources to which the disk is attached.
-        isAttached:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value indicating whether the disk is attached.
-        attachmentState:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: (Discontinued) The attachment state of the disk. In releases prior to November 14, 2017, this parameter returned attached for system disks in the API response. It is now discontinued, but still included in the response. Use isAttached instead.
-        gbInUse:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: (Discontinued) The number of GB in use by the disk. In releases prior to November 14, 2017, this parameter was not included in the API response. It is now discontinued.
-        autoMountStatus:
-          allOf:
-          - $ref: '#/components/schemas/AutoMountStatus'
-          description: The status of automatically mounting a storage disk to a virtual computer. This parameter only applies to Lightsail for Research resources.
-      description: Describes a block storage disk.
-    TagKey:
-      type: string
     AttachDiskResult:
       type: object
       properties:
@@ -713,194 +884,23 @@ components:
           allOf:
           - $ref: '#/components/schemas/OperationList'
           description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    boolean:
-      type: boolean
-    InvalidInputException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
-    ServiceException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: A general service exception.
-    GetDiskRequest:
+    DetachDiskRequest:
       type: object
       properties:
         diskName:
           allOf:
           - $ref: '#/components/schemas/ResourceName'
-          description: The name of the disk ( my-disk ).
+          description: The unique name of the disk you want to detach from your instance ( my-disk ).
       required:
       - diskName
-    TimeOfDay:
-      type: string
-      pattern: ^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$
-    Operation:
-      type: object
-      properties:
-        id:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The ID of the operation.
-        resourceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The resource name.
-        resourceType:
-          allOf:
-          - $ref: '#/components/schemas/ResourceType'
-          description: The resource type.
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the operation was initialized ( 1479816991.349 ).
-        location:
-          allOf:
-          - $ref: '#/components/schemas/ResourceLocation'
-          description: The Amazon Web Services Region and Availability Zone.
-        isTerminal:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value indicating whether the operation is terminal.
-        operationDetails:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Details about the operation ( Debian-1GB-Ohio-1 ).
-        operationType:
-          allOf:
-          - $ref: '#/components/schemas/OperationType'
-          description: The type of operation.
-        status:
-          allOf:
-          - $ref: '#/components/schemas/OperationStatus'
-          description: The status of the operation.
-        statusChangedAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the status was changed ( 1479816991.349 ).
-        errorCode:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The error code.
-        errorDetails:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The error details.
-      description: Describes the API operation.
-    TagList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Tag'
-    CreateDiskResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    CreateDiskRequest:
-      type: object
-      properties:
-        diskName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The unique Lightsail disk name ( my-disk ).
-        availabilityZone:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The Availability Zone where you want to create the disk ( us-east-2a ). Use the same Availability Zone as the Lightsail instance to which you want to attach the disk. Use the get regions operation to list the Availability Zones where Lightsail is currently available.
-        sizeInGb:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The size of the disk in GB ( 32 ).
-        tags:
-          allOf:
-          - $ref: '#/components/schemas/TagList'
-          description: The tag keys and optional values to add to the resource during create. Use the TagResource action to tag a resource after it's created.
-        addOns:
-          allOf:
-          - $ref: '#/components/schemas/AddOnRequestList'
-          description: An array of objects that represent the add-ons to enable for the new disk.
-      required:
-      - diskName
-      - availabilityZone
-      - sizeInGb
-    AutoMountStatus:
+    OperationStatus:
       type: string
       enum:
+      - NotStarted
+      - Started
       - Failed
-      - Pending
-      - Mounted
-      - NotMounted
-    NotFoundException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when it cannot find a resource.
-    RegionSetupInProgressException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Regions and Availability Zones for Lightsail
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
-      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
-    IsoDate:
-      type: string
-      format: date-time
-    Tag:
-      type: object
-      properties:
-        key:
-          allOf:
-          - $ref: '#/components/schemas/TagKey'
-          description: 'The key of the tag. Constraints: Tag keys accept a maximum of 128 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
-        value:
-          allOf:
-          - $ref: '#/components/schemas/TagValue'
-          description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
-      description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
-    AddOnRequestList:
-      type: array
-      items:
-        $ref: '#/components/schemas/AddOnRequest'
-    DiskList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Disk'
-    string:
-      type: string
+      - Completed
+      - Succeeded
     ResourceType:
       type: string
       enum:
@@ -927,26 +927,13 @@ components:
     NonEmptyString:
       type: string
       pattern: \S
-    OperationList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Operation'
-    AddOnType:
-      type: string
-      enum:
-      - AutoSnapshot
-      - StopInstanceOnIdle
-    GetDiskResult:
+    DetachDiskResult:
       type: object
       properties:
-        disk:
+        operations:
           allOf:
-          - $ref: '#/components/schemas/Disk'
-          description: An object containing information about the disk.
-    AddOnList:
-      type: array
-      items:
-        $ref: '#/components/schemas/AddOn'
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
     AccountSetupInProgressException:
       type: object
       properties:
@@ -959,33 +946,6 @@ components:
         tip:
           $ref: '#/components/schemas/string'
       description: Lightsail throws this exception when an account is still in the setup in progress state.
-    DiskState:
-      type: string
-      enum:
-      - pending
-      - error
-      - available
-      - in-use
-      - unknown
-    UnauthenticatedException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user has not been authenticated.
-    DeleteDiskResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
     AccessDeniedException:
       type: object
       properties:
@@ -998,51 +958,91 @@ components:
         tip:
           $ref: '#/components/schemas/string'
       description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
-    DetachDiskRequest:
+    TagList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Tag'
+    RegionName:
+      type: string
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-west-3
+      - eu-central-1
+      - eu-north-1
+      - eu-south-2
+      - ca-central-1
+      - ap-east-1
+      - ap-south-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+      - ap-northeast-2
+      - ap-southeast-3
+      - ap-southeast-5
+      - sa-east-1
+    AddOnRequest:
+      type: object
+      properties:
+        addOnType:
+          allOf:
+          - $ref: '#/components/schemas/AddOnType'
+          description: The add-on type.
+        autoSnapshotAddOnRequest:
+          allOf:
+          - $ref: '#/components/schemas/AutoSnapshotAddOnRequest'
+          description: An object that represents additional parameters when enabling or modifying the automatic snapshot add-on.
+        stopInstanceOnIdleRequest:
+          allOf:
+          - $ref: '#/components/schemas/StopInstanceOnIdleRequest'
+          description: An object that represents additional parameters when enabling or modifying the StopInstanceOnIdle add-on. This object only applies to Lightsail for Research resources.
+      required:
+      - addOnType
+      description: Describes a request to enable, modify, or disable an add-on for an Amazon Lightsail resource. An additional cost may be associated with enabling add-ons. For more information, see the Lightsail pricing page .
+    NotFoundException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when it cannot find a resource.
+    GetDisksRequest:
+      type: object
+      properties:
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetDisks request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+    GetDiskRequest:
       type: object
       properties:
         diskName:
           allOf:
           - $ref: '#/components/schemas/ResourceName'
-          description: The unique name of the disk you want to detach from your instance ( my-disk ).
+          description: The name of the disk ( my-disk ).
       required:
       - diskName
-    AddOn:
+    Tag:
       type: object
       properties:
-        name:
+        key:
           allOf:
-          - $ref: '#/components/schemas/string'
-          description: The name of the add-on.
-        status:
+          - $ref: '#/components/schemas/TagKey'
+          description: 'The key of the tag. Constraints: Tag keys accept a maximum of 128 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+        value:
           allOf:
-          - $ref: '#/components/schemas/string'
-          description: The status of the add-on.
-        snapshotTimeOfDay:
-          allOf:
-          - $ref: '#/components/schemas/TimeOfDay'
-          description: The daily time when an automatic snapshot is created. The time shown is in HH:00 format, and in Coordinated Universal Time (UTC). The snapshot is automatically created between the time shown and up to 45 minutes after.
-        nextSnapshotTimeOfDay:
-          allOf:
-          - $ref: '#/components/schemas/TimeOfDay'
-          description: The next daily time an automatic snapshot will be created. The time shown is in HH:00 format, and in Coordinated Universal Time (UTC). The snapshot is automatically created between the time shown and up to 45 minutes after.
-        threshold:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The trigger threshold of the action. This add-on only applies to Lightsail for Research resources.
-        duration:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The amount of idle time in minutes after which your virtual computer will automatically stop. This add-on only applies to Lightsail for Research resources.
-      description: Describes an add-on that is enabled for an Amazon Lightsail resource.
-    AutoSnapshotAddOnRequest:
-      type: object
-      properties:
-        snapshotTimeOfDay:
-          allOf:
-          - $ref: '#/components/schemas/TimeOfDay'
-          description: 'The daily time when an automatic snapshot will be created. Constraints: Must be in HH:00 format, and in an hourly increment. Specified in Coordinated Universal Time (UTC). The snapshot will be automatically created between the time specified and up to 45 minutes after.'
-      description: 'Describes a request to enable or modify the automatic snapshot add-on for an Amazon Lightsail instance or disk. When you modify the automatic snapshot time for a resource, it is typically effective immediately except under the following conditions: If an automatic snapshot has been created for the current day, and you change the snapshot time to a later time of day, then the new snapshot time will be effective the following day. This ensures that two snapshots are not created for the current day. If an automatic snapshot has not yet been created for the current day, and you change the snapshot time to an earlier time of day, then the new snapshot time will be effective the following day and a snapshot is automatically created at the previously set time for the current day. This ensures that a snapshot is created for the current day. If an automatic snapshot has not yet been created for the current day, and you change the snapshot time to a time that is within 30 minutes from your current time, then the new snapshot time will be effective the following day and a snapshot is automatically created at the previously set time for the current day. This ensures that a snapshot is created for the current day, because 30 minutes is required between your current time and the new snapshot time that you specify. If an automatic snapshot is scheduled to be created within 30 minutes from your current time and you change the snapshot time, then the new snapshot time will be effective the following day and a snapshot is automatically created at the previously set time for the current day. This ensures that a snapshot is created for the current day, because 30 minutes is required between your current time and the new snapshot time that you specify.'
+          - $ref: '#/components/schemas/TagValue'
+          description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+      description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
   securitySchemes:
     sigv4:
       type: apiKey

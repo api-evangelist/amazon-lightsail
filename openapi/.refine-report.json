@@ -2,8 +2,8 @@
   "provider": "amazon-lightsail",
   "sources": [
     "_original/amazon-lightsail-openapi.yml",
-    "_original/openapi.yml",
-    "amazon-lightsail-openapi.yml"
+    "_original/amazon-lightsail-openapi_2.yml",
+    "_original/openapi.yml"
   ],
   "outputs": [
     "amazon-lightsail-instances-api-openapi.yml",
@@ -30,17 +30,41 @@
     "amazon-lightsail-tags-api-openapi.yml"
   ],
   "archived": [
-    "archived openapi/amazon-lightsail-openapi.yml"
+    "deleted 2 superseded output(s) from the previous generation"
   ],
   "errors": [],
   "warnings": [],
   "notes": [
-    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "sourced from openapi/_original/ (3 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "amazon-lightsail-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "amazon-lightsail-openapi_2.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
-    "amazon-lightsail-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "tag 'Instances' spans 2 source specs (amazon-lightsail-openapi.yml, amazon-lightsail-openapi.yml): per-path servers applied",
-    "apis.yml register: written (+22 apis, 22 total)"
+    "tag 'Instances' spans 2 source specs (amazon-lightsail-openapi.yml, amazon-lightsail-openapi_2.yml): per-path servers applied",
+    "superseded outputs removed: amazon-lightsail-blockstorage-api-openapi.yml, amazon-lightsail-keypairs-api-openapi.yml",
+    "apis.yml register: written (+2 apis, 22 total)"
   ],
-  "skipped": []
+  "skipped": [
+    "amazon-lightsail-account-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-lightsail-alarms-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-lightsail-blockstorage-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-lightsail-blueprints-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-lightsail-buckets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-lightsail-bundles-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-lightsail-certificates-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-lightsail-contact-methods-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-lightsail-container-services-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-lightsail-cost-estimate-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-lightsail-distributions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-lightsail-domains-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-lightsail-instances-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-lightsail-keypairs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-lightsail-load-balancers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-lightsail-operations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-lightsail-regions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-lightsail-relational-databases-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-lightsail-setup-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-lightsail-snapshots-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-lightsail-static-ips-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-lightsail-tags-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

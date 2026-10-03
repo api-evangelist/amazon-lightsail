@@ -79,6 +79,34 @@ paths:
       x-amz-target: Lightsail_20161128.GetCostEstimate
 components:
   schemas:
+    RegionSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Regions and Availability Zones for Lightsail
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
+      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
+    ServiceException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: A general service exception.
     PricingUnit:
       type: string
       enum:
@@ -87,66 +115,13 @@ components:
       - GB-Mo
       - Bundles
       - Queries
-    CostEstimates:
-      type: array
-      items:
-        $ref: '#/components/schemas/CostEstimate'
-    Currency:
+    string:
       type: string
-      enum:
-      - USD
-    ResourceName:
-      type: string
-      pattern: ^\w[\w\-]*\w$
-    ResourcesBudgetEstimate:
-      type: array
-      items:
-        $ref: '#/components/schemas/ResourceBudgetEstimate'
     double:
       type: number
-    GetCostEstimateRequest:
-      type: object
-      properties:
-        resourceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The resource name.
-        startTime:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: 'The cost estimate start time. Constraints: Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you want to use a start time of October 1, 2018, at 8 PM UTC, specify 1538424000 as the start time. You can convert a human-friendly time to Unix time format using a converter like Epoch converter .'
-        endTime:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: 'The cost estimate end time. Constraints: Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you want to use an end time of October 1, 2018, at 9 PM UTC, specify 1538427600 as the end time. You can convert a human-friendly time to Unix time format using a converter like Epoch converter .'
-      required:
-      - resourceName
-      - startTime
-      - endTime
-    EstimateByTime:
-      type: object
-      properties:
-        usageCost:
-          allOf:
-          - $ref: '#/components/schemas/double'
-          description: The amount of cost or usage that's measured for the cost estimate.
-        pricingUnit:
-          allOf:
-          - $ref: '#/components/schemas/PricingUnit'
-          description: The unit of measurement that's used for the cost estimate.
-        unit:
-          allOf:
-          - $ref: '#/components/schemas/double'
-          description: The number of pricing units used to calculate the total number of hours. For example, 1 unit equals 1 hour.
-        currency:
-          allOf:
-          - $ref: '#/components/schemas/Currency'
-          description: The currency of the estimate in USD.
-        timePeriod:
-          allOf:
-          - $ref: '#/components/schemas/TimePeriod'
-          description: The period of time, in days, that an estimate covers. The period has a start date and an end date. The start date must come before the end date.
-      description: An estimate that's associated with a time period.
+    IsoDate:
+      type: string
+      format: date-time
     GetCostEstimateResult:
       type: object
       properties:
@@ -154,6 +129,25 @@ components:
           allOf:
           - $ref: '#/components/schemas/ResourcesBudgetEstimate'
           description: Returns the estimate's forecasted cost or usage.
+    ResourceName:
+      type: string
+      pattern: ^\w[\w\-]*\w$
+    CostEstimates:
+      type: array
+      items:
+        $ref: '#/components/schemas/CostEstimate'
+    UnauthenticatedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user has not been authenticated.
     ResourceBudgetEstimate:
       type: object
       properties:
@@ -178,6 +172,34 @@ components:
           - $ref: '#/components/schemas/IsoDate'
           description: The estimate end time.
       description: Describes the estimated cost or usage that a budget tracks.
+    Currency:
+      type: string
+      enum:
+      - USD
+    EstimateByTime:
+      type: object
+      properties:
+        usageCost:
+          allOf:
+          - $ref: '#/components/schemas/double'
+          description: The amount of cost or usage that's measured for the cost estimate.
+        pricingUnit:
+          allOf:
+          - $ref: '#/components/schemas/PricingUnit'
+          description: The unit of measurement that's used for the cost estimate.
+        unit:
+          allOf:
+          - $ref: '#/components/schemas/double'
+          description: The number of pricing units used to calculate the total number of hours. For example, 1 unit equals 1 hour.
+        currency:
+          allOf:
+          - $ref: '#/components/schemas/Currency'
+          description: The currency of the estimate in USD.
+        timePeriod:
+          allOf:
+          - $ref: '#/components/schemas/TimePeriod'
+          description: The period of time, in days, that an estimate covers. The period has a start date and an end date. The start date must come before the end date.
+      description: An estimate that's associated with a time period.
     InvalidInputException:
       type: object
       properties:
@@ -190,63 +212,29 @@ components:
         tip:
           $ref: '#/components/schemas/string'
       description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
-    ServiceException:
+    ResourcesBudgetEstimate:
+      type: array
+      items:
+        $ref: '#/components/schemas/ResourceBudgetEstimate'
+    GetCostEstimateRequest:
       type: object
       properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: A general service exception.
-    CostEstimate:
-      type: object
-      properties:
-        usageType:
+        resourceName:
           allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The types of usage that are included in the estimate, such as costs, usage, or data transfer.
-        resultsByTime:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The resource name.
+        startTime:
           allOf:
-          - $ref: '#/components/schemas/EstimatesByTime'
-          description: The cost estimate result that's associated with a time period.
-      description: Describes the estimated cost for resources in your Lightsail for Research account.
-    NotFoundException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when it cannot find a resource.
-    RegionSetupInProgressException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
+          - $ref: '#/components/schemas/IsoDate'
+          description: 'The cost estimate start time. Constraints: Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you want to use a start time of October 1, 2018, at 8 PM UTC, specify 1538424000 as the start time. You can convert a human-friendly time to Unix time format using a converter like Epoch converter .'
+        endTime:
           allOf:
-          - $ref: '#/components/schemas/string'
-          description: Regions and Availability Zones for Lightsail
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
-      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
-    IsoDate:
-      type: string
-      format: date-time
-    string:
-      type: string
+          - $ref: '#/components/schemas/IsoDate'
+          description: 'The cost estimate end time. Constraints: Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you want to use an end time of October 1, 2018, at 9 PM UTC, specify 1538427600 as the end time. You can convert a human-friendly time to Unix time format using a converter like Epoch converter .'
+      required:
+      - resourceName
+      - startTime
+      - endTime
     NonEmptyString:
       type: string
       pattern: \S
@@ -273,30 +261,6 @@ components:
       - Distribution
       - Certificate
       - Bucket
-    TimePeriod:
-      type: object
-      properties:
-        start:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The beginning of the time period. The start date is inclusive. For example, if start is 2017-01-01 , Lightsail for Research retrieves cost and usage data starting at 2017-01-01 up to the end date. The start date must be equal to or no later than the current date to avoid a validation error.
-        end:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The end of the time period. The end date is exclusive. For example, if end is 2017-05-01 , Lightsail for Research retrieves cost and usage data from the start date up to, but not including, 2017-05-01 .
-      description: Sets the start date and end date for retrieving a cost estimate. The start date is inclusive, but the end date is exclusive. For example, if start is 2017-01-01 and end is 2017-05-01 , then the cost and usage data is retrieved from 2017-01-01 up to and including 2017-04-30 but not including 2017-05-01 .
-    UnauthenticatedException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user has not been authenticated.
     EstimatesByTime:
       type: array
       items:
@@ -313,6 +277,42 @@ components:
         tip:
           $ref: '#/components/schemas/string'
       description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
+    CostEstimate:
+      type: object
+      properties:
+        usageType:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The types of usage that are included in the estimate, such as costs, usage, or data transfer.
+        resultsByTime:
+          allOf:
+          - $ref: '#/components/schemas/EstimatesByTime'
+          description: The cost estimate result that's associated with a time period.
+      description: Describes the estimated cost for resources in your Lightsail for Research account.
+    TimePeriod:
+      type: object
+      properties:
+        start:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The beginning of the time period. The start date is inclusive. For example, if start is 2017-01-01 , Lightsail for Research retrieves cost and usage data starting at 2017-01-01 up to the end date. The start date must be equal to or no later than the current date to avoid a validation error.
+        end:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The end of the time period. The end date is exclusive. For example, if end is 2017-05-01 , Lightsail for Research retrieves cost and usage data from the start date up to, but not including, 2017-05-01 .
+      description: Sets the start date and end date for retrieving a cost estimate. The start date is inclusive, but the end date is exclusive. For example, if start is 2017-01-01 and end is 2017-05-01 , then the cost and usage data is retrieved from 2017-01-01 up to and including 2017-04-30 but not including 2017-05-01 .
+    NotFoundException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when it cannot find a resource.
   securitySchemes:
     sigv4:
       type: apiKey

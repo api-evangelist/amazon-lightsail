@@ -449,31 +449,85 @@ paths:
       x-amz-target: Lightsail_20161128.UpdateDomainEntry
 components:
   schemas:
-    GetDomainsRequest:
+    TagValue:
+      type: string
+    TagKey:
+      type: string
+    DomainList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Domain'
+    DeleteDomainRequest:
       type: object
       properties:
-        pageToken:
+        domainName:
+          allOf:
+          - $ref: '#/components/schemas/DomainName'
+          description: The specific domain name to delete.
+      required:
+      - domainName
+    DomainEntryOptions:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/string'
+    ServiceException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: A general service exception.
+    RegionSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
           allOf:
           - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetDomains request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
-    GetDomainResult:
-      type: object
-      properties:
-        domain:
-          allOf:
-          - $ref: '#/components/schemas/Domain'
-          description: An array of key-value pairs containing information about your get domain request.
-    GetDomainsResult:
-      type: object
-      properties:
-        domains:
-          allOf:
-          - $ref: '#/components/schemas/DomainList'
-          description: An array of key-value pairs containing information about each of the domain entries in the user's account.
-        nextPageToken:
+          description: Regions and Availability Zones for Lightsail
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
           allOf:
           - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetDomains request and specify the next page token using the pageToken parameter.
+          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
+      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
+    string:
+      type: string
+    DeleteDomainEntryResult:
+      type: object
+      properties:
+        operation:
+          allOf:
+          - $ref: '#/components/schemas/Operation'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    UpdateDomainEntryRequest:
+      type: object
+      properties:
+        domainName:
+          allOf:
+          - $ref: '#/components/schemas/DomainName'
+          description: The name of the domain recordset to update.
+        domainEntry:
+          allOf:
+          - $ref: '#/components/schemas/DomainEntry'
+          description: An array of key-value pairs containing information about the domain entry.
+      required:
+      - domainName
+      - domainEntry
+    IsoDate:
+      type: string
+      format: date-time
+    DomainEntryList:
+      type: array
+      items:
+        $ref: '#/components/schemas/DomainEntry'
     R53HostedZoneDeletionState:
       type: object
       properties:
@@ -486,43 +540,103 @@ components:
           - $ref: '#/components/schemas/string'
           description: The message that describes the reason for the status code.
       description: Describes the deletion state of an Amazon Route 53 hosted zone for a domain that is being automatically delegated to an Amazon Lightsail DNS zone.
-    CreateDomainRequest:
+    CreateDomainEntryResult:
       type: object
       properties:
-        domainName:
+        operation:
           allOf:
-          - $ref: '#/components/schemas/DomainName'
-          description: The domain name to manage ( example.com ).
-        tags:
-          allOf:
-          - $ref: '#/components/schemas/TagList'
-          description: The tag keys and optional values to add to the resource during create. Use the TagResource action to tag a resource after it's created.
-      required:
-      - domainName
-    DomainName:
+          - $ref: '#/components/schemas/Operation'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    ResourceName:
       type: string
-    TagValue:
-      type: string
-    OperationStatus:
-      type: string
-      enum:
-      - NotStarted
-      - Started
-      - Failed
-      - Completed
-      - Succeeded
-    ResourceLocation:
+      pattern: ^\w[\w\-]*\w$
+    Operation:
       type: object
       properties:
-        availabilityZone:
+        id:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The ID of the operation.
+        resourceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The resource name.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The resource type.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the operation was initialized ( 1479816991.349 ).
+        location:
+          allOf:
+          - $ref: '#/components/schemas/ResourceLocation'
+          description: The Amazon Web Services Region and Availability Zone.
+        isTerminal:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the operation is terminal.
+        operationDetails:
           allOf:
           - $ref: '#/components/schemas/string'
-          description: The Availability Zone. Follows the format us-east-2a (case-sensitive).
-        regionName:
+          description: Details about the operation ( Debian-1GB-Ohio-1 ).
+        operationType:
           allOf:
-          - $ref: '#/components/schemas/RegionName'
-          description: The Amazon Web Services Region name.
-      description: Describes the resource location.
+          - $ref: '#/components/schemas/OperationType'
+          description: The type of operation.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/OperationStatus'
+          description: The status of the operation.
+        statusChangedAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the status was changed ( 1479816991.349 ).
+        errorCode:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The error code.
+        errorDetails:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The error details.
+      description: Describes the API operation.
+    UnauthenticatedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user has not been authenticated.
+    OperationList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Operation'
+    DeleteDomainResult:
+      type: object
+      properties:
+        operation:
+          allOf:
+          - $ref: '#/components/schemas/Operation'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    OperationFailureException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an operation fails to execute.
     Domain:
       type: object
       properties:
@@ -563,9 +677,67 @@ components:
           - $ref: '#/components/schemas/RegisteredDomainDelegationInfo'
           description: An object that describes the state of the Route 53 domain delegation to a Lightsail DNS zone.
       description: Describes a domain where you are storing recordsets.
-    ResourceName:
+    GetDomainsRequest:
+      type: object
+      properties:
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetDomains request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+    DomainEntryType:
       type: string
-      pattern: ^\w[\w\-]*\w$
+    UpdateDomainEntryResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    InvalidInputException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
+    R53HostedZoneDeletionStateCode:
+      type: string
+      enum:
+      - SUCCEEDED
+      - PENDING
+      - FAILED
+      - STARTED
+    boolean:
+      type: boolean
+    ResourceLocation:
+      type: object
+      properties:
+        availabilityZone:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The Availability Zone. Follows the format us-east-2a (case-sensitive).
+        regionName:
+          allOf:
+          - $ref: '#/components/schemas/RegionName'
+          description: The Amazon Web Services Region name.
+      description: Describes the resource location.
+    RegisteredDomainDelegationInfo:
+      type: object
+      properties:
+        nameServersUpdateState:
+          allOf:
+          - $ref: '#/components/schemas/NameServersUpdateState'
+          description: An object that describes the state of the name server records that are automatically added to the Route 53 domain by Lightsail.
+        r53HostedZoneDeletionState:
+          allOf:
+          - $ref: '#/components/schemas/R53HostedZoneDeletionState'
+          description: Describes the deletion state of an Amazon Route 53 hosted zone for a domain that is being automatically delegated to an Amazon Lightsail DNS zone.
+      description: 'Describes the delegation state of an Amazon Route 53 registered domain to Amazon Lightsail. When you delegate an Amazon Route 53 registered domain to Lightsail, you can manage the DNS of the domain using a Lightsail DNS zone. You no longer use the Route 53 hosted zone to manage the DNS of the domain. To delegate the domain, Lightsail automatically updates the domain''s name servers in Route 53 to the name servers of the Lightsail DNS zone. Then, Lightsail automatically deletes the Route 53 hosted zone for the domain. All of the following conditions must be true for automatic domain delegation to be successful: The registered domain must be in the same Amazon Web Services account as the Lightsail account making the request. The user or entity making the request must have permission to manage domains in Route 53. The Route 53 hosted zone for the domain must be empty. It cannot contain DNS records other than start of authority (SOA) and name server records. If automatic domain delegation fails, or if you manage the DNS of your domain using a service other than Route 53, then you must manually add the Lightsail DNS zone name servers to your domain in order to delegate management of its DNS to Lightsail. For more information, see Creating a DNS zone to manage your domain’s records in Amazon Lightsail in the Amazon Lightsail Developer Guide .'
     DeleteDomainEntryRequest:
       type: object
       properties:
@@ -580,80 +752,6 @@ components:
       required:
       - domainName
       - domainEntry
-    NameServersUpdateState:
-      type: object
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/NameServersUpdateStateCode'
-          description: 'The status code for the name servers update. Following are the possible values: SUCCEEDED - The name server records were successfully updated. PENDING - The name server record update is in progress. FAILED - The name server record update failed. STARTED - The automatic name server record update started.'
-        message:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The message that describes the reason for the status code.
-      description: Describes the state of the name server records update made by Amazon Lightsail to an Amazon Route 53 registered domain. For more information, see DNS in Amazon Lightsail in the Amazon Lightsail Developer Guide .
-    DeleteDomainResult:
-      type: object
-      properties:
-        operation:
-          allOf:
-          - $ref: '#/components/schemas/Operation'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    CreateDomainEntryRequest:
-      type: object
-      properties:
-        domainName:
-          allOf:
-          - $ref: '#/components/schemas/DomainName'
-          description: The domain name ( example.com ) for which you want to create the domain entry.
-        domainEntry:
-          allOf:
-          - $ref: '#/components/schemas/DomainEntry'
-          description: An array of key-value pairs containing information about the domain entry request.
-      required:
-      - domainName
-      - domainEntry
-    UpdateDomainEntryResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    NameServersUpdateStateCode:
-      type: string
-      enum:
-      - SUCCEEDED
-      - PENDING
-      - FAILED
-      - STARTED
-    DomainEntryList:
-      type: array
-      items:
-        $ref: '#/components/schemas/DomainEntry'
-    RegionName:
-      type: string
-      enum:
-      - us-east-1
-      - us-east-2
-      - us-west-1
-      - us-west-2
-      - eu-west-1
-      - eu-west-2
-      - eu-west-3
-      - eu-central-1
-      - eu-north-1
-      - eu-south-2
-      - ca-central-1
-      - ap-east-1
-      - ap-south-1
-      - ap-southeast-1
-      - ap-southeast-2
-      - ap-northeast-1
-      - ap-northeast-2
-      - ap-southeast-3
-      - ap-southeast-5
-      - sa-east-1
     OperationType:
       type: string
       enum:
@@ -741,27 +839,87 @@ components:
       - StopGUISession
       - SetupInstanceHttps
       - GetProfile
-    OperationFailureException:
+    GetDomainsResult:
       type: object
       properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when an operation fails to execute.
-    CreateDomainEntryResult:
+        domains:
+          allOf:
+          - $ref: '#/components/schemas/DomainList'
+          description: An array of key-value pairs containing information about each of the domain entries in the user's account.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetDomains request and specify the next page token using the pageToken parameter.
+    CreateDomainResult:
       type: object
       properties:
         operation:
           allOf:
           - $ref: '#/components/schemas/Operation'
           description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    TagKey:
+    DomainName:
       type: string
+    OperationStatus:
+      type: string
+      enum:
+      - NotStarted
+      - Started
+      - Failed
+      - Completed
+      - Succeeded
+    ResourceType:
+      type: string
+      enum:
+      - ContainerService
+      - Instance
+      - StaticIp
+      - KeyPair
+      - InstanceSnapshot
+      - Domain
+      - PeeredVpc
+      - LoadBalancer
+      - LoadBalancerTlsCertificate
+      - Disk
+      - DiskSnapshot
+      - RelationalDatabase
+      - RelationalDatabaseSnapshot
+      - ExportSnapshotRecord
+      - CloudFormationStackRecord
+      - Alarm
+      - ContactMethod
+      - Distribution
+      - Certificate
+      - Bucket
+    NonEmptyString:
+      type: string
+      pattern: \S
+    CreateDomainRequest:
+      type: object
+      properties:
+        domainName:
+          allOf:
+          - $ref: '#/components/schemas/DomainName'
+          description: The domain name to manage ( example.com ).
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values to add to the resource during create. Use the TagResource action to tag a resource after it's created.
+      required:
+      - domainName
+    CreateDomainEntryRequest:
+      type: object
+      properties:
+        domainName:
+          allOf:
+          - $ref: '#/components/schemas/DomainName'
+          description: The domain name ( example.com ) for which you want to create the domain entry.
+        domainEntry:
+          allOf:
+          - $ref: '#/components/schemas/DomainEntry'
+          description: An array of key-value pairs containing information about the domain entry request.
+      required:
+      - domainName
+      - domainEntry
     GetDomainRequest:
       type: object
       properties:
@@ -771,9 +929,7 @@ components:
           description: The domain name for which your want to return information about.
       required:
       - domainName
-    boolean:
-      type: boolean
-    InvalidInputException:
+    AccountSetupInProgressException:
       type: object
       properties:
         code:
@@ -784,8 +940,8 @@ components:
           $ref: '#/components/schemas/string'
         tip:
           $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
-    ServiceException:
+      description: Lightsail throws this exception when an account is still in the setup in progress state.
+    AccessDeniedException:
       type: object
       properties:
         code:
@@ -796,63 +952,60 @@ components:
           $ref: '#/components/schemas/string'
         tip:
           $ref: '#/components/schemas/string'
-      description: A general service exception.
-    DomainEntryOptions:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/string'
-    Operation:
+      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
+    TagList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Tag'
+    NameServersUpdateStateCode:
+      type: string
+      enum:
+      - SUCCEEDED
+      - PENDING
+      - FAILED
+      - STARTED
+    RegionName:
+      type: string
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-west-3
+      - eu-central-1
+      - eu-north-1
+      - eu-south-2
+      - ca-central-1
+      - ap-east-1
+      - ap-south-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+      - ap-northeast-2
+      - ap-southeast-3
+      - ap-southeast-5
+      - sa-east-1
+    GetDomainResult:
       type: object
       properties:
-        id:
+        domain:
           allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The ID of the operation.
-        resourceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The resource name.
-        resourceType:
-          allOf:
-          - $ref: '#/components/schemas/ResourceType'
-          description: The resource type.
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the operation was initialized ( 1479816991.349 ).
-        location:
-          allOf:
-          - $ref: '#/components/schemas/ResourceLocation'
-          description: The Amazon Web Services Region and Availability Zone.
-        isTerminal:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value indicating whether the operation is terminal.
-        operationDetails:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Details about the operation ( Debian-1GB-Ohio-1 ).
-        operationType:
-          allOf:
-          - $ref: '#/components/schemas/OperationType'
-          description: The type of operation.
-        status:
-          allOf:
-          - $ref: '#/components/schemas/OperationStatus'
-          description: The status of the operation.
-        statusChangedAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the status was changed ( 1479816991.349 ).
-        errorCode:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The error code.
-        errorDetails:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The error details.
-      description: Describes the API operation.
+          - $ref: '#/components/schemas/Domain'
+          description: An array of key-value pairs containing information about your get domain request.
+    NotFoundException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when it cannot find a resource.
     DomainEntry:
       type: object
       properties:
@@ -881,61 +1034,18 @@ components:
           - $ref: '#/components/schemas/DomainEntryOptions'
           description: (Discontinued) The options for the domain entry. In releases prior to November 29, 2017, this parameter was not included in the API response. It is now discontinued.
       description: Describes a domain recordset entry.
-    TagList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Tag'
-    R53HostedZoneDeletionStateCode:
-      type: string
-      enum:
-      - SUCCEEDED
-      - PENDING
-      - FAILED
-      - STARTED
-    CreateDomainResult:
-      type: object
-      properties:
-        operation:
-          allOf:
-          - $ref: '#/components/schemas/Operation'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    NotFoundException:
+    NameServersUpdateState:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
+          allOf:
+          - $ref: '#/components/schemas/NameServersUpdateStateCode'
+          description: 'The status code for the name servers update. Following are the possible values: SUCCEEDED - The name server records were successfully updated. PENDING - The name server record update is in progress. FAILED - The name server record update failed. STARTED - The automatic name server record update started.'
         message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when it cannot find a resource.
-    DomainEntryType:
-      type: string
-    RegionSetupInProgressException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
           allOf:
           - $ref: '#/components/schemas/string'
-          description: Regions and Availability Zones for Lightsail
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
-      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
-    DomainList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Domain'
-    IsoDate:
-      type: string
-      format: date-time
+          description: The message that describes the reason for the status code.
+      description: Describes the state of the name server records update made by Amazon Lightsail to an Amazon Route 53 registered domain. For more information, see DNS in Amazon Lightsail in the Amazon Lightsail Developer Guide .
     Tag:
       type: object
       properties:
@@ -948,116 +1058,6 @@ components:
           - $ref: '#/components/schemas/TagValue'
           description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
       description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
-    DeleteDomainRequest:
-      type: object
-      properties:
-        domainName:
-          allOf:
-          - $ref: '#/components/schemas/DomainName'
-          description: The specific domain name to delete.
-      required:
-      - domainName
-    string:
-      type: string
-    NonEmptyString:
-      type: string
-      pattern: \S
-    ResourceType:
-      type: string
-      enum:
-      - ContainerService
-      - Instance
-      - StaticIp
-      - KeyPair
-      - InstanceSnapshot
-      - Domain
-      - PeeredVpc
-      - LoadBalancer
-      - LoadBalancerTlsCertificate
-      - Disk
-      - DiskSnapshot
-      - RelationalDatabase
-      - RelationalDatabaseSnapshot
-      - ExportSnapshotRecord
-      - CloudFormationStackRecord
-      - Alarm
-      - ContactMethod
-      - Distribution
-      - Certificate
-      - Bucket
-    OperationList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Operation'
-    RegisteredDomainDelegationInfo:
-      type: object
-      properties:
-        nameServersUpdateState:
-          allOf:
-          - $ref: '#/components/schemas/NameServersUpdateState'
-          description: An object that describes the state of the name server records that are automatically added to the Route 53 domain by Lightsail.
-        r53HostedZoneDeletionState:
-          allOf:
-          - $ref: '#/components/schemas/R53HostedZoneDeletionState'
-          description: Describes the deletion state of an Amazon Route 53 hosted zone for a domain that is being automatically delegated to an Amazon Lightsail DNS zone.
-      description: 'Describes the delegation state of an Amazon Route 53 registered domain to Amazon Lightsail. When you delegate an Amazon Route 53 registered domain to Lightsail, you can manage the DNS of the domain using a Lightsail DNS zone. You no longer use the Route 53 hosted zone to manage the DNS of the domain. To delegate the domain, Lightsail automatically updates the domain''s name servers in Route 53 to the name servers of the Lightsail DNS zone. Then, Lightsail automatically deletes the Route 53 hosted zone for the domain. All of the following conditions must be true for automatic domain delegation to be successful: The registered domain must be in the same Amazon Web Services account as the Lightsail account making the request. The user or entity making the request must have permission to manage domains in Route 53. The Route 53 hosted zone for the domain must be empty. It cannot contain DNS records other than start of authority (SOA) and name server records. If automatic domain delegation fails, or if you manage the DNS of your domain using a service other than Route 53, then you must manually add the Lightsail DNS zone name servers to your domain in order to delegate management of its DNS to Lightsail. For more information, see Creating a DNS zone to manage your domain’s records in Amazon Lightsail in the Amazon Lightsail Developer Guide .'
-    AccountSetupInProgressException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when an account is still in the setup in progress state.
-    UnauthenticatedException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user has not been authenticated.
-    DeleteDomainEntryResult:
-      type: object
-      properties:
-        operation:
-          allOf:
-          - $ref: '#/components/schemas/Operation'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    AccessDeniedException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
-    UpdateDomainEntryRequest:
-      type: object
-      properties:
-        domainName:
-          allOf:
-          - $ref: '#/components/schemas/DomainName'
-          description: The name of the domain recordset to update.
-        domainEntry:
-          allOf:
-          - $ref: '#/components/schemas/DomainEntry'
-          description: An array of key-value pairs containing information about the domain entry.
-      required:
-      - domainName
-      - domainEntry
   securitySchemes:
     sigv4:
       type: apiKey

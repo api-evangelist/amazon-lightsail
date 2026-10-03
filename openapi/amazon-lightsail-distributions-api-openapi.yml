@@ -599,144 +599,46 @@ paths:
       x-amz-target: Lightsail_20161128.UpdateDistributionBundle
 components:
   schemas:
-    GetDistributionsRequest:
-      type: object
-      properties:
-        distributionName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the distribution for which to return information. When omitted, the response includes all of your distributions in the Amazon Web Services Region where the request is made.
-        pageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetDistributions request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
-    AttachCertificateToDistributionResult:
-      type: object
-      properties:
-        operation:
-          allOf:
-          - $ref: '#/components/schemas/Operation'
-          description: An object that describes the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    ResourceLocation:
-      type: object
-      properties:
-        availabilityZone:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The Availability Zone. Follows the format us-east-2a (case-sensitive).
-        regionName:
-          allOf:
-          - $ref: '#/components/schemas/RegionName'
-          description: The Amazon Web Services Region name.
-      description: Describes the resource location.
-    GetDistributionBundlesResult:
-      type: object
-      properties:
-        bundles:
-          allOf:
-          - $ref: '#/components/schemas/DistributionBundleList'
-          description: An object that describes a distribution bundle.
-    OperationType:
+    TagValue:
+      type: string
+    MetricUnit:
       type: string
       enum:
-      - DeleteKnownHostKeys
-      - DeleteInstance
-      - CreateInstance
-      - StopInstance
-      - StartInstance
-      - RebootInstance
-      - OpenInstancePublicPorts
-      - PutInstancePublicPorts
-      - CloseInstancePublicPorts
-      - AllocateStaticIp
-      - ReleaseStaticIp
-      - AttachStaticIp
-      - DetachStaticIp
-      - UpdateDomainEntry
-      - DeleteDomainEntry
-      - CreateDomain
-      - DeleteDomain
-      - CreateInstanceSnapshot
-      - DeleteInstanceSnapshot
-      - CreateInstancesFromSnapshot
-      - CreateLoadBalancer
-      - DeleteLoadBalancer
-      - AttachInstancesToLoadBalancer
-      - DetachInstancesFromLoadBalancer
-      - UpdateLoadBalancerAttribute
-      - CreateLoadBalancerTlsCertificate
-      - DeleteLoadBalancerTlsCertificate
-      - AttachLoadBalancerTlsCertificate
-      - CreateDisk
-      - DeleteDisk
-      - AttachDisk
-      - DetachDisk
-      - CreateDiskSnapshot
-      - DeleteDiskSnapshot
-      - CreateDiskFromSnapshot
-      - CreateRelationalDatabase
-      - UpdateRelationalDatabase
-      - DeleteRelationalDatabase
-      - CreateRelationalDatabaseFromSnapshot
-      - CreateRelationalDatabaseSnapshot
-      - DeleteRelationalDatabaseSnapshot
-      - UpdateRelationalDatabaseParameters
-      - StartRelationalDatabase
-      - RebootRelationalDatabase
-      - StopRelationalDatabase
-      - EnableAddOn
-      - DisableAddOn
-      - PutAlarm
-      - GetAlarms
-      - DeleteAlarm
-      - TestAlarm
-      - CreateContactMethod
-      - GetContactMethods
-      - SendContactMethodVerification
-      - DeleteContactMethod
-      - CreateDistribution
-      - UpdateDistribution
-      - DeleteDistribution
-      - ResetDistributionCache
-      - AttachCertificateToDistribution
-      - DetachCertificateFromDistribution
-      - UpdateDistributionBundle
-      - SetIpAddressType
-      - CreateCertificate
-      - DeleteCertificate
-      - CreateContainerService
-      - UpdateContainerService
-      - DeleteContainerService
-      - CreateContainerServiceDeployment
-      - CreateContainerServiceRegistryLogin
-      - RegisterContainerImage
-      - DeleteContainerImage
-      - CreateBucket
-      - DeleteBucket
-      - CreateBucketAccessKey
-      - DeleteBucketAccessKey
-      - UpdateBucketBundle
-      - UpdateBucket
-      - SetResourceAccessForBucket
-      - UpdateInstanceMetadataOptions
-      - StartGUISession
-      - StopGUISession
-      - SetupInstanceHttps
-      - GetProfile
-    TagKey:
+      - Seconds
+      - Microseconds
+      - Milliseconds
+      - Bytes
+      - Kilobytes
+      - Megabytes
+      - Gigabytes
+      - Terabytes
+      - Bits
+      - Kilobits
+      - Megabits
+      - Gigabits
+      - Terabits
+      - Percent
+      - Count
+      - Bytes/Second
+      - Kilobytes/Second
+      - Megabytes/Second
+      - Gigabytes/Second
+      - Terabytes/Second
+      - Bits/Second
+      - Kilobits/Second
+      - Megabits/Second
+      - Gigabits/Second
+      - Terabits/Second
+      - Count/Second
+      - None
+    double:
+      type: number
+    IsoDate:
       type: string
-    ServiceException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: A general service exception.
+      format: date-time
+    ResourceName:
+      type: string
+      pattern: ^\w[\w\-]*\w$
     Operation:
       type: object
       properties:
@@ -789,79 +691,142 @@ components:
           - $ref: '#/components/schemas/string'
           description: The error details.
       description: Describes the API operation.
-    UpdateDistributionRequest:
+    UnauthenticatedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user has not been authenticated.
+    ForwardValues:
+      type: string
+      enum:
+      - none
+      - allow-list
+      - all
+    StringList:
+      type: array
+      items:
+        $ref: '#/components/schemas/string'
+    DistributionCustomErrorResponseList:
+      type: array
+      items:
+        $ref: '#/components/schemas/DistributionCustomErrorResponse'
+    GetDistributionMetricDataRequest:
       type: object
       properties:
         distributionName:
           allOf:
           - $ref: '#/components/schemas/ResourceName'
-          description: The name of the distribution to update. Use the GetDistributions action to get a list of distribution names that you can specify.
-        origin:
+          description: The name of the distribution for which to get metric data. Use the GetDistributions action to get a list of distribution names that you can specify.
+        metricName:
           allOf:
-          - $ref: '#/components/schemas/InputOrigin'
-          description: An object that describes the origin resource for the distribution, such as a Lightsail instance, bucket, or load balancer. The distribution pulls, caches, and serves content from the origin.
-        defaultCacheBehavior:
+          - $ref: '#/components/schemas/DistributionMetricName'
+          description: 'The metric for which you want to return information. Valid distribution metric names are listed below, along with the most useful statistics to include in your request, and the published unit value. Requests - The total number of viewer requests received by your Lightsail distribution, for all HTTP methods, and for both HTTP and HTTPS requests. Statistics : The most useful statistic is Sum . Unit : The published unit is None . BytesDownloaded - The number of bytes downloaded by viewers for GET, HEAD, and OPTIONS requests. Statistics : The most useful statistic is Sum . Unit : The published unit is None . BytesUploaded - The number of bytes uploaded to your origin by your Lightsail distribution, using POST and PUT requests. Statistics : The most useful statistic is Sum . Unit : The published unit is None . TotalErrorRate - The percentage of all viewer requests for which the response''s HTTP status code was 4xx or 5xx. Statistics : The most useful statistic is Average . Unit : The published unit is Percent . 4xxErrorRate - The percentage of all viewer requests for which the response''s HTTP status cod was 4xx. In these cases, the client or client viewer may have made an error. For example, a status code of 404 (Not Found) means that the client requested an object that could not be found. Statistics : The most useful statistic is Average . Unit : The published unit is Percent . 5xxErrorRate - The percentage of all viewer requests for which the response''s HTTP status code was 5xx. In these cases, the origin server did not satisfy the requests. For example, a status code of 503 (Service Unavailable) means that the origin server is currently unavailable. Statistics : The most useful statistic is Average . Unit : The published unit is Percent .'
+        startTime:
           allOf:
-          - $ref: '#/components/schemas/CacheBehavior'
-          description: An object that describes the default cache behavior for the distribution.
-        cacheBehaviorSettings:
+          - $ref: '#/components/schemas/timestamp'
+          description: 'The start of the time interval for which to get metric data. Constraints: Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you wish to use a start time of October 1, 2018, at 8 PM UTC, specify 1538424000 as the start time. You can convert a human-friendly time to Unix time format using a converter like Epoch converter .'
+        endTime:
           allOf:
-          - $ref: '#/components/schemas/CacheSettings'
-          description: An object that describes the cache behavior settings for the distribution. The cacheBehaviorSettings specified in your UpdateDistributionRequest will replace your distribution's existing settings.
-        cacheBehaviors:
+          - $ref: '#/components/schemas/timestamp'
+          description: 'The end of the time interval for which to get metric data. Constraints: Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you wish to use an end time of October 1, 2018, at 9 PM UTC, specify 1538427600 as the end time. You can convert a human-friendly time to Unix time format using a converter like Epoch converter .'
+        period:
           allOf:
-          - $ref: '#/components/schemas/CacheBehaviorList'
-          description: An array of objects that describe the per-path cache behavior for the distribution.
-        isEnabled:
+          - $ref: '#/components/schemas/MetricPeriod'
+          description: The granularity, in seconds, for the metric data points that will be returned.
+        unit:
           allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: Indicates whether to enable the distribution.
-        viewerMinimumTlsProtocolVersion:
+          - $ref: '#/components/schemas/MetricUnit'
+          description: The unit for the metric data request. Valid units depend on the metric data being requested. For the valid units with each available metric, see the metricName parameter.
+        statistics:
           allOf:
-          - $ref: '#/components/schemas/ViewerMinimumTlsProtocolVersionEnum'
-          description: Use this parameter to update the minimum TLS protocol version for the SSL/TLS certificate that's attached to the distribution.
-        certificateName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the SSL/TLS certificate that you want to attach to the distribution. Only certificates with a status of ISSUED can be attached to a distribution. Use the GetCertificates action to get a list of certificate names that you can specify.
-        useDefaultCertificate:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: Indicates whether the default SSL/TLS certificate is attached to the distribution. The default value is true . When true , the distribution uses the default domain name such as d111111abcdef8.cloudfront.net . Set this value to false to attach a new certificate to the distribution.
-        enablePrivateOriginAccess:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: Specifies whether to enable private origin access for the distribution. With private origin access, the distribution can serve objects that aren't publicly accessible from a Lightsail bucket. Lightsail grants the distribution permission to read the bucket's objects. Enabling private origin access doesn't change the bucket's access settings, and you can still retrieve publicly accessible objects directly from the bucket's endpoint. When you include this parameter, you must also include the origin parameter with the resource name, even if the origin is not changing. You can enable private origin access only when the distribution's origin is a Lightsail bucket. If the origin is another resource type, the request fails.
-        defaultRootObject:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The object (for example, index.html ) that the distribution returns when a viewer requests the root URL of the distribution ( / ) instead of a specific object. The object that you specify must be available from the origin.
-        customErrorResponses:
-          allOf:
-          - $ref: '#/components/schemas/DistributionCustomErrorResponseList'
-          description: An array of objects that describe the custom error responses for the distribution. With a custom error response, you can specify the page to return when the origin responds with a given HTTP error code. You can also specify the HTTP status code to send to the viewer.
+          - $ref: '#/components/schemas/MetricStatisticList'
+          description: 'The statistic for the metric. The following statistics are available: Minimum - The lowest value observed during the specified period. Use this value to determine low volumes of activity for your application. Maximum - The highest value observed during the specified period. Use this value to determine high volumes of activity for your application. Sum - All values submitted for the matching metric added together. You can use this statistic to determine the total volume of a metric. Average - The value of Sum / SampleCount during the specified period. By comparing this statistic with the Minimum and Maximum values, you can determine the full scope of a metric and how close the average use is to the Minimum and Maximum values. This comparison helps you to know when to increase or decrease your resources. SampleCount - The count, or number, of data points used for the statistical calculation.'
       required:
       - distributionName
-    HeaderForwardList:
-      type: array
-      items:
-        $ref: '#/components/schemas/HeaderEnum'
-    TagList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Tag'
-    UpdateDistributionResult:
+      - metricName
+      - startTime
+      - endTime
+      - period
+      - unit
+      - statistics
+    Origin:
       type: object
       properties:
-        operation:
+        name:
           allOf:
-          - $ref: '#/components/schemas/Operation'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    OriginProtocolPolicyEnum:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the origin resource.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The resource type of the origin resource ( Instance ).
+        regionName:
+          allOf:
+          - $ref: '#/components/schemas/RegionName'
+          description: The AWS Region name of the origin resource.
+        protocolPolicy:
+          allOf:
+          - $ref: '#/components/schemas/OriginProtocolPolicyEnum'
+          description: The protocol that your Amazon Lightsail distribution uses when establishing a connection with your origin to pull content.
+        responseTimeout:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The amount of time, in seconds, that the distribution waits for a response after forwarding a request to the origin. The minimum timeout is 1 second, the maximum is 60 seconds, and the default (if you don't specify otherwise) is 30 seconds.
+        ipAddressType:
+          allOf:
+          - $ref: '#/components/schemas/OriginIpAddressTypeEnum'
+          description: The IP address type that the distribution uses when connecting to the origin. The possible values are ipv4 for IPv4 only, ipv6 for IPv6 only, and dualstack for IPv4 and IPv6.
+        isPrivateOriginAccessEnabled:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: Specifies whether private origin access is enabled for the distribution's origin. With private origin access, the distribution can serve objects that aren't publicly accessible from a Lightsail bucket. This applies when you set the bucket's getObject access rule to private . It also applies when you set getObject to public but set individual objects to private.
+      description: Describes the origin resource of an Amazon Lightsail content delivery network (CDN) distribution. An origin can be a Lightsail instance, bucket, or load balancer. A distribution pulls content from an origin, caches it, and serves it to viewers via a worldwide network of edge servers.
+    CacheSettings:
+      type: object
+      properties:
+        defaultTTL:
+          allOf:
+          - $ref: '#/components/schemas/long'
+          description: The default amount of time that objects stay in the distribution's cache before the distribution forwards another request to the origin to determine whether the content has been updated. The value specified applies only when the origin does not add HTTP headers such as Cache-Control max-age , Cache-Control s-maxage , and Expires to objects.
+        minimumTTL:
+          allOf:
+          - $ref: '#/components/schemas/long'
+          description: The minimum amount of time that objects stay in the distribution's cache before the distribution forwards another request to the origin to determine whether the object has been updated. A value of 0 must be specified for minimumTTL if the distribution is configured to forward all headers to the origin.
+        maximumTTL:
+          allOf:
+          - $ref: '#/components/schemas/long'
+          description: The maximum amount of time that objects stay in the distribution's cache before the distribution forwards another request to the origin to determine whether the object has been updated. The value specified applies only when the origin adds HTTP headers such as Cache-Control max-age , Cache-Control s-maxage , and Expires to objects.
+        allowedHTTPMethods:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: 'The HTTP methods that are processed and forwarded to the distribution''s origin. You can specify the following options: GET,HEAD - The distribution forwards the GET and HEAD methods. GET,HEAD,OPTIONS - The distribution forwards the GET , HEAD , and OPTIONS methods. GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE - The distribution forwards the GET , HEAD , OPTIONS , PUT , PATCH , POST , and DELETE methods. If you specify the third option, you might need to restrict access to your distribution''s origin so users can''t perform operations that you don''t want them to. For example, you might not want users to have permission to delete objects from your origin.'
+        cachedHTTPMethods:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: 'The HTTP method responses that are cached by your distribution. You can specify the following options: GET,HEAD - The distribution caches responses to the GET and HEAD methods. GET,HEAD,OPTIONS - The distribution caches responses to the GET , HEAD , and OPTIONS methods.'
+        forwardedCookies:
+          allOf:
+          - $ref: '#/components/schemas/CookieObject'
+          description: An object that describes the cookies that are forwarded to the origin. Your content is cached based on the cookies that are forwarded.
+        forwardedHeaders:
+          allOf:
+          - $ref: '#/components/schemas/HeaderObject'
+          description: An object that describes the headers that are forwarded to the origin. Your content is cached based on the headers that are forwarded.
+        forwardedQueryStrings:
+          allOf:
+          - $ref: '#/components/schemas/QueryStringObject'
+          description: An object that describes the query strings that are forwarded to the origin. Your content is cached based on the query strings that are forwarded.
+      description: Describes the cache settings of an Amazon Lightsail content delivery network (CDN) distribution. These settings apply only to your distribution's cacheBehaviors (including the defaultCacheBehavior ) that have a behavior of cache .
+    NonEmptyString:
       type: string
-      enum:
-      - http-only
-      - https-only
+      pattern: \S
     ResourceType:
       type: string
       enum:
@@ -885,10 +850,163 @@ components:
       - Distribution
       - Certificate
       - Bucket
-    DistributionCustomErrorResponseList:
+    OriginProtocolPolicyEnum:
+      type: string
+      enum:
+      - http-only
+      - https-only
+    MetricDatapointList:
       type: array
       items:
-        $ref: '#/components/schemas/DistributionCustomErrorResponse'
+        $ref: '#/components/schemas/MetricDatapoint'
+    MetricStatistic:
+      type: string
+      enum:
+      - Minimum
+      - Maximum
+      - Sum
+      - Average
+      - SampleCount
+    GetDistributionsRequest:
+      type: object
+      properties:
+        distributionName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the distribution for which to return information. When omitted, the response includes all of your distributions in the Amazon Web Services Region where the request is made.
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetDistributions request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+    BehaviorEnum:
+      type: string
+      enum:
+      - dont-cache
+      - cache
+    UpdateDistributionResult:
+      type: object
+      properties:
+        operation:
+          allOf:
+          - $ref: '#/components/schemas/Operation'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    Tag:
+      type: object
+      properties:
+        key:
+          allOf:
+          - $ref: '#/components/schemas/TagKey'
+          description: 'The key of the tag. Constraints: Tag keys accept a maximum of 128 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+        value:
+          allOf:
+          - $ref: '#/components/schemas/TagValue'
+          description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+      description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
+    GetDistributionsResult:
+      type: object
+      properties:
+        distributions:
+          allOf:
+          - $ref: '#/components/schemas/DistributionList'
+          description: An array of objects that describe your distributions.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetDistributions request and specify the next page token using the pageToken parameter.
+    MetricDatapoint:
+      type: object
+      properties:
+        average:
+          allOf:
+          - $ref: '#/components/schemas/double'
+          description: The average.
+        maximum:
+          allOf:
+          - $ref: '#/components/schemas/double'
+          description: The maximum.
+        minimum:
+          allOf:
+          - $ref: '#/components/schemas/double'
+          description: The minimum.
+        sampleCount:
+          allOf:
+          - $ref: '#/components/schemas/double'
+          description: The sample count.
+        sum:
+          allOf:
+          - $ref: '#/components/schemas/double'
+          description: The sum.
+        timestamp:
+          allOf:
+          - $ref: '#/components/schemas/timestamp'
+          description: The timestamp ( 1479816991.349 ).
+        unit:
+          allOf:
+          - $ref: '#/components/schemas/MetricUnit'
+          description: The unit.
+      description: Describes the metric data point.
+    ServiceException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: A general service exception.
+    IpAddressType:
+      type: string
+      enum:
+      - dualstack
+      - ipv4
+      - ipv6
+    MetricStatisticList:
+      type: array
+      items:
+        $ref: '#/components/schemas/MetricStatistic'
+    DeleteDistributionResult:
+      type: object
+      properties:
+        operation:
+          allOf:
+          - $ref: '#/components/schemas/Operation'
+          description: An object that describes the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    OperationFailureException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an operation fails to execute.
+    DeleteDistributionRequest:
+      type: object
+      properties:
+        distributionName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the distribution to delete. Use the GetDistributions action to get a list of distribution names that you can specify.
+    InvalidInputException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
+    boolean:
+      type: boolean
     LightsailDistribution:
       type: object
       properties:
@@ -985,227 +1103,12 @@ components:
           - $ref: '#/components/schemas/DistributionCustomErrorResponseList'
           description: An array of objects that describe the custom error responses configured for the distribution.
       description: Describes an Amazon Lightsail content delivery network (CDN) distribution.
-    UnauthenticatedException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user has not been authenticated.
-    DeleteDistributionResult:
-      type: object
-      properties:
-        operation:
-          allOf:
-          - $ref: '#/components/schemas/Operation'
-          description: An object that describes the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    OperationStatus:
-      type: string
-      enum:
-      - NotStarted
-      - Started
-      - Failed
-      - Completed
-      - Succeeded
     OriginIpAddressTypeEnum:
       type: string
       enum:
       - ipv4
       - ipv6
       - dualstack
-    ResetDistributionCacheResult:
-      type: object
-      properties:
-        status:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The status of the reset cache request.
-        createTime:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp of the reset cache request ( 1479734909.17 ) in Unix time format.
-        operation:
-          allOf:
-          - $ref: '#/components/schemas/Operation'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    integer:
-      type: integer
-    double:
-      type: number
-    ForwardValues:
-      type: string
-      enum:
-      - none
-      - allow-list
-      - all
-    InputOrigin:
-      type: object
-      properties:
-        name:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the origin resource.
-        regionName:
-          allOf:
-          - $ref: '#/components/schemas/RegionName'
-          description: The AWS Region name of the origin resource.
-        protocolPolicy:
-          allOf:
-          - $ref: '#/components/schemas/OriginProtocolPolicyEnum'
-          description: The protocol that your Amazon Lightsail distribution uses when establishing a connection with your origin to pull content.
-        responseTimeout:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The amount of time, in seconds, that the distribution waits for a response after forwarding a request to the origin. The minimum timeout is 1 second, the maximum is 60 seconds, and the default (if you don't specify otherwise) is 30 seconds.
-        ipAddressType:
-          allOf:
-          - $ref: '#/components/schemas/OriginIpAddressTypeEnum'
-          description: The IP address type that the distribution uses when connecting to the origin. The possible values are ipv4 for IPv4 only, ipv6 for IPv6 only, and dualstack for IPv4 and IPv6.
-      description: Describes the origin resource of an Amazon Lightsail content delivery network (CDN) distribution. An origin can be a Lightsail instance, bucket, container service, or load balancer. A distribution pulls content from an origin, caches it, and serves it to viewers via a worldwide network of edge servers.
-    UpdateDistributionBundleRequest:
-      type: object
-      properties:
-        distributionName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the distribution for which to update the bundle. Use the GetDistributions action to get a list of distribution names that you can specify.
-        bundleId:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The bundle ID of the new bundle to apply to your distribution. Use the GetDistributionBundles action to get a list of distribution bundle IDs that you can specify.
-    InvalidInputException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
-    MetricStatisticList:
-      type: array
-      items:
-        $ref: '#/components/schemas/MetricStatistic'
-    NotFoundException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when it cannot find a resource.
-    Tag:
-      type: object
-      properties:
-        key:
-          allOf:
-          - $ref: '#/components/schemas/TagKey'
-          description: 'The key of the tag. Constraints: Tag keys accept a maximum of 128 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
-        value:
-          allOf:
-          - $ref: '#/components/schemas/TagValue'
-          description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
-      description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
-    DistributionBundleList:
-      type: array
-      items:
-        $ref: '#/components/schemas/DistributionBundle'
-    string:
-      type: string
-    NonEmptyString:
-      type: string
-      pattern: \S
-    UpdateDistributionBundleResult:
-      type: object
-      properties:
-        operation:
-          allOf:
-          - $ref: '#/components/schemas/Operation'
-          description: An object that describes the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    CacheBehaviorList:
-      type: array
-      items:
-        $ref: '#/components/schemas/CacheBehaviorPerPath'
-    GetDistributionMetricDataResult:
-      type: object
-      properties:
-        metricName:
-          allOf:
-          - $ref: '#/components/schemas/DistributionMetricName'
-          description: The name of the metric returned.
-        metricData:
-          allOf:
-          - $ref: '#/components/schemas/MetricDatapointList'
-          description: An array of objects that describe the metric data returned.
-    AccessDeniedException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
-    DetachCertificateFromDistributionResult:
-      type: object
-      properties:
-        operation:
-          allOf:
-          - $ref: '#/components/schemas/Operation'
-          description: An object that describes the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    CookieObject:
-      type: object
-      properties:
-        option:
-          allOf:
-          - $ref: '#/components/schemas/ForwardValues'
-          description: 'Specifies which cookies to forward to the distribution''s origin for a cache behavior: all , none , or allow-list to forward only the cookies specified in the cookiesAllowList parameter.'
-        cookiesAllowList:
-          allOf:
-          - $ref: '#/components/schemas/StringList'
-          description: The specific cookies to forward to your distribution's origin.
-      description: Describes whether an Amazon Lightsail content delivery network (CDN) distribution forwards cookies to the origin and, if so, which ones. For the cookies that you specify, your distribution caches separate versions of the specified content based on the cookie values in viewer requests.
-    DetachCertificateFromDistributionRequest:
-      type: object
-      properties:
-        distributionName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the distribution from which to detach the certificate. Use the GetDistributions action to get a list of distribution names that you can specify.
-      required:
-      - distributionName
-    CreateDistributionResult:
-      type: object
-      properties:
-        distribution:
-          allOf:
-          - $ref: '#/components/schemas/LightsailDistribution'
-          description: An object that describes the distribution created.
-        operation:
-          allOf:
-          - $ref: '#/components/schemas/Operation'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    IpAddressType:
-      type: string
-      enum:
-      - dualstack
-      - ipv4
-      - ipv6
     DistributionCustomErrorResponse:
       type: object
       properties:
@@ -1226,42 +1129,6 @@ components:
           - $ref: '#/components/schemas/long'
           description: The minimum time, in seconds, that the distribution caches the custom error response before requesting the object again from the origin. If you don't specify a value, the default is 10 seconds.
       description: Describes a custom error response for a Lightsail distribution. A custom error response specifies the page that the distribution returns to the viewer. It also specifies the HTTP status code that the distribution sends when the origin responds with a given HTTP error code.
-    CacheSettings:
-      type: object
-      properties:
-        defaultTTL:
-          allOf:
-          - $ref: '#/components/schemas/long'
-          description: The default amount of time that objects stay in the distribution's cache before the distribution forwards another request to the origin to determine whether the content has been updated. The value specified applies only when the origin does not add HTTP headers such as Cache-Control max-age , Cache-Control s-maxage , and Expires to objects.
-        minimumTTL:
-          allOf:
-          - $ref: '#/components/schemas/long'
-          description: The minimum amount of time that objects stay in the distribution's cache before the distribution forwards another request to the origin to determine whether the object has been updated. A value of 0 must be specified for minimumTTL if the distribution is configured to forward all headers to the origin.
-        maximumTTL:
-          allOf:
-          - $ref: '#/components/schemas/long'
-          description: The maximum amount of time that objects stay in the distribution's cache before the distribution forwards another request to the origin to determine whether the object has been updated. The value specified applies only when the origin adds HTTP headers such as Cache-Control max-age , Cache-Control s-maxage , and Expires to objects.
-        allowedHTTPMethods:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: 'The HTTP methods that are processed and forwarded to the distribution''s origin. You can specify the following options: GET,HEAD - The distribution forwards the GET and HEAD methods. GET,HEAD,OPTIONS - The distribution forwards the GET , HEAD , and OPTIONS methods. GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE - The distribution forwards the GET , HEAD , OPTIONS , PUT , PATCH , POST , and DELETE methods. If you specify the third option, you might need to restrict access to your distribution''s origin so users can''t perform operations that you don''t want them to. For example, you might not want users to have permission to delete objects from your origin.'
-        cachedHTTPMethods:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: 'The HTTP method responses that are cached by your distribution. You can specify the following options: GET,HEAD - The distribution caches responses to the GET and HEAD methods. GET,HEAD,OPTIONS - The distribution caches responses to the GET , HEAD , and OPTIONS methods.'
-        forwardedCookies:
-          allOf:
-          - $ref: '#/components/schemas/CookieObject'
-          description: An object that describes the cookies that are forwarded to the origin. Your content is cached based on the cookies that are forwarded.
-        forwardedHeaders:
-          allOf:
-          - $ref: '#/components/schemas/HeaderObject'
-          description: An object that describes the headers that are forwarded to the origin. Your content is cached based on the headers that are forwarded.
-        forwardedQueryStrings:
-          allOf:
-          - $ref: '#/components/schemas/QueryStringObject'
-          description: An object that describes the query strings that are forwarded to the origin. Your content is cached based on the query strings that are forwarded.
-      description: Describes the cache settings of an Amazon Lightsail content delivery network (CDN) distribution. These settings apply only to your distribution's cacheBehaviors (including the defaultCacheBehavior ) that have a behavior of cache .
     RegionName:
       type: string
       enum:
@@ -1285,279 +1152,6 @@ components:
       - ap-southeast-3
       - ap-southeast-5
       - sa-east-1
-    OperationFailureException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when an operation fails to execute.
-    long:
-      type: integer
-    MetricDatapointList:
-      type: array
-      items:
-        $ref: '#/components/schemas/MetricDatapoint'
-    HeaderObject:
-      type: object
-      properties:
-        option:
-          allOf:
-          - $ref: '#/components/schemas/ForwardValues'
-          description: 'The headers that you want your distribution to forward to your origin and base caching on. You can configure your distribution to do one of the following: all - Forward all headers to your origin. none - Forward only the default headers. allow-list - Forward only the headers you specify using the headersAllowList parameter.'
-        headersAllowList:
-          allOf:
-          - $ref: '#/components/schemas/HeaderForwardList'
-          description: The specific headers to forward to your distribution's origin.
-      description: Describes the request headers that a Lightsail distribution bases caching on. For the headers that you specify, your distribution caches separate versions of the specified content based on the header values in viewer requests. For example, suppose viewer requests for logo.jpg contain a custom product header that has a value of either acme or apex , and you configure your distribution to cache your content based on values in the product header. Your distribution forwards the product header to the origin and caches the response from the origin once for each header value.
-    IsoDate:
-      type: string
-      format: date-time
-    DeleteDistributionRequest:
-      type: object
-      properties:
-        distributionName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the distribution to delete. Use the GetDistributions action to get a list of distribution names that you can specify.
-    float:
-      type: number
-    DistributionList:
-      type: array
-      items:
-        $ref: '#/components/schemas/LightsailDistribution'
-    BehaviorEnum:
-      type: string
-      enum:
-      - dont-cache
-      - cache
-    MetricStatistic:
-      type: string
-      enum:
-      - Minimum
-      - Maximum
-      - Sum
-      - Average
-      - SampleCount
-    Origin:
-      type: object
-      properties:
-        name:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the origin resource.
-        resourceType:
-          allOf:
-          - $ref: '#/components/schemas/ResourceType'
-          description: The resource type of the origin resource ( Instance ).
-        regionName:
-          allOf:
-          - $ref: '#/components/schemas/RegionName'
-          description: The AWS Region name of the origin resource.
-        protocolPolicy:
-          allOf:
-          - $ref: '#/components/schemas/OriginProtocolPolicyEnum'
-          description: The protocol that your Amazon Lightsail distribution uses when establishing a connection with your origin to pull content.
-        responseTimeout:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The amount of time, in seconds, that the distribution waits for a response after forwarding a request to the origin. The minimum timeout is 1 second, the maximum is 60 seconds, and the default (if you don't specify otherwise) is 30 seconds.
-        ipAddressType:
-          allOf:
-          - $ref: '#/components/schemas/OriginIpAddressTypeEnum'
-          description: The IP address type that the distribution uses when connecting to the origin. The possible values are ipv4 for IPv4 only, ipv6 for IPv6 only, and dualstack for IPv4 and IPv6.
-        isPrivateOriginAccessEnabled:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: Specifies whether private origin access is enabled for the distribution's origin. With private origin access, the distribution can serve objects that aren't publicly accessible from a Lightsail bucket. This applies when you set the bucket's getObject access rule to private . It also applies when you set getObject to public but set individual objects to private.
-      description: Describes the origin resource of an Amazon Lightsail content delivery network (CDN) distribution. An origin can be a Lightsail instance, bucket, or load balancer. A distribution pulls content from an origin, caches it, and serves it to viewers via a worldwide network of edge servers.
-    ViewerMinimumTlsProtocolVersionEnum:
-      type: string
-      enum:
-      - TLSv1.1_2016
-      - TLSv1.2_2018
-      - TLSv1.2_2019
-      - TLSv1.2_2021
-    MetricUnit:
-      type: string
-      enum:
-      - Seconds
-      - Microseconds
-      - Milliseconds
-      - Bytes
-      - Kilobytes
-      - Megabytes
-      - Gigabytes
-      - Terabytes
-      - Bits
-      - Kilobits
-      - Megabits
-      - Gigabits
-      - Terabits
-      - Percent
-      - Count
-      - Bytes/Second
-      - Kilobytes/Second
-      - Megabytes/Second
-      - Gigabytes/Second
-      - Terabytes/Second
-      - Bits/Second
-      - Kilobits/Second
-      - Megabits/Second
-      - Gigabits/Second
-      - Terabits/Second
-      - Count/Second
-      - None
-    QueryStringObject:
-      type: object
-      properties:
-        option:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: Indicates whether the distribution forwards and caches based on query strings.
-        queryStringsAllowList:
-          allOf:
-          - $ref: '#/components/schemas/StringList'
-          description: The specific query strings that the distribution forwards to the origin. Your distribution will cache content based on the specified query strings. If the option parameter is true, then your distribution forwards all query strings, regardless of what you specify using the queryStringsAllowList parameter.
-      description: Describes the query string parameters that an Amazon Lightsail content delivery network (CDN) distribution to bases caching on. For the query strings that you specify, your distribution caches separate versions of the specified content based on the query string values in viewer requests.
-    TagValue:
-      type: string
-    GetDistributionMetricDataRequest:
-      type: object
-      properties:
-        distributionName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the distribution for which to get metric data. Use the GetDistributions action to get a list of distribution names that you can specify.
-        metricName:
-          allOf:
-          - $ref: '#/components/schemas/DistributionMetricName'
-          description: 'The metric for which you want to return information. Valid distribution metric names are listed below, along with the most useful statistics to include in your request, and the published unit value. Requests - The total number of viewer requests received by your Lightsail distribution, for all HTTP methods, and for both HTTP and HTTPS requests. Statistics : The most useful statistic is Sum . Unit : The published unit is None . BytesDownloaded - The number of bytes downloaded by viewers for GET, HEAD, and OPTIONS requests. Statistics : The most useful statistic is Sum . Unit : The published unit is None . BytesUploaded - The number of bytes uploaded to your origin by your Lightsail distribution, using POST and PUT requests. Statistics : The most useful statistic is Sum . Unit : The published unit is None . TotalErrorRate - The percentage of all viewer requests for which the response''s HTTP status code was 4xx or 5xx. Statistics : The most useful statistic is Average . Unit : The published unit is Percent . 4xxErrorRate - The percentage of all viewer requests for which the response''s HTTP status cod was 4xx. In these cases, the client or client viewer may have made an error. For example, a status code of 404 (Not Found) means that the client requested an object that could not be found. Statistics : The most useful statistic is Average . Unit : The published unit is Percent . 5xxErrorRate - The percentage of all viewer requests for which the response''s HTTP status code was 5xx. In these cases, the origin server did not satisfy the requests. For example, a status code of 503 (Service Unavailable) means that the origin server is currently unavailable. Statistics : The most useful statistic is Average . Unit : The published unit is Percent .'
-        startTime:
-          allOf:
-          - $ref: '#/components/schemas/timestamp'
-          description: 'The start of the time interval for which to get metric data. Constraints: Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you wish to use a start time of October 1, 2018, at 8 PM UTC, specify 1538424000 as the start time. You can convert a human-friendly time to Unix time format using a converter like Epoch converter .'
-        endTime:
-          allOf:
-          - $ref: '#/components/schemas/timestamp'
-          description: 'The end of the time interval for which to get metric data. Constraints: Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you wish to use an end time of October 1, 2018, at 9 PM UTC, specify 1538427600 as the end time. You can convert a human-friendly time to Unix time format using a converter like Epoch converter .'
-        period:
-          allOf:
-          - $ref: '#/components/schemas/MetricPeriod'
-          description: The granularity, in seconds, for the metric data points that will be returned.
-        unit:
-          allOf:
-          - $ref: '#/components/schemas/MetricUnit'
-          description: The unit for the metric data request. Valid units depend on the metric data being requested. For the valid units with each available metric, see the metricName parameter.
-        statistics:
-          allOf:
-          - $ref: '#/components/schemas/MetricStatisticList'
-          description: 'The statistic for the metric. The following statistics are available: Minimum - The lowest value observed during the specified period. Use this value to determine low volumes of activity for your application. Maximum - The highest value observed during the specified period. Use this value to determine high volumes of activity for your application. Sum - All values submitted for the matching metric added together. You can use this statistic to determine the total volume of a metric. Average - The value of Sum / SampleCount during the specified period. By comparing this statistic with the Minimum and Maximum values, you can determine the full scope of a metric and how close the average use is to the Minimum and Maximum values. This comparison helps you to know when to increase or decrease your resources. SampleCount - The count, or number, of data points used for the statistical calculation.'
-      required:
-      - distributionName
-      - metricName
-      - startTime
-      - endTime
-      - period
-      - unit
-      - statistics
-    ResourceName:
-      type: string
-      pattern: ^\w[\w\-]*\w$
-    GetDistributionsResult:
-      type: object
-      properties:
-        distributions:
-          allOf:
-          - $ref: '#/components/schemas/DistributionList'
-          description: An array of objects that describe your distributions.
-        nextPageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetDistributions request and specify the next page token using the pageToken parameter.
-    GetDistributionLatestCacheResetResult:
-      type: object
-      properties:
-        status:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The status of the last cache reset.
-        createTime:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp of the last cache reset ( 1479734909.17 ) in Unix time format.
-    GetDistributionLatestCacheResetRequest:
-      type: object
-      properties:
-        distributionName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the distribution for which to return the timestamp of the last cache reset. Use the GetDistributions action to get a list of distribution names that you can specify. When omitted, the response includes the latest cache reset timestamp of all your distributions.
-    CacheBehavior:
-      type: object
-      properties:
-        behavior:
-          allOf:
-          - $ref: '#/components/schemas/BehaviorEnum'
-          description: 'The cache behavior of the distribution. The following cache behaviors can be specified: cache - This option is best for static sites. When specified, your distribution caches and serves your entire website as static content. This behavior is ideal for websites with static content that doesn''t change depending on who views it, or for websites that don''t use cookies, headers, or query strings to personalize content. dont-cache - This option is best for sites that serve a mix of static and dynamic content. When specified, your distribution caches and serve only the content that is specified in the distribution''s CacheBehaviorPerPath parameter. This behavior is ideal for websites or web applications that use cookies, headers, and query strings to personalize content for individual users.'
-      description: Describes the default cache behavior of an Amazon Lightsail content delivery network (CDN) distribution.
-    boolean:
-      type: boolean
-    HeaderEnum:
-      type: string
-      enum:
-      - Accept
-      - Accept-Charset
-      - Accept-Datetime
-      - Accept-Encoding
-      - Accept-Language
-      - Authorization
-      - CloudFront-Forwarded-Proto
-      - CloudFront-Is-Desktop-Viewer
-      - CloudFront-Is-Mobile-Viewer
-      - CloudFront-Is-SmartTV-Viewer
-      - CloudFront-Is-Tablet-Viewer
-      - CloudFront-Viewer-Country
-      - Host
-      - Origin
-      - Referer
-    MetricDatapoint:
-      type: object
-      properties:
-        average:
-          allOf:
-          - $ref: '#/components/schemas/double'
-          description: The average.
-        maximum:
-          allOf:
-          - $ref: '#/components/schemas/double'
-          description: The maximum.
-        minimum:
-          allOf:
-          - $ref: '#/components/schemas/double'
-          description: The minimum.
-        sampleCount:
-          allOf:
-          - $ref: '#/components/schemas/double'
-          description: The sample count.
-        sum:
-          allOf:
-          - $ref: '#/components/schemas/double'
-          description: The sum.
-        timestamp:
-          allOf:
-          - $ref: '#/components/schemas/timestamp'
-          description: The timestamp ( 1479816991.349 ).
-        unit:
-          allOf:
-          - $ref: '#/components/schemas/MetricUnit'
-          description: The unit.
-      description: Describes the metric data point.
     CreateDistributionRequest:
       type: object
       properties:
@@ -1618,27 +1212,52 @@ components:
       - origin
       - defaultCacheBehavior
       - bundleId
-    ResetDistributionCacheRequest:
+    GetDistributionLatestCacheResetRequest:
       type: object
       properties:
         distributionName:
           allOf:
           - $ref: '#/components/schemas/ResourceName'
-          description: The name of the distribution for which to reset cache. Use the GetDistributions action to get a list of distribution names that you can specify.
-    AttachCertificateToDistributionRequest:
+          description: The name of the distribution for which to return the timestamp of the last cache reset. Use the GetDistributions action to get a list of distribution names that you can specify. When omitted, the response includes the latest cache reset timestamp of all your distributions.
+    QueryStringObject:
+      type: object
+      properties:
+        option:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: Indicates whether the distribution forwards and caches based on query strings.
+        queryStringsAllowList:
+          allOf:
+          - $ref: '#/components/schemas/StringList'
+          description: The specific query strings that the distribution forwards to the origin. Your distribution will cache content based on the specified query strings. If the option parameter is true, then your distribution forwards all query strings, regardless of what you specify using the queryStringsAllowList parameter.
+      description: Describes the query string parameters that an Amazon Lightsail content delivery network (CDN) distribution to bases caching on. For the query strings that you specify, your distribution caches separate versions of the specified content based on the query string values in viewer requests.
+    DistributionList:
+      type: array
+      items:
+        $ref: '#/components/schemas/LightsailDistribution'
+    GetDistributionMetricDataResult:
+      type: object
+      properties:
+        metricName:
+          allOf:
+          - $ref: '#/components/schemas/DistributionMetricName'
+          description: The name of the metric returned.
+        metricData:
+          allOf:
+          - $ref: '#/components/schemas/MetricDatapointList'
+          description: An array of objects that describe the metric data returned.
+    DetachCertificateFromDistributionRequest:
       type: object
       properties:
         distributionName:
           allOf:
           - $ref: '#/components/schemas/ResourceName'
-          description: The name of the distribution that the certificate will be attached to. Use the GetDistributions action to get a list of distribution names that you can specify.
-        certificateName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the certificate to attach to a distribution. Only certificates with a status of ISSUED can be attached to a distribution. Use the GetCertificates action to get a list of certificate names that you can specify. This is the name of the certificate resource type and is used only to reference the certificate in other API actions. It can be different than the domain name of the certificate. For example, your certificate name might be WordPress-Blog-Certificate and the domain name of the certificate might be example.com .
+          description: The name of the distribution from which to detach the certificate. Use the GetDistributions action to get a list of distribution names that you can specify.
       required:
       - distributionName
-      - certificateName
+    timestamp:
+      type: string
+      format: date-time
     DistributionMetricName:
       type: string
       enum:
@@ -1648,17 +1267,224 @@ components:
       - TotalErrorRate
       - Http4xxErrorRate
       - Http5xxErrorRate
-    StringList:
+    CacheBehaviorList:
       type: array
       items:
-        $ref: '#/components/schemas/string'
-    MetricPeriod:
+        $ref: '#/components/schemas/CacheBehaviorPerPath'
+    integer:
       type: integer
-      minimum: 60
-      maximum: 86400
-    timestamp:
+    InputOrigin:
+      type: object
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the origin resource.
+        regionName:
+          allOf:
+          - $ref: '#/components/schemas/RegionName'
+          description: The AWS Region name of the origin resource.
+        protocolPolicy:
+          allOf:
+          - $ref: '#/components/schemas/OriginProtocolPolicyEnum'
+          description: The protocol that your Amazon Lightsail distribution uses when establishing a connection with your origin to pull content.
+        responseTimeout:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The amount of time, in seconds, that the distribution waits for a response after forwarding a request to the origin. The minimum timeout is 1 second, the maximum is 60 seconds, and the default (if you don't specify otherwise) is 30 seconds.
+        ipAddressType:
+          allOf:
+          - $ref: '#/components/schemas/OriginIpAddressTypeEnum'
+          description: The IP address type that the distribution uses when connecting to the origin. The possible values are ipv4 for IPv4 only, ipv6 for IPv6 only, and dualstack for IPv4 and IPv6.
+      description: Describes the origin resource of an Amazon Lightsail content delivery network (CDN) distribution. An origin can be a Lightsail instance, bucket, container service, or load balancer. A distribution pulls content from an origin, caches it, and serves it to viewers via a worldwide network of edge servers.
+    CookieObject:
+      type: object
+      properties:
+        option:
+          allOf:
+          - $ref: '#/components/schemas/ForwardValues'
+          description: 'Specifies which cookies to forward to the distribution''s origin for a cache behavior: all , none , or allow-list to forward only the cookies specified in the cookiesAllowList parameter.'
+        cookiesAllowList:
+          allOf:
+          - $ref: '#/components/schemas/StringList'
+          description: The specific cookies to forward to your distribution's origin.
+      description: Describes whether an Amazon Lightsail content delivery network (CDN) distribution forwards cookies to the origin and, if so, which ones. For the cookies that you specify, your distribution caches separate versions of the specified content based on the cookie values in viewer requests.
+    ViewerMinimumTlsProtocolVersionEnum:
       type: string
-      format: date-time
+      enum:
+      - TLSv1.1_2016
+      - TLSv1.2_2018
+      - TLSv1.2_2019
+      - TLSv1.2_2021
+    OperationType:
+      type: string
+      enum:
+      - DeleteKnownHostKeys
+      - DeleteInstance
+      - CreateInstance
+      - StopInstance
+      - StartInstance
+      - RebootInstance
+      - OpenInstancePublicPorts
+      - PutInstancePublicPorts
+      - CloseInstancePublicPorts
+      - AllocateStaticIp
+      - ReleaseStaticIp
+      - AttachStaticIp
+      - DetachStaticIp
+      - UpdateDomainEntry
+      - DeleteDomainEntry
+      - CreateDomain
+      - DeleteDomain
+      - CreateInstanceSnapshot
+      - DeleteInstanceSnapshot
+      - CreateInstancesFromSnapshot
+      - CreateLoadBalancer
+      - DeleteLoadBalancer
+      - AttachInstancesToLoadBalancer
+      - DetachInstancesFromLoadBalancer
+      - UpdateLoadBalancerAttribute
+      - CreateLoadBalancerTlsCertificate
+      - DeleteLoadBalancerTlsCertificate
+      - AttachLoadBalancerTlsCertificate
+      - CreateDisk
+      - DeleteDisk
+      - AttachDisk
+      - DetachDisk
+      - CreateDiskSnapshot
+      - DeleteDiskSnapshot
+      - CreateDiskFromSnapshot
+      - CreateRelationalDatabase
+      - UpdateRelationalDatabase
+      - DeleteRelationalDatabase
+      - CreateRelationalDatabaseFromSnapshot
+      - CreateRelationalDatabaseSnapshot
+      - DeleteRelationalDatabaseSnapshot
+      - UpdateRelationalDatabaseParameters
+      - StartRelationalDatabase
+      - RebootRelationalDatabase
+      - StopRelationalDatabase
+      - EnableAddOn
+      - DisableAddOn
+      - PutAlarm
+      - GetAlarms
+      - DeleteAlarm
+      - TestAlarm
+      - CreateContactMethod
+      - GetContactMethods
+      - SendContactMethodVerification
+      - DeleteContactMethod
+      - CreateDistribution
+      - UpdateDistribution
+      - DeleteDistribution
+      - ResetDistributionCache
+      - AttachCertificateToDistribution
+      - DetachCertificateFromDistribution
+      - UpdateDistributionBundle
+      - SetIpAddressType
+      - CreateCertificate
+      - DeleteCertificate
+      - CreateContainerService
+      - UpdateContainerService
+      - DeleteContainerService
+      - CreateContainerServiceDeployment
+      - CreateContainerServiceRegistryLogin
+      - RegisterContainerImage
+      - DeleteContainerImage
+      - CreateBucket
+      - DeleteBucket
+      - CreateBucketAccessKey
+      - DeleteBucketAccessKey
+      - UpdateBucketBundle
+      - UpdateBucket
+      - SetResourceAccessForBucket
+      - UpdateInstanceMetadataOptions
+      - StartGUISession
+      - StopGUISession
+      - SetupInstanceHttps
+      - GetProfile
+    ResetDistributionCacheResult:
+      type: object
+      properties:
+        status:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The status of the reset cache request.
+        createTime:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp of the reset cache request ( 1479734909.17 ) in Unix time format.
+        operation:
+          allOf:
+          - $ref: '#/components/schemas/Operation'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    UpdateDistributionRequest:
+      type: object
+      properties:
+        distributionName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the distribution to update. Use the GetDistributions action to get a list of distribution names that you can specify.
+        origin:
+          allOf:
+          - $ref: '#/components/schemas/InputOrigin'
+          description: An object that describes the origin resource for the distribution, such as a Lightsail instance, bucket, or load balancer. The distribution pulls, caches, and serves content from the origin.
+        defaultCacheBehavior:
+          allOf:
+          - $ref: '#/components/schemas/CacheBehavior'
+          description: An object that describes the default cache behavior for the distribution.
+        cacheBehaviorSettings:
+          allOf:
+          - $ref: '#/components/schemas/CacheSettings'
+          description: An object that describes the cache behavior settings for the distribution. The cacheBehaviorSettings specified in your UpdateDistributionRequest will replace your distribution's existing settings.
+        cacheBehaviors:
+          allOf:
+          - $ref: '#/components/schemas/CacheBehaviorList'
+          description: An array of objects that describe the per-path cache behavior for the distribution.
+        isEnabled:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: Indicates whether to enable the distribution.
+        viewerMinimumTlsProtocolVersion:
+          allOf:
+          - $ref: '#/components/schemas/ViewerMinimumTlsProtocolVersionEnum'
+          description: Use this parameter to update the minimum TLS protocol version for the SSL/TLS certificate that's attached to the distribution.
+        certificateName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the SSL/TLS certificate that you want to attach to the distribution. Only certificates with a status of ISSUED can be attached to a distribution. Use the GetCertificates action to get a list of certificate names that you can specify.
+        useDefaultCertificate:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: Indicates whether the default SSL/TLS certificate is attached to the distribution. The default value is true . When true , the distribution uses the default domain name such as d111111abcdef8.cloudfront.net . Set this value to false to attach a new certificate to the distribution.
+        enablePrivateOriginAccess:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: Specifies whether to enable private origin access for the distribution. With private origin access, the distribution can serve objects that aren't publicly accessible from a Lightsail bucket. Lightsail grants the distribution permission to read the bucket's objects. Enabling private origin access doesn't change the bucket's access settings, and you can still retrieve publicly accessible objects directly from the bucket's endpoint. When you include this parameter, you must also include the origin parameter with the resource name, even if the origin is not changing. You can enable private origin access only when the distribution's origin is a Lightsail bucket. If the origin is another resource type, the request fails.
+        defaultRootObject:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The object (for example, index.html ) that the distribution returns when a viewer requests the root URL of the distribution ( / ) instead of a specific object. The object that you specify must be available from the origin.
+        customErrorResponses:
+          allOf:
+          - $ref: '#/components/schemas/DistributionCustomErrorResponseList'
+          description: An array of objects that describe the custom error responses for the distribution. With a custom error response, you can specify the page to return when the origin responds with a given HTTP error code. You can also specify the HTTP status code to send to the viewer.
+      required:
+      - distributionName
+    HeaderObject:
+      type: object
+      properties:
+        option:
+          allOf:
+          - $ref: '#/components/schemas/ForwardValues'
+          description: 'The headers that you want your distribution to forward to your origin and base caching on. You can configure your distribution to do one of the following: all - Forward all headers to your origin. none - Forward only the default headers. allow-list - Forward only the headers you specify using the headersAllowList parameter.'
+        headersAllowList:
+          allOf:
+          - $ref: '#/components/schemas/HeaderForwardList'
+          description: The specific headers to forward to your distribution's origin.
+      description: Describes the request headers that a Lightsail distribution bases caching on. For the headers that you specify, your distribution caches separate versions of the specified content based on the header values in viewer requests. For example, suppose viewer requests for logo.jpg contain a custom product header that has a value of either acme or apex , and you configure your distribution to cache your content based on values in the product header. Your distribution forwards the product header to the origin and caches the response from the origin once for each header value.
+    TagKey:
+      type: string
     CacheBehaviorPerPath:
       type: object
       properties:
@@ -1695,6 +1521,180 @@ components:
           - $ref: '#/components/schemas/boolean'
           description: Indicates whether the bundle is active, and can be specified for a new or existing distribution.
       description: Describes the specifications of a distribution bundle.
+    string:
+      type: string
+    GetDistributionLatestCacheResetResult:
+      type: object
+      properties:
+        status:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The status of the last cache reset.
+        createTime:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp of the last cache reset ( 1479734909.17 ) in Unix time format.
+    DetachCertificateFromDistributionResult:
+      type: object
+      properties:
+        operation:
+          allOf:
+          - $ref: '#/components/schemas/Operation'
+          description: An object that describes the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    float:
+      type: number
+    AttachCertificateToDistributionRequest:
+      type: object
+      properties:
+        distributionName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the distribution that the certificate will be attached to. Use the GetDistributions action to get a list of distribution names that you can specify.
+        certificateName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the certificate to attach to a distribution. Only certificates with a status of ISSUED can be attached to a distribution. Use the GetCertificates action to get a list of certificate names that you can specify. This is the name of the certificate resource type and is used only to reference the certificate in other API actions. It can be different than the domain name of the certificate. For example, your certificate name might be WordPress-Blog-Certificate and the domain name of the certificate might be example.com .
+      required:
+      - distributionName
+      - certificateName
+    ResourceLocation:
+      type: object
+      properties:
+        availabilityZone:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The Availability Zone. Follows the format us-east-2a (case-sensitive).
+        regionName:
+          allOf:
+          - $ref: '#/components/schemas/RegionName'
+          description: The Amazon Web Services Region name.
+      description: Describes the resource location.
+    UpdateDistributionBundleResult:
+      type: object
+      properties:
+        operation:
+          allOf:
+          - $ref: '#/components/schemas/Operation'
+          description: An object that describes the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    MetricPeriod:
+      type: integer
+      minimum: 60
+      maximum: 86400
+    long:
+      type: integer
+    ResetDistributionCacheRequest:
+      type: object
+      properties:
+        distributionName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the distribution for which to reset cache. Use the GetDistributions action to get a list of distribution names that you can specify.
+    DistributionBundleList:
+      type: array
+      items:
+        $ref: '#/components/schemas/DistributionBundle'
+    OperationStatus:
+      type: string
+      enum:
+      - NotStarted
+      - Started
+      - Failed
+      - Completed
+      - Succeeded
+    UpdateDistributionBundleRequest:
+      type: object
+      properties:
+        distributionName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the distribution for which to update the bundle. Use the GetDistributions action to get a list of distribution names that you can specify.
+        bundleId:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The bundle ID of the new bundle to apply to your distribution. Use the GetDistributionBundles action to get a list of distribution bundle IDs that you can specify.
+    GetDistributionBundlesResult:
+      type: object
+      properties:
+        bundles:
+          allOf:
+          - $ref: '#/components/schemas/DistributionBundleList'
+          description: An object that describes a distribution bundle.
+    AttachCertificateToDistributionResult:
+      type: object
+      properties:
+        operation:
+          allOf:
+          - $ref: '#/components/schemas/Operation'
+          description: An object that describes the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    HeaderEnum:
+      type: string
+      enum:
+      - Accept
+      - Accept-Charset
+      - Accept-Datetime
+      - Accept-Encoding
+      - Accept-Language
+      - Authorization
+      - CloudFront-Forwarded-Proto
+      - CloudFront-Is-Desktop-Viewer
+      - CloudFront-Is-Mobile-Viewer
+      - CloudFront-Is-SmartTV-Viewer
+      - CloudFront-Is-Tablet-Viewer
+      - CloudFront-Viewer-Country
+      - Host
+      - Origin
+      - Referer
+    CreateDistributionResult:
+      type: object
+      properties:
+        distribution:
+          allOf:
+          - $ref: '#/components/schemas/LightsailDistribution'
+          description: An object that describes the distribution created.
+        operation:
+          allOf:
+          - $ref: '#/components/schemas/Operation'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    HeaderForwardList:
+      type: array
+      items:
+        $ref: '#/components/schemas/HeaderEnum'
+    AccessDeniedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
+    TagList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Tag'
+    CacheBehavior:
+      type: object
+      properties:
+        behavior:
+          allOf:
+          - $ref: '#/components/schemas/BehaviorEnum'
+          description: 'The cache behavior of the distribution. The following cache behaviors can be specified: cache - This option is best for static sites. When specified, your distribution caches and serves your entire website as static content. This behavior is ideal for websites with static content that doesn''t change depending on who views it, or for websites that don''t use cookies, headers, or query strings to personalize content. dont-cache - This option is best for sites that serve a mix of static and dynamic content. When specified, your distribution caches and serve only the content that is specified in the distribution''s CacheBehaviorPerPath parameter. This behavior is ideal for websites or web applications that use cookies, headers, and query strings to personalize content for individual users.'
+      description: Describes the default cache behavior of an Amazon Lightsail content delivery network (CDN) distribution.
+    NotFoundException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when it cannot find a resource.
   securitySchemes:
     sigv4:
       type: apiKey

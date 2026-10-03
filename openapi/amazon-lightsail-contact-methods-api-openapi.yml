@@ -259,29 +259,220 @@ paths:
       x-amz-target: Lightsail_20161128.SendContactMethodVerification
 components:
   schemas:
+    TagValue:
+      type: string
+    TagKey:
+      type: string
+    ServiceException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: A general service exception.
+    RegionSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Regions and Availability Zones for Lightsail
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
+      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
+    string:
+      type: string
+    DeleteContactMethodResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    IsoDate:
+      type: string
+      format: date-time
     ContactProtocolsList:
       type: array
       items:
         $ref: '#/components/schemas/ContactProtocol'
-    SendContactMethodVerificationRequest:
+    ResourceName:
+      type: string
+      pattern: ^\w[\w\-]*\w$
+    Operation:
+      type: object
+      properties:
+        id:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The ID of the operation.
+        resourceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The resource name.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The resource type.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the operation was initialized ( 1479816991.349 ).
+        location:
+          allOf:
+          - $ref: '#/components/schemas/ResourceLocation'
+          description: The Amazon Web Services Region and Availability Zone.
+        isTerminal:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the operation is terminal.
+        operationDetails:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Details about the operation ( Debian-1GB-Ohio-1 ).
+        operationType:
+          allOf:
+          - $ref: '#/components/schemas/OperationType'
+          description: The type of operation.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/OperationStatus'
+          description: The status of the operation.
+        statusChangedAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the status was changed ( 1479816991.349 ).
+        errorCode:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The error code.
+        errorDetails:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The error details.
+      description: Describes the API operation.
+    SendContactMethodVerificationResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    CreateContactMethodRequest:
       type: object
       properties:
         protocol:
           allOf:
-          - $ref: '#/components/schemas/ContactMethodVerificationProtocol'
-          description: The protocol to verify, such as Email or SMS (text messaging).
+          - $ref: '#/components/schemas/ContactProtocol'
+          description: The protocol of the contact method, such as Email or SMS (text messaging). The SMS protocol is supported only in the following Amazon Web Services Regions. US East (N. Virginia) ( us-east-1 ) US West (Oregon) ( us-west-2 ) Europe (Ireland) ( eu-west-1 ) Asia Pacific (Tokyo) ( ap-northeast-1 ) Asia Pacific (Singapore) ( ap-southeast-1 ) Asia Pacific (Sydney) ( ap-southeast-2 ) For a list of countries/regions where SMS text messages can be sent, and the latest Amazon Web Services Regions where SMS text messaging is supported, see Supported Regions and Countries in the Amazon SNS Developer Guide . For more information about notifications in Amazon Lightsail, see Notifications in Amazon Lightsail .
+        contactEndpoint:
+          allOf:
+          - $ref: '#/components/schemas/StringMax256'
+          description: The destination of the contact method, such as an email address or a mobile phone number. Use the E.164 format when specifying a mobile phone number. E.164 is a standard for the phone number structure used for international telecommunication. Phone numbers that follow this format can have a maximum of 15 digits, and they are prefixed with the plus character (+) and the country code. For example, a U.S. phone number in E.164 format would be specified as +1XXX5550100. For more information, see E.164 on Wikipedia .
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values to add to the contact method during create. Use the TagResource action to tag a resource after it's created.
       required:
       - protocol
-    TagValue:
-      type: string
-    OperationStatus:
-      type: string
-      enum:
-      - NotStarted
-      - Started
-      - Failed
-      - Completed
-      - Succeeded
+      - contactEndpoint
+    UnauthenticatedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user has not been authenticated.
+    ContactMethod:
+      type: object
+      properties:
+        contactEndpoint:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The destination of the contact method, such as an email address or a mobile phone number.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/ContactMethodStatus'
+          description: 'The current status of the contact method. A contact method has the following possible status: PendingVerification - The contact method has not yet been verified, and the verification has not yet expired. Valid - The contact method has been verified. InValid - An attempt was made to verify the contact method, but the verification has expired.'
+        protocol:
+          allOf:
+          - $ref: '#/components/schemas/ContactProtocol'
+          description: The protocol of the contact method, such as email or SMS (text messaging).
+        name:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the contact method.
+        arn:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Amazon Resource Name (ARN) of the contact method.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the contact method was created.
+        location:
+          allOf:
+          - $ref: '#/components/schemas/ResourceLocation'
+          description: An object that describes the location of the contact method, such as the Amazon Web Services Region and Availability Zone.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The Lightsail resource type of the contact method.
+        supportCode:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The support code. Include this code in your email to support when you have questions about your Lightsail contact method. This code enables our support team to look up your Lightsail information more easily.
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values for the resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
+      description: Describes a contact method. A contact method is a way to send you notifications. For more information, see Notifications in Amazon Lightsail .
+    OperationList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Operation'
+    OperationFailureException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an operation fails to execute.
+    InvalidInputException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
+    boolean:
+      type: boolean
     ResourceLocation:
       type: object
       properties:
@@ -294,37 +485,20 @@ components:
           - $ref: '#/components/schemas/RegionName'
           description: The Amazon Web Services Region name.
       description: Describes the resource location.
-    ResourceName:
-      type: string
-      pattern: ^\w[\w\-]*\w$
+    DeleteContactMethodRequest:
+      type: object
+      properties:
+        protocol:
+          allOf:
+          - $ref: '#/components/schemas/ContactProtocol'
+          description: The protocol that will be deleted, such as Email or SMS (text messaging). To delete an Email and an SMS contact method if you added both, you must run separate DeleteContactMethod actions to delete each protocol.
+      required:
+      - protocol
     ContactProtocol:
       type: string
       enum:
       - Email
       - SMS
-    RegionName:
-      type: string
-      enum:
-      - us-east-1
-      - us-east-2
-      - us-west-1
-      - us-west-2
-      - eu-west-1
-      - eu-west-2
-      - eu-west-3
-      - eu-central-1
-      - eu-north-1
-      - eu-south-2
-      - ca-central-1
-      - ap-east-1
-      - ap-south-1
-      - ap-southeast-1
-      - ap-southeast-2
-      - ap-northeast-1
-      - ap-northeast-2
-      - ap-southeast-3
-      - ap-southeast-5
-      - sa-east-1
     OperationType:
       type: string
       enum:
@@ -412,195 +586,17 @@ components:
       - StopGUISession
       - SetupInstanceHttps
       - GetProfile
-    OperationFailureException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when an operation fails to execute.
-    ContactMethodVerificationProtocol:
+    OperationStatus:
       type: string
       enum:
-      - Email
-    TagKey:
+      - NotStarted
+      - Started
+      - Failed
+      - Completed
+      - Succeeded
+    NonEmptyString:
       type: string
-    boolean:
-      type: boolean
-    ContactMethodsList:
-      type: array
-      items:
-        $ref: '#/components/schemas/ContactMethod'
-    InvalidInputException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
-    ServiceException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: A general service exception.
-    ContactMethodStatus:
-      type: string
-      enum:
-      - PendingVerification
-      - Valid
-      - Invalid
-    GetContactMethodsResult:
-      type: object
-      properties:
-        contactMethods:
-          allOf:
-          - $ref: '#/components/schemas/ContactMethodsList'
-          description: An array of objects that describe the contact methods.
-    DeleteContactMethodRequest:
-      type: object
-      properties:
-        protocol:
-          allOf:
-          - $ref: '#/components/schemas/ContactProtocol'
-          description: The protocol that will be deleted, such as Email or SMS (text messaging). To delete an Email and an SMS contact method if you added both, you must run separate DeleteContactMethod actions to delete each protocol.
-      required:
-      - protocol
-    Operation:
-      type: object
-      properties:
-        id:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The ID of the operation.
-        resourceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The resource name.
-        resourceType:
-          allOf:
-          - $ref: '#/components/schemas/ResourceType'
-          description: The resource type.
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the operation was initialized ( 1479816991.349 ).
-        location:
-          allOf:
-          - $ref: '#/components/schemas/ResourceLocation'
-          description: The Amazon Web Services Region and Availability Zone.
-        isTerminal:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value indicating whether the operation is terminal.
-        operationDetails:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Details about the operation ( Debian-1GB-Ohio-1 ).
-        operationType:
-          allOf:
-          - $ref: '#/components/schemas/OperationType'
-          description: The type of operation.
-        status:
-          allOf:
-          - $ref: '#/components/schemas/OperationStatus'
-          description: The status of the operation.
-        statusChangedAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the status was changed ( 1479816991.349 ).
-        errorCode:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The error code.
-        errorDetails:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The error details.
-      description: Describes the API operation.
-    CreateContactMethodRequest:
-      type: object
-      properties:
-        protocol:
-          allOf:
-          - $ref: '#/components/schemas/ContactProtocol'
-          description: The protocol of the contact method, such as Email or SMS (text messaging). The SMS protocol is supported only in the following Amazon Web Services Regions. US East (N. Virginia) ( us-east-1 ) US West (Oregon) ( us-west-2 ) Europe (Ireland) ( eu-west-1 ) Asia Pacific (Tokyo) ( ap-northeast-1 ) Asia Pacific (Singapore) ( ap-southeast-1 ) Asia Pacific (Sydney) ( ap-southeast-2 ) For a list of countries/regions where SMS text messages can be sent, and the latest Amazon Web Services Regions where SMS text messaging is supported, see Supported Regions and Countries in the Amazon SNS Developer Guide . For more information about notifications in Amazon Lightsail, see Notifications in Amazon Lightsail .
-        contactEndpoint:
-          allOf:
-          - $ref: '#/components/schemas/StringMax256'
-          description: The destination of the contact method, such as an email address or a mobile phone number. Use the E.164 format when specifying a mobile phone number. E.164 is a standard for the phone number structure used for international telecommunication. Phone numbers that follow this format can have a maximum of 15 digits, and they are prefixed with the plus character (+) and the country code. For example, a U.S. phone number in E.164 format would be specified as +1XXX5550100. For more information, see E.164 on Wikipedia .
-        tags:
-          allOf:
-          - $ref: '#/components/schemas/TagList'
-          description: The tag keys and optional values to add to the contact method during create. Use the TagResource action to tag a resource after it's created.
-      required:
-      - protocol
-      - contactEndpoint
-    TagList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Tag'
-    NotFoundException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when it cannot find a resource.
-    RegionSetupInProgressException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Regions and Availability Zones for Lightsail
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
-      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
-    IsoDate:
-      type: string
-      format: date-time
-    Tag:
-      type: object
-      properties:
-        key:
-          allOf:
-          - $ref: '#/components/schemas/TagKey'
-          description: 'The key of the tag. Constraints: Tag keys accept a maximum of 128 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
-        value:
-          allOf:
-          - $ref: '#/components/schemas/TagValue'
-          description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
-      description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
-    string:
-      type: string
+      pattern: \S
     ResourceType:
       type: string
       enum:
@@ -624,20 +620,12 @@ components:
       - Distribution
       - Certificate
       - Bucket
-    NonEmptyString:
+    ContactMethodStatus:
       type: string
-      pattern: \S
-    OperationList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Operation'
-    SendContactMethodVerificationResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+      enum:
+      - PendingVerification
+      - Valid
+      - Invalid
     CreateContactMethodResult:
       type: object
       properties:
@@ -645,25 +633,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/OperationList'
           description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    DeleteContactMethodResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    UnauthenticatedException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user has not been authenticated.
     AccessDeniedException:
       type: object
       properties:
@@ -676,54 +645,85 @@ components:
         tip:
           $ref: '#/components/schemas/string'
       description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
-    ContactMethod:
+    TagList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Tag'
+    RegionName:
+      type: string
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-west-3
+      - eu-central-1
+      - eu-north-1
+      - eu-south-2
+      - ca-central-1
+      - ap-east-1
+      - ap-south-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+      - ap-northeast-2
+      - ap-southeast-3
+      - ap-southeast-5
+      - sa-east-1
+    GetContactMethodsResult:
       type: object
       properties:
-        contactEndpoint:
+        contactMethods:
           allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The destination of the contact method, such as an email address or a mobile phone number.
-        status:
-          allOf:
-          - $ref: '#/components/schemas/ContactMethodStatus'
-          description: 'The current status of the contact method. A contact method has the following possible status: PendingVerification - The contact method has not yet been verified, and the verification has not yet expired. Valid - The contact method has been verified. InValid - An attempt was made to verify the contact method, but the verification has expired.'
-        protocol:
-          allOf:
-          - $ref: '#/components/schemas/ContactProtocol'
-          description: The protocol of the contact method, such as email or SMS (text messaging).
-        name:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the contact method.
-        arn:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The Amazon Resource Name (ARN) of the contact method.
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the contact method was created.
-        location:
-          allOf:
-          - $ref: '#/components/schemas/ResourceLocation'
-          description: An object that describes the location of the contact method, such as the Amazon Web Services Region and Availability Zone.
-        resourceType:
-          allOf:
-          - $ref: '#/components/schemas/ResourceType'
-          description: The Lightsail resource type of the contact method.
-        supportCode:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The support code. Include this code in your email to support when you have questions about your Lightsail contact method. This code enables our support team to look up your Lightsail information more easily.
-        tags:
-          allOf:
-          - $ref: '#/components/schemas/TagList'
-          description: The tag keys and optional values for the resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
-      description: Describes a contact method. A contact method is a way to send you notifications. For more information, see Notifications in Amazon Lightsail .
+          - $ref: '#/components/schemas/ContactMethodsList'
+          description: An array of objects that describe the contact methods.
+    NotFoundException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when it cannot find a resource.
     StringMax256:
       type: string
       minLength: 1
       maxLength: 256
+    SendContactMethodVerificationRequest:
+      type: object
+      properties:
+        protocol:
+          allOf:
+          - $ref: '#/components/schemas/ContactMethodVerificationProtocol'
+          description: The protocol to verify, such as Email or SMS (text messaging).
+      required:
+      - protocol
+    ContactMethodsList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ContactMethod'
+    ContactMethodVerificationProtocol:
+      type: string
+      enum:
+      - Email
+    Tag:
+      type: object
+      properties:
+        key:
+          allOf:
+          - $ref: '#/components/schemas/TagKey'
+          description: 'The key of the tag. Constraints: Tag keys accept a maximum of 128 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+        value:
+          allOf:
+          - $ref: '#/components/schemas/TagValue'
+          description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+      description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
   securitySchemes:
     sigv4:
       type: apiKey

@@ -437,62 +437,281 @@ paths:
       x-amz-target: Lightsail_20161128.GetLoadBalancerTlsCertificates
 components:
   schemas:
-    LoadBalancerTlsCertificateDomainValidationOption:
+    TagValue:
+      type: string
+    CertificateSummaryList:
+      type: array
+      items:
+        $ref: '#/components/schemas/CertificateSummary'
+    CreateCertificateRequest:
       type: object
       properties:
+        certificateName:
+          allOf:
+          - $ref: '#/components/schemas/CertificateName'
+          description: The name for the certificate.
         domainName:
           allOf:
           - $ref: '#/components/schemas/DomainName'
-          description: The fully qualified domain name in the certificate request.
-        validationStatus:
+          description: The domain name ( example.com ) for the certificate.
+        subjectAlternativeNames:
           allOf:
-          - $ref: '#/components/schemas/LoadBalancerTlsCertificateDomainStatus'
-          description: The status of the domain validation. Valid values are listed below.
-      description: Contains information about the domain names on an SSL/TLS certificate that you will use to validate domain ownership.
+          - $ref: '#/components/schemas/SubjectAlternativeNameList'
+          description: An array of strings that specify the alternate domains ( example2.com ) and subdomains ( blog.example.com ) for the certificate. You can specify a maximum of nine alternate domains (in addition to the primary domain name). Wildcard domain entries ( *.example.com ) are not supported.
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values to add to the certificate during create. Use the TagResource action to tag a resource after it's created.
+      required:
+      - certificateName
+      - domainName
+    RegionSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Regions and Availability Zones for Lightsail
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
+      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
+    IsoDate:
+      type: string
+      format: date-time
+    RevocationReason:
+      type: string
+    ResourceName:
+      type: string
+      pattern: ^\w[\w\-]*\w$
+    Operation:
+      type: object
+      properties:
+        id:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The ID of the operation.
+        resourceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The resource name.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The resource type.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the operation was initialized ( 1479816991.349 ).
+        location:
+          allOf:
+          - $ref: '#/components/schemas/ResourceLocation'
+          description: The Amazon Web Services Region and Availability Zone.
+        isTerminal:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the operation is terminal.
+        operationDetails:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Details about the operation ( Debian-1GB-Ohio-1 ).
+        operationType:
+          allOf:
+          - $ref: '#/components/schemas/OperationType'
+          description: The type of operation.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/OperationStatus'
+          description: The status of the operation.
+        statusChangedAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the status was changed ( 1479816991.349 ).
+        errorCode:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The error code.
+        errorDetails:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The error details.
+      description: Describes the API operation.
+    UnauthenticatedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user has not been authenticated.
+    OperationList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Operation'
+    LoadBalancerTlsCertificateFailureReason:
+      type: string
+      enum:
+      - NO_AVAILABLE_CONTACTS
+      - ADDITIONAL_VERIFICATION_REQUIRED
+      - DOMAIN_NOT_ALLOWED
+      - INVALID_PUBLIC_DOMAIN
+      - OTHER
+    StringList:
+      type: array
+      items:
+        $ref: '#/components/schemas/string'
+    RenewalSummary:
+      type: object
+      properties:
+        domainValidationRecords:
+          allOf:
+          - $ref: '#/components/schemas/DomainValidationRecordList'
+          description: An array of objects that describe the domain validation records of the certificate.
+        renewalStatus:
+          allOf:
+          - $ref: '#/components/schemas/RenewalStatus'
+          description: 'The renewal status of the certificate. The following renewal status are possible: PendingAutoRenewal - Lightsail is attempting to automatically validate the domain names of the certificate. No further action is required. PendingValidation - Lightsail couldn''t automatically validate one or more domain names of the certificate. You must take action to validate these domain names or the certificate won''t be renewed. Check to make sure your certificate''s domain validation records exist in your domain''s DNS, and that your certificate remains in use. Success - All domain names in the certificate are validated, and Lightsail renewed the certificate. No further action is required. Failed - One or more domain names were not validated before the certificate expired, and Lightsail did not renew the certificate. You can request a new certificate using the CreateCertificate action.'
+        renewalStatusReason:
+          allOf:
+          - $ref: '#/components/schemas/RenewalStatusReason'
+          description: The reason for the renewal status of the certificate.
+        updatedAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the certificate was last updated.
+      description: Describes the status of a SSL/TLS certificate renewal managed by Amazon Lightsail.
+    GetCertificatesResult:
+      type: object
+      properties:
+        certificates:
+          allOf:
+          - $ref: '#/components/schemas/CertificateSummaryList'
+          description: An object that describes certificates.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: If NextPageToken is returned there are more results available. The value of NextPageToken is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged.
+    LoadBalancerTlsCertificateStatus:
+      type: string
+      enum:
+      - PENDING_VALIDATION
+      - ISSUED
+      - INACTIVE
+      - EXPIRED
+      - VALIDATION_TIMED_OUT
+      - REVOKED
+      - FAILED
+      - UNKNOWN
+    LoadBalancerTlsCertificateDnsRecordCreationState:
+      type: object
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/LoadBalancerTlsCertificateDnsRecordCreationStateCode'
+          description: 'The status code for the automated DNS record creation. Following are the possible values: SUCCEEDED - The validation records were successfully added. STARTED - The automatic DNS record creation has started. FAILED - The validation record addition failed.'
+        message:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The message that describes the reason for the status code.
+      description: An object that describes the state of the canonical name (CNAME) records that are automatically added by Lightsail to the DNS of the domain to validate domain ownership.
+    GetLoadBalancerTlsCertificatesResult:
+      type: object
+      properties:
+        tlsCertificates:
+          allOf:
+          - $ref: '#/components/schemas/LoadBalancerTlsCertificateList'
+          description: An array of LoadBalancerTlsCertificate objects describing your SSL/TLS certificates.
+    SubjectAlternativeNameList:
+      type: array
+      items:
+        $ref: '#/components/schemas/DomainName'
+    CertificateDomainValidationStatus:
+      type: string
+      enum:
+      - PENDING_VALIDATION
+      - FAILED
+      - SUCCESS
+    RenewalStatusReason:
+      type: string
+    ResourceType:
+      type: string
+      enum:
+      - ContainerService
+      - Instance
+      - StaticIp
+      - KeyPair
+      - InstanceSnapshot
+      - Domain
+      - PeeredVpc
+      - LoadBalancer
+      - LoadBalancerTlsCertificate
+      - Disk
+      - DiskSnapshot
+      - RelationalDatabase
+      - RelationalDatabaseSnapshot
+      - ExportSnapshotRecord
+      - CloudFormationStackRecord
+      - Alarm
+      - ContactMethod
+      - Distribution
+      - Certificate
+      - Bucket
+    NonEmptyString:
+      type: string
+      pattern: \S
     DomainValidationRecordList:
       type: array
       items:
         $ref: '#/components/schemas/DomainValidationRecord'
-    LoadBalancerTlsCertificateRevocationReason:
-      type: string
-      enum:
-      - UNSPECIFIED
-      - KEY_COMPROMISE
-      - CA_COMPROMISE
-      - AFFILIATION_CHANGED
-      - SUPERCEDED
-      - CESSATION_OF_OPERATION
-      - CERTIFICATE_HOLD
-      - REMOVE_FROM_CRL
-      - PRIVILEGE_WITHDRAWN
-      - A_A_COMPROMISE
-    ResourceLocation:
+    LoadBalancerTlsCertificateDomainValidationRecord:
       type: object
       properties:
-        availabilityZone:
+        name:
           allOf:
-          - $ref: '#/components/schemas/string'
-          description: The Availability Zone. Follows the format us-east-2a (case-sensitive).
-        regionName:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: A fully qualified domain name in the certificate. For example, example.com .
+        type:
           allOf:
-          - $ref: '#/components/schemas/RegionName'
-          description: The Amazon Web Services Region name.
-      description: Describes the resource location.
-    RevocationReason:
-      type: string
-    LoadBalancerTlsCertificateList:
-      type: array
-      items:
-        $ref: '#/components/schemas/LoadBalancerTlsCertificate'
-    GetLoadBalancerTlsCertificatesRequest:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The type of validation record. For example, CNAME for domain validation.
+        value:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The value for that type.
+        validationStatus:
+          allOf:
+          - $ref: '#/components/schemas/LoadBalancerTlsCertificateDomainStatus'
+          description: The validation status. Valid values are listed below.
+        domainName:
+          allOf:
+          - $ref: '#/components/schemas/DomainName'
+          description: The domain name against which your SSL/TLS certificate was validated.
+        dnsRecordCreationState:
+          allOf:
+          - $ref: '#/components/schemas/LoadBalancerTlsCertificateDnsRecordCreationState'
+          description: An object that describes the state of the canonical name (CNAME) records that are automatically added by Lightsail to the DNS of a domain to validate domain ownership.
+      description: Describes the validation record of each domain name in the SSL/TLS certificate.
+    Tag:
       type: object
       properties:
-        loadBalancerName:
+        key:
           allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the load balancer you associated with your SSL/TLS certificate.
-      required:
-      - loadBalancerName
+          - $ref: '#/components/schemas/TagKey'
+          description: 'The key of the tag. Constraints: Tag keys accept a maximum of 128 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+        value:
+          allOf:
+          - $ref: '#/components/schemas/TagValue'
+          description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+      description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
     Certificate:
       type: object
       properties:
@@ -581,6 +800,59 @@ components:
           - $ref: '#/components/schemas/string'
           description: The support code. Include this code in your email to support when you have questions about your Lightsail certificate. This code enables our support team to look up your Lightsail information more easily.
       description: Describes the full details of an Amazon Lightsail SSL/TLS certificate. To get a summary of a certificate, use the GetCertificates action and omit includeCertificateDetails from your request. The response will include only the certificate Amazon Resource Name (ARN), certificate name, domain name, and tags.
+    ServiceException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: A general service exception.
+    DomainNameList:
+      type: array
+      items:
+        $ref: '#/components/schemas/DomainName'
+    AttachLoadBalancerTlsCertificateResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request. These SSL/TLS certificates are only usable by Lightsail load balancers. You can't get the certificate and use it for another purpose.
+    CreateLoadBalancerTlsCertificateResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    LoadBalancerTlsCertificateDomainValidationOptionList:
+      type: array
+      items:
+        $ref: '#/components/schemas/LoadBalancerTlsCertificateDomainValidationOption'
+    OperationFailureException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an operation fails to execute.
+    LoadBalancerTlsCertificateRenewalStatus:
+      type: string
+      enum:
+      - PENDING_AUTO_RENEWAL
+      - PENDING_VALIDATION
+      - SUCCESS
+      - FAILED
     DeleteLoadBalancerTlsCertificateRequest:
       type: object
       properties:
@@ -599,6 +871,165 @@ components:
       required:
       - loadBalancerName
       - certificateName
+    InvalidInputException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
+    CertificateStatusList:
+      type: array
+      items:
+        $ref: '#/components/schemas/CertificateStatus'
+    boolean:
+      type: boolean
+    LoadBalancerTlsCertificateDnsRecordCreationStateCode:
+      type: string
+      enum:
+      - SUCCEEDED
+      - STARTED
+      - FAILED
+    RenewalStatus:
+      type: string
+      enum:
+      - PendingAutoRenewal
+      - PendingValidation
+      - Success
+      - Failed
+    LoadBalancerTlsCertificateList:
+      type: array
+      items:
+        $ref: '#/components/schemas/LoadBalancerTlsCertificate'
+    LoadBalancerTlsCertificateDomainValidationRecordList:
+      type: array
+      items:
+        $ref: '#/components/schemas/LoadBalancerTlsCertificateDomainValidationRecord'
+    LoadBalancerTlsCertificateRenewalSummary:
+      type: object
+      properties:
+        renewalStatus:
+          allOf:
+          - $ref: '#/components/schemas/LoadBalancerTlsCertificateRenewalStatus'
+          description: 'The renewal status of the certificate. The following renewal status are possible: PendingAutoRenewal - Lightsail is attempting to automatically validate the domain names of the certificate. No further action is required. PendingValidation - Lightsail couldn''t automatically validate one or more domain names of the certificate. You must take action to validate these domain names or the certificate won''t be renewed. Check to make sure your certificate''s domain validation records exist in your domain''s DNS, and that your certificate remains in use. Success - All domain names in the certificate are validated, and Lightsail renewed the certificate. No further action is required. Failed - One or more domain names were not validated before the certificate expired, and Lightsail did not renew the certificate. You can request a new certificate using the CreateCertificate action.'
+        domainValidationOptions:
+          allOf:
+          - $ref: '#/components/schemas/LoadBalancerTlsCertificateDomainValidationOptionList'
+          description: Contains information about the validation of each domain name in the certificate, as it pertains to Lightsail's managed renewal. This is different from the initial validation that occurs as a result of the RequestCertificate request.
+      description: 'Contains information about the status of Lightsail''s managed renewal for the certificate. The renewal status of the certificate. The following renewal status are possible: PendingAutoRenewal - Lightsail is attempting to automatically validate the domain names in the certificate. No further action is required. PendingValidation - Lightsail couldn''t automatically validate one or more domain names in the certificate. You must take action to validate these domain names or the certificate won''t be renewed. If you used DNS validation, check to make sure your certificate''s domain validation records exist in your domain''s DNS, and that your certificate remains in use. Success - All domain names in the certificate are validated, and Lightsail renewed the certificate. No further action is required. Failed - One or more domain names were not validated before the certificate expired, and Lightsail did not renew the certificate. You can request a new certificate using the CreateCertificate action.'
+    RegionName:
+      type: string
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-west-3
+      - eu-central-1
+      - eu-north-1
+      - eu-south-2
+      - ca-central-1
+      - ap-east-1
+      - ap-south-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+      - ap-northeast-2
+      - ap-southeast-3
+      - ap-southeast-5
+      - sa-east-1
+    RequestFailureReason:
+      type: string
+    EligibleToRenew:
+      type: string
+    CreateLoadBalancerTlsCertificateRequest:
+      type: object
+      properties:
+        loadBalancerName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The load balancer name where you want to create the SSL/TLS certificate.
+        certificateName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The SSL/TLS certificate name. You can have up to 10 certificates in your account at one time. Each Lightsail load balancer can have up to 2 certificates associated with it at one time. There is also an overall limit to the number of certificates that can be issue in a 365-day period. For more information, see Limits .
+        certificateDomainName:
+          allOf:
+          - $ref: '#/components/schemas/DomainName'
+          description: The domain name ( example.com ) for your SSL/TLS certificate.
+        certificateAlternativeNames:
+          allOf:
+          - $ref: '#/components/schemas/DomainNameList'
+          description: An array of strings listing alternative domains and subdomains for your SSL/TLS certificate. Lightsail will de-dupe the names for you. You can have a maximum of 9 alternative names (in addition to the 1 primary domain). We do not support wildcards ( *.example.com ).
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values to add to the resource during create. Use the TagResource action to tag a resource after it's created.
+      required:
+      - loadBalancerName
+      - certificateName
+      - certificateDomainName
+    DeleteLoadBalancerTlsCertificateResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    AttachLoadBalancerTlsCertificateRequest:
+      type: object
+      properties:
+        loadBalancerName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the load balancer to which you want to associate the SSL/TLS certificate.
+        certificateName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of your SSL/TLS certificate.
+      required:
+      - loadBalancerName
+      - certificateName
+    GetLoadBalancerTlsCertificatesRequest:
+      type: object
+      properties:
+        loadBalancerName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the load balancer you associated with your SSL/TLS certificate.
+      required:
+      - loadBalancerName
+    LoadBalancerTlsCertificateRevocationReason:
+      type: string
+      enum:
+      - UNSPECIFIED
+      - KEY_COMPROMISE
+      - CA_COMPROMISE
+      - AFFILIATION_CHANGED
+      - SUPERCEDED
+      - CESSATION_OF_OPERATION
+      - CERTIFICATE_HOLD
+      - REMOVE_FROM_CRL
+      - PRIVILEGE_WITHDRAWN
+      - A_A_COMPROMISE
+    DeleteCertificateRequest:
+      type: object
+      properties:
+        certificateName:
+          allOf:
+          - $ref: '#/components/schemas/CertificateName'
+          description: The name of the certificate to delete. Use the GetCertificates action to get a list of certificate names that you can specify.
+      required:
+      - certificateName
+    IssuerCA:
+      type: string
     OperationType:
       type: string
       enum:
@@ -686,347 +1117,6 @@ components:
       - StopGUISession
       - SetupInstanceHttps
       - GetProfile
-    TagKey:
-      type: string
-    CertificateSummary:
-      type: object
-      properties:
-        certificateArn:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The Amazon Resource Name (ARN) of the certificate.
-        certificateName:
-          allOf:
-          - $ref: '#/components/schemas/CertificateName'
-          description: The name of the certificate.
-        domainName:
-          allOf:
-          - $ref: '#/components/schemas/DomainName'
-          description: The domain name of the certificate.
-        certificateDetail:
-          allOf:
-          - $ref: '#/components/schemas/Certificate'
-          description: An object that describes a certificate in detail.
-        tags:
-          allOf:
-          - $ref: '#/components/schemas/TagList'
-          description: The tag keys and optional values for the resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
-      description: Describes an Amazon Lightsail SSL/TLS certificate.
-    LoadBalancerTlsCertificateRenewalSummary:
-      type: object
-      properties:
-        renewalStatus:
-          allOf:
-          - $ref: '#/components/schemas/LoadBalancerTlsCertificateRenewalStatus'
-          description: 'The renewal status of the certificate. The following renewal status are possible: PendingAutoRenewal - Lightsail is attempting to automatically validate the domain names of the certificate. No further action is required. PendingValidation - Lightsail couldn''t automatically validate one or more domain names of the certificate. You must take action to validate these domain names or the certificate won''t be renewed. Check to make sure your certificate''s domain validation records exist in your domain''s DNS, and that your certificate remains in use. Success - All domain names in the certificate are validated, and Lightsail renewed the certificate. No further action is required. Failed - One or more domain names were not validated before the certificate expired, and Lightsail did not renew the certificate. You can request a new certificate using the CreateCertificate action.'
-        domainValidationOptions:
-          allOf:
-          - $ref: '#/components/schemas/LoadBalancerTlsCertificateDomainValidationOptionList'
-          description: Contains information about the validation of each domain name in the certificate, as it pertains to Lightsail's managed renewal. This is different from the initial validation that occurs as a result of the RequestCertificate request.
-      description: 'Contains information about the status of Lightsail''s managed renewal for the certificate. The renewal status of the certificate. The following renewal status are possible: PendingAutoRenewal - Lightsail is attempting to automatically validate the domain names in the certificate. No further action is required. PendingValidation - Lightsail couldn''t automatically validate one or more domain names in the certificate. You must take action to validate these domain names or the certificate won''t be renewed. If you used DNS validation, check to make sure your certificate''s domain validation records exist in your domain''s DNS, and that your certificate remains in use. Success - All domain names in the certificate are validated, and Lightsail renewed the certificate. No further action is required. Failed - One or more domain names were not validated before the certificate expired, and Lightsail did not renew the certificate. You can request a new certificate using the CreateCertificate action.'
-    ServiceException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: A general service exception.
-    DomainNameList:
-      type: array
-      items:
-        $ref: '#/components/schemas/DomainName'
-    Operation:
-      type: object
-      properties:
-        id:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The ID of the operation.
-        resourceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The resource name.
-        resourceType:
-          allOf:
-          - $ref: '#/components/schemas/ResourceType'
-          description: The resource type.
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the operation was initialized ( 1479816991.349 ).
-        location:
-          allOf:
-          - $ref: '#/components/schemas/ResourceLocation'
-          description: The Amazon Web Services Region and Availability Zone.
-        isTerminal:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value indicating whether the operation is terminal.
-        operationDetails:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Details about the operation ( Debian-1GB-Ohio-1 ).
-        operationType:
-          allOf:
-          - $ref: '#/components/schemas/OperationType'
-          description: The type of operation.
-        status:
-          allOf:
-          - $ref: '#/components/schemas/OperationStatus'
-          description: The status of the operation.
-        statusChangedAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the status was changed ( 1479816991.349 ).
-        errorCode:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The error code.
-        errorDetails:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The error details.
-      description: Describes the API operation.
-    TagList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Tag'
-    SerialNumber:
-      type: string
-    GetCertificatesResult:
-      type: object
-      properties:
-        certificates:
-          allOf:
-          - $ref: '#/components/schemas/CertificateSummaryList'
-          description: An object that describes certificates.
-        nextPageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: If NextPageToken is returned there are more results available. The value of NextPageToken is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged.
-    SubjectAlternativeNameList:
-      type: array
-      items:
-        $ref: '#/components/schemas/DomainName'
-    RegionSetupInProgressException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Regions and Availability Zones for Lightsail
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
-      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
-    ResourceType:
-      type: string
-      enum:
-      - ContainerService
-      - Instance
-      - StaticIp
-      - KeyPair
-      - InstanceSnapshot
-      - Domain
-      - PeeredVpc
-      - LoadBalancer
-      - LoadBalancerTlsCertificate
-      - Disk
-      - DiskSnapshot
-      - RelationalDatabase
-      - RelationalDatabaseSnapshot
-      - ExportSnapshotRecord
-      - CloudFormationStackRecord
-      - Alarm
-      - ContactMethod
-      - Distribution
-      - Certificate
-      - Bucket
-    LoadBalancerTlsCertificateDomainStatus:
-      type: string
-      enum:
-      - PENDING_VALIDATION
-      - FAILED
-      - SUCCESS
-    UnauthenticatedException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user has not been authenticated.
-    CreateCertificateRequest:
-      type: object
-      properties:
-        certificateName:
-          allOf:
-          - $ref: '#/components/schemas/CertificateName'
-          description: The name for the certificate.
-        domainName:
-          allOf:
-          - $ref: '#/components/schemas/DomainName'
-          description: The domain name ( example.com ) for the certificate.
-        subjectAlternativeNames:
-          allOf:
-          - $ref: '#/components/schemas/SubjectAlternativeNameList'
-          description: An array of strings that specify the alternate domains ( example2.com ) and subdomains ( blog.example.com ) for the certificate. You can specify a maximum of nine alternate domains (in addition to the primary domain name). Wildcard domain entries ( *.example.com ) are not supported.
-        tags:
-          allOf:
-          - $ref: '#/components/schemas/TagList'
-          description: The tag keys and optional values to add to the certificate during create. Use the TagResource action to tag a resource after it's created.
-      required:
-      - certificateName
-      - domainName
-    DomainName:
-      type: string
-    OperationStatus:
-      type: string
-      enum:
-      - NotStarted
-      - Started
-      - Failed
-      - Completed
-      - Succeeded
-    CertificateDomainValidationStatus:
-      type: string
-      enum:
-      - PENDING_VALIDATION
-      - FAILED
-      - SUCCESS
-    CertificateSummaryList:
-      type: array
-      items:
-        $ref: '#/components/schemas/CertificateSummary'
-    LoadBalancerTlsCertificateFailureReason:
-      type: string
-      enum:
-      - NO_AVAILABLE_CONTACTS
-      - ADDITIONAL_VERIFICATION_REQUIRED
-      - DOMAIN_NOT_ALLOWED
-      - INVALID_PUBLIC_DOMAIN
-      - OTHER
-    ResourceRecord:
-      type: object
-      properties:
-        name:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The name of the record.
-        type:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The DNS record type.
-        value:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The value for the DNS record.
-      description: Describes the domain name system (DNS) records to add to your domain's DNS to validate it for an Amazon Lightsail certificate.
-    IssuerCA:
-      type: string
-    LoadBalancerTlsCertificateDnsRecordCreationState:
-      type: object
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/LoadBalancerTlsCertificateDnsRecordCreationStateCode'
-          description: 'The status code for the automated DNS record creation. Following are the possible values: SUCCEEDED - The validation records were successfully added. STARTED - The automatic DNS record creation has started. FAILED - The validation record addition failed.'
-        message:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The message that describes the reason for the status code.
-      description: An object that describes the state of the canonical name (CNAME) records that are automatically added by Lightsail to the DNS of the domain to validate domain ownership.
-    InvalidInputException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
-    DeleteCertificateResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    IncludeCertificateDetails:
-      type: boolean
-    NotFoundException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when it cannot find a resource.
-    CreateCertificateResult:
-      type: object
-      properties:
-        certificate:
-          allOf:
-          - $ref: '#/components/schemas/CertificateSummary'
-          description: An object that describes the certificate created.
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    Tag:
-      type: object
-      properties:
-        key:
-          allOf:
-          - $ref: '#/components/schemas/TagKey'
-          description: 'The key of the tag. Constraints: Tag keys accept a maximum of 128 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
-        value:
-          allOf:
-          - $ref: '#/components/schemas/TagValue'
-          description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
-      description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
-    LoadBalancerTlsCertificateDomainValidationOptionList:
-      type: array
-      items:
-        $ref: '#/components/schemas/LoadBalancerTlsCertificateDomainValidationOption'
-    string:
-      type: string
-    NonEmptyString:
-      type: string
-      pattern: \S
-    AccessDeniedException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
     CertificateStatus:
       type: string
       enum:
@@ -1037,84 +1127,6 @@ components:
       - VALIDATION_TIMED_OUT
       - REVOKED
       - FAILED
-    LoadBalancerTlsCertificateStatus:
-      type: string
-      enum:
-      - PENDING_VALIDATION
-      - ISSUED
-      - INACTIVE
-      - EXPIRED
-      - VALIDATION_TIMED_OUT
-      - REVOKED
-      - FAILED
-      - UNKNOWN
-    RenewalStatus:
-      type: string
-      enum:
-      - PendingAutoRenewal
-      - PendingValidation
-      - Success
-      - Failed
-    CertificateStatusList:
-      type: array
-      items:
-        $ref: '#/components/schemas/CertificateStatus'
-    AttachLoadBalancerTlsCertificateRequest:
-      type: object
-      properties:
-        loadBalancerName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the load balancer to which you want to associate the SSL/TLS certificate.
-        certificateName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of your SSL/TLS certificate.
-      required:
-      - loadBalancerName
-      - certificateName
-    RegionName:
-      type: string
-      enum:
-      - us-east-1
-      - us-east-2
-      - us-west-1
-      - us-west-2
-      - eu-west-1
-      - eu-west-2
-      - eu-west-3
-      - eu-central-1
-      - eu-north-1
-      - eu-south-2
-      - ca-central-1
-      - ap-east-1
-      - ap-south-1
-      - ap-southeast-1
-      - ap-southeast-2
-      - ap-northeast-1
-      - ap-northeast-2
-      - ap-southeast-3
-      - ap-southeast-5
-      - sa-east-1
-    OperationFailureException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when an operation fails to execute.
-    GetLoadBalancerTlsCertificatesResult:
-      type: object
-      properties:
-        tlsCertificates:
-          allOf:
-          - $ref: '#/components/schemas/LoadBalancerTlsCertificateList'
-          description: An array of LoadBalancerTlsCertificate objects describing your SSL/TLS certificates.
     LoadBalancerTlsCertificate:
       type: object
       properties:
@@ -1219,74 +1231,43 @@ components:
           - $ref: '#/components/schemas/StringList'
           description: An array of strings that specify the alternate domains ( example2.com ) and subdomains ( blog.example.com ) for the certificate.
       description: Describes a load balancer SSL/TLS certificate. TLS is just an updated, more secure version of Secure Socket Layer (SSL).
-    GetCertificatesRequest:
+    AccountSetupInProgressException:
       type: object
       properties:
-        certificateStatuses:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an account is still in the setup in progress state.
+    CertificateSummary:
+      type: object
+      properties:
+        certificateArn:
           allOf:
-          - $ref: '#/components/schemas/CertificateStatusList'
-          description: The status of the certificates for which to return information. For example, specify ISSUED to return only certificates with an ISSUED status. When omitted, the response includes all of your certificates in the Amazon Web Services Region where the request is made, regardless of their current status.
-        includeCertificateDetails:
-          allOf:
-          - $ref: '#/components/schemas/IncludeCertificateDetails'
-          description: Indicates whether to include detailed information about the certificates in the response. When omitted, the response includes only the certificate names, Amazon Resource Names (ARNs), domain names, and tags.
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Amazon Resource Name (ARN) of the certificate.
         certificateName:
           allOf:
           - $ref: '#/components/schemas/CertificateName'
-          description: The name for the certificate for which to return information. When omitted, the response includes all of your certificates in the Amazon Web Services Region where the request is made.
-        pageToken:
+          description: The name of the certificate.
+        domainName:
           allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetCertificates request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
-    LoadBalancerTlsCertificateRenewalStatus:
-      type: string
-      enum:
-      - PENDING_AUTO_RENEWAL
-      - PENDING_VALIDATION
-      - SUCCESS
-      - FAILED
-    LoadBalancerTlsCertificateDomainValidationRecordList:
-      type: array
-      items:
-        $ref: '#/components/schemas/LoadBalancerTlsCertificateDomainValidationRecord'
-    RenewalStatusReason:
-      type: string
-    InUseResourceCount:
-      type: integer
-    DeleteLoadBalancerTlsCertificateResult:
-      type: object
-      properties:
-        operations:
+          - $ref: '#/components/schemas/DomainName'
+          description: The domain name of the certificate.
+        certificateDetail:
           allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    IsoDate:
-      type: string
-      format: date-time
-    EligibleToRenew:
-      type: string
-    CreateLoadBalancerTlsCertificateResult:
-      type: object
-      properties:
-        operations:
+          - $ref: '#/components/schemas/Certificate'
+          description: An object that describes a certificate in detail.
+        tags:
           allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    AttachLoadBalancerTlsCertificateResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request. These SSL/TLS certificates are only usable by Lightsail load balancers. You can't get the certificate and use it for another purpose.
-    RequestFailureReason:
-      type: string
-    TagValue:
-      type: string
-    ResourceName:
-      type: string
-      pattern: ^\w[\w\-]*\w$
-    LoadBalancerTlsCertificateDnsRecordCreationStateCode:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values for the resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
+      description: Describes an Amazon Lightsail SSL/TLS certificate.
+    DnsRecordCreationStateCode:
       type: string
       enum:
       - SUCCEEDED
@@ -1294,28 +1275,10 @@ components:
       - FAILED
     CertificateName:
       type: string
-    boolean:
+    TagKey:
+      type: string
+    IncludeCertificateDetails:
       type: boolean
-    RenewalSummary:
-      type: object
-      properties:
-        domainValidationRecords:
-          allOf:
-          - $ref: '#/components/schemas/DomainValidationRecordList'
-          description: An array of objects that describe the domain validation records of the certificate.
-        renewalStatus:
-          allOf:
-          - $ref: '#/components/schemas/RenewalStatus'
-          description: 'The renewal status of the certificate. The following renewal status are possible: PendingAutoRenewal - Lightsail is attempting to automatically validate the domain names of the certificate. No further action is required. PendingValidation - Lightsail couldn''t automatically validate one or more domain names of the certificate. You must take action to validate these domain names or the certificate won''t be renewed. Check to make sure your certificate''s domain validation records exist in your domain''s DNS, and that your certificate remains in use. Success - All domain names in the certificate are validated, and Lightsail renewed the certificate. No further action is required. Failed - One or more domain names were not validated before the certificate expired, and Lightsail did not renew the certificate. You can request a new certificate using the CreateCertificate action.'
-        renewalStatusReason:
-          allOf:
-          - $ref: '#/components/schemas/RenewalStatusReason'
-          description: The reason for the renewal status of the certificate.
-        updatedAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the certificate was last updated.
-      description: Describes the status of a SSL/TLS certificate renewal managed by Amazon Lightsail.
     DomainValidationRecord:
       type: object
       properties:
@@ -1336,40 +1299,59 @@ components:
           - $ref: '#/components/schemas/CertificateDomainValidationStatus'
           description: The validation status of the record.
       description: Describes the domain name system (DNS) records that you must add to the DNS of your registered domain to validate ownership for an Amazon Lightsail SSL/TLS certificate.
-    KeyAlgorithm:
+    string:
       type: string
-    StringList:
-      type: array
-      items:
-        $ref: '#/components/schemas/string'
-    LoadBalancerTlsCertificateDomainValidationRecord:
+    InUseResourceCount:
+      type: integer
+    GetCertificatesRequest:
+      type: object
+      properties:
+        certificateStatuses:
+          allOf:
+          - $ref: '#/components/schemas/CertificateStatusList'
+          description: The status of the certificates for which to return information. For example, specify ISSUED to return only certificates with an ISSUED status. When omitted, the response includes all of your certificates in the Amazon Web Services Region where the request is made, regardless of their current status.
+        includeCertificateDetails:
+          allOf:
+          - $ref: '#/components/schemas/IncludeCertificateDetails'
+          description: Indicates whether to include detailed information about the certificates in the response. When omitted, the response includes only the certificate names, Amazon Resource Names (ARNs), domain names, and tags.
+        certificateName:
+          allOf:
+          - $ref: '#/components/schemas/CertificateName'
+          description: The name for the certificate for which to return information. When omitted, the response includes all of your certificates in the Amazon Web Services Region where the request is made.
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetCertificates request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+    LoadBalancerTlsCertificateDomainValidationOption:
+      type: object
+      properties:
+        domainName:
+          allOf:
+          - $ref: '#/components/schemas/DomainName'
+          description: The fully qualified domain name in the certificate request.
+        validationStatus:
+          allOf:
+          - $ref: '#/components/schemas/LoadBalancerTlsCertificateDomainStatus'
+          description: The status of the domain validation. Valid values are listed below.
+      description: Contains information about the domain names on an SSL/TLS certificate that you will use to validate domain ownership.
+    ResourceRecord:
       type: object
       properties:
         name:
           allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: A fully qualified domain name in the certificate. For example, example.com .
+          - $ref: '#/components/schemas/string'
+          description: The name of the record.
         type:
           allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The type of validation record. For example, CNAME for domain validation.
+          - $ref: '#/components/schemas/string'
+          description: The DNS record type.
         value:
           allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The value for that type.
-        validationStatus:
-          allOf:
-          - $ref: '#/components/schemas/LoadBalancerTlsCertificateDomainStatus'
-          description: The validation status. Valid values are listed below.
-        domainName:
-          allOf:
-          - $ref: '#/components/schemas/DomainName'
-          description: The domain name against which your SSL/TLS certificate was validated.
-        dnsRecordCreationState:
-          allOf:
-          - $ref: '#/components/schemas/LoadBalancerTlsCertificateDnsRecordCreationState'
-          description: An object that describes the state of the canonical name (CNAME) records that are automatically added by Lightsail to the DNS of a domain to validate domain ownership.
-      description: Describes the validation record of each domain name in the SSL/TLS certificate.
+          - $ref: '#/components/schemas/string'
+          description: The value for the DNS record.
+      description: Describes the domain name system (DNS) records to add to your domain's DNS to validate it for an Amazon Lightsail certificate.
+    SerialNumber:
+      type: string
     DnsRecordCreationState:
       type: object
       properties:
@@ -1382,38 +1364,47 @@ components:
           - $ref: '#/components/schemas/string'
           description: The message that describes the reason for the status code.
       description: Describes the creation state of the canonical name (CNAME) records that are automatically added by Amazon Lightsail to the DNS of a domain to validate domain ownership for an SSL/TLS certificate. When you create an SSL/TLS certificate for a Lightsail resource, you must add a set of CNAME records to the DNS of the domains for the certificate to validate that you own the domains. Lightsail can automatically add the CNAME records to the DNS of the domain if the DNS zone for the domain exists within your Lightsail account. If automatic record addition fails, or if you manage the DNS of your domain using a third-party service, then you must manually add the CNAME records to the DNS of your domain. For more information, see Verify an SSL/TLS certificate in Amazon Lightsail in the Amazon Lightsail Developer Guide .
-    OperationList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Operation'
-    CreateLoadBalancerTlsCertificateRequest:
+    ResourceLocation:
       type: object
       properties:
-        loadBalancerName:
+        availabilityZone:
           allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The load balancer name where you want to create the SSL/TLS certificate.
-        certificateName:
+          - $ref: '#/components/schemas/string'
+          description: The Availability Zone. Follows the format us-east-2a (case-sensitive).
+        regionName:
           allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The SSL/TLS certificate name. You can have up to 10 certificates in your account at one time. Each Lightsail load balancer can have up to 2 certificates associated with it at one time. There is also an overall limit to the number of certificates that can be issue in a 365-day period. For more information, see Limits .
-        certificateDomainName:
+          - $ref: '#/components/schemas/RegionName'
+          description: The Amazon Web Services Region name.
+      description: Describes the resource location.
+    DeleteCertificateResult:
+      type: object
+      properties:
+        operations:
           allOf:
-          - $ref: '#/components/schemas/DomainName'
-          description: The domain name ( example.com ) for your SSL/TLS certificate.
-        certificateAlternativeNames:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    CreateCertificateResult:
+      type: object
+      properties:
+        certificate:
           allOf:
-          - $ref: '#/components/schemas/DomainNameList'
-          description: An array of strings listing alternative domains and subdomains for your SSL/TLS certificate. Lightsail will de-dupe the names for you. You can have a maximum of 9 alternative names (in addition to the 1 primary domain). We do not support wildcards ( *.example.com ).
-        tags:
+          - $ref: '#/components/schemas/CertificateSummary'
+          description: An object that describes the certificate created.
+        operations:
           allOf:
-          - $ref: '#/components/schemas/TagList'
-          description: The tag keys and optional values to add to the resource during create. Use the TagResource action to tag a resource after it's created.
-      required:
-      - loadBalancerName
-      - certificateName
-      - certificateDomainName
-    AccountSetupInProgressException:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    OperationStatus:
+      type: string
+      enum:
+      - NotStarted
+      - Started
+      - Failed
+      - Completed
+      - Succeeded
+    DomainName:
+      type: string
+    AccessDeniedException:
       type: object
       properties:
         code:
@@ -1424,22 +1415,31 @@ components:
           $ref: '#/components/schemas/string'
         tip:
           $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when an account is still in the setup in progress state.
-    DnsRecordCreationStateCode:
-      type: string
-      enum:
-      - SUCCEEDED
-      - STARTED
-      - FAILED
-    DeleteCertificateRequest:
+      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
+    TagList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Tag'
+    NotFoundException:
       type: object
       properties:
-        certificateName:
-          allOf:
-          - $ref: '#/components/schemas/CertificateName'
-          description: The name of the certificate to delete. Use the GetCertificates action to get a list of certificate names that you can specify.
-      required:
-      - certificateName
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when it cannot find a resource.
+    KeyAlgorithm:
+      type: string
+    LoadBalancerTlsCertificateDomainStatus:
+      type: string
+      enum:
+      - PENDING_VALIDATION
+      - FAILED
+      - SUCCESS
   securitySchemes:
     sigv4:
       type: apiKey
