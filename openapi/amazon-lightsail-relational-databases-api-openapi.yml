@@ -1364,54 +1364,74 @@ paths:
       x-amz-target: Lightsail_20161128.UpdateRelationalDatabaseParameters
 components:
   schemas:
-    MetricUnit:
+    RelationalDatabaseEngine:
       type: string
       enum:
-      - Seconds
-      - Microseconds
-      - Milliseconds
-      - Bytes
-      - Kilobytes
-      - Megabytes
-      - Gigabytes
-      - Terabytes
-      - Bits
-      - Kilobits
-      - Megabits
-      - Gigabits
-      - Terabits
-      - Percent
-      - Count
-      - Bytes/Second
-      - Kilobytes/Second
-      - Megabytes/Second
-      - Gigabytes/Second
-      - Terabytes/Second
-      - Bits/Second
-      - Kilobits/Second
-      - Megabits/Second
-      - Gigabits/Second
-      - Terabits/Second
-      - Count/Second
-      - None
-    TagValue:
-      type: string
-    RegionSetupInProgressException:
+      - mysql
+    AccessDeniedException:
       type: object
       properties:
         code:
           $ref: '#/components/schemas/string'
         docs:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Regions and Availability Zones for Lightsail
+          $ref: '#/components/schemas/string'
         message:
           $ref: '#/components/schemas/string'
         tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
+    StartRelationalDatabaseRequest:
+      type: object
+      properties:
+        relationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of your database to start.
+      required:
+      - relationalDatabaseName
+    RelationalDatabaseBundleList:
+      type: array
+      items:
+        $ref: '#/components/schemas/RelationalDatabaseBundle'
+    CreateRelationalDatabaseResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    MetricStatisticList:
+      type: array
+      items:
+        $ref: '#/components/schemas/MetricStatistic'
+    RelationalDatabaseBlueprint:
+      type: object
+      properties:
+        blueprintId:
           allOf:
           - $ref: '#/components/schemas/string'
-          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
-      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
+          description: The ID for the database blueprint.
+        engine:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabaseEngine'
+          description: The database software of the database blueprint (for example, MySQL ).
+        engineVersion:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The database engine version for the database blueprint (for example, 5.7.23 ).
+        engineDescription:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The description of the database engine for the database blueprint.
+        engineVersionDescription:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The description of the database engine version for the database blueprint.
+        isEngineDefault:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the engine version is the default for the database blueprint.
+      description: Describes a database image, or blueprint. A blueprint describes the major engine version of a database.
     UpdateRelationalDatabaseParametersRequest:
       type: object
       properties:
@@ -1426,20 +1446,844 @@ components:
       required:
       - relationalDatabaseName
       - parameters
-    double:
-      type: number
-    StartRelationalDatabaseRequest:
+    GetRelationalDatabaseMetricDataResult:
+      type: object
+      properties:
+        metricName:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabaseMetricName'
+          description: The name of the metric returned.
+        metricData:
+          allOf:
+          - $ref: '#/components/schemas/MetricDatapointList'
+          description: An array of objects that describe the metric data returned.
+    OperationFailureException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an operation fails to execute.
+    UpdateRelationalDatabaseResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    RelationalDatabaseMetricName:
+      type: string
+      enum:
+      - CPUUtilization
+      - DatabaseConnections
+      - DiskQueueDepth
+      - FreeStorageSpace
+      - NetworkReceiveThroughput
+      - NetworkTransmitThroughput
+      - FreeableMemory
+      - SwapUsage
+    MetricDatapoint:
+      type: object
+      properties:
+        average:
+          allOf:
+          - $ref: '#/components/schemas/double'
+          description: The average.
+        maximum:
+          allOf:
+          - $ref: '#/components/schemas/double'
+          description: The maximum.
+        minimum:
+          allOf:
+          - $ref: '#/components/schemas/double'
+          description: The minimum.
+        sampleCount:
+          allOf:
+          - $ref: '#/components/schemas/double'
+          description: The sample count.
+        sum:
+          allOf:
+          - $ref: '#/components/schemas/double'
+          description: The sum.
+        timestamp:
+          allOf:
+          - $ref: '#/components/schemas/timestamp'
+          description: The timestamp ( 1479816991.349 ).
+        unit:
+          allOf:
+          - $ref: '#/components/schemas/MetricUnit'
+          description: The unit.
+      description: Describes the metric data point.
+    TagList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Tag'
+    GetRelationalDatabaseBlueprintsRequest:
+      type: object
+      properties:
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetRelationalDatabaseBlueprints request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+    UnauthenticatedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user has not been authenticated.
+    GetRelationalDatabaseMetricDataRequest:
       type: object
       properties:
         relationalDatabaseName:
           allOf:
           - $ref: '#/components/schemas/ResourceName'
-          description: The name of your database to start.
+          description: The name of your database from which to get metric data.
+        metricName:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabaseMetricName'
+          description: 'The metric for which you want to return information. Valid relational database metric names are listed below, along with the most useful statistics to include in your request, and the published unit value. All relational database metric data is available in 1-minute (60 seconds) granularity. CPUUtilization - The percentage of CPU utilization currently in use on the database. Statistics : The most useful statistics are Maximum and Average . Unit : The published unit is Percent . DatabaseConnections - The number of database connections in use. Statistics : The most useful statistics are Maximum and Sum . Unit : The published unit is Count . DiskQueueDepth - The number of outstanding IOs (read/write requests) that are waiting to access the disk. Statistics : The most useful statistic is Sum . Unit : The published unit is Count . FreeStorageSpace - The amount of available storage space. Statistics : The most useful statistic is Sum . Unit : The published unit is Bytes . NetworkReceiveThroughput - The incoming (Receive) network traffic on the database, including both customer database traffic and AWS traffic used for monitoring and replication. Statistics : The most useful statistic is Average . Unit : The published unit is Bytes/Second . NetworkTransmitThroughput - The outgoing (Transmit) network traffic on the database, including both customer database traffic and AWS traffic used for monitoring and replication. Statistics : The most useful statistic is Average . Unit : The published unit is Bytes/Second .'
+        period:
+          allOf:
+          - $ref: '#/components/schemas/MetricPeriod'
+          description: The granularity, in seconds, of the returned data points. All relational database metric data is available in 1-minute (60 seconds) granularity.
+        startTime:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: 'The start of the time interval from which to get metric data. Constraints: Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you wish to use a start time of October 1, 2018, at 8 PM UTC, then you input 1538424000 as the start time.'
+        endTime:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: 'The end of the time interval from which to get metric data. Constraints: Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you wish to use an end time of October 1, 2018, at 8 PM UTC, then you input 1538424000 as the end time.'
+        unit:
+          allOf:
+          - $ref: '#/components/schemas/MetricUnit'
+          description: The unit for the metric data request. Valid units depend on the metric data being requested. For the valid units with each available metric, see the metricName parameter.
+        statistics:
+          allOf:
+          - $ref: '#/components/schemas/MetricStatisticList'
+          description: 'The statistic for the metric. The following statistics are available: Minimum - The lowest value observed during the specified period. Use this value to determine low volumes of activity for your application. Maximum - The highest value observed during the specified period. Use this value to determine high volumes of activity for your application. Sum - All values submitted for the matching metric added together. You can use this statistic to determine the total volume of a metric. Average - The value of Sum / SampleCount during the specified period. By comparing this statistic with the Minimum and Maximum values, you can determine the full scope of a metric and how close the average use is to the Minimum and Maximum values. This comparison helps you to know when to increase or decrease your resources. SampleCount - The count, or number, of data points used for the statistical calculation.'
       required:
       - relationalDatabaseName
-    IsoDate:
+      - metricName
+      - period
+      - startTime
+      - endTime
+      - unit
+      - statistics
+    PendingMaintenanceAction:
+      type: object
+      properties:
+        action:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The type of pending database maintenance action.
+        description:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: Additional detail about the pending database maintenance action.
+        currentApplyDate:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The effective date of the pending database maintenance action.
+      description: Describes a pending database maintenance action.
+    float:
+      type: number
+    RelationalDatabasePasswordVersion:
       type: string
-      format: date-time
+      enum:
+      - CURRENT
+      - PREVIOUS
+      - PENDING
+    DeleteRelationalDatabaseResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    OperationType:
+      type: string
+      enum:
+      - DeleteKnownHostKeys
+      - DeleteInstance
+      - CreateInstance
+      - StopInstance
+      - StartInstance
+      - RebootInstance
+      - OpenInstancePublicPorts
+      - PutInstancePublicPorts
+      - CloseInstancePublicPorts
+      - AllocateStaticIp
+      - ReleaseStaticIp
+      - AttachStaticIp
+      - DetachStaticIp
+      - UpdateDomainEntry
+      - DeleteDomainEntry
+      - CreateDomain
+      - DeleteDomain
+      - CreateInstanceSnapshot
+      - DeleteInstanceSnapshot
+      - CreateInstancesFromSnapshot
+      - CreateLoadBalancer
+      - DeleteLoadBalancer
+      - AttachInstancesToLoadBalancer
+      - DetachInstancesFromLoadBalancer
+      - UpdateLoadBalancerAttribute
+      - CreateLoadBalancerTlsCertificate
+      - DeleteLoadBalancerTlsCertificate
+      - AttachLoadBalancerTlsCertificate
+      - CreateDisk
+      - DeleteDisk
+      - AttachDisk
+      - DetachDisk
+      - CreateDiskSnapshot
+      - DeleteDiskSnapshot
+      - CreateDiskFromSnapshot
+      - CreateRelationalDatabase
+      - UpdateRelationalDatabase
+      - DeleteRelationalDatabase
+      - CreateRelationalDatabaseFromSnapshot
+      - CreateRelationalDatabaseSnapshot
+      - DeleteRelationalDatabaseSnapshot
+      - UpdateRelationalDatabaseParameters
+      - StartRelationalDatabase
+      - RebootRelationalDatabase
+      - StopRelationalDatabase
+      - EnableAddOn
+      - DisableAddOn
+      - PutAlarm
+      - GetAlarms
+      - DeleteAlarm
+      - TestAlarm
+      - CreateContactMethod
+      - GetContactMethods
+      - SendContactMethodVerification
+      - DeleteContactMethod
+      - CreateDistribution
+      - UpdateDistribution
+      - DeleteDistribution
+      - ResetDistributionCache
+      - AttachCertificateToDistribution
+      - DetachCertificateFromDistribution
+      - UpdateDistributionBundle
+      - SetIpAddressType
+      - CreateCertificate
+      - DeleteCertificate
+      - CreateContainerService
+      - UpdateContainerService
+      - DeleteContainerService
+      - CreateContainerServiceDeployment
+      - CreateContainerServiceRegistryLogin
+      - RegisterContainerImage
+      - DeleteContainerImage
+      - CreateBucket
+      - DeleteBucket
+      - CreateBucketAccessKey
+      - DeleteBucketAccessKey
+      - UpdateBucketBundle
+      - UpdateBucket
+      - SetResourceAccessForBucket
+      - UpdateInstanceMetadataOptions
+      - StartGUISession
+      - StopGUISession
+      - SetupInstanceHttps
+      - GetProfile
+    NotFoundException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when it cannot find a resource.
+    CreateRelationalDatabaseFromSnapshotResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    LogEvent:
+      type: object
+      properties:
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the database log event was created.
+        message:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The message of the database log event.
+      description: Describes a database log event.
+    OperationList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Operation'
+    CreateRelationalDatabaseSnapshotResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    StringList:
+      type: array
+      items:
+        $ref: '#/components/schemas/string'
+    TagKey:
+      type: string
+    RelationalDatabaseSnapshotList:
+      type: array
+      items:
+        $ref: '#/components/schemas/RelationalDatabaseSnapshot'
+    RelationalDatabaseBundle:
+      type: object
+      properties:
+        bundleId:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The ID for the database bundle.
+        name:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The name for the database bundle.
+        price:
+          allOf:
+          - $ref: '#/components/schemas/float'
+          description: The cost of the database bundle in US currency.
+        ramSizeInGb:
+          allOf:
+          - $ref: '#/components/schemas/float'
+          description: The amount of RAM in GB (for example, 2.0 ) for the database bundle.
+        diskSizeInGb:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The size of the disk for the database bundle.
+        transferPerMonthInGb:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The data transfer rate per month in GB for the database bundle.
+        cpuCount:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The number of virtual CPUs (vCPUs) for the database bundle.
+        isEncrypted:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the database bundle is encrypted.
+        isActive:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the database bundle is active.
+      description: Describes a database bundle. A bundle describes the performance specifications of the database.
+    StartRelationalDatabaseResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    GetRelationalDatabaseLogStreamsRequest:
+      type: object
+      properties:
+        relationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of your database for which to get log streams.
+      required:
+      - relationalDatabaseName
+    RelationalDatabaseParameter:
+      type: object
+      properties:
+        allowedValues:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Specifies the valid range of values for the parameter.
+        applyMethod:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Indicates when parameter updates are applied. Can be immediate or pending-reboot .
+        applyType:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Specifies the engine-specific parameter type.
+        dataType:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Specifies the valid data type for the parameter.
+        description:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Provides a description of the parameter.
+        isModifiable:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the parameter can be modified.
+        parameterName:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Specifies the name of the parameter.
+        parameterValue:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Specifies the value of the parameter.
+      description: Describes the parameters of a database.
+    PendingMaintenanceActionList:
+      type: array
+      items:
+        $ref: '#/components/schemas/PendingMaintenanceAction'
+    GetRelationalDatabaseLogEventsResult:
+      type: object
+      properties:
+        resourceLogEvents:
+          allOf:
+          - $ref: '#/components/schemas/LogEventList'
+          description: An object describing the result of your get relational database log events request.
+        nextBackwardToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: A token used for advancing to the previous page of results from your get relational database log events request.
+        nextForwardToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: A token used for advancing to the next page of results from your get relational database log events request.
+    AccountSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an account is still in the setup in progress state.
+    GetRelationalDatabaseSnapshotsRequest:
+      type: object
+      properties:
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetRelationalDatabaseSnapshots request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+    GetRelationalDatabaseParametersRequest:
+      type: object
+      properties:
+        relationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of your database for which to get parameters.
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetRelationalDatabaseParameters request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+      required:
+      - relationalDatabaseName
+    GetRelationalDatabaseParametersResult:
+      type: object
+      properties:
+        parameters:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabaseParameterList'
+          description: An object describing the result of your get relational database parameters request.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetRelationalDatabaseParameters request and specify the next page token using the pageToken parameter.
+    Tag:
+      type: object
+      properties:
+        key:
+          allOf:
+          - $ref: '#/components/schemas/TagKey'
+          description: 'The key of the tag. Constraints: Tag keys accept a maximum of 128 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+        value:
+          allOf:
+          - $ref: '#/components/schemas/TagValue'
+          description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+      description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
+    RebootRelationalDatabaseResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    StopRelationalDatabaseRequest:
+      type: object
+      properties:
+        relationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of your database to stop.
+        relationalDatabaseSnapshotName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of your new database snapshot to be created before stopping your database.
+      required:
+      - relationalDatabaseName
+    OperationStatus:
+      type: string
+      enum:
+      - NotStarted
+      - Started
+      - Failed
+      - Completed
+      - Succeeded
+    DeleteRelationalDatabaseSnapshotResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    GetRelationalDatabaseBundlesResult:
+      type: object
+      properties:
+        bundles:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabaseBundleList'
+          description: An object describing the result of your get relational database bundles request.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetRelationalDatabaseBundles request and specify the next page token using the pageToken parameter.
+    SensitiveString:
+      type: string
+    GetRelationalDatabaseSnapshotResult:
+      type: object
+      properties:
+        relationalDatabaseSnapshot:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabaseSnapshot'
+          description: An object describing the specified database snapshot.
+    RelationalDatabaseBlueprintList:
+      type: array
+      items:
+        $ref: '#/components/schemas/RelationalDatabaseBlueprint'
+    CreateRelationalDatabaseRequest:
+      type: object
+      properties:
+        relationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: 'The name to use for your new Lightsail database resource. Constraints: Must contain from 2 to 255 alphanumeric characters, or hyphens. The first and last character must be a letter or number.'
+        availabilityZone:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The Availability Zone in which to create your new database. Use the us-east-2a case-sensitive format. You can get a list of Availability Zones by using the get regions operation. Be sure to add the include relational database Availability Zones parameter to your request.
+        relationalDatabaseBlueprintId:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The blueprint ID for your new database. A blueprint describes the major engine version of a database. You can get a list of database blueprints IDs by using the get relational database blueprints operation.
+        relationalDatabaseBundleId:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The bundle ID for your new database. A bundle describes the performance specifications for your database. You can get a list of database bundle IDs by using the get relational database bundles operation.
+        masterDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: 'The meaning of this parameter differs according to the database engine you use. MySQL The name of the database to create when the Lightsail database resource is created. If this parameter isn''t specified, no database is created in the database resource. Constraints: Must contain 1 to 64 letters or numbers. Must begin with a letter. Subsequent characters can be letters, underscores, or digits (0- 9). Can''t be a word reserved by the specified database engine. For more information about reserved words in MySQL, see the Keywords and Reserved Words articles for MySQL 5.6 , MySQL 5.7 , and MySQL 8.0 . PostgreSQL The name of the database to create when the Lightsail database resource is created. If this parameter isn''t specified, a database named postgres is created in the database resource. Constraints: Must contain 1 to 63 letters or numbers. Must begin with a letter. Subsequent characters can be letters, underscores, or digits (0- 9). Can''t be a word reserved by the specified database engine. For more information about reserved words in PostgreSQL, see the SQL Key Words articles for PostgreSQL 9.6 , PostgreSQL 10 , PostgreSQL 11 , and PostgreSQL 12 .'
+        masterUsername:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: 'The name for the master user. MySQL Constraints: Required for MySQL. Must be 1 to 16 letters or numbers. Can contain underscores. First character must be a letter. Can''t be a reserved word for the chosen database engine. For more information about reserved words in MySQL 5.6 or 5.7, see the Keywords and Reserved Words articles for MySQL 5.6 , MySQL 5.7 , or MySQL 8.0 . PostgreSQL Constraints: Required for PostgreSQL. Must be 1 to 63 letters or numbers. Can contain underscores. First character must be a letter. Can''t be a reserved word for the chosen database engine. For more information about reserved words in MySQL 5.6 or 5.7, see the Keywords and Reserved Words articles for PostgreSQL 9.6 , PostgreSQL 10 , PostgreSQL 11 , and PostgreSQL 12 .'
+        masterUserPassword:
+          allOf:
+          - $ref: '#/components/schemas/SensitiveString'
+          description: 'The password for the master user. The password can include any printable ASCII character except "/", """, or "@". It cannot contain spaces. MySQL Constraints: Must contain from 8 to 41 characters. PostgreSQL Constraints: Must contain from 8 to 128 characters.'
+        preferredBackupWindow:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: 'The daily time range during which automated backups are created for your new database if automated backups are enabled. The default is a 30-minute window selected at random from an 8-hour block of time for each AWS Region. For more information about the preferred backup window time blocks for each region, see the Working With Backups guide in the Amazon Relational Database Service documentation. Constraints: Must be in the hh24:mi-hh24:mi format. Example: 16:00-16:30 Specified in Coordinated Universal Time (UTC). Must not conflict with the preferred maintenance window. Must be at least 30 minutes.'
+        preferredMaintenanceWindow:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: 'The weekly time range during which system maintenance can occur on your new database. The default is a 30-minute window selected at random from an 8-hour block of time for each AWS Region, occurring on a random day of the week. Constraints: Must be in the ddd:hh24:mi-ddd:hh24:mi format. Valid days: Mon, Tue, Wed, Thu, Fri, Sat, Sun. Must be at least 30 minutes. Specified in Coordinated Universal Time (UTC). Example: Tue:17:00-Tue:17:30'
+        publiclyAccessible:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: Specifies the accessibility options for your new database. A value of true specifies a database that is available to resources outside of your Lightsail account. A value of false specifies a database that is available only to your Lightsail resources in the same region as your database.
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values to add to the resource during create. Use the TagResource action to tag a resource after it's created.
+      required:
+      - relationalDatabaseName
+      - relationalDatabaseBlueprintId
+      - relationalDatabaseBundleId
+      - masterDatabaseName
+      - masterUsername
+    GetRelationalDatabaseRequest:
+      type: object
+      properties:
+        relationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the database that you are looking up.
+      required:
+      - relationalDatabaseName
+    RelationalDatabaseSnapshot:
+      type: object
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the database snapshot.
+        arn:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Amazon Resource Name (ARN) of the database snapshot.
+        supportCode:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The support code for the database snapshot. Include this code in your email to support when you have questions about a database snapshot in Lightsail. This code enables our support team to look up your Lightsail information more easily.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the database snapshot was created.
+        location:
+          allOf:
+          - $ref: '#/components/schemas/ResourceLocation'
+          description: The Region name and Availability Zone where the database snapshot is located.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The Lightsail resource type.
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values for the resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
+        engine:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The software of the database snapshot (for example, MySQL )
+        engineVersion:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The database engine version for the database snapshot (for example, 5.7.23 ).
+        sizeInGb:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The size of the disk in GB (for example, 32 ) for the database snapshot.
+        state:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The state of the database snapshot.
+        fromRelationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The name of the source database from which the database snapshot was created.
+        fromRelationalDatabaseArn:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Amazon Resource Name (ARN) of the database from which the database snapshot was created.
+        fromRelationalDatabaseBundleId:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The bundle ID of the database from which the database snapshot was created.
+        fromRelationalDatabaseBlueprintId:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The blueprint ID of the database from which the database snapshot was created. A blueprint describes the major engine version of a database.
+      description: Describes a database snapshot.
+    MetricPeriod:
+      type: integer
+      minimum: 60
+      maximum: 86400
+    InvalidInputException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
+    GetRelationalDatabaseSnapshotsResult:
+      type: object
+      properties:
+        relationalDatabaseSnapshots:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabaseSnapshotList'
+          description: An object describing the result of your get relational database snapshots request.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetRelationalDatabaseSnapshots request and specify the next page token using the pageToken parameter.
+    RelationalDatabaseParameterList:
+      type: array
+      items:
+        $ref: '#/components/schemas/RelationalDatabaseParameter'
+    MetricStatistic:
+      type: string
+      enum:
+      - Minimum
+      - Maximum
+      - Sum
+      - Average
+      - SampleCount
+    GetRelationalDatabaseBundlesRequest:
+      type: object
+      properties:
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetRelationalDatabaseBundles request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+        includeInactive:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value that indicates whether to include inactive (unavailable) bundles in the response of your request.
+    CreateRelationalDatabaseFromSnapshotRequest:
+      type: object
+      properties:
+        relationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: 'The name to use for your new Lightsail database resource. Constraints: Must contain from 2 to 255 alphanumeric characters, or hyphens. The first and last character must be a letter or number.'
+        availabilityZone:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The Availability Zone in which to create your new database. Use the us-east-2a case-sensitive format. You can get a list of Availability Zones by using the get regions operation. Be sure to add the include relational database Availability Zones parameter to your request.
+        publiclyAccessible:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: Specifies the accessibility options for your new database. A value of true specifies a database that is available to resources outside of your Lightsail account. A value of false specifies a database that is available only to your Lightsail resources in the same region as your database.
+        relationalDatabaseSnapshotName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the database snapshot from which to create your new database.
+        relationalDatabaseBundleId:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The bundle ID for your new database. A bundle describes the performance specifications for your database. You can get a list of database bundle IDs by using the get relational database bundles operation. When creating a new database from a snapshot, you cannot choose a bundle that is smaller than the bundle of the source database.
+        sourceRelationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the source database.
+        restoreTime:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: 'The date and time to restore your database from. Constraints: Must be before the latest restorable time for the database. Cannot be specified if the use latest restorable time parameter is true . Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you wish to use a restore time of October 1, 2018, at 8 PM UTC, then you input 1538424000 as the restore time.'
+        useLatestRestorableTime:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: 'Specifies whether your database is restored from the latest backup time. A value of true restores from the latest backup time. Default: false Constraints: Cannot be specified if the restore time parameter is provided.'
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values to add to the resource during create. Use the TagResource action to tag a resource after it's created.
+      required:
+      - relationalDatabaseName
+    RelationalDatabaseList:
+      type: array
+      items:
+        $ref: '#/components/schemas/RelationalDatabase'
+    GetRelationalDatabaseEventsResult:
+      type: object
+      properties:
+        relationalDatabaseEvents:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabaseEventList'
+          description: An object describing the result of your get relational database events request.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetRelationalDatabaseEvents request and specify the next page token using the pageToken parameter.
+    DeleteRelationalDatabaseSnapshotRequest:
+      type: object
+      properties:
+        relationalDatabaseSnapshotName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the database snapshot that you are deleting.
+      required:
+      - relationalDatabaseSnapshotName
+    GetRelationalDatabaseMasterUserPasswordResult:
+      type: object
+      properties:
+        masterUserPassword:
+          allOf:
+          - $ref: '#/components/schemas/SensitiveString'
+          description: The master user password for the password version specified.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the specified version of the master user password was created.
+    Operation:
+      type: object
+      properties:
+        id:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The ID of the operation.
+        resourceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The resource name.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The resource type.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the operation was initialized ( 1479816991.349 ).
+        location:
+          allOf:
+          - $ref: '#/components/schemas/ResourceLocation'
+          description: The Amazon Web Services Region and Availability Zone.
+        isTerminal:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the operation is terminal.
+        operationDetails:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Details about the operation ( Debian-1GB-Ohio-1 ).
+        operationType:
+          allOf:
+          - $ref: '#/components/schemas/OperationType'
+          description: The type of operation.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/OperationStatus'
+          description: The status of the operation.
+        statusChangedAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the status was changed ( 1479816991.349 ).
+        errorCode:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The error code.
+        errorDetails:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The error details.
+      description: Describes the API operation.
+    LogEventList:
+      type: array
+      items:
+        $ref: '#/components/schemas/LogEvent'
     RelationalDatabase:
       type: object
       properties:
@@ -1548,9 +2392,54 @@ components:
           - $ref: '#/components/schemas/string'
           description: The certificate associated with the database.
       description: Describes a database.
-    ResourceName:
+    MetricDatapointList:
+      type: array
+      items:
+        $ref: '#/components/schemas/MetricDatapoint'
+    ResourceLocation:
+      type: object
+      properties:
+        availabilityZone:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The Availability Zone. Follows the format us-east-2a (case-sensitive).
+        regionName:
+          allOf:
+          - $ref: '#/components/schemas/RegionName'
+          description: The Amazon Web Services Region name.
+      description: Describes the resource location.
+    MetricUnit:
       type: string
-      pattern: ^\w[\w\-]*\w$
+      enum:
+      - Seconds
+      - Microseconds
+      - Milliseconds
+      - Bytes
+      - Kilobytes
+      - Megabytes
+      - Gigabytes
+      - Terabytes
+      - Bits
+      - Kilobits
+      - Megabits
+      - Gigabits
+      - Terabits
+      - Percent
+      - Count
+      - Bytes/Second
+      - Kilobytes/Second
+      - Megabytes/Second
+      - Gigabytes/Second
+      - Terabytes/Second
+      - Bits/Second
+      - Kilobits/Second
+      - Megabits/Second
+      - Gigabits/Second
+      - Terabits/Second
+      - Count/Second
+      - None
+    TagValue:
+      type: string
     GetRelationalDatabaseSnapshotRequest:
       type: object
       properties:
@@ -1560,83 +2449,49 @@ components:
           description: The name of the database snapshot for which to get information.
       required:
       - relationalDatabaseSnapshotName
-    Operation:
+    timestamp:
+      type: string
+      format: date-time
+    GetRelationalDatabaseResult:
       type: object
       properties:
-        id:
+        relationalDatabase:
           allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The ID of the operation.
-        resourceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The resource name.
-        resourceType:
-          allOf:
-          - $ref: '#/components/schemas/ResourceType'
-          description: The resource type.
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the operation was initialized ( 1479816991.349 ).
-        location:
-          allOf:
-          - $ref: '#/components/schemas/ResourceLocation'
-          description: The Amazon Web Services Region and Availability Zone.
-        isTerminal:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value indicating whether the operation is terminal.
-        operationDetails:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Details about the operation ( Debian-1GB-Ohio-1 ).
-        operationType:
-          allOf:
-          - $ref: '#/components/schemas/OperationType'
-          description: The type of operation.
-        status:
-          allOf:
-          - $ref: '#/components/schemas/OperationStatus'
-          description: The status of the operation.
-        statusChangedAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the status was changed ( 1479816991.349 ).
-        errorCode:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The error code.
-        errorDetails:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The error details.
-      description: Describes the API operation.
-    GetRelationalDatabaseBlueprintsResult:
+          - $ref: '#/components/schemas/RelationalDatabase'
+          description: An object describing the specified database.
+    GetRelationalDatabasesRequest:
       type: object
       properties:
-        blueprints:
-          allOf:
-          - $ref: '#/components/schemas/RelationalDatabaseBlueprintList'
-          description: An object describing the result of your get relational database blueprints request.
-        nextPageToken:
+        pageToken:
           allOf:
           - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetRelationalDatabaseBlueprints request and specify the next page token using the pageToken parameter.
-    GetRelationalDatabaseMasterUserPasswordRequest:
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetRelationalDatabases request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+    NonEmptyString:
+      type: string
+      pattern: \S
+    RelationalDatabaseEventList:
+      type: array
+      items:
+        $ref: '#/components/schemas/RelationalDatabaseEvent'
+    UpdateRelationalDatabaseParametersResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    double:
+      type: number
+    RebootRelationalDatabaseRequest:
       type: object
       properties:
         relationalDatabaseName:
           allOf:
           - $ref: '#/components/schemas/ResourceName'
-          description: The name of your database for which to get the master user password.
-        passwordVersion:
-          allOf:
-          - $ref: '#/components/schemas/RelationalDatabasePasswordVersion'
-          description: 'The password version to return. Specifying CURRENT or PREVIOUS returns the current or previous passwords respectively. Specifying PENDING returns the newest version of the password that will rotate to CURRENT . After the PENDING password rotates to CURRENT , the PENDING password is no longer available. Default: CURRENT'
+          description: The name of your database to reboot.
       required:
       - relationalDatabaseName
-    UnauthenticatedException:
+    ServiceException:
       type: object
       properties:
         code:
@@ -1647,15 +2502,18 @@ components:
           $ref: '#/components/schemas/string'
         tip:
           $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user has not been authenticated.
-    OperationList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Operation'
-    StringList:
-      type: array
-      items:
-        $ref: '#/components/schemas/string'
+      description: A general service exception.
+    GetRelationalDatabasesResult:
+      type: object
+      properties:
+        relationalDatabases:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabaseList'
+          description: An object describing the result of your get relational databases request.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetRelationalDatabases request and specify the next page token using the pageToken parameter.
     GetRelationalDatabaseEventsRequest:
       type: object
       properties:
@@ -1690,434 +2548,73 @@ components:
           description: 'The name of the database snapshot created if skip final snapshot is false , which is the default value for that parameter. Specifying this parameter and also specifying the skip final snapshot parameter to true results in an error. Constraints: Must contain from 2 to 255 alphanumeric characters, or hyphens. The first and last character must be a letter or number.'
       required:
       - relationalDatabaseName
-    RelationalDatabasePasswordVersion:
-      type: string
-      enum:
-      - CURRENT
-      - PREVIOUS
-      - PENDING
-    GetRelationalDatabaseLogEventsRequest:
-      type: object
-      properties:
-        relationalDatabaseName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of your database for which to get log events.
-        logStreamName:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The name of the log stream. Use the get relational database log streams operation to get a list of available log streams.
-        startTime:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: 'The start of the time interval from which to get log events. Constraints: Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you wish to use a start time of October 1, 2018, at 8 PM UTC, then you input 1538424000 as the start time.'
-        endTime:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: 'The end of the time interval from which to get log events. Constraints: Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you wish to use an end time of October 1, 2018, at 8 PM UTC, then you input 1538424000 as the end time.'
-        startFromHead:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: Parameter to specify if the log should start from head or tail. If true is specified, the log event starts from the head of the log. If false is specified, the log event starts from the tail of the log. For PostgreSQL, the default value of false is the only option available.
-        pageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next or previous page of results from your request. To get a page token, perform an initial GetRelationalDatabaseLogEvents request. If your results are paginated, the response will return a next forward token and/or next backward token that you can specify as the page token in a subsequent request.
-      required:
-      - relationalDatabaseName
-      - logStreamName
-    GetRelationalDatabaseRequest:
-      type: object
-      properties:
-        relationalDatabaseName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the database that you are looking up.
-      required:
-      - relationalDatabaseName
-    UpdateRelationalDatabaseParametersResult:
+    StopRelationalDatabaseResult:
       type: object
       properties:
         operations:
           allOf:
           - $ref: '#/components/schemas/OperationList'
           description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    NonEmptyString:
+    ResourceName:
       type: string
-      pattern: \S
-    ResourceType:
+      pattern: ^\w[\w\-]*\w$
+    IsoDate:
       type: string
-      enum:
-      - ContainerService
-      - Instance
-      - StaticIp
-      - KeyPair
-      - InstanceSnapshot
-      - Domain
-      - PeeredVpc
-      - LoadBalancer
-      - LoadBalancerTlsCertificate
-      - Disk
-      - DiskSnapshot
-      - RelationalDatabase
-      - RelationalDatabaseSnapshot
-      - ExportSnapshotRecord
-      - CloudFormationStackRecord
-      - Alarm
-      - ContactMethod
-      - Distribution
-      - Certificate
-      - Bucket
-    CreateRelationalDatabaseFromSnapshotRequest:
+      format: date-time
+    RegionSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Regions and Availability Zones for Lightsail
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
+      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
+    integer:
+      type: integer
+    GetRelationalDatabaseLogStreamsResult:
+      type: object
+      properties:
+        logStreams:
+          allOf:
+          - $ref: '#/components/schemas/StringList'
+          description: An object describing the result of your get relational database log streams request.
+    GetRelationalDatabaseMasterUserPasswordRequest:
       type: object
       properties:
         relationalDatabaseName:
           allOf:
           - $ref: '#/components/schemas/ResourceName'
-          description: 'The name to use for your new Lightsail database resource. Constraints: Must contain from 2 to 255 alphanumeric characters, or hyphens. The first and last character must be a letter or number.'
-        availabilityZone:
+          description: The name of your database for which to get the master user password.
+        passwordVersion:
           allOf:
-          - $ref: '#/components/schemas/string'
-          description: The Availability Zone in which to create your new database. Use the us-east-2a case-sensitive format. You can get a list of Availability Zones by using the get regions operation. Be sure to add the include relational database Availability Zones parameter to your request.
-        publiclyAccessible:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: Specifies the accessibility options for your new database. A value of true specifies a database that is available to resources outside of your Lightsail account. A value of false specifies a database that is available only to your Lightsail resources in the same region as your database.
-        relationalDatabaseSnapshotName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the database snapshot from which to create your new database.
-        relationalDatabaseBundleId:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The bundle ID for your new database. A bundle describes the performance specifications for your database. You can get a list of database bundle IDs by using the get relational database bundles operation. When creating a new database from a snapshot, you cannot choose a bundle that is smaller than the bundle of the source database.
-        sourceRelationalDatabaseName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the source database.
-        restoreTime:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: 'The date and time to restore your database from. Constraints: Must be before the latest restorable time for the database. Cannot be specified if the use latest restorable time parameter is true . Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you wish to use a restore time of October 1, 2018, at 8 PM UTC, then you input 1538424000 as the restore time.'
-        useLatestRestorableTime:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: 'Specifies whether your database is restored from the latest backup time. A value of true restores from the latest backup time. Default: false Constraints: Cannot be specified if the restore time parameter is provided.'
-        tags:
-          allOf:
-          - $ref: '#/components/schemas/TagList'
-          description: The tag keys and optional values to add to the resource during create. Use the TagResource action to tag a resource after it's created.
+          - $ref: '#/components/schemas/RelationalDatabasePasswordVersion'
+          description: 'The password version to return. Specifying CURRENT or PREVIOUS returns the current or previous passwords respectively. Specifying PENDING returns the newest version of the password that will rotate to CURRENT . After the PENDING password rotates to CURRENT , the PENDING password is no longer available. Default: CURRENT'
       required:
       - relationalDatabaseName
-    UpdateRelationalDatabaseResult:
+    RelationalDatabaseHardware:
       type: object
       properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    RelationalDatabaseEndpoint:
-      type: object
-      properties:
-        port:
+        cpuCount:
           allOf:
           - $ref: '#/components/schemas/integer'
-          description: Specifies the port that the database is listening on.
-        address:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: Specifies the DNS address of the database.
-      description: Describes an endpoint for a database.
-    MetricDatapointList:
-      type: array
-      items:
-        $ref: '#/components/schemas/MetricDatapoint'
-    MetricStatistic:
-      type: string
-      enum:
-      - Minimum
-      - Maximum
-      - Sum
-      - Average
-      - SampleCount
-    RelationalDatabaseSnapshotList:
-      type: array
-      items:
-        $ref: '#/components/schemas/RelationalDatabaseSnapshot'
-    GetRelationalDatabaseBundlesResult:
-      type: object
-      properties:
-        bundles:
-          allOf:
-          - $ref: '#/components/schemas/RelationalDatabaseBundleList'
-          description: An object describing the result of your get relational database bundles request.
-        nextPageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetRelationalDatabaseBundles request and specify the next page token using the pageToken parameter.
-    Tag:
-      type: object
-      properties:
-        key:
-          allOf:
-          - $ref: '#/components/schemas/TagKey'
-          description: 'The key of the tag. Constraints: Tag keys accept a maximum of 128 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
-        value:
-          allOf:
-          - $ref: '#/components/schemas/TagValue'
-          description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
-      description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
-    GetRelationalDatabaseBlueprintsRequest:
-      type: object
-      properties:
-        pageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetRelationalDatabaseBlueprints request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
-    MetricDatapoint:
-      type: object
-      properties:
-        average:
-          allOf:
-          - $ref: '#/components/schemas/double'
-          description: The average.
-        maximum:
-          allOf:
-          - $ref: '#/components/schemas/double'
-          description: The maximum.
-        minimum:
-          allOf:
-          - $ref: '#/components/schemas/double'
-          description: The minimum.
-        sampleCount:
-          allOf:
-          - $ref: '#/components/schemas/double'
-          description: The sample count.
-        sum:
-          allOf:
-          - $ref: '#/components/schemas/double'
-          description: The sum.
-        timestamp:
-          allOf:
-          - $ref: '#/components/schemas/timestamp'
-          description: The timestamp ( 1479816991.349 ).
-        unit:
-          allOf:
-          - $ref: '#/components/schemas/MetricUnit'
-          description: The unit.
-      description: Describes the metric data point.
-    GetRelationalDatabasesRequest:
-      type: object
-      properties:
-        pageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetRelationalDatabases request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
-    ServiceException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: A general service exception.
-    DeleteRelationalDatabaseSnapshotRequest:
-      type: object
-      properties:
-        relationalDatabaseSnapshotName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the database snapshot that you are deleting.
-      required:
-      - relationalDatabaseSnapshotName
-    CreateRelationalDatabaseSnapshotRequest:
-      type: object
-      properties:
-        relationalDatabaseName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the database on which to base your new snapshot.
-        relationalDatabaseSnapshotName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: 'The name for your new database snapshot. Constraints: Must contain from 2 to 255 alphanumeric characters, or hyphens. The first and last character must be a letter or number.'
-        tags:
-          allOf:
-          - $ref: '#/components/schemas/TagList'
-          description: The tag keys and optional values to add to the resource during create. Use the TagResource action to tag a resource after it's created.
-      required:
-      - relationalDatabaseName
-      - relationalDatabaseSnapshotName
-    MetricStatisticList:
-      type: array
-      items:
-        $ref: '#/components/schemas/MetricStatistic'
-    LogEvent:
-      type: object
-      properties:
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the database log event was created.
-        message:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The message of the database log event.
-      description: Describes a database log event.
-    RelationalDatabaseEngine:
-      type: string
-      enum:
-      - mysql
-    OperationFailureException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when an operation fails to execute.
-    RelationalDatabaseSnapshot:
-      type: object
-      properties:
-        name:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the database snapshot.
-        arn:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The Amazon Resource Name (ARN) of the database snapshot.
-        supportCode:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The support code for the database snapshot. Include this code in your email to support when you have questions about a database snapshot in Lightsail. This code enables our support team to look up your Lightsail information more easily.
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the database snapshot was created.
-        location:
-          allOf:
-          - $ref: '#/components/schemas/ResourceLocation'
-          description: The Region name and Availability Zone where the database snapshot is located.
-        resourceType:
-          allOf:
-          - $ref: '#/components/schemas/ResourceType'
-          description: The Lightsail resource type.
-        tags:
-          allOf:
-          - $ref: '#/components/schemas/TagList'
-          description: The tag keys and optional values for the resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
-        engine:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The software of the database snapshot (for example, MySQL )
-        engineVersion:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The database engine version for the database snapshot (for example, 5.7.23 ).
-        sizeInGb:
+          description: The number of vCPUs for the database.
+        diskSizeInGb:
           allOf:
           - $ref: '#/components/schemas/integer'
-          description: The size of the disk in GB (for example, 32 ) for the database snapshot.
-        state:
+          description: The size of the disk for the database.
+        ramSizeInGb:
           allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The state of the database snapshot.
-        fromRelationalDatabaseName:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The name of the source database from which the database snapshot was created.
-        fromRelationalDatabaseArn:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The Amazon Resource Name (ARN) of the database from which the database snapshot was created.
-        fromRelationalDatabaseBundleId:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The bundle ID of the database from which the database snapshot was created.
-        fromRelationalDatabaseBlueprintId:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The blueprint ID of the database from which the database snapshot was created. A blueprint describes the major engine version of a database.
-      description: Describes a database snapshot.
-    GetRelationalDatabaseLogEventsResult:
-      type: object
-      properties:
-        resourceLogEvents:
-          allOf:
-          - $ref: '#/components/schemas/LogEventList'
-          description: An object describing the result of your get relational database log events request.
-        nextBackwardToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: A token used for advancing to the previous page of results from your get relational database log events request.
-        nextForwardToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: A token used for advancing to the next page of results from your get relational database log events request.
-    InvalidInputException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
-    boolean:
-      type: boolean
-    RelationalDatabaseBundleList:
-      type: array
-      items:
-        $ref: '#/components/schemas/RelationalDatabaseBundle'
-    GetRelationalDatabaseParametersRequest:
-      type: object
-      properties:
-        relationalDatabaseName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of your database for which to get parameters.
-        pageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetRelationalDatabaseParameters request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
-      required:
-      - relationalDatabaseName
-    SensitiveString:
-      type: string
-    GetRelationalDatabasesResult:
-      type: object
-      properties:
-        relationalDatabases:
-          allOf:
-          - $ref: '#/components/schemas/RelationalDatabaseList'
-          description: An object describing the result of your get relational databases request.
-        nextPageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetRelationalDatabases request and specify the next page token using the pageToken parameter.
-    GetRelationalDatabaseBundlesRequest:
-      type: object
-      properties:
-        pageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetRelationalDatabaseBundles request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
-        includeInactive:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value that indicates whether to include inactive (unavailable) bundles in the response of your request.
+          - $ref: '#/components/schemas/float'
+          description: The amount of RAM in GB for the database.
+      description: Describes the hardware of a database.
     RegionName:
       type: string
       enum:
@@ -2141,45 +2638,6 @@ components:
       - ap-southeast-3
       - ap-southeast-5
       - sa-east-1
-    GetRelationalDatabaseMetricDataRequest:
-      type: object
-      properties:
-        relationalDatabaseName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of your database from which to get metric data.
-        metricName:
-          allOf:
-          - $ref: '#/components/schemas/RelationalDatabaseMetricName'
-          description: 'The metric for which you want to return information. Valid relational database metric names are listed below, along with the most useful statistics to include in your request, and the published unit value. All relational database metric data is available in 1-minute (60 seconds) granularity. CPUUtilization - The percentage of CPU utilization currently in use on the database. Statistics : The most useful statistics are Maximum and Average . Unit : The published unit is Percent . DatabaseConnections - The number of database connections in use. Statistics : The most useful statistics are Maximum and Sum . Unit : The published unit is Count . DiskQueueDepth - The number of outstanding IOs (read/write requests) that are waiting to access the disk. Statistics : The most useful statistic is Sum . Unit : The published unit is Count . FreeStorageSpace - The amount of available storage space. Statistics : The most useful statistic is Sum . Unit : The published unit is Bytes . NetworkReceiveThroughput - The incoming (Receive) network traffic on the database, including both customer database traffic and AWS traffic used for monitoring and replication. Statistics : The most useful statistic is Average . Unit : The published unit is Bytes/Second . NetworkTransmitThroughput - The outgoing (Transmit) network traffic on the database, including both customer database traffic and AWS traffic used for monitoring and replication. Statistics : The most useful statistic is Average . Unit : The published unit is Bytes/Second .'
-        period:
-          allOf:
-          - $ref: '#/components/schemas/MetricPeriod'
-          description: The granularity, in seconds, of the returned data points. All relational database metric data is available in 1-minute (60 seconds) granularity.
-        startTime:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: 'The start of the time interval from which to get metric data. Constraints: Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you wish to use a start time of October 1, 2018, at 8 PM UTC, then you input 1538424000 as the start time.'
-        endTime:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: 'The end of the time interval from which to get metric data. Constraints: Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you wish to use an end time of October 1, 2018, at 8 PM UTC, then you input 1538424000 as the end time.'
-        unit:
-          allOf:
-          - $ref: '#/components/schemas/MetricUnit'
-          description: The unit for the metric data request. Valid units depend on the metric data being requested. For the valid units with each available metric, see the metricName parameter.
-        statistics:
-          allOf:
-          - $ref: '#/components/schemas/MetricStatisticList'
-          description: 'The statistic for the metric. The following statistics are available: Minimum - The lowest value observed during the specified period. Use this value to determine low volumes of activity for your application. Maximum - The highest value observed during the specified period. Use this value to determine high volumes of activity for your application. Sum - All values submitted for the matching metric added together. You can use this statistic to determine the total volume of a metric. Average - The value of Sum / SampleCount during the specified period. By comparing this statistic with the Minimum and Maximum values, you can determine the full scope of a metric and how close the average use is to the Minimum and Maximum values. This comparison helps you to know when to increase or decrease your resources. SampleCount - The count, or number, of data points used for the statistical calculation.'
-      required:
-      - relationalDatabaseName
-      - metricName
-      - period
-      - startTime
-      - endTime
-      - unit
-      - statistics
     UpdateRelationalDatabaseRequest:
       type: object
       properties:
@@ -2229,10 +2687,74 @@ components:
           description: This parameter is used to update the major version of the database. Enter the blueprintId for the major version that you want to update to. Use the GetRelationalDatabaseBlueprints action to get a list of available blueprint IDs.
       required:
       - relationalDatabaseName
-    RelationalDatabaseParameterList:
-      type: array
-      items:
-        $ref: '#/components/schemas/RelationalDatabaseParameter'
+    ResourceType:
+      type: string
+      enum:
+      - ContainerService
+      - Instance
+      - StaticIp
+      - KeyPair
+      - InstanceSnapshot
+      - Domain
+      - PeeredVpc
+      - LoadBalancer
+      - LoadBalancerTlsCertificate
+      - Disk
+      - DiskSnapshot
+      - RelationalDatabase
+      - RelationalDatabaseSnapshot
+      - ExportSnapshotRecord
+      - CloudFormationStackRecord
+      - Alarm
+      - ContactMethod
+      - Distribution
+      - Certificate
+      - Bucket
+    string:
+      type: string
+    boolean:
+      type: boolean
+    GetRelationalDatabaseBlueprintsResult:
+      type: object
+      properties:
+        blueprints:
+          allOf:
+          - $ref: '#/components/schemas/RelationalDatabaseBlueprintList'
+          description: An object describing the result of your get relational database blueprints request.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetRelationalDatabaseBlueprints request and specify the next page token using the pageToken parameter.
+    GetRelationalDatabaseLogEventsRequest:
+      type: object
+      properties:
+        relationalDatabaseName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of your database for which to get log events.
+        logStreamName:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The name of the log stream. Use the get relational database log streams operation to get a list of available log streams.
+        startTime:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: 'The start of the time interval from which to get log events. Constraints: Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you wish to use a start time of October 1, 2018, at 8 PM UTC, then you input 1538424000 as the start time.'
+        endTime:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: 'The end of the time interval from which to get log events. Constraints: Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you wish to use an end time of October 1, 2018, at 8 PM UTC, then you input 1538424000 as the end time.'
+        startFromHead:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: Parameter to specify if the log should start from head or tail. If true is specified, the log event starts from the head of the log. If false is specified, the log event starts from the tail of the log. For PostgreSQL, the default value of false is the only option available.
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next or previous page of results from your request. To get a page token, perform an initial GetRelationalDatabaseLogEvents request. If your results are paginated, the response will return a next forward token and/or next backward token that you can specify as the page token in a subsequent request.
+      required:
+      - relationalDatabaseName
+      - logStreamName
     RelationalDatabaseEvent:
       type: object
       properties:
@@ -2253,235 +2775,24 @@ components:
           - $ref: '#/components/schemas/StringList'
           description: The category that the database event belongs to.
       description: Describes an event for a database.
-    RelationalDatabaseBlueprint:
+    CreateRelationalDatabaseSnapshotRequest:
       type: object
       properties:
-        blueprintId:
+        relationalDatabaseName:
           allOf:
-          - $ref: '#/components/schemas/string'
-          description: The ID for the database blueprint.
-        engine:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the database on which to base your new snapshot.
+        relationalDatabaseSnapshotName:
           allOf:
-          - $ref: '#/components/schemas/RelationalDatabaseEngine'
-          description: The database software of the database blueprint (for example, MySQL ).
-        engineVersion:
+          - $ref: '#/components/schemas/ResourceName'
+          description: 'The name for your new database snapshot. Constraints: Must contain from 2 to 255 alphanumeric characters, or hyphens. The first and last character must be a letter or number.'
+        tags:
           allOf:
-          - $ref: '#/components/schemas/string'
-          description: The database engine version for the database blueprint (for example, 5.7.23 ).
-        engineDescription:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The description of the database engine for the database blueprint.
-        engineVersionDescription:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The description of the database engine version for the database blueprint.
-        isEngineDefault:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value indicating whether the engine version is the default for the database blueprint.
-      description: Describes a database image, or blueprint. A blueprint describes the major engine version of a database.
-    GetRelationalDatabaseMasterUserPasswordResult:
-      type: object
-      properties:
-        masterUserPassword:
-          allOf:
-          - $ref: '#/components/schemas/SensitiveString'
-          description: The master user password for the password version specified.
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the specified version of the master user password was created.
-    DeleteRelationalDatabaseSnapshotResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    GetRelationalDatabaseSnapshotResult:
-      type: object
-      properties:
-        relationalDatabaseSnapshot:
-          allOf:
-          - $ref: '#/components/schemas/RelationalDatabaseSnapshot'
-          description: An object describing the specified database snapshot.
-    StopRelationalDatabaseResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    timestamp:
-      type: string
-      format: date-time
-    DeleteRelationalDatabaseResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    GetRelationalDatabaseLogStreamsResult:
-      type: object
-      properties:
-        logStreams:
-          allOf:
-          - $ref: '#/components/schemas/StringList'
-          description: An object describing the result of your get relational database log streams request.
-    RebootRelationalDatabaseResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    integer:
-      type: integer
-    StartRelationalDatabaseResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    RelationalDatabaseMetricName:
-      type: string
-      enum:
-      - CPUUtilization
-      - DatabaseConnections
-      - DiskQueueDepth
-      - FreeStorageSpace
-      - NetworkReceiveThroughput
-      - NetworkTransmitThroughput
-      - FreeableMemory
-      - SwapUsage
-    GetRelationalDatabaseSnapshotsResult:
-      type: object
-      properties:
-        relationalDatabaseSnapshots:
-          allOf:
-          - $ref: '#/components/schemas/RelationalDatabaseSnapshotList'
-          description: An object describing the result of your get relational database snapshots request.
-        nextPageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetRelationalDatabaseSnapshots request and specify the next page token using the pageToken parameter.
-    OperationType:
-      type: string
-      enum:
-      - DeleteKnownHostKeys
-      - DeleteInstance
-      - CreateInstance
-      - StopInstance
-      - StartInstance
-      - RebootInstance
-      - OpenInstancePublicPorts
-      - PutInstancePublicPorts
-      - CloseInstancePublicPorts
-      - AllocateStaticIp
-      - ReleaseStaticIp
-      - AttachStaticIp
-      - DetachStaticIp
-      - UpdateDomainEntry
-      - DeleteDomainEntry
-      - CreateDomain
-      - DeleteDomain
-      - CreateInstanceSnapshot
-      - DeleteInstanceSnapshot
-      - CreateInstancesFromSnapshot
-      - CreateLoadBalancer
-      - DeleteLoadBalancer
-      - AttachInstancesToLoadBalancer
-      - DetachInstancesFromLoadBalancer
-      - UpdateLoadBalancerAttribute
-      - CreateLoadBalancerTlsCertificate
-      - DeleteLoadBalancerTlsCertificate
-      - AttachLoadBalancerTlsCertificate
-      - CreateDisk
-      - DeleteDisk
-      - AttachDisk
-      - DetachDisk
-      - CreateDiskSnapshot
-      - DeleteDiskSnapshot
-      - CreateDiskFromSnapshot
-      - CreateRelationalDatabase
-      - UpdateRelationalDatabase
-      - DeleteRelationalDatabase
-      - CreateRelationalDatabaseFromSnapshot
-      - CreateRelationalDatabaseSnapshot
-      - DeleteRelationalDatabaseSnapshot
-      - UpdateRelationalDatabaseParameters
-      - StartRelationalDatabase
-      - RebootRelationalDatabase
-      - StopRelationalDatabase
-      - EnableAddOn
-      - DisableAddOn
-      - PutAlarm
-      - GetAlarms
-      - DeleteAlarm
-      - TestAlarm
-      - CreateContactMethod
-      - GetContactMethods
-      - SendContactMethodVerification
-      - DeleteContactMethod
-      - CreateDistribution
-      - UpdateDistribution
-      - DeleteDistribution
-      - ResetDistributionCache
-      - AttachCertificateToDistribution
-      - DetachCertificateFromDistribution
-      - UpdateDistributionBundle
-      - SetIpAddressType
-      - CreateCertificate
-      - DeleteCertificate
-      - CreateContainerService
-      - UpdateContainerService
-      - DeleteContainerService
-      - CreateContainerServiceDeployment
-      - CreateContainerServiceRegistryLogin
-      - RegisterContainerImage
-      - DeleteContainerImage
-      - CreateBucket
-      - DeleteBucket
-      - CreateBucketAccessKey
-      - DeleteBucketAccessKey
-      - UpdateBucketBundle
-      - UpdateBucket
-      - SetResourceAccessForBucket
-      - UpdateInstanceMetadataOptions
-      - StartGUISession
-      - StopGUISession
-      - SetupInstanceHttps
-      - GetProfile
-    AccountSetupInProgressException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when an account is still in the setup in progress state.
-    GetRelationalDatabaseParametersResult:
-      type: object
-      properties:
-        parameters:
-          allOf:
-          - $ref: '#/components/schemas/RelationalDatabaseParameterList'
-          description: An object describing the result of your get relational database parameters request.
-        nextPageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetRelationalDatabaseParameters request and specify the next page token using the pageToken parameter.
-    RelationalDatabaseList:
-      type: array
-      items:
-        $ref: '#/components/schemas/RelationalDatabase'
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values to add to the resource during create. Use the TagResource action to tag a resource after it's created.
+      required:
+      - relationalDatabaseName
+      - relationalDatabaseSnapshotName
     PendingModifiedRelationalDatabaseValues:
       type: object
       properties:
@@ -2498,329 +2809,18 @@ components:
           - $ref: '#/components/schemas/boolean'
           description: A Boolean value indicating whether automated backup retention is enabled.
       description: Describes a pending database value modification.
-    RebootRelationalDatabaseRequest:
+    RelationalDatabaseEndpoint:
       type: object
       properties:
-        relationalDatabaseName:
+        port:
           allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of your database to reboot.
-      required:
-      - relationalDatabaseName
-    TagKey:
-      type: string
-    string:
-      type: string
-    GetRelationalDatabaseResult:
-      type: object
-      properties:
-        relationalDatabase:
-          allOf:
-          - $ref: '#/components/schemas/RelationalDatabase'
-          description: An object describing the specified database.
-    PendingMaintenanceAction:
-      type: object
-      properties:
-        action:
+          - $ref: '#/components/schemas/integer'
+          description: Specifies the port that the database is listening on.
+        address:
           allOf:
           - $ref: '#/components/schemas/NonEmptyString'
-          description: The type of pending database maintenance action.
-        description:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: Additional detail about the pending database maintenance action.
-        currentApplyDate:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The effective date of the pending database maintenance action.
-      description: Describes a pending database maintenance action.
-    RelationalDatabaseHardware:
-      type: object
-      properties:
-        cpuCount:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The number of vCPUs for the database.
-        diskSizeInGb:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The size of the disk for the database.
-        ramSizeInGb:
-          allOf:
-          - $ref: '#/components/schemas/float'
-          description: The amount of RAM in GB for the database.
-      description: Describes the hardware of a database.
-    CreateRelationalDatabaseFromSnapshotResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    CreateRelationalDatabaseSnapshotResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    LogEventList:
-      type: array
-      items:
-        $ref: '#/components/schemas/LogEvent'
-    RelationalDatabaseBundle:
-      type: object
-      properties:
-        bundleId:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The ID for the database bundle.
-        name:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The name for the database bundle.
-        price:
-          allOf:
-          - $ref: '#/components/schemas/float'
-          description: The cost of the database bundle in US currency.
-        ramSizeInGb:
-          allOf:
-          - $ref: '#/components/schemas/float'
-          description: The amount of RAM in GB (for example, 2.0 ) for the database bundle.
-        diskSizeInGb:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The size of the disk for the database bundle.
-        transferPerMonthInGb:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The data transfer rate per month in GB for the database bundle.
-        cpuCount:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The number of virtual CPUs (vCPUs) for the database bundle.
-        isEncrypted:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value indicating whether the database bundle is encrypted.
-        isActive:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value indicating whether the database bundle is active.
-      description: Describes a database bundle. A bundle describes the performance specifications of the database.
-    float:
-      type: number
-    RelationalDatabaseParameter:
-      type: object
-      properties:
-        allowedValues:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Specifies the valid range of values for the parameter.
-        applyMethod:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Indicates when parameter updates are applied. Can be immediate or pending-reboot .
-        applyType:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Specifies the engine-specific parameter type.
-        dataType:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Specifies the valid data type for the parameter.
-        description:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Provides a description of the parameter.
-        isModifiable:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value indicating whether the parameter can be modified.
-        parameterName:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Specifies the name of the parameter.
-        parameterValue:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Specifies the value of the parameter.
-      description: Describes the parameters of a database.
-    ResourceLocation:
-      type: object
-      properties:
-        availabilityZone:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The Availability Zone. Follows the format us-east-2a (case-sensitive).
-        regionName:
-          allOf:
-          - $ref: '#/components/schemas/RegionName'
-          description: The Amazon Web Services Region name.
-      description: Describes the resource location.
-    GetRelationalDatabaseSnapshotsRequest:
-      type: object
-      properties:
-        pageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetRelationalDatabaseSnapshots request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
-    MetricPeriod:
-      type: integer
-      minimum: 60
-      maximum: 86400
-    StopRelationalDatabaseRequest:
-      type: object
-      properties:
-        relationalDatabaseName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of your database to stop.
-        relationalDatabaseSnapshotName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of your new database snapshot to be created before stopping your database.
-      required:
-      - relationalDatabaseName
-    CreateRelationalDatabaseResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    GetRelationalDatabaseLogStreamsRequest:
-      type: object
-      properties:
-        relationalDatabaseName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of your database for which to get log streams.
-      required:
-      - relationalDatabaseName
-    GetRelationalDatabaseMetricDataResult:
-      type: object
-      properties:
-        metricName:
-          allOf:
-          - $ref: '#/components/schemas/RelationalDatabaseMetricName'
-          description: The name of the metric returned.
-        metricData:
-          allOf:
-          - $ref: '#/components/schemas/MetricDatapointList'
-          description: An array of objects that describe the metric data returned.
-    OperationStatus:
-      type: string
-      enum:
-      - NotStarted
-      - Started
-      - Failed
-      - Completed
-      - Succeeded
-    RelationalDatabaseEventList:
-      type: array
-      items:
-        $ref: '#/components/schemas/RelationalDatabaseEvent'
-    CreateRelationalDatabaseRequest:
-      type: object
-      properties:
-        relationalDatabaseName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: 'The name to use for your new Lightsail database resource. Constraints: Must contain from 2 to 255 alphanumeric characters, or hyphens. The first and last character must be a letter or number.'
-        availabilityZone:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The Availability Zone in which to create your new database. Use the us-east-2a case-sensitive format. You can get a list of Availability Zones by using the get regions operation. Be sure to add the include relational database Availability Zones parameter to your request.
-        relationalDatabaseBlueprintId:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The blueprint ID for your new database. A blueprint describes the major engine version of a database. You can get a list of database blueprints IDs by using the get relational database blueprints operation.
-        relationalDatabaseBundleId:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The bundle ID for your new database. A bundle describes the performance specifications for your database. You can get a list of database bundle IDs by using the get relational database bundles operation.
-        masterDatabaseName:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: 'The meaning of this parameter differs according to the database engine you use. MySQL The name of the database to create when the Lightsail database resource is created. If this parameter isn''t specified, no database is created in the database resource. Constraints: Must contain 1 to 64 letters or numbers. Must begin with a letter. Subsequent characters can be letters, underscores, or digits (0- 9). Can''t be a word reserved by the specified database engine. For more information about reserved words in MySQL, see the Keywords and Reserved Words articles for MySQL 5.6 , MySQL 5.7 , and MySQL 8.0 . PostgreSQL The name of the database to create when the Lightsail database resource is created. If this parameter isn''t specified, a database named postgres is created in the database resource. Constraints: Must contain 1 to 63 letters or numbers. Must begin with a letter. Subsequent characters can be letters, underscores, or digits (0- 9). Can''t be a word reserved by the specified database engine. For more information about reserved words in PostgreSQL, see the SQL Key Words articles for PostgreSQL 9.6 , PostgreSQL 10 , PostgreSQL 11 , and PostgreSQL 12 .'
-        masterUsername:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: 'The name for the master user. MySQL Constraints: Required for MySQL. Must be 1 to 16 letters or numbers. Can contain underscores. First character must be a letter. Can''t be a reserved word for the chosen database engine. For more information about reserved words in MySQL 5.6 or 5.7, see the Keywords and Reserved Words articles for MySQL 5.6 , MySQL 5.7 , or MySQL 8.0 . PostgreSQL Constraints: Required for PostgreSQL. Must be 1 to 63 letters or numbers. Can contain underscores. First character must be a letter. Can''t be a reserved word for the chosen database engine. For more information about reserved words in MySQL 5.6 or 5.7, see the Keywords and Reserved Words articles for PostgreSQL 9.6 , PostgreSQL 10 , PostgreSQL 11 , and PostgreSQL 12 .'
-        masterUserPassword:
-          allOf:
-          - $ref: '#/components/schemas/SensitiveString'
-          description: 'The password for the master user. The password can include any printable ASCII character except "/", """, or "@". It cannot contain spaces. MySQL Constraints: Must contain from 8 to 41 characters. PostgreSQL Constraints: Must contain from 8 to 128 characters.'
-        preferredBackupWindow:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: 'The daily time range during which automated backups are created for your new database if automated backups are enabled. The default is a 30-minute window selected at random from an 8-hour block of time for each AWS Region. For more information about the preferred backup window time blocks for each region, see the Working With Backups guide in the Amazon Relational Database Service documentation. Constraints: Must be in the hh24:mi-hh24:mi format. Example: 16:00-16:30 Specified in Coordinated Universal Time (UTC). Must not conflict with the preferred maintenance window. Must be at least 30 minutes.'
-        preferredMaintenanceWindow:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: 'The weekly time range during which system maintenance can occur on your new database. The default is a 30-minute window selected at random from an 8-hour block of time for each AWS Region, occurring on a random day of the week. Constraints: Must be in the ddd:hh24:mi-ddd:hh24:mi format. Valid days: Mon, Tue, Wed, Thu, Fri, Sat, Sun. Must be at least 30 minutes. Specified in Coordinated Universal Time (UTC). Example: Tue:17:00-Tue:17:30'
-        publiclyAccessible:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: Specifies the accessibility options for your new database. A value of true specifies a database that is available to resources outside of your Lightsail account. A value of false specifies a database that is available only to your Lightsail resources in the same region as your database.
-        tags:
-          allOf:
-          - $ref: '#/components/schemas/TagList'
-          description: The tag keys and optional values to add to the resource during create. Use the TagResource action to tag a resource after it's created.
-      required:
-      - relationalDatabaseName
-      - relationalDatabaseBlueprintId
-      - relationalDatabaseBundleId
-      - masterDatabaseName
-      - masterUsername
-    AccessDeniedException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
-    TagList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Tag'
-    GetRelationalDatabaseEventsResult:
-      type: object
-      properties:
-        relationalDatabaseEvents:
-          allOf:
-          - $ref: '#/components/schemas/RelationalDatabaseEventList'
-          description: An object describing the result of your get relational database events request.
-        nextPageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetRelationalDatabaseEvents request and specify the next page token using the pageToken parameter.
-    NotFoundException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when it cannot find a resource.
-    PendingMaintenanceActionList:
-      type: array
-      items:
-        $ref: '#/components/schemas/PendingMaintenanceAction'
-    RelationalDatabaseBlueprintList:
-      type: array
-      items:
-        $ref: '#/components/schemas/RelationalDatabaseBlueprint'
+          description: Specifies the DNS address of the database.
+      description: Describes an endpoint for a database.
   securitySchemes:
     sigv4:
       type: apiKey

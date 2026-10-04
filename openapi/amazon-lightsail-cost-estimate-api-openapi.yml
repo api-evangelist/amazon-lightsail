@@ -79,6 +79,71 @@ paths:
       x-amz-target: Lightsail_20161128.GetCostEstimate
 components:
   schemas:
+    TimePeriod:
+      type: object
+      properties:
+        start:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The beginning of the time period. The start date is inclusive. For example, if start is 2017-01-01 , Lightsail for Research retrieves cost and usage data starting at 2017-01-01 up to the end date. The start date must be equal to or no later than the current date to avoid a validation error.
+        end:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The end of the time period. The end date is exclusive. For example, if end is 2017-05-01 , Lightsail for Research retrieves cost and usage data from the start date up to, but not including, 2017-05-01 .
+      description: Sets the start date and end date for retrieving a cost estimate. The start date is inclusive, but the end date is exclusive. For example, if start is 2017-01-01 and end is 2017-05-01 , then the cost and usage data is retrieved from 2017-01-01 up to and including 2017-04-30 but not including 2017-05-01 .
+    AccessDeniedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
+    ResourceName:
+      type: string
+      pattern: ^\w[\w\-]*\w$
+    NotFoundException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when it cannot find a resource.
+    GetCostEstimateRequest:
+      type: object
+      properties:
+        resourceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The resource name.
+        startTime:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: 'The cost estimate start time. Constraints: Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you want to use a start time of October 1, 2018, at 8 PM UTC, specify 1538424000 as the start time. You can convert a human-friendly time to Unix time format using a converter like Epoch converter .'
+        endTime:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: 'The cost estimate end time. Constraints: Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you want to use an end time of October 1, 2018, at 9 PM UTC, specify 1538427600 as the end time. You can convert a human-friendly time to Unix time format using a converter like Epoch converter .'
+      required:
+      - resourceName
+      - startTime
+      - endTime
+    IsoDate:
+      type: string
+      format: date-time
+    ResourcesBudgetEstimate:
+      type: array
+      items:
+        $ref: '#/components/schemas/ResourceBudgetEstimate'
     RegionSetupInProgressException:
       type: object
       properties:
@@ -95,7 +160,7 @@ components:
           - $ref: '#/components/schemas/string'
           description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
       description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
-    ServiceException:
+    InvalidInputException:
       type: object
       properties:
         code:
@@ -106,76 +171,19 @@ components:
           $ref: '#/components/schemas/string'
         tip:
           $ref: '#/components/schemas/string'
-      description: A general service exception.
-    PricingUnit:
-      type: string
-      enum:
-      - GB
-      - Hrs
-      - GB-Mo
-      - Bundles
-      - Queries
-    string:
-      type: string
-    double:
-      type: number
-    IsoDate:
-      type: string
-      format: date-time
-    GetCostEstimateResult:
-      type: object
-      properties:
-        resourcesBudgetEstimate:
-          allOf:
-          - $ref: '#/components/schemas/ResourcesBudgetEstimate'
-          description: Returns the estimate's forecasted cost or usage.
-    ResourceName:
-      type: string
-      pattern: ^\w[\w\-]*\w$
-    CostEstimates:
+      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
+    EstimatesByTime:
       type: array
       items:
-        $ref: '#/components/schemas/CostEstimate'
-    UnauthenticatedException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user has not been authenticated.
-    ResourceBudgetEstimate:
-      type: object
-      properties:
-        resourceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The resource name.
-        resourceType:
-          allOf:
-          - $ref: '#/components/schemas/ResourceType'
-          description: The type of resource the budget will track.
-        costEstimates:
-          allOf:
-          - $ref: '#/components/schemas/CostEstimates'
-          description: The cost estimate for the specified budget.
-        startTime:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The estimate start time.
-        endTime:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The estimate end time.
-      description: Describes the estimated cost or usage that a budget tracks.
+        $ref: '#/components/schemas/EstimateByTime'
     Currency:
       type: string
       enum:
       - USD
+    CostEstimates:
+      type: array
+      items:
+        $ref: '#/components/schemas/CostEstimate'
     EstimateByTime:
       type: object
       properties:
@@ -200,44 +208,14 @@ components:
           - $ref: '#/components/schemas/TimePeriod'
           description: The period of time, in days, that an estimate covers. The period has a start date and an end date. The start date must come before the end date.
       description: An estimate that's associated with a time period.
-    InvalidInputException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
-    ResourcesBudgetEstimate:
-      type: array
-      items:
-        $ref: '#/components/schemas/ResourceBudgetEstimate'
-    GetCostEstimateRequest:
-      type: object
-      properties:
-        resourceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The resource name.
-        startTime:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: 'The cost estimate start time. Constraints: Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you want to use a start time of October 1, 2018, at 8 PM UTC, specify 1538424000 as the start time. You can convert a human-friendly time to Unix time format using a converter like Epoch converter .'
-        endTime:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: 'The cost estimate end time. Constraints: Specified in Coordinated Universal Time (UTC). Specified in the Unix time format. For example, if you want to use an end time of October 1, 2018, at 9 PM UTC, specify 1538427600 as the end time. You can convert a human-friendly time to Unix time format using a converter like Epoch converter .'
-      required:
-      - resourceName
-      - startTime
-      - endTime
-    NonEmptyString:
+    PricingUnit:
       type: string
-      pattern: \S
+      enum:
+      - GB
+      - Hrs
+      - GB-Mo
+      - Bundles
+      - Queries
     ResourceType:
       type: string
       enum:
@@ -261,22 +239,6 @@ components:
       - Distribution
       - Certificate
       - Bucket
-    EstimatesByTime:
-      type: array
-      items:
-        $ref: '#/components/schemas/EstimateByTime'
-    AccessDeniedException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
     CostEstimate:
       type: object
       properties:
@@ -289,19 +251,9 @@ components:
           - $ref: '#/components/schemas/EstimatesByTime'
           description: The cost estimate result that's associated with a time period.
       description: Describes the estimated cost for resources in your Lightsail for Research account.
-    TimePeriod:
-      type: object
-      properties:
-        start:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The beginning of the time period. The start date is inclusive. For example, if start is 2017-01-01 , Lightsail for Research retrieves cost and usage data starting at 2017-01-01 up to the end date. The start date must be equal to or no later than the current date to avoid a validation error.
-        end:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The end of the time period. The end date is exclusive. For example, if end is 2017-05-01 , Lightsail for Research retrieves cost and usage data from the start date up to, but not including, 2017-05-01 .
-      description: Sets the start date and end date for retrieving a cost estimate. The start date is inclusive, but the end date is exclusive. For example, if start is 2017-01-01 and end is 2017-05-01 , then the cost and usage data is retrieved from 2017-01-01 up to and including 2017-04-30 but not including 2017-05-01 .
-    NotFoundException:
+    string:
+      type: string
+    UnauthenticatedException:
       type: object
       properties:
         code:
@@ -312,7 +264,55 @@ components:
           $ref: '#/components/schemas/string'
         tip:
           $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when it cannot find a resource.
+      description: Lightsail throws this exception when the user has not been authenticated.
+    GetCostEstimateResult:
+      type: object
+      properties:
+        resourcesBudgetEstimate:
+          allOf:
+          - $ref: '#/components/schemas/ResourcesBudgetEstimate'
+          description: Returns the estimate's forecasted cost or usage.
+    NonEmptyString:
+      type: string
+      pattern: \S
+    ResourceBudgetEstimate:
+      type: object
+      properties:
+        resourceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The resource name.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The type of resource the budget will track.
+        costEstimates:
+          allOf:
+          - $ref: '#/components/schemas/CostEstimates'
+          description: The cost estimate for the specified budget.
+        startTime:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The estimate start time.
+        endTime:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The estimate end time.
+      description: Describes the estimated cost or usage that a budget tracks.
+    double:
+      type: number
+    ServiceException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: A general service exception.
   securitySchemes:
     sigv4:
       type: apiKey

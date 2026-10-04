@@ -904,127 +904,22 @@ paths:
       x-amz-target: Lightsail_20161128.GetContainerServiceMetricData
 components:
   schemas:
-    TagValue:
-      type: string
-    MetricUnit:
-      type: string
-      enum:
-      - Seconds
-      - Microseconds
-      - Milliseconds
-      - Bytes
-      - Kilobytes
-      - Megabytes
-      - Gigabytes
-      - Terabytes
-      - Bits
-      - Kilobits
-      - Megabits
-      - Gigabits
-      - Terabits
-      - Percent
-      - Count
-      - Bytes/Second
-      - Kilobytes/Second
-      - Megabytes/Second
-      - Gigabytes/Second
-      - Terabytes/Second
-      - Bits/Second
-      - Kilobits/Second
-      - Megabits/Second
-      - Gigabits/Second
-      - Terabits/Second
-      - Count/Second
-      - None
-    RegionSetupInProgressException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Regions and Availability Zones for Lightsail
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
-      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
-    double:
-      type: number
-    ContainerMap:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/Container'
-    ContainerServiceLogEventList:
-      type: array
-      items:
-        $ref: '#/components/schemas/ContainerServiceLogEvent'
-    IsoDate:
-      type: string
-      format: date-time
-    ContainerServicePowerList:
-      type: array
-      items:
-        $ref: '#/components/schemas/ContainerServicePower'
-    UnauthenticatedException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user has not been authenticated.
-    GetContainerImagesResult:
-      type: object
-      properties:
-        containerImages:
-          allOf:
-          - $ref: '#/components/schemas/ContainerImageList'
-          description: An array of objects that describe container images that are registered to the container service.
-    ContainerServiceScale:
-      type: integer
-      minimum: 1
-      maximum: 20
-    StringList:
-      type: array
-      items:
-        $ref: '#/components/schemas/string'
-    ContainerServiceStateDetail:
-      type: object
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/ContainerServiceStateDetailCode'
-          description: 'The state code of the container service. The following state codes are possible: The following state codes are possible if your container service is in a DEPLOYING or UPDATING state: CREATING_SYSTEM_RESOURCES - The system resources for your container service are being created. CREATING_NETWORK_INFRASTRUCTURE - The network infrastructure for your container service are being created. PROVISIONING_CERTIFICATE - The SSL/TLS certificate for your container service is being created. PROVISIONING_SERVICE - Your container service is being provisioned. CREATING_DEPLOYMENT - Your deployment is being created on your container service. EVALUATING_HEALTH_CHECK - The health of your deployment is being evaluated. ACTIVATING_DEPLOYMENT - Your deployment is being activated. The following state codes are possible if your container service is in a PENDING state: CERTIFICATE_LIMIT_EXCEEDED - The SSL/TLS certificate required for your container service exceeds the maximum number of certificates allowed for your account. UNKNOWN_ERROR - An error was experienced when your container service was being created.'
-        message:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: A message that provides more information for the state code. The state detail is populated only when a container service is in a PENDING , DEPLOYING , or UPDATING state.
-      description: Describes the current state of a container service.
-    ContainerLabel:
-      type: string
-      pattern: ^[a-z0-9]{1,2}|[a-z0-9][a-z0-9-]+[a-z0-9]$
-      minLength: 1
-      maxLength: 53
     ContainerServiceMetadataEntryList:
       type: array
       items:
         $ref: '#/components/schemas/ContainerServiceMetadataEntry'
-    ContainerServiceName:
-      type: string
-      pattern: ^[a-z0-9]{1,2}|[a-z0-9][a-z0-9-]+[a-z0-9]$
-      minLength: 1
-      maxLength: 63
-    NonEmptyString:
-      type: string
-      pattern: \S
+    AccessDeniedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
     ContainerServiceRegistryLogin:
       type: object
       properties:
@@ -1045,65 +940,96 @@ components:
           - $ref: '#/components/schemas/string'
           description: The address to use to push container images to the container image registry of a Lightsail account.
       description: Describes the sign-in credentials for the container image registry of an Amazon Lightsail account.
-    ResourceType:
+    ContainerServiceStateDetailCode:
       type: string
       enum:
-      - ContainerService
-      - Instance
-      - StaticIp
-      - KeyPair
-      - InstanceSnapshot
-      - Domain
-      - PeeredVpc
-      - LoadBalancer
-      - LoadBalancerTlsCertificate
-      - Disk
-      - DiskSnapshot
-      - RelationalDatabase
-      - RelationalDatabaseSnapshot
-      - ExportSnapshotRecord
-      - CloudFormationStackRecord
-      - Alarm
-      - ContactMethod
-      - Distribution
-      - Certificate
-      - Bucket
-    PrivateRegistryAccessRequest:
+      - CREATING_SYSTEM_RESOURCES
+      - CREATING_NETWORK_INFRASTRUCTURE
+      - PROVISIONING_CERTIFICATE
+      - PROVISIONING_SERVICE
+      - CREATING_DEPLOYMENT
+      - EVALUATING_HEALTH_CHECK
+      - ACTIVATING_DEPLOYMENT
+      - CERTIFICATE_LIMIT_EXCEEDED
+      - UNKNOWN_ERROR
+    ContainerServiceDeploymentRequest:
       type: object
       properties:
-        ecrImagePullerRole:
+        containers:
           allOf:
-          - $ref: '#/components/schemas/ContainerServiceECRImagePullerRoleRequest'
-          description: An object to describe a request to activate or deactivate the role that you can use to grant an Amazon Lightsail container service access to Amazon Elastic Container Registry (Amazon ECR) private repositories.
-      description: Describes a request to configure an Amazon Lightsail container service to access private container image repositories, such as Amazon Elastic Container Registry (Amazon ECR) private repositories. For more information, see Configuring access to an Amazon ECR private repository for an Amazon Lightsail container service in the Amazon Lightsail Developer Guide .
-    ContainerServiceMetadataEntry:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/string'
-    MetricDatapointList:
+          - $ref: '#/components/schemas/ContainerMap'
+          description: An object that describes the configuration for the containers of the deployment.
+        publicEndpoint:
+          allOf:
+          - $ref: '#/components/schemas/EndpointRequest'
+          description: An object that describes the endpoint of the deployment.
+      description: Describes a container deployment configuration of an Amazon Lightsail container service. A deployment specifies the settings, such as the ports and launch command, of containers that are deployed to your container service.
+    MetricStatisticList:
       type: array
       items:
-        $ref: '#/components/schemas/MetricDatapoint'
-    MetricStatistic:
-      type: string
-      enum:
-      - Minimum
-      - Maximum
-      - Sum
-      - Average
-      - SampleCount
-    Tag:
+        $ref: '#/components/schemas/MetricStatistic'
+    ContainerServiceECRImagePullerRole:
       type: object
       properties:
-        key:
+        isActive:
           allOf:
-          - $ref: '#/components/schemas/TagKey'
-          description: 'The key of the tag. Constraints: Tag keys accept a maximum of 128 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
-        value:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value that indicates whether the role is activated.
+        principalArn:
           allOf:
-          - $ref: '#/components/schemas/TagValue'
-          description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
-      description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
+          - $ref: '#/components/schemas/string'
+          description: The Amazon Resource Name (ARN) of the role, if it is activated.
+      description: Describes the activation status of the role that you can use to grant an Amazon Lightsail container service access to Amazon Elastic Container Registry (Amazon ECR) private repositories. When activated, Lightsail creates an Identity and Access Management (IAM) role for the specified Lightsail container service. You can use the ARN of the role to create a trust relationship between your Lightsail container service and an Amazon ECR private repository in your Amazon Web Services account. This allows your container service to pull images from Amazon ECR private repositories. For more information, see Configuring access to an Amazon ECR private repository for an Amazon Lightsail container service in the Amazon Lightsail Developer Guide .
+    ContainerServiceDeploymentList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ContainerServiceDeployment'
+    GetContainerServiceMetricDataResult:
+      type: object
+      properties:
+        metricName:
+          allOf:
+          - $ref: '#/components/schemas/ContainerServiceMetricName'
+          description: The name of the metric returned.
+        metricData:
+          allOf:
+          - $ref: '#/components/schemas/MetricDatapointList'
+          description: An array of objects that describe the metric data returned.
+    CreateContainerServiceResult:
+      type: object
+      properties:
+        containerService:
+          allOf:
+          - $ref: '#/components/schemas/ContainerService'
+          description: An object that describes a container service.
+    ContainerServicePower:
+      type: object
+      properties:
+        powerId:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The ID of the power ( nano-1 ).
+        price:
+          allOf:
+          - $ref: '#/components/schemas/float'
+          description: The monthly price of the power in USD.
+        cpuCount:
+          allOf:
+          - $ref: '#/components/schemas/float'
+          description: The number of vCPUs included in the power.
+        ramSizeInGb:
+          allOf:
+          - $ref: '#/components/schemas/float'
+          description: The amount of RAM (in GB) of the power.
+        name:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The friendly name of the power ( nano ).
+        isActive:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the power is active and can be specified for container services.
+      description: Describes the powers that can be specified for an Amazon Lightsail container service. The power specifies the amount of RAM, the number of vCPUs, and the base price of the container service.
     MetricDatapoint:
       type: object
       properties:
@@ -1136,15 +1062,34 @@ components:
           - $ref: '#/components/schemas/MetricUnit'
           description: The unit.
       description: Describes the metric data point.
-    PrivateRegistryAccess:
+    ContainerServicePowerName:
+      type: string
+      enum:
+      - nano
+      - micro
+      - small
+      - medium
+      - large
+      - xlarge
+    RegisterContainerImageResult:
       type: object
       properties:
-        ecrImagePullerRole:
+        containerImage:
           allOf:
-          - $ref: '#/components/schemas/ContainerServiceECRImagePullerRole'
-          description: An object that describes the activation status of the role that you can use to grant a Lightsail container service access to Amazon ECR private repositories. If the role is activated, the Amazon Resource Name (ARN) of the role is also listed.
-      description: Describes the configuration for an Amazon Lightsail container service to access private container image repositories, such as Amazon Elastic Container Registry (Amazon ECR) private repositories. For more information, see Configuring access to an Amazon ECR private repository for an Amazon Lightsail container service in the Amazon Lightsail Developer Guide .
-    ServiceException:
+          - $ref: '#/components/schemas/ContainerImage'
+          description: An object that describes a container image that is registered to a Lightsail container service
+    TagList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Tag'
+    ContainerServicesListResult:
+      type: object
+      properties:
+        containerServices:
+          allOf:
+          - $ref: '#/components/schemas/ContainerServiceList'
+          description: An array of objects that describe one or more container services.
+    UnauthenticatedException:
       type: object
       properties:
         code:
@@ -1155,40 +1100,38 @@ components:
           $ref: '#/components/schemas/string'
         tip:
           $ref: '#/components/schemas/string'
-      description: A general service exception.
-    ContainerServiceDeploymentList:
-      type: array
-      items:
-        $ref: '#/components/schemas/ContainerServiceDeployment'
-    DeleteContainerImageResult:
-      type: object
-    ContainerServiceDeploymentState:
+      description: Lightsail throws this exception when the user has not been authenticated.
+    ContainerServiceMetricName:
       type: string
       enum:
-      - ACTIVATING
-      - ACTIVE
-      - INACTIVE
-      - FAILED
-    ContainerServiceDeploymentRequest:
+      - CPUUtilization
+      - MemoryUtilization
+    CreateContainerServiceRegistryLoginResult:
       type: object
       properties:
-        containers:
+        registryLogin:
           allOf:
-          - $ref: '#/components/schemas/ContainerMap'
-          description: An object that describes the configuration for the containers of the deployment.
-        publicEndpoint:
-          allOf:
-          - $ref: '#/components/schemas/EndpointRequest'
-          description: An object that describes the endpoint of the deployment.
-      description: Describes a container deployment configuration of an Amazon Lightsail container service. A deployment specifies the settings, such as the ports and launch command, of containers that are deployed to your container service.
-    MetricStatisticList:
-      type: array
-      items:
-        $ref: '#/components/schemas/MetricStatistic'
-    ContainerServicePublicDomains:
+          - $ref: '#/components/schemas/ContainerServiceRegistryLogin'
+          description: An object that describes the log in information for the container service registry of your Lightsail account.
+    ContainerLabel:
+      type: string
+      pattern: ^[a-z0-9]{1,2}|[a-z0-9][a-z0-9-]+[a-z0-9]$
+      minLength: 1
+      maxLength: 53
+    ContainerServiceName:
+      type: string
+      pattern: ^[a-z0-9]{1,2}|[a-z0-9][a-z0-9-]+[a-z0-9]$
+      minLength: 1
+      maxLength: 63
+    GetContainerImagesResult:
       type: object
-      additionalProperties:
-        $ref: '#/components/schemas/ContainerServicePublicDomainsList'
+      properties:
+        containerImages:
+          allOf:
+          - $ref: '#/components/schemas/ContainerImageList'
+          description: An array of objects that describe container images that are registered to the container service.
+    float:
+      type: number
     UpdateContainerServiceResult:
       type: object
       properties:
@@ -1196,24 +1139,34 @@ components:
           allOf:
           - $ref: '#/components/schemas/ContainerService'
           description: An object that describes a container service.
-    ContainerServiceStateDetailCode:
-      type: string
-      enum:
-      - CREATING_SYSTEM_RESOURCES
-      - CREATING_NETWORK_INFRASTRUCTURE
-      - PROVISIONING_CERTIFICATE
-      - PROVISIONING_SERVICE
-      - CREATING_DEPLOYMENT
-      - EVALUATING_HEALTH_CHECK
-      - ACTIVATING_DEPLOYMENT
-      - CERTIFICATE_LIMIT_EXCEEDED
-      - UNKNOWN_ERROR
-    ContainerServiceMetricName:
-      type: string
-      enum:
-      - CPUUtilization
-      - MemoryUtilization
-    InvalidInputException:
+    PrivateRegistryAccessRequest:
+      type: object
+      properties:
+        ecrImagePullerRole:
+          allOf:
+          - $ref: '#/components/schemas/ContainerServiceECRImagePullerRoleRequest'
+          description: An object to describe a request to activate or deactivate the role that you can use to grant an Amazon Lightsail container service access to Amazon Elastic Container Registry (Amazon ECR) private repositories.
+      description: Describes a request to configure an Amazon Lightsail container service to access private container image repositories, such as Amazon Elastic Container Registry (Amazon ECR) private repositories. For more information, see Configuring access to an Amazon ECR private repository for an Amazon Lightsail container service in the Amazon Lightsail Developer Guide .
+    ContainerServiceECRImagePullerRoleRequest:
+      type: object
+      properties:
+        isActive:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value that indicates whether to activate the role.
+      description: Describes a request to activate or deactivate the role that you can use to grant an Amazon Lightsail container service access to Amazon Elastic Container Registry (Amazon ECR) private repositories. When activated, Lightsail creates an Identity and Access Management (IAM) role for the specified Lightsail container service. You can use the ARN of the role to create a trust relationship between your Lightsail container service and an Amazon ECR private repository in your Amazon Web Services account. This allows your container service to pull images from Amazon ECR private repositories. For more information, see Configuring access to an Amazon ECR private repository for an Amazon Lightsail container service in the Amazon Lightsail Developer Guide .
+    GetContainerLogResult:
+      type: object
+      properties:
+        logEvents:
+          allOf:
+          - $ref: '#/components/schemas/ContainerServiceLogEventList'
+          description: An array of objects that describe the log events of a container.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetContainerLog request and specify the next page token using the pageToken parameter.
+    NotFoundException:
       type: object
       properties:
         code:
@@ -1224,35 +1177,17 @@ components:
           $ref: '#/components/schemas/string'
         tip:
           $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
-    ContainerServiceHealthCheckConfig:
-      type: object
-      properties:
-        healthyThreshold:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The number of consecutive health checks successes required before moving the container to the Healthy state. The default value is 2 .
-        unhealthyThreshold:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The number of consecutive health check failures required before moving the container to the Unhealthy state. The default value is 2 .
-        timeoutSeconds:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The amount of time, in seconds, during which no response means a failed health check. You can specify between 2 and 60 seconds. The default value is 2 .
-        intervalSeconds:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The approximate interval, in seconds, between health checks of an individual container. You can specify between 5 and 300 seconds. The default value is 5 .
-        path:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The path on the container on which to perform the health check. The default value is / .
-        successCodes:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The HTTP codes to use when checking for a successful response from a container. You can specify values between 200 and 499 . You can specify multiple values (for example, 200,202 ) or a range of values (for example, 200-299 ).
-      description: Describes the health check configuration of an Amazon Lightsail container service.
+      description: Lightsail throws this exception when it cannot find a resource.
+    ContainerServiceList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ContainerService'
+    StringList:
+      type: array
+      items:
+        $ref: '#/components/schemas/string'
+    TagKey:
+      type: string
     ContainerImage:
       type: object
       properties:
@@ -1269,127 +1204,41 @@ components:
           - $ref: '#/components/schemas/IsoDate'
           description: The timestamp when the container image was created.
       description: Describes a container image that is registered to an Amazon Lightsail container service.
-    boolean:
-      type: boolean
-    GetContainerServicePowersResult:
-      type: object
-      properties:
-        powers:
-          allOf:
-          - $ref: '#/components/schemas/ContainerServicePowerList'
-          description: An array of objects that describe the powers that can be specified for a container service.
-    ContainerServiceLogEvent:
-      type: object
-      properties:
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the container service log event was created.
-        message:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The message of the container service log event.
-      description: Describes the log events of a container of an Amazon Lightsail container service.
-    GetContainerServiceMetricDataResult:
-      type: object
-      properties:
-        metricName:
-          allOf:
-          - $ref: '#/components/schemas/ContainerServiceMetricName'
-          description: The name of the metric returned.
-        metricData:
-          allOf:
-          - $ref: '#/components/schemas/MetricDatapointList'
-          description: An array of objects that describe the metric data returned.
-    ContainerImageList:
+    ContainerServicePowerList:
       type: array
       items:
-        $ref: '#/components/schemas/ContainerImage'
-    ContainerServiceECRImagePullerRole:
-      type: object
-      properties:
-        isActive:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value that indicates whether the role is activated.
-        principalArn:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The Amazon Resource Name (ARN) of the role, if it is activated.
-      description: Describes the activation status of the role that you can use to grant an Amazon Lightsail container service access to Amazon Elastic Container Registry (Amazon ECR) private repositories. When activated, Lightsail creates an Identity and Access Management (IAM) role for the specified Lightsail container service. You can use the ARN of the role to create a trust relationship between your Lightsail container service and an Amazon ECR private repository in your Amazon Web Services account. This allows your container service to pull images from Amazon ECR private repositories. For more information, see Configuring access to an Amazon ECR private repository for an Amazon Lightsail container service in the Amazon Lightsail Developer Guide .
-    ContainerServicePublicDomainsList:
-      type: array
-      items:
-        $ref: '#/components/schemas/string'
-    RegionName:
-      type: string
-      enum:
-      - us-east-1
-      - us-east-2
-      - us-west-1
-      - us-west-2
-      - eu-west-1
-      - eu-west-2
-      - eu-west-3
-      - eu-central-1
-      - eu-north-1
-      - eu-south-2
-      - ca-central-1
-      - ap-east-1
-      - ap-south-1
-      - ap-southeast-1
-      - ap-southeast-2
-      - ap-northeast-1
-      - ap-northeast-2
-      - ap-southeast-3
-      - ap-southeast-5
-      - sa-east-1
-    ContainerServiceECRImagePullerRoleRequest:
-      type: object
-      properties:
-        isActive:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value that indicates whether to activate the role.
-      description: Describes a request to activate or deactivate the role that you can use to grant an Amazon Lightsail container service access to Amazon Elastic Container Registry (Amazon ECR) private repositories. When activated, Lightsail creates an Identity and Access Management (IAM) role for the specified Lightsail container service. You can use the ARN of the role to create a trust relationship between your Lightsail container service and an Amazon ECR private repository in your Amazon Web Services account. This allows your container service to pull images from Amazon ECR private repositories. For more information, see Configuring access to an Amazon ECR private repository for an Amazon Lightsail container service in the Amazon Lightsail Developer Guide .
-    ContainerServiceState:
-      type: string
-      enum:
-      - PENDING
-      - READY
-      - RUNNING
-      - UPDATING
-      - DELETING
-      - DISABLED
-      - DEPLOYING
-    DeleteContainerServiceResult:
-      type: object
-    timestamp:
-      type: string
-      format: date-time
-    GetContainerAPIMetadataResult:
-      type: object
-      properties:
-        metadata:
-          allOf:
-          - $ref: '#/components/schemas/ContainerServiceMetadataEntryList'
-          description: Metadata about Lightsail containers, such as the current version of the Lightsail Control (lightsailctl) plugin.
-    GetContainerServiceDeploymentsResult:
-      type: object
-      properties:
-        deployments:
-          allOf:
-          - $ref: '#/components/schemas/ContainerServiceDeploymentList'
-          description: An array of objects that describe deployments for a container service.
-    integer:
+        $ref: '#/components/schemas/ContainerServicePower'
+    ContainerServiceScale:
       type: integer
-    ContainerServiceProtocol:
-      type: string
-      enum:
-      - HTTP
-      - HTTPS
-      - TCP
-      - UDP
+      minimum: 1
+      maximum: 20
+    PortMap:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/ContainerServiceProtocol'
+    Tag:
+      type: object
+      properties:
+        key:
+          allOf:
+          - $ref: '#/components/schemas/TagKey'
+          description: 'The key of the tag. Constraints: Tag keys accept a maximum of 128 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+        value:
+          allOf:
+          - $ref: '#/components/schemas/TagValue'
+          description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+      description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
+    Environment:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/string'
+    CreateContainerServiceDeploymentResult:
+      type: object
+      properties:
+        containerService:
+          allOf:
+          - $ref: '#/components/schemas/ContainerService'
+          description: An object that describes a container service.
     EndpointRequest:
       type: object
       properties:
@@ -1409,6 +1258,273 @@ components:
       - containerName
       - containerPort
       description: Describes the settings of a public endpoint for an Amazon Lightsail container service.
+    ContainerServicePublicDomains:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/ContainerServicePublicDomainsList'
+    ContainerServiceLogEventList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ContainerServiceLogEvent'
+    ContainerServiceDeploymentState:
+      type: string
+      enum:
+      - ACTIVATING
+      - ACTIVE
+      - INACTIVE
+      - FAILED
+    ContainerImageList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ContainerImage'
+    MetricPeriod:
+      type: integer
+      minimum: 60
+      maximum: 86400
+    InvalidInputException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
+    ContainerServiceDeployment:
+      type: object
+      properties:
+        version:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The version number of the deployment.
+        state:
+          allOf:
+          - $ref: '#/components/schemas/ContainerServiceDeploymentState'
+          description: 'The state of the deployment. A deployment can be in one of the following states: ACTIVATING - The deployment is being created. ACTIVE - The deployment was successfully created, and it''s currently running on the container service. The container service can have only one deployment in an active state at a time. INACTIVE - The deployment was previously successfully created, but it is not currently running on the container service. FAILED - The deployment failed. Use the GetContainerLog action to view the log events for the containers in the deployment to try to determine the reason for the failure.'
+        containers:
+          allOf:
+          - $ref: '#/components/schemas/ContainerMap'
+          description: An object that describes the configuration for the containers of the deployment.
+        publicEndpoint:
+          allOf:
+          - $ref: '#/components/schemas/ContainerServiceEndpoint'
+          description: An object that describes the endpoint of the deployment.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the deployment was created.
+      description: Describes a container deployment configuration of an Amazon Lightsail container service. A deployment specifies the settings, such as the ports and launch command, of containers that are deployed to your container service.
+    MetricStatistic:
+      type: string
+      enum:
+      - Minimum
+      - Maximum
+      - Sum
+      - Average
+      - SampleCount
+    ContainerServiceMetadataEntry:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/string'
+    ContainerServicePublicDomainsList:
+      type: array
+      items:
+        $ref: '#/components/schemas/string'
+    ContainerServiceProtocol:
+      type: string
+      enum:
+      - HTTP
+      - HTTPS
+      - TCP
+      - UDP
+    PrivateRegistryAccess:
+      type: object
+      properties:
+        ecrImagePullerRole:
+          allOf:
+          - $ref: '#/components/schemas/ContainerServiceECRImagePullerRole'
+          description: An object that describes the activation status of the role that you can use to grant a Lightsail container service access to Amazon ECR private repositories. If the role is activated, the Amazon Resource Name (ARN) of the role is also listed.
+      description: Describes the configuration for an Amazon Lightsail container service to access private container image repositories, such as Amazon Elastic Container Registry (Amazon ECR) private repositories. For more information, see Configuring access to an Amazon ECR private repository for an Amazon Lightsail container service in the Amazon Lightsail Developer Guide .
+    MetricDatapointList:
+      type: array
+      items:
+        $ref: '#/components/schemas/MetricDatapoint'
+    ResourceLocation:
+      type: object
+      properties:
+        availabilityZone:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The Availability Zone. Follows the format us-east-2a (case-sensitive).
+        regionName:
+          allOf:
+          - $ref: '#/components/schemas/RegionName'
+          description: The Amazon Web Services Region name.
+      description: Describes the resource location.
+    MetricUnit:
+      type: string
+      enum:
+      - Seconds
+      - Microseconds
+      - Milliseconds
+      - Bytes
+      - Kilobytes
+      - Megabytes
+      - Gigabytes
+      - Terabytes
+      - Bits
+      - Kilobits
+      - Megabits
+      - Gigabits
+      - Terabits
+      - Percent
+      - Count
+      - Bytes/Second
+      - Kilobytes/Second
+      - Megabytes/Second
+      - Gigabytes/Second
+      - Terabytes/Second
+      - Bits/Second
+      - Kilobits/Second
+      - Megabits/Second
+      - Gigabits/Second
+      - Terabits/Second
+      - Count/Second
+      - None
+    TagValue:
+      type: string
+    timestamp:
+      type: string
+      format: date-time
+    GetContainerServicePowersResult:
+      type: object
+      properties:
+        powers:
+          allOf:
+          - $ref: '#/components/schemas/ContainerServicePowerList'
+          description: An array of objects that describe the powers that can be specified for a container service.
+    CreateContainerServiceRequest:
+      type: object
+      properties:
+        serviceName:
+          allOf:
+          - $ref: '#/components/schemas/ContainerServiceName'
+          description: 'The name for the container service. The name that you specify for your container service will make up part of its default domain. The default domain of a container service is typically https:// . . .cs.amazonlightsail.com . If the name of your container service is container-service-1 , and it''s located in the US East (Ohio) Amazon Web Services Region ( us-east-2 ), then the domain for your container service will be like the following example: https://container-service-1.ur4EXAMPLE2uq.us-east-2.cs.amazonlightsail.com The following are the requirements for container service names: Must be unique within each Amazon Web Services Region in your Lightsail account. Must contain 1 to 63 characters. Must contain only alphanumeric characters and hyphens. A hyphen (-) can separate words but cannot be at the start or end of the name.'
+        power:
+          allOf:
+          - $ref: '#/components/schemas/ContainerServicePowerName'
+          description: The power specification for the container service. The power specifies the amount of memory, vCPUs, and base monthly cost of each node of the container service. The power and scale of a container service makes up its configured capacity. To determine the monthly price of your container service, multiply the base price of the power with the scale (the number of nodes) of the service. Use the GetContainerServicePowers action to get a list of power options that you can specify using this parameter, and their base monthly cost.
+        scale:
+          allOf:
+          - $ref: '#/components/schemas/ContainerServiceScale'
+          description: The scale specification for the container service. The scale specifies the allocated compute nodes of the container service. The power and scale of a container service makes up its configured capacity. To determine the monthly price of your container service, multiply the base price of the power with the scale (the number of nodes) of the service.
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values to add to the container service during create. Use the TagResource action to tag a resource after it's created. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
+        publicDomainNames:
+          allOf:
+          - $ref: '#/components/schemas/ContainerServicePublicDomains'
+          description: The public domain names to use with the container service, such as example.com and www.example.com . You can specify up to four public domain names for a container service. The domain names that you specify are used when you create a deployment with a container configured as the public endpoint of your container service. If you don't specify public domain names, then you can use the default domain of the container service. You must create and validate an SSL/TLS certificate before you can use public domain names with your container service. Use the CreateCertificate action to create a certificate for the public domain names you want to use with your container service. You can specify public domain names using a string to array map as shown in the example later on this page.
+        deployment:
+          allOf:
+          - $ref: '#/components/schemas/ContainerServiceDeploymentRequest'
+          description: An object that describes a deployment for the container service. A deployment specifies the containers that will be launched on the container service and their settings, such as the ports to open, the environment variables to apply, and the launch command to run. It also specifies the container that will serve as the public endpoint of the deployment and its settings, such as the HTTP or HTTPS port to use, and the health check configuration.
+        privateRegistryAccess:
+          allOf:
+          - $ref: '#/components/schemas/PrivateRegistryAccessRequest'
+          description: An object to describe the configuration for the container service to access private container image repositories, such as Amazon Elastic Container Registry (Amazon ECR) private repositories. For more information, see Configuring access to an Amazon ECR private repository for an Amazon Lightsail container service in the Amazon Lightsail Developer Guide .
+      required:
+      - serviceName
+      - power
+      - scale
+    ContainerServiceLogEvent:
+      type: object
+      properties:
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the container service log event was created.
+        message:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The message of the container service log event.
+      description: Describes the log events of a container of an Amazon Lightsail container service.
+    Container:
+      type: object
+      properties:
+        image:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: 'The name of the image used for the container. Container images sourced from your Lightsail container service, that are registered and stored on your service, start with a colon ( : ). For example, if your container service name is container-service-1 , the container image label is mystaticsite , and you want to use the third ( 3 ) version of the registered container image, then you should specify :container-service-1.mystaticsite.3 . To use the latest version of a container image, specify latest instead of a version number (for example, :container-service-1.mystaticsite.latest ). Lightsail will automatically use the highest numbered version of the registered container image. Container images sourced from a public registry like Docker Hub don''t start with a colon. For example, nginx:latest or nginx .'
+        command:
+          allOf:
+          - $ref: '#/components/schemas/StringList'
+          description: The launch command for the container.
+        environment:
+          allOf:
+          - $ref: '#/components/schemas/Environment'
+          description: The environment variables of the container.
+        ports:
+          allOf:
+          - $ref: '#/components/schemas/PortMap'
+          description: The open firewall ports of the container.
+      description: Describes the settings of a container that will be launched, or that is launched, to an Amazon Lightsail container service.
+    NonEmptyString:
+      type: string
+      pattern: \S
+    GetContainerServiceDeploymentsResult:
+      type: object
+      properties:
+        deployments:
+          allOf:
+          - $ref: '#/components/schemas/ContainerServiceDeploymentList'
+          description: An array of objects that describe deployments for a container service.
+    double:
+      type: number
+    ServiceException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: A general service exception.
+    GetContainerAPIMetadataResult:
+      type: object
+      properties:
+        metadata:
+          allOf:
+          - $ref: '#/components/schemas/ContainerServiceMetadataEntryList'
+          description: Metadata about Lightsail containers, such as the current version of the Lightsail Control (lightsailctl) plugin.
+    DeleteContainerServiceResult:
+      type: object
+    ContainerServiceEndpoint:
+      type: object
+      properties:
+        containerName:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The name of the container entry of the deployment that the endpoint configuration applies to.
+        containerPort:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The port of the specified container to which traffic is forwarded to.
+        healthCheck:
+          allOf:
+          - $ref: '#/components/schemas/ContainerServiceHealthCheckConfig'
+          description: An object that describes the health check configuration of the container.
+      description: Describes the public endpoint configuration of a deployment of an Amazon Lightsail container service.
+    IsoDate:
+      type: string
+      format: date-time
     ContainerService:
       type: object
       properties:
@@ -1489,246 +1605,130 @@ components:
           - $ref: '#/components/schemas/PrivateRegistryAccess'
           description: An object that describes the configuration for the container service to access private container image repositories, such as Amazon Elastic Container Registry (Amazon ECR) private repositories. For more information, see Configuring access to an Amazon ECR private repository for an Amazon Lightsail container service in the Amazon Lightsail Developer Guide .
       description: Describes an Amazon Lightsail container service.
-    TagKey:
-      type: string
-    GetContainerLogResult:
+    RegionSetupInProgressException:
       type: object
       properties:
-        logEvents:
-          allOf:
-          - $ref: '#/components/schemas/ContainerServiceLogEventList'
-          description: An array of objects that describe the log events of a container.
-        nextPageToken:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
           allOf:
           - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetContainerLog request and specify the next page token using the pageToken parameter.
-    Environment:
+          description: Regions and Availability Zones for Lightsail
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
+      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
+    integer:
+      type: integer
+    ContainerMap:
       type: object
       additionalProperties:
-        $ref: '#/components/schemas/string'
-    string:
-      type: string
-    ContainerServiceList:
-      type: array
-      items:
-        $ref: '#/components/schemas/ContainerService'
-    CreateContainerServiceResult:
-      type: object
-      properties:
-        containerService:
-          allOf:
-          - $ref: '#/components/schemas/ContainerService'
-          description: An object that describes a container service.
-    float:
-      type: number
-    ContainerServicePowerName:
+        $ref: '#/components/schemas/Container'
+    RegionName:
       type: string
       enum:
-      - nano
-      - micro
-      - small
-      - medium
-      - large
-      - xlarge
-    PortMap:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/ContainerServiceProtocol'
-    ContainerServiceDeployment:
-      type: object
-      properties:
-        version:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The version number of the deployment.
-        state:
-          allOf:
-          - $ref: '#/components/schemas/ContainerServiceDeploymentState'
-          description: 'The state of the deployment. A deployment can be in one of the following states: ACTIVATING - The deployment is being created. ACTIVE - The deployment was successfully created, and it''s currently running on the container service. The container service can have only one deployment in an active state at a time. INACTIVE - The deployment was previously successfully created, but it is not currently running on the container service. FAILED - The deployment failed. Use the GetContainerLog action to view the log events for the containers in the deployment to try to determine the reason for the failure.'
-        containers:
-          allOf:
-          - $ref: '#/components/schemas/ContainerMap'
-          description: An object that describes the configuration for the containers of the deployment.
-        publicEndpoint:
-          allOf:
-          - $ref: '#/components/schemas/ContainerServiceEndpoint'
-          description: An object that describes the endpoint of the deployment.
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the deployment was created.
-      description: Describes a container deployment configuration of an Amazon Lightsail container service. A deployment specifies the settings, such as the ports and launch command, of containers that are deployed to your container service.
-    ContainerServiceEndpoint:
-      type: object
-      properties:
-        containerName:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The name of the container entry of the deployment that the endpoint configuration applies to.
-        containerPort:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The port of the specified container to which traffic is forwarded to.
-        healthCheck:
-          allOf:
-          - $ref: '#/components/schemas/ContainerServiceHealthCheckConfig'
-          description: An object that describes the health check configuration of the container.
-      description: Describes the public endpoint configuration of a deployment of an Amazon Lightsail container service.
-    ResourceLocation:
-      type: object
-      properties:
-        availabilityZone:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The Availability Zone. Follows the format us-east-2a (case-sensitive).
-        regionName:
-          allOf:
-          - $ref: '#/components/schemas/RegionName'
-          description: The Amazon Web Services Region name.
-      description: Describes the resource location.
-    RegisterContainerImageResult:
-      type: object
-      properties:
-        containerImage:
-          allOf:
-          - $ref: '#/components/schemas/ContainerImage'
-          description: An object that describes a container image that is registered to a Lightsail container service
-    MetricPeriod:
-      type: integer
-      minimum: 60
-      maximum: 86400
-    ContainerServicesListResult:
-      type: object
-      properties:
-        containerServices:
-          allOf:
-          - $ref: '#/components/schemas/ContainerServiceList'
-          description: An array of objects that describe one or more container services.
-    CreateContainerServiceRequest:
-      type: object
-      properties:
-        serviceName:
-          allOf:
-          - $ref: '#/components/schemas/ContainerServiceName'
-          description: 'The name for the container service. The name that you specify for your container service will make up part of its default domain. The default domain of a container service is typically https:// . . .cs.amazonlightsail.com . If the name of your container service is container-service-1 , and it''s located in the US East (Ohio) Amazon Web Services Region ( us-east-2 ), then the domain for your container service will be like the following example: https://container-service-1.ur4EXAMPLE2uq.us-east-2.cs.amazonlightsail.com The following are the requirements for container service names: Must be unique within each Amazon Web Services Region in your Lightsail account. Must contain 1 to 63 characters. Must contain only alphanumeric characters and hyphens. A hyphen (-) can separate words but cannot be at the start or end of the name.'
-        power:
-          allOf:
-          - $ref: '#/components/schemas/ContainerServicePowerName'
-          description: The power specification for the container service. The power specifies the amount of memory, vCPUs, and base monthly cost of each node of the container service. The power and scale of a container service makes up its configured capacity. To determine the monthly price of your container service, multiply the base price of the power with the scale (the number of nodes) of the service. Use the GetContainerServicePowers action to get a list of power options that you can specify using this parameter, and their base monthly cost.
-        scale:
-          allOf:
-          - $ref: '#/components/schemas/ContainerServiceScale'
-          description: The scale specification for the container service. The scale specifies the allocated compute nodes of the container service. The power and scale of a container service makes up its configured capacity. To determine the monthly price of your container service, multiply the base price of the power with the scale (the number of nodes) of the service.
-        tags:
-          allOf:
-          - $ref: '#/components/schemas/TagList'
-          description: The tag keys and optional values to add to the container service during create. Use the TagResource action to tag a resource after it's created. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
-        publicDomainNames:
-          allOf:
-          - $ref: '#/components/schemas/ContainerServicePublicDomains'
-          description: The public domain names to use with the container service, such as example.com and www.example.com . You can specify up to four public domain names for a container service. The domain names that you specify are used when you create a deployment with a container configured as the public endpoint of your container service. If you don't specify public domain names, then you can use the default domain of the container service. You must create and validate an SSL/TLS certificate before you can use public domain names with your container service. Use the CreateCertificate action to create a certificate for the public domain names you want to use with your container service. You can specify public domain names using a string to array map as shown in the example later on this page.
-        deployment:
-          allOf:
-          - $ref: '#/components/schemas/ContainerServiceDeploymentRequest'
-          description: An object that describes a deployment for the container service. A deployment specifies the containers that will be launched on the container service and their settings, such as the ports to open, the environment variables to apply, and the launch command to run. It also specifies the container that will serve as the public endpoint of the deployment and its settings, such as the HTTP or HTTPS port to use, and the health check configuration.
-        privateRegistryAccess:
-          allOf:
-          - $ref: '#/components/schemas/PrivateRegistryAccessRequest'
-          description: An object to describe the configuration for the container service to access private container image repositories, such as Amazon Elastic Container Registry (Amazon ECR) private repositories. For more information, see Configuring access to an Amazon ECR private repository for an Amazon Lightsail container service in the Amazon Lightsail Developer Guide .
-      required:
-      - serviceName
-      - power
-      - scale
-    ContainerServicePower:
-      type: object
-      properties:
-        powerId:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The ID of the power ( nano-1 ).
-        price:
-          allOf:
-          - $ref: '#/components/schemas/float'
-          description: The monthly price of the power in USD.
-        cpuCount:
-          allOf:
-          - $ref: '#/components/schemas/float'
-          description: The number of vCPUs included in the power.
-        ramSizeInGb:
-          allOf:
-          - $ref: '#/components/schemas/float'
-          description: The amount of RAM (in GB) of the power.
-        name:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The friendly name of the power ( nano ).
-        isActive:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value indicating whether the power is active and can be specified for container services.
-      description: Describes the powers that can be specified for an Amazon Lightsail container service. The power specifies the amount of RAM, the number of vCPUs, and the base price of the container service.
-    Container:
-      type: object
-      properties:
-        image:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: 'The name of the image used for the container. Container images sourced from your Lightsail container service, that are registered and stored on your service, start with a colon ( : ). For example, if your container service name is container-service-1 , the container image label is mystaticsite , and you want to use the third ( 3 ) version of the registered container image, then you should specify :container-service-1.mystaticsite.3 . To use the latest version of a container image, specify latest instead of a version number (for example, :container-service-1.mystaticsite.latest ). Lightsail will automatically use the highest numbered version of the registered container image. Container images sourced from a public registry like Docker Hub don''t start with a colon. For example, nginx:latest or nginx .'
-        command:
-          allOf:
-          - $ref: '#/components/schemas/StringList'
-          description: The launch command for the container.
-        environment:
-          allOf:
-          - $ref: '#/components/schemas/Environment'
-          description: The environment variables of the container.
-        ports:
-          allOf:
-          - $ref: '#/components/schemas/PortMap'
-          description: The open firewall ports of the container.
-      description: Describes the settings of a container that will be launched, or that is launched, to an Amazon Lightsail container service.
-    CreateContainerServiceDeploymentResult:
-      type: object
-      properties:
-        containerService:
-          allOf:
-          - $ref: '#/components/schemas/ContainerService'
-          description: An object that describes a container service.
-    AccessDeniedException:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-west-3
+      - eu-central-1
+      - eu-north-1
+      - eu-south-2
+      - ca-central-1
+      - ap-east-1
+      - ap-south-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+      - ap-northeast-2
+      - ap-southeast-3
+      - ap-southeast-5
+      - sa-east-1
+    ResourceType:
+      type: string
+      enum:
+      - ContainerService
+      - Instance
+      - StaticIp
+      - KeyPair
+      - InstanceSnapshot
+      - Domain
+      - PeeredVpc
+      - LoadBalancer
+      - LoadBalancerTlsCertificate
+      - Disk
+      - DiskSnapshot
+      - RelationalDatabase
+      - RelationalDatabaseSnapshot
+      - ExportSnapshotRecord
+      - CloudFormationStackRecord
+      - Alarm
+      - ContactMethod
+      - Distribution
+      - Certificate
+      - Bucket
+    ContainerServiceStateDetail:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
-    TagList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Tag'
-    NotFoundException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when it cannot find a resource.
-    CreateContainerServiceRegistryLoginResult:
-      type: object
-      properties:
-        registryLogin:
           allOf:
-          - $ref: '#/components/schemas/ContainerServiceRegistryLogin'
-          description: An object that describes the log in information for the container service registry of your Lightsail account.
+          - $ref: '#/components/schemas/ContainerServiceStateDetailCode'
+          description: 'The state code of the container service. The following state codes are possible: The following state codes are possible if your container service is in a DEPLOYING or UPDATING state: CREATING_SYSTEM_RESOURCES - The system resources for your container service are being created. CREATING_NETWORK_INFRASTRUCTURE - The network infrastructure for your container service are being created. PROVISIONING_CERTIFICATE - The SSL/TLS certificate for your container service is being created. PROVISIONING_SERVICE - Your container service is being provisioned. CREATING_DEPLOYMENT - Your deployment is being created on your container service. EVALUATING_HEALTH_CHECK - The health of your deployment is being evaluated. ACTIVATING_DEPLOYMENT - Your deployment is being activated. The following state codes are possible if your container service is in a PENDING state: CERTIFICATE_LIMIT_EXCEEDED - The SSL/TLS certificate required for your container service exceeds the maximum number of certificates allowed for your account. UNKNOWN_ERROR - An error was experienced when your container service was being created.'
+        message:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: A message that provides more information for the state code. The state detail is populated only when a container service is in a PENDING , DEPLOYING , or UPDATING state.
+      description: Describes the current state of a container service.
+    DeleteContainerImageResult:
+      type: object
+    string:
+      type: string
+    boolean:
+      type: boolean
+    ContainerServiceState:
+      type: string
+      enum:
+      - PENDING
+      - READY
+      - RUNNING
+      - UPDATING
+      - DELETING
+      - DISABLED
+      - DEPLOYING
+    ContainerServiceHealthCheckConfig:
+      type: object
+      properties:
+        healthyThreshold:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The number of consecutive health checks successes required before moving the container to the Healthy state. The default value is 2 .
+        unhealthyThreshold:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The number of consecutive health check failures required before moving the container to the Unhealthy state. The default value is 2 .
+        timeoutSeconds:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The amount of time, in seconds, during which no response means a failed health check. You can specify between 2 and 60 seconds. The default value is 2 .
+        intervalSeconds:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The approximate interval, in seconds, between health checks of an individual container. You can specify between 5 and 300 seconds. The default value is 5 .
+        path:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The path on the container on which to perform the health check. The default value is / .
+        successCodes:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The HTTP codes to use when checking for a successful response from a container. You can specify values between 200 and 499 . You can specify multiple values (for example, 200,202 ) or a range of values (for example, 200-299 ).
+      description: Describes the health check configuration of an Amazon Lightsail container service.
   securitySchemes:
     sigv4:
       type: apiKey

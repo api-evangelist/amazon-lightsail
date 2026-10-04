@@ -382,11 +382,14 @@ paths:
       x-amz-target: Lightsail_20161128.ImportKeyPair
 components:
   schemas:
-    TagValue:
-      type: string
-    TagKey:
-      type: string
-    ServiceException:
+    GetKeyPairResult:
+      type: object
+      properties:
+        keyPair:
+          allOf:
+          - $ref: '#/components/schemas/KeyPair'
+          description: An array of key-value pairs containing information about the key pair.
+    AccessDeniedException:
       type: object
       properties:
         code:
@@ -397,7 +400,52 @@ components:
           $ref: '#/components/schemas/string'
         tip:
           $ref: '#/components/schemas/string'
-      description: A general service exception.
+      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
+    ImportKeyPairResult:
+      type: object
+      properties:
+        operation:
+          allOf:
+          - $ref: '#/components/schemas/Operation'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    Base64:
+      type: string
+    ResourceName:
+      type: string
+      pattern: ^\w[\w\-]*\w$
+    NotFoundException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when it cannot find a resource.
+    IsoDate:
+      type: string
+      format: date-time
+    KeyPairList:
+      type: array
+      items:
+        $ref: '#/components/schemas/KeyPair'
+    ImportKeyPairRequest:
+      type: object
+      properties:
+        keyPairName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the key pair for which you want to import the public key.
+        publicKeyBase64:
+          allOf:
+          - $ref: '#/components/schemas/Base64'
+          description: A base64-encoded public key of the ssh-rsa type.
+      required:
+      - keyPairName
+      - publicKeyBase64
     RegionSetupInProgressException:
       type: object
       properties:
@@ -414,39 +462,142 @@ components:
           - $ref: '#/components/schemas/string'
           description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
       description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
-    string:
-      type: string
-    GetKeyPairsResult:
-      type: object
-      properties:
-        keyPairs:
-          allOf:
-          - $ref: '#/components/schemas/KeyPairList'
-          description: An array of key-value pairs containing information about the key pairs.
-        nextPageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetKeyPairs request and specify the next page token using the pageToken parameter.
-    ImportKeyPairRequest:
+    CreateKeyPairRequest:
       type: object
       properties:
         keyPairName:
           allOf:
           - $ref: '#/components/schemas/ResourceName'
-          description: The name of the key pair for which you want to import the public key.
+          description: The name for your new key pair.
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values to add to the resource during create. Use the TagResource action to tag a resource after it's created.
+      required:
+      - keyPairName
+    TagKey:
+      type: string
+    InvalidInputException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
+    DeleteKeyPairResult:
+      type: object
+      properties:
+        operation:
+          allOf:
+          - $ref: '#/components/schemas/Operation'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    OperationFailureException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an operation fails to execute.
+    GetKeyPairsRequest:
+      type: object
+      properties:
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetKeyPairs request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+        includeDefaultKeyPair:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value that indicates whether to include the default key pair in the response of your request.
+    DownloadDefaultKeyPairResult:
+      type: object
+      properties:
         publicKeyBase64:
           allOf:
           - $ref: '#/components/schemas/Base64'
           description: A base64-encoded public key of the ssh-rsa type.
-      required:
-      - keyPairName
-      - publicKeyBase64
-    IsoDate:
+        privateKeyBase64:
+          allOf:
+          - $ref: '#/components/schemas/Base64'
+          description: A base64-encoded RSA private key.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the default key pair was created.
+    RegionName:
       type: string
-      format: date-time
-    ResourceName:
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-west-3
+      - eu-central-1
+      - eu-north-1
+      - eu-south-2
+      - ca-central-1
+      - ap-east-1
+      - ap-south-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+      - ap-northeast-2
+      - ap-southeast-3
+      - ap-southeast-5
+      - sa-east-1
+    ResourceType:
       type: string
-      pattern: ^\w[\w\-]*\w$
+      enum:
+      - ContainerService
+      - Instance
+      - StaticIp
+      - KeyPair
+      - InstanceSnapshot
+      - Domain
+      - PeeredVpc
+      - LoadBalancer
+      - LoadBalancerTlsCertificate
+      - Disk
+      - DiskSnapshot
+      - RelationalDatabase
+      - RelationalDatabaseSnapshot
+      - ExportSnapshotRecord
+      - CloudFormationStackRecord
+      - Alarm
+      - ContactMethod
+      - Distribution
+      - Certificate
+      - Bucket
+    TagList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Tag'
+    AccountSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an account is still in the setup in progress state.
+    string:
+      type: string
     Operation:
       type: object
       properties:
@@ -499,6 +650,8 @@ components:
           - $ref: '#/components/schemas/string'
           description: The error details.
       description: Describes the API operation.
+    boolean:
+      type: boolean
     UnauthenticatedException:
       type: object
       properties:
@@ -511,68 +664,6 @@ components:
         tip:
           $ref: '#/components/schemas/string'
       description: Lightsail throws this exception when the user has not been authenticated.
-    GetKeyPairResult:
-      type: object
-      properties:
-        keyPair:
-          allOf:
-          - $ref: '#/components/schemas/KeyPair'
-          description: An array of key-value pairs containing information about the key pair.
-    OperationFailureException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when an operation fails to execute.
-    CreateKeyPairRequest:
-      type: object
-      properties:
-        keyPairName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name for your new key pair.
-        tags:
-          allOf:
-          - $ref: '#/components/schemas/TagList'
-          description: The tag keys and optional values to add to the resource during create. Use the TagResource action to tag a resource after it's created.
-      required:
-      - keyPairName
-    InvalidInputException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
-    KeyPairList:
-      type: array
-      items:
-        $ref: '#/components/schemas/KeyPair'
-    boolean:
-      type: boolean
-    ResourceLocation:
-      type: object
-      properties:
-        availabilityZone:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The Availability Zone. Follows the format us-east-2a (case-sensitive).
-        regionName:
-          allOf:
-          - $ref: '#/components/schemas/RegionName'
-          description: The Amazon Web Services Region name.
-      description: Describes the resource location.
     CreateKeyPairResult:
       type: object
       properties:
@@ -592,23 +683,35 @@ components:
           allOf:
           - $ref: '#/components/schemas/Operation'
           description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    DownloadDefaultKeyPairResult:
+    ResourceLocation:
       type: object
       properties:
-        publicKeyBase64:
+        availabilityZone:
           allOf:
-          - $ref: '#/components/schemas/Base64'
-          description: A base64-encoded public key of the ssh-rsa type.
-        privateKeyBase64:
+          - $ref: '#/components/schemas/string'
+          description: The Availability Zone. Follows the format us-east-2a (case-sensitive).
+        regionName:
           allOf:
-          - $ref: '#/components/schemas/Base64'
-          description: A base64-encoded RSA private key.
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the default key pair was created.
-    Base64:
+          - $ref: '#/components/schemas/RegionName'
+          description: The Amazon Web Services Region name.
+      description: Describes the resource location.
+    TagValue:
       type: string
+    Tag:
+      type: object
+      properties:
+        key:
+          allOf:
+          - $ref: '#/components/schemas/TagKey'
+          description: 'The key of the tag. Constraints: Tag keys accept a maximum of 128 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+        value:
+          allOf:
+          - $ref: '#/components/schemas/TagValue'
+          description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+      description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
+    NonEmptyString:
+      type: string
+      pattern: \S
     OperationType:
       type: string
       enum:
@@ -696,46 +799,17 @@ components:
       - StopGUISession
       - SetupInstanceHttps
       - GetProfile
-    GetKeyPairRequest:
+    GetKeyPairsResult:
       type: object
       properties:
-        keyPairName:
+        keyPairs:
           allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the key pair for which you are requesting information.
-      required:
-      - keyPairName
-    DeleteKeyPairRequest:
-      type: object
-      properties:
-        keyPairName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the key pair to delete.
-        expectedFingerprint:
+          - $ref: '#/components/schemas/KeyPairList'
+          description: An array of key-value pairs containing information about the key pairs.
+        nextPageToken:
           allOf:
           - $ref: '#/components/schemas/string'
-          description: The RSA fingerprint of the Lightsail default key pair to delete. The expectedFingerprint parameter is required only when specifying to delete a Lightsail default key pair.
-      required:
-      - keyPairName
-    ImportKeyPairResult:
-      type: object
-      properties:
-        operation:
-          allOf:
-          - $ref: '#/components/schemas/Operation'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    GetKeyPairsRequest:
-      type: object
-      properties:
-        pageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetKeyPairs request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
-        includeDefaultKeyPair:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value that indicates whether to include the default key pair in the response of your request.
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetKeyPairs request and specify the next page token using the pageToken parameter.
     OperationStatus:
       type: string
       enum:
@@ -744,32 +818,6 @@ components:
       - Failed
       - Completed
       - Succeeded
-    ResourceType:
-      type: string
-      enum:
-      - ContainerService
-      - Instance
-      - StaticIp
-      - KeyPair
-      - InstanceSnapshot
-      - Domain
-      - PeeredVpc
-      - LoadBalancer
-      - LoadBalancerTlsCertificate
-      - Disk
-      - DiskSnapshot
-      - RelationalDatabase
-      - RelationalDatabaseSnapshot
-      - ExportSnapshotRecord
-      - CloudFormationStackRecord
-      - Alarm
-      - ContactMethod
-      - Distribution
-      - Certificate
-      - Bucket
-    NonEmptyString:
-      type: string
-      pattern: \S
     KeyPair:
       type: object
       properties:
@@ -806,7 +854,29 @@ components:
           - $ref: '#/components/schemas/Base64'
           description: The RSA fingerprint of the key pair.
       description: Describes an SSH key pair.
-    AccountSetupInProgressException:
+    DeleteKeyPairRequest:
+      type: object
+      properties:
+        keyPairName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the key pair to delete.
+        expectedFingerprint:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The RSA fingerprint of the Lightsail default key pair to delete. The expectedFingerprint parameter is required only when specifying to delete a Lightsail default key pair.
+      required:
+      - keyPairName
+    GetKeyPairRequest:
+      type: object
+      properties:
+        keyPairName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the key pair for which you are requesting information.
+      required:
+      - keyPairName
+    ServiceException:
       type: object
       properties:
         code:
@@ -817,77 +887,7 @@ components:
           $ref: '#/components/schemas/string'
         tip:
           $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when an account is still in the setup in progress state.
-    AccessDeniedException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
-    TagList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Tag'
-    RegionName:
-      type: string
-      enum:
-      - us-east-1
-      - us-east-2
-      - us-west-1
-      - us-west-2
-      - eu-west-1
-      - eu-west-2
-      - eu-west-3
-      - eu-central-1
-      - eu-north-1
-      - eu-south-2
-      - ca-central-1
-      - ap-east-1
-      - ap-south-1
-      - ap-southeast-1
-      - ap-southeast-2
-      - ap-northeast-1
-      - ap-northeast-2
-      - ap-southeast-3
-      - ap-southeast-5
-      - sa-east-1
-    DeleteKeyPairResult:
-      type: object
-      properties:
-        operation:
-          allOf:
-          - $ref: '#/components/schemas/Operation'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    NotFoundException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when it cannot find a resource.
-    Tag:
-      type: object
-      properties:
-        key:
-          allOf:
-          - $ref: '#/components/schemas/TagKey'
-          description: 'The key of the tag. Constraints: Tag keys accept a maximum of 128 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
-        value:
-          allOf:
-          - $ref: '#/components/schemas/TagValue'
-          description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
-      description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
+      description: A general service exception.
   securitySchemes:
     sigv4:
       type: apiKey

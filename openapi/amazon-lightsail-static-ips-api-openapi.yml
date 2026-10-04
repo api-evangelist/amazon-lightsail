@@ -388,6 +388,47 @@ paths:
       x-amz-target: Lightsail_20161128.ReleaseStaticIp
 components:
   schemas:
+    ReleaseStaticIpResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    AccessDeniedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
+    StaticIpList:
+      type: array
+      items:
+        $ref: '#/components/schemas/StaticIp'
+    ResourceName:
+      type: string
+      pattern: ^\w[\w\-]*\w$
+    NotFoundException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when it cannot find a resource.
+    IsoDate:
+      type: string
+      format: date-time
     RegionSetupInProgressException:
       type: object
       properties:
@@ -404,7 +445,27 @@ components:
           - $ref: '#/components/schemas/string'
           description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
       description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
-    ServiceException:
+    GetStaticIpRequest:
+      type: object
+      properties:
+        staticIpName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the static IP in Lightsail.
+      required:
+      - staticIpName
+    OperationList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Operation'
+    DetachStaticIpResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    InvalidInputException:
       type: object
       properties:
         code:
@@ -415,48 +476,109 @@ components:
           $ref: '#/components/schemas/string'
         tip:
           $ref: '#/components/schemas/string'
-      description: A general service exception.
-    AttachStaticIpRequest:
+      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
+    OperationFailureException:
       type: object
       properties:
-        staticIpName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the static IP.
-        instanceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The instance name to which you want to attach the static IP address.
-      required:
-      - staticIpName
-      - instanceName
-    ReleaseStaticIpResult:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an operation fails to execute.
+    AllocateStaticIpResult:
       type: object
       properties:
         operations:
           allOf:
           - $ref: '#/components/schemas/OperationList'
           description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    string:
-      type: string
-    IsoDate:
-      type: string
-      format: date-time
-    AllocateStaticIpRequest:
+    GetStaticIpsResult:
+      type: object
+      properties:
+        staticIps:
+          allOf:
+          - $ref: '#/components/schemas/StaticIpList'
+          description: An array of key-value pairs containing information about your get static IPs request.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetStaticIps request and specify the next page token using the pageToken parameter.
+    DetachStaticIpRequest:
       type: object
       properties:
         staticIpName:
           allOf:
           - $ref: '#/components/schemas/ResourceName'
-          description: The name of the static IP address.
+          description: The name of the static IP to detach from the instance.
       required:
       - staticIpName
+    RegionName:
+      type: string
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-west-3
+      - eu-central-1
+      - eu-north-1
+      - eu-south-2
+      - ca-central-1
+      - ap-east-1
+      - ap-south-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+      - ap-northeast-2
+      - ap-southeast-3
+      - ap-southeast-5
+      - sa-east-1
+    ResourceType:
+      type: string
+      enum:
+      - ContainerService
+      - Instance
+      - StaticIp
+      - KeyPair
+      - InstanceSnapshot
+      - Domain
+      - PeeredVpc
+      - LoadBalancer
+      - LoadBalancerTlsCertificate
+      - Disk
+      - DiskSnapshot
+      - RelationalDatabase
+      - RelationalDatabaseSnapshot
+      - ExportSnapshotRecord
+      - CloudFormationStackRecord
+      - Alarm
+      - ContactMethod
+      - Distribution
+      - Certificate
+      - Bucket
     IpAddress:
       type: string
       pattern: ^([0-9]{1,3}\.){3}[0-9]{1,3}$
-    ResourceName:
+    AccountSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an account is still in the setup in progress state.
+    string:
       type: string
-      pattern: ^\w[\w\-]*\w$
     Operation:
       type: object
       properties:
@@ -509,6 +631,8 @@ components:
           - $ref: '#/components/schemas/string'
           description: The error details.
       description: Describes the API operation.
+    boolean:
+      type: boolean
     UnauthenticatedException:
       type: object
       properties:
@@ -521,72 +645,6 @@ components:
         tip:
           $ref: '#/components/schemas/string'
       description: Lightsail throws this exception when the user has not been authenticated.
-    OperationList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Operation'
-    OperationFailureException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when an operation fails to execute.
-    GetStaticIpsResult:
-      type: object
-      properties:
-        staticIps:
-          allOf:
-          - $ref: '#/components/schemas/StaticIpList'
-          description: An array of key-value pairs containing information about your get static IPs request.
-        nextPageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetStaticIps request and specify the next page token using the pageToken parameter.
-    GetStaticIpsRequest:
-      type: object
-      properties:
-        pageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetStaticIps request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
-    AttachStaticIpResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    StaticIpList:
-      type: array
-      items:
-        $ref: '#/components/schemas/StaticIp'
-    DetachStaticIpResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    InvalidInputException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
-    boolean:
-      type: boolean
     ResourceLocation:
       type: object
       properties:
@@ -599,15 +657,46 @@ components:
           - $ref: '#/components/schemas/RegionName'
           description: The Amazon Web Services Region name.
       description: Describes the resource location.
-    DetachStaticIpRequest:
+    GetStaticIpResult:
+      type: object
+      properties:
+        staticIp:
+          allOf:
+          - $ref: '#/components/schemas/StaticIp'
+          description: An array of key-value pairs containing information about the requested static IP.
+    AllocateStaticIpRequest:
       type: object
       properties:
         staticIpName:
           allOf:
           - $ref: '#/components/schemas/ResourceName'
-          description: The name of the static IP to detach from the instance.
+          description: The name of the static IP address.
       required:
       - staticIpName
+    GetStaticIpsRequest:
+      type: object
+      properties:
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetStaticIps request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+    AttachStaticIpRequest:
+      type: object
+      properties:
+        staticIpName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the static IP.
+        instanceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The instance name to which you want to attach the static IP address.
+      required:
+      - staticIpName
+      - instanceName
+    NonEmptyString:
+      type: string
+      pattern: \S
     OperationType:
       type: string
       enum:
@@ -695,40 +784,15 @@ components:
       - StopGUISession
       - SetupInstanceHttps
       - GetProfile
-    OperationStatus:
-      type: string
-      enum:
-      - NotStarted
-      - Started
-      - Failed
-      - Completed
-      - Succeeded
-    NonEmptyString:
-      type: string
-      pattern: \S
-    ResourceType:
-      type: string
-      enum:
-      - ContainerService
-      - Instance
-      - StaticIp
-      - KeyPair
-      - InstanceSnapshot
-      - Domain
-      - PeeredVpc
-      - LoadBalancer
-      - LoadBalancerTlsCertificate
-      - Disk
-      - DiskSnapshot
-      - RelationalDatabase
-      - RelationalDatabaseSnapshot
-      - ExportSnapshotRecord
-      - CloudFormationStackRecord
-      - Alarm
-      - ContactMethod
-      - Distribution
-      - Certificate
-      - Bucket
+    ReleaseStaticIpRequest:
+      type: object
+      properties:
+        staticIpName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the static IP to delete.
+      required:
+      - staticIpName
     StaticIp:
       type: object
       properties:
@@ -769,68 +833,22 @@ components:
           - $ref: '#/components/schemas/boolean'
           description: A Boolean value indicating whether the static IP is attached.
       description: Describes a static IP.
-    AccountSetupInProgressException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when an account is still in the setup in progress state.
-    AccessDeniedException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
-    GetStaticIpResult:
-      type: object
-      properties:
-        staticIp:
-          allOf:
-          - $ref: '#/components/schemas/StaticIp'
-          description: An array of key-value pairs containing information about the requested static IP.
-    RegionName:
+    OperationStatus:
       type: string
       enum:
-      - us-east-1
-      - us-east-2
-      - us-west-1
-      - us-west-2
-      - eu-west-1
-      - eu-west-2
-      - eu-west-3
-      - eu-central-1
-      - eu-north-1
-      - eu-south-2
-      - ca-central-1
-      - ap-east-1
-      - ap-south-1
-      - ap-southeast-1
-      - ap-southeast-2
-      - ap-northeast-1
-      - ap-northeast-2
-      - ap-southeast-3
-      - ap-southeast-5
-      - sa-east-1
-    AllocateStaticIpResult:
+      - NotStarted
+      - Started
+      - Failed
+      - Completed
+      - Succeeded
+    AttachStaticIpResult:
       type: object
       properties:
         operations:
           allOf:
           - $ref: '#/components/schemas/OperationList'
           description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    NotFoundException:
+    ServiceException:
       type: object
       properties:
         code:
@@ -841,25 +859,7 @@ components:
           $ref: '#/components/schemas/string'
         tip:
           $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when it cannot find a resource.
-    ReleaseStaticIpRequest:
-      type: object
-      properties:
-        staticIpName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the static IP to delete.
-      required:
-      - staticIpName
-    GetStaticIpRequest:
-      type: object
-      properties:
-        staticIpName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the static IP in Lightsail.
-      required:
-      - staticIpName
+      description: A general service exception.
   securitySchemes:
     sigv4:
       type: apiKey

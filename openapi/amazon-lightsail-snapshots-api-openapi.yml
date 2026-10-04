@@ -933,348 +933,45 @@ paths:
       x-amz-target: Lightsail_20161128.GetInstanceSnapshots
 components:
   schemas:
-    TagValue:
-      type: string
-    RegionSetupInProgressException:
+    AccessDeniedException:
       type: object
       properties:
         code:
           $ref: '#/components/schemas/string'
         docs:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Regions and Availability Zones for Lightsail
+          $ref: '#/components/schemas/string'
         message:
           $ref: '#/components/schemas/string'
         tip:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
-      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
-    CreateDiskSnapshotResult:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
+    AddOnRequest:
       type: object
       properties:
-        operations:
+        addOnType:
           allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    TimeOfDay:
-      type: string
-      pattern: ^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$
-    DeleteDiskSnapshotRequest:
-      type: object
-      properties:
-        diskSnapshotName:
+          - $ref: '#/components/schemas/AddOnType'
+          description: The add-on type.
+        autoSnapshotAddOnRequest:
           allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the disk snapshot you want to delete ( my-disk-snapshot ).
+          - $ref: '#/components/schemas/AutoSnapshotAddOnRequest'
+          description: An object that represents additional parameters when enabling or modifying the automatic snapshot add-on.
+        stopInstanceOnIdleRequest:
+          allOf:
+          - $ref: '#/components/schemas/StopInstanceOnIdleRequest'
+          description: An object that represents additional parameters when enabling or modifying the StopInstanceOnIdle add-on. This object only applies to Lightsail for Research resources.
       required:
-      - diskSnapshotName
-    DiskSnapshotList:
-      type: array
-      items:
-        $ref: '#/components/schemas/DiskSnapshot'
-    AttachedDiskList:
-      type: array
-      items:
-        $ref: '#/components/schemas/AttachedDisk'
-    DiskSnapshotState:
-      type: string
-      enum:
-      - pending
-      - completed
-      - error
-      - unknown
-    IsoDate:
-      type: string
-      format: date-time
-    GetExportSnapshotRecordsRequest:
+      - addOnType
+      description: Describes a request to enable, modify, or disable an add-on for an Amazon Lightsail resource. An additional cost may be associated with enabling add-ons. For more information, see the Lightsail pricing page .
+    ExportSnapshotRequest:
       type: object
       properties:
-        pageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetExportSnapshotRecords request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
-    ResourceName:
-      type: string
-      pattern: ^\w[\w\-]*\w$
-    Operation:
-      type: object
-      properties:
-        id:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The ID of the operation.
-        resourceName:
+        sourceSnapshotName:
           allOf:
           - $ref: '#/components/schemas/ResourceName'
-          description: The resource name.
-        resourceType:
-          allOf:
-          - $ref: '#/components/schemas/ResourceType'
-          description: The resource type.
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the operation was initialized ( 1479816991.349 ).
-        location:
-          allOf:
-          - $ref: '#/components/schemas/ResourceLocation'
-          description: The Amazon Web Services Region and Availability Zone.
-        isTerminal:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value indicating whether the operation is terminal.
-        operationDetails:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Details about the operation ( Debian-1GB-Ohio-1 ).
-        operationType:
-          allOf:
-          - $ref: '#/components/schemas/OperationType'
-          description: The type of operation.
-        status:
-          allOf:
-          - $ref: '#/components/schemas/OperationStatus'
-          description: The status of the operation.
-        statusChangedAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the status was changed ( 1479816991.349 ).
-        errorCode:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The error code.
-        errorDetails:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The error details.
-      description: Describes the API operation.
-    AddOnType:
-      type: string
-      enum:
-      - AutoSnapshot
-      - StopInstanceOnIdle
-    UnauthenticatedException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user has not been authenticated.
-    OperationList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Operation'
-    StringList:
-      type: array
-      items:
-        $ref: '#/components/schemas/string'
-    DiskState:
-      type: string
-      enum:
-      - pending
-      - error
-      - available
-      - in-use
-      - unknown
-    ExportSnapshotRecordSourceInfo:
-      type: object
-      properties:
-        resourceType:
-          allOf:
-          - $ref: '#/components/schemas/ExportSnapshotRecordSourceType'
-          description: The Lightsail resource type ( InstanceSnapshot or DiskSnapshot ).
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The date when the source instance or disk snapshot was created.
-        name:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The name of the source instance or disk snapshot.
-        arn:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The Amazon Resource Name (ARN) of the source instance or disk snapshot.
-        fromResourceName:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The name of the snapshot's source instance or disk.
-        fromResourceArn:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The Amazon Resource Name (ARN) of the snapshot's source instance or disk.
-        instanceSnapshotInfo:
-          allOf:
-          - $ref: '#/components/schemas/InstanceSnapshotInfo'
-          description: A list of objects describing an instance snapshot.
-        diskSnapshotInfo:
-          allOf:
-          - $ref: '#/components/schemas/DiskSnapshotInfo'
-          description: A list of objects describing a disk snapshot.
-      description: Describes the source of an export snapshot record.
-    AddOnList:
-      type: array
-      items:
-        $ref: '#/components/schemas/AddOn'
-    AutoSnapshotAddOnRequest:
-      type: object
-      properties:
-        snapshotTimeOfDay:
-          allOf:
-          - $ref: '#/components/schemas/TimeOfDay'
-          description: 'The daily time when an automatic snapshot will be created. Constraints: Must be in HH:00 format, and in an hourly increment. Specified in Coordinated Universal Time (UTC). The snapshot will be automatically created between the time specified and up to 45 minutes after.'
-      description: 'Describes a request to enable or modify the automatic snapshot add-on for an Amazon Lightsail instance or disk. When you modify the automatic snapshot time for a resource, it is typically effective immediately except under the following conditions: If an automatic snapshot has been created for the current day, and you change the snapshot time to a later time of day, then the new snapshot time will be effective the following day. This ensures that two snapshots are not created for the current day. If an automatic snapshot has not yet been created for the current day, and you change the snapshot time to an earlier time of day, then the new snapshot time will be effective the following day and a snapshot is automatically created at the previously set time for the current day. This ensures that a snapshot is created for the current day. If an automatic snapshot has not yet been created for the current day, and you change the snapshot time to a time that is within 30 minutes from your current time, then the new snapshot time will be effective the following day and a snapshot is automatically created at the previously set time for the current day. This ensures that a snapshot is created for the current day, because 30 minutes is required between your current time and the new snapshot time that you specify. If an automatic snapshot is scheduled to be created within 30 minutes from your current time and you change the snapshot time, then the new snapshot time will be effective the following day and a snapshot is automatically created at the previously set time for the current day. This ensures that a snapshot is created for the current day, because 30 minutes is required between your current time and the new snapshot time that you specify.'
-    ExportSnapshotRecord:
-      type: object
-      properties:
-        name:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The export snapshot record name.
-        arn:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The Amazon Resource Name (ARN) of the export snapshot record.
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The date when the export snapshot record was created.
-        location:
-          allOf:
-          - $ref: '#/components/schemas/ResourceLocation'
-          description: The AWS Region and Availability Zone where the export snapshot record is located.
-        resourceType:
-          allOf:
-          - $ref: '#/components/schemas/ResourceType'
-          description: The Lightsail resource type ( ExportSnapshotRecord ).
-        state:
-          allOf:
-          - $ref: '#/components/schemas/RecordState'
-          description: The state of the export snapshot record.
-        sourceInfo:
-          allOf:
-          - $ref: '#/components/schemas/ExportSnapshotRecordSourceInfo'
-          description: A list of objects describing the source of the export snapshot record.
-        destinationInfo:
-          allOf:
-          - $ref: '#/components/schemas/DestinationInfo'
-          description: A list of objects describing the destination of the export snapshot record.
-      description: Describes an export snapshot record.
-    GetInstanceSnapshotResult:
-      type: object
-      properties:
-        instanceSnapshot:
-          allOf:
-          - $ref: '#/components/schemas/InstanceSnapshot'
-          description: An array of key-value pairs containing information about the results of your get instance snapshot request.
-    ResourceType:
-      type: string
-      enum:
-      - ContainerService
-      - Instance
-      - StaticIp
-      - KeyPair
-      - InstanceSnapshot
-      - Domain
-      - PeeredVpc
-      - LoadBalancer
-      - LoadBalancerTlsCertificate
-      - Disk
-      - DiskSnapshot
-      - RelationalDatabase
-      - RelationalDatabaseSnapshot
-      - ExportSnapshotRecord
-      - CloudFormationStackRecord
-      - Alarm
-      - ContactMethod
-      - Distribution
-      - Certificate
-      - Bucket
-    NonEmptyString:
-      type: string
-      pattern: \S
-    GetDiskSnapshotResult:
-      type: object
-      properties:
-        diskSnapshot:
-          allOf:
-          - $ref: '#/components/schemas/DiskSnapshot'
-          description: An object containing information about the disk snapshot.
-    CreateDiskFromSnapshotResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    Tag:
-      type: object
-      properties:
-        key:
-          allOf:
-          - $ref: '#/components/schemas/TagKey'
-          description: 'The key of the tag. Constraints: Tag keys accept a maximum of 128 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
-        value:
-          allOf:
-          - $ref: '#/components/schemas/TagValue'
-          description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
-      description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
-    CopySnapshotResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    GetInstanceSnapshotsRequest:
-      type: object
-      properties:
-        pageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetInstanceSnapshots request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
-    GetDiskSnapshotRequest:
-      type: object
-      properties:
-        diskSnapshotName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the disk snapshot ( my-disk-snapshot ).
+          description: The name of the instance or disk snapshot to be exported to Amazon EC2.
       required:
-      - diskSnapshotName
-    ServiceException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: A general service exception.
-    AttachedDiskMap:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/DiskMapList'
-    IpAddressType:
-      type: string
-      enum:
-      - dualstack
-      - ipv4
-      - ipv6
-    AutoSnapshotDetailsList:
-      type: array
-      items:
-        $ref: '#/components/schemas/AutoSnapshotDetails'
+      - sourceSnapshotName
     OperationFailureException:
       type: object
       properties:
@@ -1287,439 +984,27 @@ components:
         tip:
           $ref: '#/components/schemas/string'
       description: Lightsail throws this exception when an operation fails to execute.
-    AutoMountStatus:
-      type: string
-      enum:
-      - Failed
-      - Pending
-      - Mounted
-      - NotMounted
-    InvalidInputException:
+    CreateDiskSnapshotRequest:
       type: object
       properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
-    boolean:
-      type: boolean
-    DiskSnapshot:
-      type: object
-      properties:
-        name:
+        diskName:
           allOf:
           - $ref: '#/components/schemas/ResourceName'
-          description: The name of the disk snapshot ( my-disk-snapshot ).
-        arn:
+          description: The unique name of the source disk ( Disk-Virginia-1 ). This parameter cannot be defined together with the instance name parameter. The disk name and instance name parameters are mutually exclusive.
+        diskSnapshotName:
           allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The Amazon Resource Name (ARN) of the disk snapshot.
-        supportCode:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the destination disk snapshot ( my-disk-snapshot ) based on the source disk.
+        instanceName:
           allOf:
-          - $ref: '#/components/schemas/string'
-          description: The support code. Include this code in your email to support when you have questions about an instance or another resource in Lightsail. This code enables our support team to look up your Lightsail information more easily.
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The date when the disk snapshot was created.
-        location:
-          allOf:
-          - $ref: '#/components/schemas/ResourceLocation'
-          description: The AWS Region and Availability Zone where the disk snapshot was created.
-        resourceType:
-          allOf:
-          - $ref: '#/components/schemas/ResourceType'
-          description: The Lightsail resource type ( DiskSnapshot ).
+          - $ref: '#/components/schemas/ResourceName'
+          description: The unique name of the source instance ( Amazon_Linux-512MB-Virginia-1 ). When this is defined, a snapshot of the instance's system volume is created. This parameter cannot be defined together with the disk name parameter. The instance name and disk name parameters are mutually exclusive.
         tags:
           allOf:
           - $ref: '#/components/schemas/TagList'
-          description: The tag keys and optional values for the resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
-        sizeInGb:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The size of the disk in GB.
-        state:
-          allOf:
-          - $ref: '#/components/schemas/DiskSnapshotState'
-          description: The status of the disk snapshot operation.
-        progress:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The progress of the snapshot.
-        fromDiskName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The unique name of the source disk from which the disk snapshot was created.
-        fromDiskArn:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The Amazon Resource Name (ARN) of the source disk from which the disk snapshot was created.
-        fromInstanceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The unique name of the source instance from which the disk (system volume) snapshot was created.
-        fromInstanceArn:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The Amazon Resource Name (ARN) of the source instance from which the disk (system volume) snapshot was created.
-        isFromAutoSnapshot:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value indicating whether the snapshot was created from an automatic snapshot.
-      description: Describes a block storage disk snapshot.
-    DeleteAutoSnapshotResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    CreateInstancesFromSnapshotResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    DeleteInstanceSnapshotRequest:
-      type: object
-      properties:
-        instanceSnapshotName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the snapshot to delete.
+          description: The tag keys and optional values to add to the resource during create. Use the TagResource action to tag a resource after it's created.
       required:
-      - instanceSnapshotName
-    GetInstanceSnapshotRequest:
-      type: object
-      properties:
-        instanceSnapshotName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the snapshot for which you are requesting information.
-      required:
-      - instanceSnapshotName
-    RegionName:
-      type: string
-      enum:
-      - us-east-1
-      - us-east-2
-      - us-west-1
-      - us-west-2
-      - eu-west-1
-      - eu-west-2
-      - eu-west-3
-      - eu-central-1
-      - eu-north-1
-      - eu-south-2
-      - ca-central-1
-      - ap-east-1
-      - ap-south-1
-      - ap-southeast-1
-      - ap-southeast-2
-      - ap-northeast-1
-      - ap-northeast-2
-      - ap-southeast-3
-      - ap-southeast-5
-      - sa-east-1
-    InstanceSnapshot:
-      type: object
-      properties:
-        name:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the snapshot.
-        arn:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The Amazon Resource Name (ARN) of the snapshot ( arn:aws:lightsail:us-east-2:123456789101:InstanceSnapshot/d23b5706-3322-4d83-81e5-12345EXAMPLE ).
-        supportCode:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The support code. Include this code in your email to support when you have questions about an instance or another resource in Lightsail. This code enables our support team to look up your Lightsail information more easily.
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the snapshot was created ( 1479907467.024 ).
-        location:
-          allOf:
-          - $ref: '#/components/schemas/ResourceLocation'
-          description: The region name and Availability Zone where you created the snapshot.
-        resourceType:
-          allOf:
-          - $ref: '#/components/schemas/ResourceType'
-          description: The type of resource (usually InstanceSnapshot ).
-        tags:
-          allOf:
-          - $ref: '#/components/schemas/TagList'
-          description: The tag keys and optional values for the resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
-        state:
-          allOf:
-          - $ref: '#/components/schemas/InstanceSnapshotState'
-          description: The state the snapshot is in.
-        progress:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The progress of the snapshot. This is populated only for disk snapshots, and is null for instance snapshots.
-        fromAttachedDisks:
-          allOf:
-          - $ref: '#/components/schemas/DiskList'
-          description: An array of disk objects containing information about all block storage disks.
-        fromInstanceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The instance from which the snapshot was created.
-        fromInstanceArn:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The Amazon Resource Name (ARN) of the instance from which the snapshot was created ( arn:aws:lightsail:us-east-2:123456789101:Instance/64b8404c-ccb1-430b-8daf-12345EXAMPLE ).
-        fromBlueprintId:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The blueprint ID from which you created the snapshot ( amazon_linux_2023 ). A blueprint is a virtual private server (or instance ) image used to create instances quickly.
-        fromBundleId:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The bundle ID from which you created the snapshot ( micro_x_x ).
-        isFromAutoSnapshot:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value indicating whether the snapshot was created from an automatic snapshot.
-        sizeInGb:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The size in GB of the SSD.
-      description: Describes an instance snapshot.
-    ExportSnapshotResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    AutoSnapshotDate:
-      type: string
-      pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$
-    GetInstanceSnapshotsResult:
-      type: object
-      properties:
-        instanceSnapshots:
-          allOf:
-          - $ref: '#/components/schemas/InstanceSnapshotList'
-          description: An array of key-value pairs containing information about the results of your get instance snapshots request.
-        nextPageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetInstanceSnapshots request and specify the next page token using the pageToken parameter.
-    DestinationInfo:
-      type: object
-      properties:
-        id:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The ID of the resource created at the destination.
-        service:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The destination service of the record.
-      description: Describes the destination of a record.
-    DeleteInstanceSnapshotResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    RecordState:
-      type: string
-      enum:
-      - Started
-      - Succeeded
-      - Failed
-    CreateInstanceSnapshotResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    Disk:
-      type: object
-      properties:
-        name:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The unique name of the disk.
-        arn:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The Amazon Resource Name (ARN) of the disk.
-        supportCode:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The support code. Include this code in your email to support when you have questions about an instance or another resource in Lightsail. This code enables our support team to look up your Lightsail information more easily.
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The date when the disk was created.
-        location:
-          allOf:
-          - $ref: '#/components/schemas/ResourceLocation'
-          description: The AWS Region and Availability Zone where the disk is located.
-        resourceType:
-          allOf:
-          - $ref: '#/components/schemas/ResourceType'
-          description: The Lightsail resource type ( Disk ).
-        tags:
-          allOf:
-          - $ref: '#/components/schemas/TagList'
-          description: The tag keys and optional values for the resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
-        addOns:
-          allOf:
-          - $ref: '#/components/schemas/AddOnList'
-          description: An array of objects representing the add-ons enabled on the disk.
-        sizeInGb:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The size of the disk in GB.
-        isSystemDisk:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value indicating whether this disk is a system disk (has an operating system loaded on it).
-        iops:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The input/output operations per second (IOPS) of the disk.
-        path:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The disk path.
-        state:
-          allOf:
-          - $ref: '#/components/schemas/DiskState'
-          description: Describes the status of the disk.
-        attachedTo:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The resources to which the disk is attached.
-        isAttached:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value indicating whether the disk is attached.
-        attachmentState:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: (Discontinued) The attachment state of the disk. In releases prior to November 14, 2017, this parameter returned attached for system disks in the API response. It is now discontinued, but still included in the response. Use isAttached instead.
-        gbInUse:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: (Discontinued) The number of GB in use by the disk. In releases prior to November 14, 2017, this parameter was not included in the API response. It is now discontinued.
-        autoMountStatus:
-          allOf:
-          - $ref: '#/components/schemas/AutoMountStatus'
-          description: The status of automatically mounting a storage disk to a virtual computer. This parameter only applies to Lightsail for Research resources.
-      description: Describes a block storage disk.
-    CopySnapshotRequest:
-      type: object
-      properties:
-        sourceSnapshotName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: 'The name of the source manual snapshot to copy. Constraint: Define this parameter only when copying a manual snapshot as another manual snapshot.'
-        sourceResourceName:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: 'The name of the source instance or disk from which the source automatic snapshot was created. Constraint: Define this parameter only when copying an automatic snapshot as a manual snapshot. For more information, see the Amazon Lightsail Developer Guide .'
-        restoreDate:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: 'The date of the source automatic snapshot to copy. Use the get auto snapshots operation to identify the dates of the available automatic snapshots. Constraints: Must be specified in YYYY-MM-DD format. This parameter cannot be defined together with the use latest restorable auto snapshot parameter. The restore date and use latest restorable auto snapshot parameters are mutually exclusive. Define this parameter only when copying an automatic snapshot as a manual snapshot. For more information, see the Amazon Lightsail Developer Guide .'
-        useLatestRestorableAutoSnapshot:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: 'A Boolean value to indicate whether to use the latest available automatic snapshot of the specified source instance or disk. Constraints: This parameter cannot be defined together with the restore date parameter. The use latest restorable auto snapshot and restore date parameters are mutually exclusive. Define this parameter only when copying an automatic snapshot as a manual snapshot. For more information, see the Amazon Lightsail Developer Guide .'
-        targetSnapshotName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the new manual snapshot to be created as a copy.
-        sourceRegion:
-          allOf:
-          - $ref: '#/components/schemas/RegionName'
-          description: The Amazon Web Services Region where the source manual or automatic snapshot is located.
-      required:
-      - targetSnapshotName
-      - sourceRegion
-    AutoSnapshotDetails:
-      type: object
-      properties:
-        date:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The date of the automatic snapshot in YYYY-MM-DD format.
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the automatic snapshot was created.
-        status:
-          allOf:
-          - $ref: '#/components/schemas/AutoSnapshotStatus'
-          description: The status of the automatic snapshot.
-        fromAttachedDisks:
-          allOf:
-          - $ref: '#/components/schemas/AttachedDiskList'
-          description: An array of objects that describe the block storage disks attached to the instance when the automatic snapshot was created.
-      description: Describes an automatic snapshot.
-    DiskMap:
-      type: object
-      properties:
-        originalDiskPath:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The original disk path exposed to the instance (for example, /dev/sdh ).
-        newDiskName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The new disk name ( my-new-disk ).
-      description: Describes a block storage disk mapping.
-    DiskInfo:
-      type: object
-      properties:
-        name:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The disk name.
-        path:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The disk path.
-        sizeInGb:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The size of the disk in GB ( 32 ).
-        isSystemDisk:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value indicating whether this disk is a system disk (has an operating system loaded on it).
-      description: Describes a disk.
-    AttachedDisk:
-      type: object
-      properties:
-        path:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The path of the disk ( /dev/xvdf ).
-        sizeInGb:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The size of the disk in GB.
-      description: Describes a block storage disk that is attached to an instance, and is included in an automatic snapshot.
-    integer:
-      type: integer
+      - diskSnapshotName
     StopInstanceOnIdleRequest:
       type: object
       properties:
@@ -1732,26 +1017,73 @@ components:
           - $ref: '#/components/schemas/string'
           description: The amount of idle time in minutes after which your virtual computer will automatically stop.
       description: Describes a request to create or edit the StopInstanceOnIdle add-on. This add-on only applies to Lightsail for Research resources.
-    AddOnRequestList:
+    AutoSnapshotDetailsList:
       type: array
       items:
-        $ref: '#/components/schemas/AddOnRequest'
-    InstanceSnapshotInfo:
+        $ref: '#/components/schemas/AutoSnapshotDetails'
+    AddOn:
       type: object
       properties:
-        fromBundleId:
+        name:
           allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The bundle ID from which the source instance was created ( micro_x_x ).
-        fromBlueprintId:
+          - $ref: '#/components/schemas/string'
+          description: The name of the add-on.
+        status:
           allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The blueprint ID from which the source instance ( amazon_linux_2023 ).
-        fromDiskInfo:
+          - $ref: '#/components/schemas/string'
+          description: The status of the add-on.
+        snapshotTimeOfDay:
           allOf:
-          - $ref: '#/components/schemas/DiskInfoList'
-          description: A list of objects describing the disks that were attached to the source instance.
-      description: Describes an instance snapshot.
+          - $ref: '#/components/schemas/TimeOfDay'
+          description: The daily time when an automatic snapshot is created. The time shown is in HH:00 format, and in Coordinated Universal Time (UTC). The snapshot is automatically created between the time shown and up to 45 minutes after.
+        nextSnapshotTimeOfDay:
+          allOf:
+          - $ref: '#/components/schemas/TimeOfDay'
+          description: The next daily time an automatic snapshot will be created. The time shown is in HH:00 format, and in Coordinated Universal Time (UTC). The snapshot is automatically created between the time shown and up to 45 minutes after.
+        threshold:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The trigger threshold of the action. This add-on only applies to Lightsail for Research resources.
+        duration:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The amount of idle time in minutes after which your virtual computer will automatically stop. This add-on only applies to Lightsail for Research resources.
+      description: Describes an add-on that is enabled for an Amazon Lightsail resource.
+    TagList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Tag'
+    UnauthenticatedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user has not been authenticated.
+    DiskState:
+      type: string
+      enum:
+      - pending
+      - error
+      - available
+      - in-use
+      - unknown
+    GetInstanceSnapshotResult:
+      type: object
+      properties:
+        instanceSnapshot:
+          allOf:
+          - $ref: '#/components/schemas/InstanceSnapshot'
+          description: An array of key-value pairs containing information about the results of your get instance snapshot request.
+    AddOnList:
+      type: array
+      items:
+        $ref: '#/components/schemas/AddOn'
     OperationType:
       type: string
       enum:
@@ -1839,6 +1171,243 @@ components:
       - StopGUISession
       - SetupInstanceHttps
       - GetProfile
+    CreateInstanceSnapshotResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    GetDiskSnapshotsRequest:
+      type: object
+      properties:
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetDiskSnapshots request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+    CopySnapshotRequest:
+      type: object
+      properties:
+        sourceSnapshotName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: 'The name of the source manual snapshot to copy. Constraint: Define this parameter only when copying a manual snapshot as another manual snapshot.'
+        sourceResourceName:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: 'The name of the source instance or disk from which the source automatic snapshot was created. Constraint: Define this parameter only when copying an automatic snapshot as a manual snapshot. For more information, see the Amazon Lightsail Developer Guide .'
+        restoreDate:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: 'The date of the source automatic snapshot to copy. Use the get auto snapshots operation to identify the dates of the available automatic snapshots. Constraints: Must be specified in YYYY-MM-DD format. This parameter cannot be defined together with the use latest restorable auto snapshot parameter. The restore date and use latest restorable auto snapshot parameters are mutually exclusive. Define this parameter only when copying an automatic snapshot as a manual snapshot. For more information, see the Amazon Lightsail Developer Guide .'
+        useLatestRestorableAutoSnapshot:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: 'A Boolean value to indicate whether to use the latest available automatic snapshot of the specified source instance or disk. Constraints: This parameter cannot be defined together with the restore date parameter. The use latest restorable auto snapshot and restore date parameters are mutually exclusive. Define this parameter only when copying an automatic snapshot as a manual snapshot. For more information, see the Amazon Lightsail Developer Guide .'
+        targetSnapshotName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the new manual snapshot to be created as a copy.
+        sourceRegion:
+          allOf:
+          - $ref: '#/components/schemas/RegionName'
+          description: The Amazon Web Services Region where the source manual or automatic snapshot is located.
+      required:
+      - targetSnapshotName
+      - sourceRegion
+    InstanceSnapshotInfo:
+      type: object
+      properties:
+        fromBundleId:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The bundle ID from which the source instance was created ( micro_x_x ).
+        fromBlueprintId:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The blueprint ID from which the source instance ( amazon_linux_2023 ).
+        fromDiskInfo:
+          allOf:
+          - $ref: '#/components/schemas/DiskInfoList'
+          description: A list of objects describing the disks that were attached to the source instance.
+      description: Describes an instance snapshot.
+    NotFoundException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when it cannot find a resource.
+    DeleteInstanceSnapshotResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    InstanceSnapshotList:
+      type: array
+      items:
+        $ref: '#/components/schemas/InstanceSnapshot'
+    AttachedDisk:
+      type: object
+      properties:
+        path:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The path of the disk ( /dev/xvdf ).
+        sizeInGb:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The size of the disk in GB.
+      description: Describes a block storage disk that is attached to an instance, and is included in an automatic snapshot.
+    OperationList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Operation'
+    StringList:
+      type: array
+      items:
+        $ref: '#/components/schemas/string'
+    Disk:
+      type: object
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The unique name of the disk.
+        arn:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Amazon Resource Name (ARN) of the disk.
+        supportCode:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The support code. Include this code in your email to support when you have questions about an instance or another resource in Lightsail. This code enables our support team to look up your Lightsail information more easily.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The date when the disk was created.
+        location:
+          allOf:
+          - $ref: '#/components/schemas/ResourceLocation'
+          description: The AWS Region and Availability Zone where the disk is located.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The Lightsail resource type ( Disk ).
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values for the resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
+        addOns:
+          allOf:
+          - $ref: '#/components/schemas/AddOnList'
+          description: An array of objects representing the add-ons enabled on the disk.
+        sizeInGb:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The size of the disk in GB.
+        isSystemDisk:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether this disk is a system disk (has an operating system loaded on it).
+        iops:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The input/output operations per second (IOPS) of the disk.
+        path:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The disk path.
+        state:
+          allOf:
+          - $ref: '#/components/schemas/DiskState'
+          description: Describes the status of the disk.
+        attachedTo:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The resources to which the disk is attached.
+        isAttached:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the disk is attached.
+        attachmentState:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: (Discontinued) The attachment state of the disk. In releases prior to November 14, 2017, this parameter returned attached for system disks in the API response. It is now discontinued, but still included in the response. Use isAttached instead.
+        gbInUse:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: (Discontinued) The number of GB in use by the disk. In releases prior to November 14, 2017, this parameter was not included in the API response. It is now discontinued.
+        autoMountStatus:
+          allOf:
+          - $ref: '#/components/schemas/AutoMountStatus'
+          description: The status of automatically mounting a storage disk to a virtual computer. This parameter only applies to Lightsail for Research resources.
+      description: Describes a block storage disk.
+    TagKey:
+      type: string
+    GetDiskSnapshotRequest:
+      type: object
+      properties:
+        diskSnapshotName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the disk snapshot ( my-disk-snapshot ).
+      required:
+      - diskSnapshotName
+    CreateDiskFromSnapshotRequest:
+      type: object
+      properties:
+        diskName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The unique Lightsail disk name ( my-disk ).
+        diskSnapshotName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: 'The name of the disk snapshot ( my-snapshot ) from which to create the new storage disk. Constraint: This parameter cannot be defined together with the source disk name parameter. The disk snapshot name and source disk name parameters are mutually exclusive.'
+        availabilityZone:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Availability Zone where you want to create the disk ( us-east-2a ). Choose the same Availability Zone as the Lightsail instance where you want to create the disk. Use the GetRegions operation to list the Availability Zones where Lightsail is currently available.
+        sizeInGb:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The size of the disk in GB ( 32 ).
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values to add to the resource during create. Use the TagResource action to tag a resource after it's created.
+        addOns:
+          allOf:
+          - $ref: '#/components/schemas/AddOnRequestList'
+          description: An array of objects that represent the add-ons to enable for the new disk.
+        sourceDiskName:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: 'The name of the source disk from which the source automatic snapshot was created. Constraints: This parameter cannot be defined together with the disk snapshot name parameter. The source disk name and disk snapshot name parameters are mutually exclusive. Define this parameter only when creating a new disk from an automatic snapshot. For more information, see the Amazon Lightsail Developer Guide .'
+        restoreDate:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: 'The date of the automatic snapshot to use for the new disk. Use the get auto snapshots operation to identify the dates of the available automatic snapshots. Constraints: Must be specified in YYYY-MM-DD format. This parameter cannot be defined together with the use latest restorable auto snapshot parameter. The restore date and use latest restorable auto snapshot parameters are mutually exclusive. Define this parameter only when creating a new disk from an automatic snapshot. For more information, see the Amazon Lightsail Developer Guide .'
+        useLatestRestorableAutoSnapshot:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: 'A Boolean value to indicate whether to use the latest available automatic snapshot. Constraints: This parameter cannot be defined together with the restore date parameter. The use latest restorable auto snapshot and restore date parameters are mutually exclusive. Define this parameter only when creating a new disk from an automatic snapshot. For more information, see the Amazon Lightsail Developer Guide .'
+      required:
+      - diskName
+      - availabilityZone
+      - sizeInGb
+    ExportSnapshotRecordList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ExportSnapshotRecord'
     AccountSetupInProgressException:
       type: object
       properties:
@@ -1851,82 +1420,45 @@ components:
         tip:
           $ref: '#/components/schemas/string'
       description: Lightsail throws this exception when an account is still in the setup in progress state.
-    ExportSnapshotRecordList:
+    DiskList:
       type: array
       items:
-        $ref: '#/components/schemas/ExportSnapshotRecord'
-    CreateDiskSnapshotRequest:
+        $ref: '#/components/schemas/Disk'
+    Tag:
       type: object
       properties:
-        diskName:
+        key:
           allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The unique name of the source disk ( Disk-Virginia-1 ). This parameter cannot be defined together with the instance name parameter. The disk name and instance name parameters are mutually exclusive.
-        diskSnapshotName:
+          - $ref: '#/components/schemas/TagKey'
+          description: 'The key of the tag. Constraints: Tag keys accept a maximum of 128 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+        value:
           allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the destination disk snapshot ( my-disk-snapshot ) based on the source disk.
-        instanceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The unique name of the source instance ( Amazon_Linux-512MB-Virginia-1 ). When this is defined, a snapshot of the instance's system volume is created. This parameter cannot be defined together with the disk name parameter. The instance name and disk name parameters are mutually exclusive.
-        tags:
-          allOf:
-          - $ref: '#/components/schemas/TagList'
-          description: The tag keys and optional values to add to the resource during create. Use the TagResource action to tag a resource after it's created.
-      required:
-      - diskSnapshotName
-    AddOnRequest:
-      type: object
-      properties:
-        addOnType:
-          allOf:
-          - $ref: '#/components/schemas/AddOnType'
-          description: The add-on type.
-        autoSnapshotAddOnRequest:
-          allOf:
-          - $ref: '#/components/schemas/AutoSnapshotAddOnRequest'
-          description: An object that represents additional parameters when enabling or modifying the automatic snapshot add-on.
-        stopInstanceOnIdleRequest:
-          allOf:
-          - $ref: '#/components/schemas/StopInstanceOnIdleRequest'
-          description: An object that represents additional parameters when enabling or modifying the StopInstanceOnIdle add-on. This object only applies to Lightsail for Research resources.
-      required:
-      - addOnType
-      description: Describes a request to enable, modify, or disable an add-on for an Amazon Lightsail resource. An additional cost may be associated with enabling add-ons. For more information, see the Lightsail pricing page .
-    DeleteDiskSnapshotResult:
+          - $ref: '#/components/schemas/TagValue'
+          description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+      description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
+    CreateInstancesFromSnapshotResult:
       type: object
       properties:
         operations:
           allOf:
           - $ref: '#/components/schemas/OperationList'
           description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    ExportSnapshotRequest:
+    DiskSnapshotInfo:
       type: object
       properties:
-        sourceSnapshotName:
+        sizeInGb:
           allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the instance or disk snapshot to be exported to Amazon EC2.
-      required:
-      - sourceSnapshotName
-    TagKey:
-      type: string
-    DiskMapList:
-      type: array
-      items:
-        $ref: '#/components/schemas/DiskMap'
-    string:
-      type: string
-    ExportSnapshotRecordSourceType:
+          - $ref: '#/components/schemas/integer'
+          description: The size of the disk in GB ( 32 ).
+      description: Describes a disk snapshot.
+    OperationStatus:
       type: string
       enum:
-      - InstanceSnapshot
-      - DiskSnapshot
-    InstanceSnapshotList:
-      type: array
-      items:
-        $ref: '#/components/schemas/InstanceSnapshot'
+      - NotStarted
+      - Started
+      - Failed
+      - Completed
+      - Succeeded
     CreateInstancesFromSnapshotRequest:
       type: object
       properties:
@@ -1986,58 +1518,6 @@ components:
       - instanceNames
       - availabilityZone
       - bundleId
-    DiskInfoList:
-      type: array
-      items:
-        $ref: '#/components/schemas/DiskInfo'
-    GetDiskSnapshotsRequest:
-      type: object
-      properties:
-        pageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetDiskSnapshots request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
-    GetAutoSnapshotsRequest:
-      type: object
-      properties:
-        resourceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the source instance or disk from which to get automatic snapshot information.
-      required:
-      - resourceName
-    DiskList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Disk'
-    AddOn:
-      type: object
-      properties:
-        name:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The name of the add-on.
-        status:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The status of the add-on.
-        snapshotTimeOfDay:
-          allOf:
-          - $ref: '#/components/schemas/TimeOfDay'
-          description: The daily time when an automatic snapshot is created. The time shown is in HH:00 format, and in Coordinated Universal Time (UTC). The snapshot is automatically created between the time shown and up to 45 minutes after.
-        nextSnapshotTimeOfDay:
-          allOf:
-          - $ref: '#/components/schemas/TimeOfDay'
-          description: The next daily time an automatic snapshot will be created. The time shown is in HH:00 format, and in Coordinated Universal Time (UTC). The snapshot is automatically created between the time shown and up to 45 minutes after.
-        threshold:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The trigger threshold of the action. This add-on only applies to Lightsail for Research resources.
-        duration:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The amount of idle time in minutes after which your virtual computer will automatically stop. This add-on only applies to Lightsail for Research resources.
-      description: Describes an add-on that is enabled for an Amazon Lightsail resource.
     GetDiskSnapshotsResult:
       type: object
       properties:
@@ -2049,6 +1529,34 @@ components:
           allOf:
           - $ref: '#/components/schemas/string'
           description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetDiskSnapshots request and specify the next page token using the pageToken parameter.
+    DiskInfo:
+      type: object
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The disk name.
+        path:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The disk path.
+        sizeInGb:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The size of the disk in GB ( 32 ).
+        isSystemDisk:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether this disk is a system disk (has an operating system loaded on it).
+      description: Describes a disk.
+    AutoSnapshotAddOnRequest:
+      type: object
+      properties:
+        snapshotTimeOfDay:
+          allOf:
+          - $ref: '#/components/schemas/TimeOfDay'
+          description: 'The daily time when an automatic snapshot will be created. Constraints: Must be in HH:00 format, and in an hourly increment. Specified in Coordinated Universal Time (UTC). The snapshot will be automatically created between the time specified and up to 45 minutes after.'
+      description: 'Describes a request to enable or modify the automatic snapshot add-on for an Amazon Lightsail instance or disk. When you modify the automatic snapshot time for a resource, it is typically effective immediately except under the following conditions: If an automatic snapshot has been created for the current day, and you change the snapshot time to a later time of day, then the new snapshot time will be effective the following day. This ensures that two snapshots are not created for the current day. If an automatic snapshot has not yet been created for the current day, and you change the snapshot time to an earlier time of day, then the new snapshot time will be effective the following day and a snapshot is automatically created at the previously set time for the current day. This ensures that a snapshot is created for the current day. If an automatic snapshot has not yet been created for the current day, and you change the snapshot time to a time that is within 30 minutes from your current time, then the new snapshot time will be effective the following day and a snapshot is automatically created at the previously set time for the current day. This ensures that a snapshot is created for the current day, because 30 minutes is required between your current time and the new snapshot time that you specify. If an automatic snapshot is scheduled to be created within 30 minutes from your current time and you change the snapshot time, then the new snapshot time will be effective the following day and a snapshot is automatically created at the previously set time for the current day. This ensures that a snapshot is created for the current day, because 30 minutes is required between your current time and the new snapshot time that you specify.'
     DeleteAutoSnapshotRequest:
       type: object
       properties:
@@ -2063,14 +1571,132 @@ components:
       required:
       - resourceName
       - date
-    DiskSnapshotInfo:
+    DeleteAutoSnapshotResult:
       type: object
       properties:
-        sizeInGb:
+        operations:
           allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The size of the disk in GB ( 32 ).
-      description: Describes a disk snapshot.
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    GetInstanceSnapshotsRequest:
+      type: object
+      properties:
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetInstanceSnapshots request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+    DestinationInfo:
+      type: object
+      properties:
+        id:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The ID of the resource created at the destination.
+        service:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The destination service of the record.
+      description: Describes the destination of a record.
+    DiskSnapshotState:
+      type: string
+      enum:
+      - pending
+      - completed
+      - error
+      - unknown
+    CopySnapshotResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    GetAutoSnapshotsResult:
+      type: object
+      properties:
+        resourceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the source instance or disk for the automatic snapshots.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The resource type of the automatic snapshot. The possible values are Instance , and Disk .
+        autoSnapshots:
+          allOf:
+          - $ref: '#/components/schemas/AutoSnapshotDetailsList'
+          description: An array of objects that describe the automatic snapshots that are available for the specified source instance or disk.
+    InvalidInputException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
+    GetExportSnapshotRecordsRequest:
+      type: object
+      properties:
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetExportSnapshotRecords request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+    Operation:
+      type: object
+      properties:
+        id:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The ID of the operation.
+        resourceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The resource name.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The resource type.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the operation was initialized ( 1479816991.349 ).
+        location:
+          allOf:
+          - $ref: '#/components/schemas/ResourceLocation'
+          description: The Amazon Web Services Region and Availability Zone.
+        isTerminal:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the operation is terminal.
+        operationDetails:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Details about the operation ( Debian-1GB-Ohio-1 ).
+        operationType:
+          allOf:
+          - $ref: '#/components/schemas/OperationType'
+          description: The type of operation.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/OperationStatus'
+          description: The status of the operation.
+        statusChangedAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the status was changed ( 1479816991.349 ).
+        errorCode:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The error code.
+        errorDetails:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The error details.
+      description: Describes the API operation.
     ResourceLocation:
       type: object
       properties:
@@ -2083,6 +1709,378 @@ components:
           - $ref: '#/components/schemas/RegionName'
           description: The Amazon Web Services Region name.
       description: Describes the resource location.
+    TagValue:
+      type: string
+    DiskMap:
+      type: object
+      properties:
+        originalDiskPath:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The original disk path exposed to the instance (for example, /dev/sdh ).
+        newDiskName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The new disk name ( my-new-disk ).
+      description: Describes a block storage disk mapping.
+    AttachedDiskMap:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/DiskMapList'
+    NonEmptyString:
+      type: string
+      pattern: \S
+    AttachedDiskList:
+      type: array
+      items:
+        $ref: '#/components/schemas/AttachedDisk'
+    DeleteInstanceSnapshotRequest:
+      type: object
+      properties:
+        instanceSnapshotName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the snapshot to delete.
+      required:
+      - instanceSnapshotName
+    AutoMountStatus:
+      type: string
+      enum:
+      - Failed
+      - Pending
+      - Mounted
+      - NotMounted
+    DiskSnapshotList:
+      type: array
+      items:
+        $ref: '#/components/schemas/DiskSnapshot'
+    ServiceException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: A general service exception.
+    InstanceSnapshotState:
+      type: string
+      enum:
+      - pending
+      - error
+      - available
+    GetDiskSnapshotResult:
+      type: object
+      properties:
+        diskSnapshot:
+          allOf:
+          - $ref: '#/components/schemas/DiskSnapshot'
+          description: An object containing information about the disk snapshot.
+    AddOnType:
+      type: string
+      enum:
+      - AutoSnapshot
+      - StopInstanceOnIdle
+    AutoSnapshotStatus:
+      type: string
+      enum:
+      - Success
+      - Failed
+      - InProgress
+      - NotFound
+    ResourceName:
+      type: string
+      pattern: ^\w[\w\-]*\w$
+    IsoDate:
+      type: string
+      format: date-time
+    ExportSnapshotRecord:
+      type: object
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The export snapshot record name.
+        arn:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Amazon Resource Name (ARN) of the export snapshot record.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The date when the export snapshot record was created.
+        location:
+          allOf:
+          - $ref: '#/components/schemas/ResourceLocation'
+          description: The AWS Region and Availability Zone where the export snapshot record is located.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The Lightsail resource type ( ExportSnapshotRecord ).
+        state:
+          allOf:
+          - $ref: '#/components/schemas/RecordState'
+          description: The state of the export snapshot record.
+        sourceInfo:
+          allOf:
+          - $ref: '#/components/schemas/ExportSnapshotRecordSourceInfo'
+          description: A list of objects describing the source of the export snapshot record.
+        destinationInfo:
+          allOf:
+          - $ref: '#/components/schemas/DestinationInfo'
+          description: A list of objects describing the destination of the export snapshot record.
+      description: Describes an export snapshot record.
+    DeleteDiskSnapshotRequest:
+      type: object
+      properties:
+        diskSnapshotName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the disk snapshot you want to delete ( my-disk-snapshot ).
+      required:
+      - diskSnapshotName
+    RegionSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Regions and Availability Zones for Lightsail
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
+      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
+    integer:
+      type: integer
+    IpAddressType:
+      type: string
+      enum:
+      - dualstack
+      - ipv4
+      - ipv6
+    GetAutoSnapshotsRequest:
+      type: object
+      properties:
+        resourceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the source instance or disk from which to get automatic snapshot information.
+      required:
+      - resourceName
+    DiskSnapshot:
+      type: object
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the disk snapshot ( my-disk-snapshot ).
+        arn:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Amazon Resource Name (ARN) of the disk snapshot.
+        supportCode:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The support code. Include this code in your email to support when you have questions about an instance or another resource in Lightsail. This code enables our support team to look up your Lightsail information more easily.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The date when the disk snapshot was created.
+        location:
+          allOf:
+          - $ref: '#/components/schemas/ResourceLocation'
+          description: The AWS Region and Availability Zone where the disk snapshot was created.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The Lightsail resource type ( DiskSnapshot ).
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values for the resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
+        sizeInGb:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The size of the disk in GB.
+        state:
+          allOf:
+          - $ref: '#/components/schemas/DiskSnapshotState'
+          description: The status of the disk snapshot operation.
+        progress:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The progress of the snapshot.
+        fromDiskName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The unique name of the source disk from which the disk snapshot was created.
+        fromDiskArn:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Amazon Resource Name (ARN) of the source disk from which the disk snapshot was created.
+        fromInstanceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The unique name of the source instance from which the disk (system volume) snapshot was created.
+        fromInstanceArn:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Amazon Resource Name (ARN) of the source instance from which the disk (system volume) snapshot was created.
+        isFromAutoSnapshot:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the snapshot was created from an automatic snapshot.
+      description: Describes a block storage disk snapshot.
+    ExportSnapshotRecordSourceInfo:
+      type: object
+      properties:
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ExportSnapshotRecordSourceType'
+          description: The Lightsail resource type ( InstanceSnapshot or DiskSnapshot ).
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The date when the source instance or disk snapshot was created.
+        name:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The name of the source instance or disk snapshot.
+        arn:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Amazon Resource Name (ARN) of the source instance or disk snapshot.
+        fromResourceName:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The name of the snapshot's source instance or disk.
+        fromResourceArn:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Amazon Resource Name (ARN) of the snapshot's source instance or disk.
+        instanceSnapshotInfo:
+          allOf:
+          - $ref: '#/components/schemas/InstanceSnapshotInfo'
+          description: A list of objects describing an instance snapshot.
+        diskSnapshotInfo:
+          allOf:
+          - $ref: '#/components/schemas/DiskSnapshotInfo'
+          description: A list of objects describing a disk snapshot.
+      description: Describes the source of an export snapshot record.
+    CreateDiskSnapshotResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    AutoSnapshotDetails:
+      type: object
+      properties:
+        date:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The date of the automatic snapshot in YYYY-MM-DD format.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the automatic snapshot was created.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/AutoSnapshotStatus'
+          description: The status of the automatic snapshot.
+        fromAttachedDisks:
+          allOf:
+          - $ref: '#/components/schemas/AttachedDiskList'
+          description: An array of objects that describe the block storage disks attached to the instance when the automatic snapshot was created.
+      description: Describes an automatic snapshot.
+    DeleteDiskSnapshotResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    RegionName:
+      type: string
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-west-3
+      - eu-central-1
+      - eu-north-1
+      - eu-south-2
+      - ca-central-1
+      - ap-east-1
+      - ap-south-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+      - ap-northeast-2
+      - ap-southeast-3
+      - ap-southeast-5
+      - sa-east-1
+    DiskMapList:
+      type: array
+      items:
+        $ref: '#/components/schemas/DiskMap'
+    CreateDiskFromSnapshotResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    ResourceType:
+      type: string
+      enum:
+      - ContainerService
+      - Instance
+      - StaticIp
+      - KeyPair
+      - InstanceSnapshot
+      - Domain
+      - PeeredVpc
+      - LoadBalancer
+      - LoadBalancerTlsCertificate
+      - Disk
+      - DiskSnapshot
+      - RelationalDatabase
+      - RelationalDatabaseSnapshot
+      - ExportSnapshotRecord
+      - CloudFormationStackRecord
+      - Alarm
+      - ContactMethod
+      - Distribution
+      - Certificate
+      - Bucket
+    GetInstanceSnapshotsResult:
+      type: object
+      properties:
+        instanceSnapshots:
+          allOf:
+          - $ref: '#/components/schemas/InstanceSnapshotList'
+          description: An array of key-value pairs containing information about the results of your get instance snapshots request.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetInstanceSnapshots request and specify the next page token using the pageToken parameter.
+    string:
+      type: string
+    boolean:
+      type: boolean
     CreateInstanceSnapshotRequest:
       type: object
       properties:
@@ -2101,79 +2099,24 @@ components:
       required:
       - instanceSnapshotName
       - instanceName
-    CreateDiskFromSnapshotRequest:
-      type: object
-      properties:
-        diskName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The unique Lightsail disk name ( my-disk ).
-        diskSnapshotName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: 'The name of the disk snapshot ( my-snapshot ) from which to create the new storage disk. Constraint: This parameter cannot be defined together with the source disk name parameter. The disk snapshot name and source disk name parameters are mutually exclusive.'
-        availabilityZone:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The Availability Zone where you want to create the disk ( us-east-2a ). Choose the same Availability Zone as the Lightsail instance where you want to create the disk. Use the GetRegions operation to list the Availability Zones where Lightsail is currently available.
-        sizeInGb:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The size of the disk in GB ( 32 ).
-        tags:
-          allOf:
-          - $ref: '#/components/schemas/TagList'
-          description: The tag keys and optional values to add to the resource during create. Use the TagResource action to tag a resource after it's created.
-        addOns:
-          allOf:
-          - $ref: '#/components/schemas/AddOnRequestList'
-          description: An array of objects that represent the add-ons to enable for the new disk.
-        sourceDiskName:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: 'The name of the source disk from which the source automatic snapshot was created. Constraints: This parameter cannot be defined together with the disk snapshot name parameter. The source disk name and disk snapshot name parameters are mutually exclusive. Define this parameter only when creating a new disk from an automatic snapshot. For more information, see the Amazon Lightsail Developer Guide .'
-        restoreDate:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: 'The date of the automatic snapshot to use for the new disk. Use the get auto snapshots operation to identify the dates of the available automatic snapshots. Constraints: Must be specified in YYYY-MM-DD format. This parameter cannot be defined together with the use latest restorable auto snapshot parameter. The restore date and use latest restorable auto snapshot parameters are mutually exclusive. Define this parameter only when creating a new disk from an automatic snapshot. For more information, see the Amazon Lightsail Developer Guide .'
-        useLatestRestorableAutoSnapshot:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: 'A Boolean value to indicate whether to use the latest available automatic snapshot. Constraints: This parameter cannot be defined together with the restore date parameter. The use latest restorable auto snapshot and restore date parameters are mutually exclusive. Define this parameter only when creating a new disk from an automatic snapshot. For more information, see the Amazon Lightsail Developer Guide .'
-      required:
-      - diskName
-      - availabilityZone
-      - sizeInGb
-    OperationStatus:
+    ExportSnapshotRecordSourceType:
       type: string
       enum:
-      - NotStarted
+      - InstanceSnapshot
+      - DiskSnapshot
+    RecordState:
+      type: string
+      enum:
       - Started
-      - Failed
-      - Completed
       - Succeeded
-    InstanceSnapshotState:
-      type: string
-      enum:
-      - pending
-      - error
-      - available
-    AccessDeniedException:
+      - Failed
+    ExportSnapshotResult:
       type: object
       properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
-    TagList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Tag'
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
     GetExportSnapshotRecordsResult:
       type: object
       properties:
@@ -2185,40 +2128,97 @@ components:
           allOf:
           - $ref: '#/components/schemas/string'
           description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetExportSnapshotRecords request and specify the next page token using the pageToken parameter.
-    NotFoundException:
+    AutoSnapshotDate:
+      type: string
+      pattern: ^[0-9]{4}-[0-9]{2}-[0-9]{2}$
+    TimeOfDay:
+      type: string
+      pattern: ^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$
+    AddOnRequestList:
+      type: array
+      items:
+        $ref: '#/components/schemas/AddOnRequest'
+    DiskInfoList:
+      type: array
+      items:
+        $ref: '#/components/schemas/DiskInfo'
+    GetInstanceSnapshotRequest:
       type: object
       properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when it cannot find a resource.
-    GetAutoSnapshotsResult:
-      type: object
-      properties:
-        resourceName:
+        instanceSnapshotName:
           allOf:
           - $ref: '#/components/schemas/ResourceName'
-          description: The name of the source instance or disk for the automatic snapshots.
+          description: The name of the snapshot for which you are requesting information.
+      required:
+      - instanceSnapshotName
+    InstanceSnapshot:
+      type: object
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the snapshot.
+        arn:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Amazon Resource Name (ARN) of the snapshot ( arn:aws:lightsail:us-east-2:123456789101:InstanceSnapshot/d23b5706-3322-4d83-81e5-12345EXAMPLE ).
+        supportCode:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The support code. Include this code in your email to support when you have questions about an instance or another resource in Lightsail. This code enables our support team to look up your Lightsail information more easily.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the snapshot was created ( 1479907467.024 ).
+        location:
+          allOf:
+          - $ref: '#/components/schemas/ResourceLocation'
+          description: The region name and Availability Zone where you created the snapshot.
         resourceType:
           allOf:
           - $ref: '#/components/schemas/ResourceType'
-          description: The resource type of the automatic snapshot. The possible values are Instance , and Disk .
-        autoSnapshots:
+          description: The type of resource (usually InstanceSnapshot ).
+        tags:
           allOf:
-          - $ref: '#/components/schemas/AutoSnapshotDetailsList'
-          description: An array of objects that describe the automatic snapshots that are available for the specified source instance or disk.
-    AutoSnapshotStatus:
-      type: string
-      enum:
-      - Success
-      - Failed
-      - InProgress
-      - NotFound
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values for the resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
+        state:
+          allOf:
+          - $ref: '#/components/schemas/InstanceSnapshotState'
+          description: The state the snapshot is in.
+        progress:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The progress of the snapshot. This is populated only for disk snapshots, and is null for instance snapshots.
+        fromAttachedDisks:
+          allOf:
+          - $ref: '#/components/schemas/DiskList'
+          description: An array of disk objects containing information about all block storage disks.
+        fromInstanceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The instance from which the snapshot was created.
+        fromInstanceArn:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Amazon Resource Name (ARN) of the instance from which the snapshot was created ( arn:aws:lightsail:us-east-2:123456789101:Instance/64b8404c-ccb1-430b-8daf-12345EXAMPLE ).
+        fromBlueprintId:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The blueprint ID from which you created the snapshot ( amazon_linux_2023 ). A blueprint is a virtual private server (or instance ) image used to create instances quickly.
+        fromBundleId:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The bundle ID from which you created the snapshot ( micro_x_x ).
+        isFromAutoSnapshot:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the snapshot was created from an automatic snapshot.
+        sizeInGb:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The size in GB of the SSD.
+      description: Describes an instance snapshot.
   securitySchemes:
     sigv4:
       type: apiKey

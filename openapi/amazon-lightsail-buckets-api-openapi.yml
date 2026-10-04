@@ -637,74 +637,151 @@ paths:
       x-amz-target: Lightsail_20161128.UpdateBucketBundle
 components:
   schemas:
-    BucketAccessLogPrefix:
-      type: string
-      pattern: ^[\w/!.*')(-]+$
-      minLength: 1
-      maxLength: 100
-    TagValue:
-      type: string
-    MetricUnit:
-      type: string
-      enum:
-      - Seconds
-      - Microseconds
-      - Milliseconds
-      - Bytes
-      - Kilobytes
-      - Megabytes
-      - Gigabytes
-      - Terabytes
-      - Bits
-      - Kilobits
-      - Megabits
-      - Gigabits
-      - Terabits
-      - Percent
-      - Count
-      - Bytes/Second
-      - Kilobytes/Second
-      - Megabytes/Second
-      - Gigabytes/Second
-      - Terabytes/Second
-      - Bits/Second
-      - Kilobits/Second
-      - Megabits/Second
-      - Gigabits/Second
-      - Terabits/Second
-      - Count/Second
-      - None
-    RegionSetupInProgressException:
+    DeleteBucketAccessKeyRequest:
+      type: object
+      properties:
+        bucketName:
+          allOf:
+          - $ref: '#/components/schemas/BucketName'
+          description: The name of the bucket that the access key belongs to.
+        accessKeyId:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The ID of the access key to delete. Use the GetBucketAccessKeys action to get a list of access key IDs that you can specify.
+      required:
+      - bucketName
+      - accessKeyId
+    AccessDeniedException:
       type: object
       properties:
         code:
           $ref: '#/components/schemas/string'
         docs:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Regions and Availability Zones for Lightsail
+          $ref: '#/components/schemas/string'
         message:
           $ref: '#/components/schemas/string'
         tip:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
-      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
-    GetBucketBundlesRequest:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
+    BucketCorsAllowedMethod:
+      type: string
+      pattern: ^(DELETE|GET|HEAD|POST|PUT)$
+    GetBucketMetricDataRequest:
       type: object
       properties:
-        includeInactive:
+        bucketName:
+          allOf:
+          - $ref: '#/components/schemas/BucketName'
+          description: The name of the bucket for which to get metric data.
+        metricName:
+          allOf:
+          - $ref: '#/components/schemas/BucketMetricName'
+          description: 'The metric for which you want to return information. Valid bucket metric names are listed below, along with the most useful statistics to include in your request, and the published unit value. These bucket metrics are reported once per day. BucketSizeBytes - The amount of data in bytes stored in a bucket. This value is calculated by summing the size of all objects in the bucket (including object versions), including the size of all parts for all incomplete multipart uploads to the bucket. Statistics: The most useful statistic is Maximum . Unit: The published unit is Bytes . NumberOfObjects - The total number of objects stored in a bucket. This value is calculated by counting all objects in the bucket (including object versions) and the total number of parts for all incomplete multipart uploads to the bucket. Statistics: The most useful statistic is Average . Unit: The published unit is Count .'
+        startTime:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp indicating the earliest data to be returned.
+        endTime:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp indicating the latest data to be returned.
+        period:
+          allOf:
+          - $ref: '#/components/schemas/MetricPeriod'
+          description: The granularity, in seconds, of the returned data points. Bucket storage metrics are reported once per day. Therefore, you should specify a period of 86400 seconds, which is the number of seconds in a day.
+        statistics:
+          allOf:
+          - $ref: '#/components/schemas/MetricStatisticList'
+          description: 'The statistic for the metric. The following statistics are available: Minimum - The lowest value observed during the specified period. Use this value to determine low volumes of activity for your application. Maximum - The highest value observed during the specified period. Use this value to determine high volumes of activity for your application. Sum - The sum of all values submitted for the matching metric. You can use this statistic to determine the total volume of a metric. Average - The value of Sum / SampleCount during the specified period. By comparing this statistic with the Minimum and Maximum values, you can determine the full scope of a metric and how close the average use is to the Minimum and Maximum values. This comparison helps you to know when to increase or decrease your resources. SampleCount - The count, or number, of data points used for the statistical calculation.'
+        unit:
+          allOf:
+          - $ref: '#/components/schemas/MetricUnit'
+          description: The unit for the metric data request. Valid units depend on the metric data being requested. For the valid units with each available metric, see the metricName parameter.
+      required:
+      - bucketName
+      - metricName
+      - startTime
+      - endTime
+      - period
+      - statistics
+      - unit
+    BucketCorsConfig:
+      type: object
+      properties:
+        rules:
+          allOf:
+          - $ref: '#/components/schemas/BucketCorsRules'
+          description: A set of origins and methods (cross-origin access that you want to allow). You can add up to 20 rules to the configuration. The total size is limited to 64 KB.
+      description: Describes the cross-origin resource sharing (CORS) configuration for a Lightsail bucket. CORS defines a way for client web applications that are loaded in one domain to interact with resources in a different domain. For more information, see Configuring cross-origin resource sharing (CORS) .
+    MetricStatisticList:
+      type: array
+      items:
+        $ref: '#/components/schemas/MetricStatistic'
+    BucketName:
+      type: string
+      pattern: ^[a-z0-9][a-z0-9-]{1,52}[a-z0-9]$
+      minLength: 3
+      maxLength: 54
+    BucketBundle:
+      type: object
+      properties:
+        bundleId:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The ID of the bundle.
+        name:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The name of the bundle.
+        price:
+          allOf:
+          - $ref: '#/components/schemas/float'
+          description: The monthly price of the bundle, in US dollars.
+        storagePerMonthInGb:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The storage size of the bundle, in GB.
+        transferPerMonthInGb:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The monthly network transfer quota of the bundle.
+        isActive:
           allOf:
           - $ref: '#/components/schemas/boolean'
-          description: A Boolean value that indicates whether to include inactive (unavailable) bundles in the response of your request.
-    double:
-      type: number
-    IsoDate:
-      type: string
-      format: date-time
-    ResourceName:
-      type: string
-      pattern: ^\w[\w\-]*\w$
+          description: Indicates whether the bundle is active. Use for a new or existing bucket.
+      description: Describes the specifications of a bundle that can be applied to an Amazon Lightsail bucket. A bucket bundle specifies the monthly cost, storage space, and data transfer quota for a bucket.
+    MetricDatapoint:
+      type: object
+      properties:
+        average:
+          allOf:
+          - $ref: '#/components/schemas/double'
+          description: The average.
+        maximum:
+          allOf:
+          - $ref: '#/components/schemas/double'
+          description: The maximum.
+        minimum:
+          allOf:
+          - $ref: '#/components/schemas/double'
+          description: The minimum.
+        sampleCount:
+          allOf:
+          - $ref: '#/components/schemas/double'
+          description: The sample count.
+        sum:
+          allOf:
+          - $ref: '#/components/schemas/double'
+          description: The sum.
+        timestamp:
+          allOf:
+          - $ref: '#/components/schemas/timestamp'
+          description: The timestamp ( 1479816991.349 ).
+        unit:
+          allOf:
+          - $ref: '#/components/schemas/MetricUnit'
+          description: The unit.
+      description: Describes the metric data point.
     Bucket:
       type: object
       properties:
@@ -777,58 +854,38 @@ components:
           - $ref: '#/components/schemas/BucketCorsConfig'
           description: An array of cross-origin resource sharing (CORS) rules that identify origins and the HTTP methods that can be executed on your bucket. This field is only included in the response when CORS configuration is requested or when updating CORS configuration. For more information, see Configuring cross-origin resource sharing (CORS) .
       description: Describes an Amazon Lightsail bucket.
-    Operation:
+    TagList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Tag'
+    StatusType:
+      type: string
+      enum:
+      - Active
+      - Inactive
+    BucketCorsAllowedOrigins:
+      type: array
+      items:
+        $ref: '#/components/schemas/string'
+    GetBucketsRequest:
       type: object
       properties:
-        id:
+        bucketName:
           allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The ID of the operation.
-        resourceName:
+          - $ref: '#/components/schemas/BucketName'
+          description: The name of the bucket for which to return information. When omitted, the response includes all of your buckets in the Amazon Web Services Region where the request is made.
+        pageToken:
           allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The resource name.
-        resourceType:
-          allOf:
-          - $ref: '#/components/schemas/ResourceType'
-          description: The resource type.
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the operation was initialized ( 1479816991.349 ).
-        location:
-          allOf:
-          - $ref: '#/components/schemas/ResourceLocation'
-          description: The Amazon Web Services Region and Availability Zone.
-        isTerminal:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetBuckets request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+        includeConnectedResources:
           allOf:
           - $ref: '#/components/schemas/boolean'
-          description: A Boolean value indicating whether the operation is terminal.
-        operationDetails:
+          description: A Boolean value that indicates whether to include Lightsail instances that were given access to the bucket using the SetResourceAccessForBucket action.
+        includeCors:
           allOf:
-          - $ref: '#/components/schemas/string'
-          description: Details about the operation ( Debian-1GB-Ohio-1 ).
-        operationType:
-          allOf:
-          - $ref: '#/components/schemas/OperationType'
-          description: The type of operation.
-        status:
-          allOf:
-          - $ref: '#/components/schemas/OperationStatus'
-          description: The status of the operation.
-        statusChangedAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the status was changed ( 1479816991.349 ).
-        errorCode:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The error code.
-        errorDetails:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The error details.
-      description: Describes the API operation.
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value that indicates whether to include Lightsail bucket CORS configuration in the response. For more information, see Configuring cross-origin resource sharing (CORS) . This parameter is only supported when getting a single bucket with bucketName specified. The default value for this parameter is False .
     UnauthenticatedException:
       type: object
       properties:
@@ -841,145 +898,15 @@ components:
         tip:
           $ref: '#/components/schemas/string'
       description: Lightsail throws this exception when the user has not been authenticated.
-    OperationList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Operation'
-    AccessKey:
-      type: object
-      properties:
-        accessKeyId:
-          allOf:
-          - $ref: '#/components/schemas/IAMAccessKeyId'
-          description: The ID of the access key.
-        secretAccessKey:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The secret access key used to sign requests. You should store the secret access key in a safe location. We recommend that you delete the access key if the secret access key is compromised.
-        status:
-          allOf:
-          - $ref: '#/components/schemas/StatusType'
-          description: The status of the access key. A status of Active means that the key is valid, while Inactive means it is not.
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the access key was created.
-        lastUsed:
-          allOf:
-          - $ref: '#/components/schemas/AccessKeyLastUsed'
-          description: An object that describes the last time the access key was used. This object does not include data in the response of a CreateBucketAccessKey action. If the access key has not been used, the region and serviceName values are N/A , and the lastUsedDate value is null.
-      description: Describes an access key for an Amazon Lightsail bucket. Access keys grant full programmatic access to the specified bucket and its objects. You can have a maximum of two access keys per bucket. Use the CreateBucketAccessKey action to create an access key for a specific bucket. For more information about access keys, see Creating access keys for a bucket in Amazon Lightsail in the Amazon Lightsail Developer Guide . The secretAccessKey value is returned only in response to the CreateBucketAccessKey action. You can get a secret access key only when you first create an access key; you cannot get the secret access key later. If you lose the secret access key, you must create a new access key.
-    BucketCorsRule:
-      type: object
-      properties:
-        id:
-          allOf:
-          - $ref: '#/components/schemas/BucketCorsRuleId'
-          description: A unique identifier for the CORS rule. The ID value can be up to 255 characters long. The IDs help you find a rule in the configuration.
-        allowedMethods:
-          allOf:
-          - $ref: '#/components/schemas/BucketCorsAllowedMethods'
-          description: 'The HTTP methods that are allowed when accessing the bucket from the specified origin. Each CORS rule must identify at least one origin and one method. You can use the following HTTP methods: GET - Retrieves data from the server, such as downloading files or viewing content. PUT - Uploads or replaces data on the server, such as uploading new files. POST - Sends data to the server for processing, such as submitting forms or creating new resources. DELETE - Removes data from the server, such as deleting files or resources. HEAD - Retrieves only the headers from the server without the actual content, useful for checking if a resource exists.'
-        allowedOrigins:
-          allOf:
-          - $ref: '#/components/schemas/BucketCorsAllowedOrigins'
-          description: One or more origins you want customers to be able to access the bucket from. Each CORS rule must identify at least one origin and one method.
-        allowedHeaders:
-          allOf:
-          - $ref: '#/components/schemas/BucketCorsAllowedHeaders'
-          description: Headers that are specified in the Access-Control-Request-Headers header. These headers are allowed in a preflight OPTIONS request. In response to any preflight OPTIONS request, Amazon S3 returns any requested headers that are allowed.
-        exposeHeaders:
-          allOf:
-          - $ref: '#/components/schemas/BucketCorsExposeHeaders'
-          description: One or more headers in the response that you want customers to be able to access from their applications (for example, from a JavaScript XMLHttpRequest object).
-        maxAgeSeconds:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The time in seconds that your browser is to cache the preflight response for the specified resource. A CORS rule can have only one maxAgeSeconds element.
-      required:
-      - allowedMethods
-      - allowedOrigins
-      description: Describes a cross-origin resource sharing (CORS) rule for a Lightsail bucket. CORS rules specify which origins are allowed to access the bucket, which HTTP methods are allowed, and other access control information. For more information, see Configuring cross-origin resource sharing (CORS) .
-    CreateBucketRequest:
-      type: object
-      properties:
-        bucketName:
-          allOf:
-          - $ref: '#/components/schemas/BucketName'
-          description: The name for the bucket. For more information about bucket names, see Bucket naming rules in Amazon Lightsail in the Amazon Lightsail Developer Guide .
-        bundleId:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The ID of the bundle to use for the bucket. A bucket bundle specifies the monthly cost, storage space, and data transfer quota for a bucket. Use the GetBucketBundles action to get a list of bundle IDs that you can specify. Use the UpdateBucketBundle action to change the bundle after the bucket is created.
-        tags:
-          allOf:
-          - $ref: '#/components/schemas/TagList'
-          description: The tag keys and optional values to add to the bucket during creation. Use the TagResource action to tag the bucket after it's created.
-        enableObjectVersioning:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value that indicates whether to enable versioning of objects in the bucket. For more information about versioning, see Enabling and suspending object versioning in a bucket in Amazon Lightsail in the Amazon Lightsail Developer Guide .
-      required:
-      - bucketName
-      - bundleId
-    GetBucketAccessKeysRequest:
-      type: object
-      properties:
-        bucketName:
-          allOf:
-          - $ref: '#/components/schemas/BucketName'
-          description: The name of the bucket for which to return access keys.
-      required:
-      - bucketName
-    UpdateBucketBundleResult:
+    DeleteBucketResult:
       type: object
       properties:
         operations:
           allOf:
           - $ref: '#/components/schemas/OperationList'
           description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    NonEmptyString:
-      type: string
-      pattern: \S
-    ResourceType:
-      type: string
-      enum:
-      - ContainerService
-      - Instance
-      - StaticIp
-      - KeyPair
-      - InstanceSnapshot
-      - Domain
-      - PeeredVpc
-      - LoadBalancer
-      - LoadBalancerTlsCertificate
-      - Disk
-      - DiskSnapshot
-      - RelationalDatabase
-      - RelationalDatabaseSnapshot
-      - ExportSnapshotRecord
-      - CloudFormationStackRecord
-      - Alarm
-      - ContactMethod
-      - Distribution
-      - Certificate
-      - Bucket
-    BucketBundleList:
-      type: array
-      items:
-        $ref: '#/components/schemas/BucketBundle'
-    AccountLevelBpaSyncStatus:
-      type: string
-      enum:
-      - InSync
-      - Failed
-      - NeverSynced
-      - Defaulted
-    BucketName:
-      type: string
-      pattern: ^[a-z0-9][a-z0-9-]{1,52}[a-z0-9]$
-      minLength: 3
-      maxLength: 54
+    float:
+      type: number
     BPAStatusMessage:
       type: string
       enum:
@@ -987,327 +914,11 @@ components:
       - SYNC_ON_HOLD
       - DEFAULTED_FOR_SLR_MISSING_ON_HOLD
       - Unknown
-    CreateBucketAccessKeyRequest:
-      type: object
-      properties:
-        bucketName:
-          allOf:
-          - $ref: '#/components/schemas/BucketName'
-          description: The name of the bucket that the new access key will belong to, and grant access to.
-      required:
-      - bucketName
-    MetricDatapointList:
-      type: array
-      items:
-        $ref: '#/components/schemas/MetricDatapoint'
-    MetricStatistic:
+    BucketAccessLogPrefix:
       type: string
-      enum:
-      - Minimum
-      - Maximum
-      - Sum
-      - Average
-      - SampleCount
-    GetBucketBundlesResult:
-      type: object
-      properties:
-        bundles:
-          allOf:
-          - $ref: '#/components/schemas/BucketBundleList'
-          description: An object that describes bucket bundles.
-    BucketCorsRuleId:
-      type: string
-      minLength: 0
-      maxLength: 255
-    ResourceBucketAccess:
-      type: string
-      enum:
-      - allow
-      - deny
-    Tag:
-      type: object
-      properties:
-        key:
-          allOf:
-          - $ref: '#/components/schemas/TagKey'
-          description: 'The key of the tag. Constraints: Tag keys accept a maximum of 128 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
-        value:
-          allOf:
-          - $ref: '#/components/schemas/TagValue'
-          description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
-      description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
-    MetricDatapoint:
-      type: object
-      properties:
-        average:
-          allOf:
-          - $ref: '#/components/schemas/double'
-          description: The average.
-        maximum:
-          allOf:
-          - $ref: '#/components/schemas/double'
-          description: The maximum.
-        minimum:
-          allOf:
-          - $ref: '#/components/schemas/double'
-          description: The minimum.
-        sampleCount:
-          allOf:
-          - $ref: '#/components/schemas/double'
-          description: The sample count.
-        sum:
-          allOf:
-          - $ref: '#/components/schemas/double'
-          description: The sum.
-        timestamp:
-          allOf:
-          - $ref: '#/components/schemas/timestamp'
-          description: The timestamp ( 1479816991.349 ).
-        unit:
-          allOf:
-          - $ref: '#/components/schemas/MetricUnit'
-          description: The unit.
-      description: Describes the metric data point.
-    ServiceException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: A general service exception.
-    UpdateBucketBundleRequest:
-      type: object
-      properties:
-        bucketName:
-          allOf:
-          - $ref: '#/components/schemas/BucketName'
-          description: The name of the bucket for which to update the bundle.
-        bundleId:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The ID of the new bundle to apply to the bucket. Use the GetBucketBundles action to get a list of bundle IDs that you can specify.
-      required:
-      - bucketName
-      - bundleId
-    MetricStatisticList:
-      type: array
-      items:
-        $ref: '#/components/schemas/MetricStatistic'
-    BucketCorsConfig:
-      type: object
-      properties:
-        rules:
-          allOf:
-          - $ref: '#/components/schemas/BucketCorsRules'
-          description: A set of origins and methods (cross-origin access that you want to allow). You can add up to 20 rules to the configuration. The total size is limited to 64 KB.
-      description: Describes the cross-origin resource sharing (CORS) configuration for a Lightsail bucket. CORS defines a way for client web applications that are loaded in one domain to interact with resources in a different domain. For more information, see Configuring cross-origin resource sharing (CORS) .
-    CreateBucketAccessKeyResult:
-      type: object
-      properties:
-        accessKey:
-          allOf:
-          - $ref: '#/components/schemas/AccessKey'
-          description: An object that describes the access key that is created.
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    BucketCorsAllowedOrigins:
-      type: array
-      items:
-        $ref: '#/components/schemas/string'
-    InvalidInputException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
-    boolean:
-      type: boolean
-    AccessKeyList:
-      type: array
-      items:
-        $ref: '#/components/schemas/AccessKey'
-    BucketCorsAllowedMethod:
-      type: string
-      pattern: ^(DELETE|GET|HEAD|POST|PUT)$
-    BucketState:
-      type: object
-      properties:
-        code:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: 'The state code of the bucket. The following codes are possible: OK - The bucket is in a running state. Unknown - Creation of the bucket might have timed-out. You might want to delete the bucket and create a new one.'
-        message:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: A message that describes the state of the bucket.
-      description: Describes the state of an Amazon Lightsail bucket.
-    SetResourceAccessForBucketRequest:
-      type: object
-      properties:
-        resourceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the Lightsail instance for which to set bucket access. The instance must be in a running or stopped state.
-        bucketName:
-          allOf:
-          - $ref: '#/components/schemas/BucketName'
-          description: The name of the bucket for which to set access to another Lightsail resource.
-        access:
-          allOf:
-          - $ref: '#/components/schemas/ResourceBucketAccess'
-          description: 'The access setting. The following access settings are available: allow - Allows access to the bucket and its objects. deny - Denies access to the bucket and its objects. Use this setting to remove access for a resource previously set to allow .'
-      required:
-      - resourceName
-      - bucketName
-      - access
-    GetBucketAccessKeysResult:
-      type: object
-      properties:
-        accessKeys:
-          allOf:
-          - $ref: '#/components/schemas/AccessKeyList'
-          description: An object that describes the access keys for the specified bucket.
-    GetBucketMetricDataResult:
-      type: object
-      properties:
-        metricName:
-          allOf:
-          - $ref: '#/components/schemas/BucketMetricName'
-          description: The name of the metric returned.
-        metricData:
-          allOf:
-          - $ref: '#/components/schemas/MetricDatapointList'
-          description: An array of objects that describe the metric data returned.
-    BucketAccessLogConfig:
-      type: object
-      properties:
-        enabled:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value that indicates whether bucket access logging is enabled for the bucket.
-        destination:
-          allOf:
-          - $ref: '#/components/schemas/BucketName'
-          description: The name of the bucket where the access logs are saved. The destination can be a Lightsail bucket in the same account, and in the same Amazon Web Services Region as the source bucket. This parameter is required when enabling the access log for a bucket, and should be omitted when disabling the access log.
-        prefix:
-          allOf:
-          - $ref: '#/components/schemas/BucketAccessLogPrefix'
-          description: The optional object prefix for the bucket access log. The prefix is an optional addition to the object key that organizes your access log files in the destination bucket. For example, if you specify a logs/ prefix, then each log object will begin with the logs/ prefix in its key (for example, logs/2021-11-01-21-32-16-E568B2907131C0C0 ). This parameter can be optionally specified when enabling the access log for a bucket, and should be omitted when disabling the access log.
-      required:
-      - enabled
-      description: Describes the access log configuration for a bucket in the Amazon Lightsail object storage service. For more information about bucket access logs, see Logging bucket requests using access logging in Amazon Lightsail in the Amazon Lightsail Developer Guide .
-    AccessType:
-      type: string
-      enum:
-      - public
-      - private
-    RegionName:
-      type: string
-      enum:
-      - us-east-1
-      - us-east-2
-      - us-west-1
-      - us-west-2
-      - eu-west-1
-      - eu-west-2
-      - eu-west-3
-      - eu-central-1
-      - eu-north-1
-      - eu-south-2
-      - ca-central-1
-      - ap-east-1
-      - ap-south-1
-      - ap-southeast-1
-      - ap-southeast-2
-      - ap-northeast-1
-      - ap-northeast-2
-      - ap-southeast-3
-      - ap-southeast-5
-      - sa-east-1
-    ResourceReceivingAccess:
-      type: object
-      properties:
-        name:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The name of the Lightsail instance.
-        resourceType:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The Lightsail resource type (for example, Instance ).
-      description: Describes an Amazon Lightsail instance that has access to a Lightsail bucket.
-    BucketBundle:
-      type: object
-      properties:
-        bundleId:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The ID of the bundle.
-        name:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The name of the bundle.
-        price:
-          allOf:
-          - $ref: '#/components/schemas/float'
-          description: The monthly price of the bundle, in US dollars.
-        storagePerMonthInGb:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The storage size of the bundle, in GB.
-        transferPerMonthInGb:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The monthly network transfer quota of the bundle.
-        isActive:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: Indicates whether the bundle is active. Use for a new or existing bucket.
-      description: Describes the specifications of a bundle that can be applied to an Amazon Lightsail bucket. A bucket bundle specifies the monthly cost, storage space, and data transfer quota for a bucket.
-    SetResourceAccessForBucketResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    BucketCorsExposeHeaders:
-      type: array
-      items:
-        $ref: '#/components/schemas/string'
-    timestamp:
-      type: string
-      format: date-time
-    UpdateBucketResult:
-      type: object
-      properties:
-        bucket:
-          allOf:
-          - $ref: '#/components/schemas/Bucket'
-          description: An object that describes the bucket that is updated.
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    integer:
-      type: integer
-    AccessReceiverList:
-      type: array
-      items:
-        $ref: '#/components/schemas/ResourceReceivingAccess'
+      pattern: ^[\w/!.*')(-]+$
+      minLength: 1
+      maxLength: 100
     OperationType:
       type: string
       enum:
@@ -1395,6 +1006,394 @@ components:
       - StopGUISession
       - SetupInstanceHttps
       - GetProfile
+    AccessKeyList:
+      type: array
+      items:
+        $ref: '#/components/schemas/AccessKey'
+    AccessKey:
+      type: object
+      properties:
+        accessKeyId:
+          allOf:
+          - $ref: '#/components/schemas/IAMAccessKeyId'
+          description: The ID of the access key.
+        secretAccessKey:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The secret access key used to sign requests. You should store the secret access key in a safe location. We recommend that you delete the access key if the secret access key is compromised.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/StatusType'
+          description: The status of the access key. A status of Active means that the key is valid, while Inactive means it is not.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the access key was created.
+        lastUsed:
+          allOf:
+          - $ref: '#/components/schemas/AccessKeyLastUsed'
+          description: An object that describes the last time the access key was used. This object does not include data in the response of a CreateBucketAccessKey action. If the access key has not been used, the region and serviceName values are N/A , and the lastUsedDate value is null.
+      description: Describes an access key for an Amazon Lightsail bucket. Access keys grant full programmatic access to the specified bucket and its objects. You can have a maximum of two access keys per bucket. Use the CreateBucketAccessKey action to create an access key for a specific bucket. For more information about access keys, see Creating access keys for a bucket in Amazon Lightsail in the Amazon Lightsail Developer Guide . The secretAccessKey value is returned only in response to the CreateBucketAccessKey action. You can get a secret access key only when you first create an access key; you cannot get the secret access key later. If you lose the secret access key, you must create a new access key.
+    IAMAccessKeyId:
+      type: string
+      pattern: ^[A-Z0-9]{20}$
+      minLength: 20
+      maxLength: 20
+    CreateBucketAccessKeyResult:
+      type: object
+      properties:
+        accessKey:
+          allOf:
+          - $ref: '#/components/schemas/AccessKey'
+          description: An object that describes the access key that is created.
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    AccessReceiverList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ResourceReceivingAccess'
+    NotFoundException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when it cannot find a resource.
+    OperationList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Operation'
+    BucketState:
+      type: object
+      properties:
+        code:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: 'The state code of the bucket. The following codes are possible: OK - The bucket is in a running state. Unknown - Creation of the bucket might have timed-out. You might want to delete the bucket and create a new one.'
+        message:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: A message that describes the state of the bucket.
+      description: Describes the state of an Amazon Lightsail bucket.
+    AccessKeyLastUsed:
+      type: object
+      properties:
+        lastUsedDate:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The date and time when the access key was most recently used. This value is null if the access key has not been used.
+        region:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The Amazon Web Services Region where this access key was most recently used. This value is N/A if the access key has not been used.
+        serviceName:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The name of the Amazon Web Services service with which this access key was most recently used. This value is N/A if the access key has not been used.
+      description: Describes the last time an access key was used. This object does not include data in the response of a CreateBucketAccessKey action.
+    TagKey:
+      type: string
+    BucketCorsAllowedHeaders:
+      type: array
+      items:
+        $ref: '#/components/schemas/string'
+    UpdateBucketBundleResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    CreateBucketAccessKeyRequest:
+      type: object
+      properties:
+        bucketName:
+          allOf:
+          - $ref: '#/components/schemas/BucketName'
+          description: The name of the bucket that the new access key will belong to, and grant access to.
+      required:
+      - bucketName
+    BucketCorsRule:
+      type: object
+      properties:
+        id:
+          allOf:
+          - $ref: '#/components/schemas/BucketCorsRuleId'
+          description: A unique identifier for the CORS rule. The ID value can be up to 255 characters long. The IDs help you find a rule in the configuration.
+        allowedMethods:
+          allOf:
+          - $ref: '#/components/schemas/BucketCorsAllowedMethods'
+          description: 'The HTTP methods that are allowed when accessing the bucket from the specified origin. Each CORS rule must identify at least one origin and one method. You can use the following HTTP methods: GET - Retrieves data from the server, such as downloading files or viewing content. PUT - Uploads or replaces data on the server, such as uploading new files. POST - Sends data to the server for processing, such as submitting forms or creating new resources. DELETE - Removes data from the server, such as deleting files or resources. HEAD - Retrieves only the headers from the server without the actual content, useful for checking if a resource exists.'
+        allowedOrigins:
+          allOf:
+          - $ref: '#/components/schemas/BucketCorsAllowedOrigins'
+          description: One or more origins you want customers to be able to access the bucket from. Each CORS rule must identify at least one origin and one method.
+        allowedHeaders:
+          allOf:
+          - $ref: '#/components/schemas/BucketCorsAllowedHeaders'
+          description: Headers that are specified in the Access-Control-Request-Headers header. These headers are allowed in a preflight OPTIONS request. In response to any preflight OPTIONS request, Amazon S3 returns any requested headers that are allowed.
+        exposeHeaders:
+          allOf:
+          - $ref: '#/components/schemas/BucketCorsExposeHeaders'
+          description: One or more headers in the response that you want customers to be able to access from their applications (for example, from a JavaScript XMLHttpRequest object).
+        maxAgeSeconds:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The time in seconds that your browser is to cache the preflight response for the specified resource. A CORS rule can have only one maxAgeSeconds element.
+      required:
+      - allowedMethods
+      - allowedOrigins
+      description: Describes a cross-origin resource sharing (CORS) rule for a Lightsail bucket. CORS rules specify which origins are allowed to access the bucket, which HTTP methods are allowed, and other access control information. For more information, see Configuring cross-origin resource sharing (CORS) .
+    Tag:
+      type: object
+      properties:
+        key:
+          allOf:
+          - $ref: '#/components/schemas/TagKey'
+          description: 'The key of the tag. Constraints: Tag keys accept a maximum of 128 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+        value:
+          allOf:
+          - $ref: '#/components/schemas/TagValue'
+          description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+      description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
+    SetResourceAccessForBucketResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    OperationStatus:
+      type: string
+      enum:
+      - NotStarted
+      - Started
+      - Failed
+      - Completed
+      - Succeeded
+    GetBucketBundlesResult:
+      type: object
+      properties:
+        bundles:
+          allOf:
+          - $ref: '#/components/schemas/BucketBundleList'
+          description: An object that describes bucket bundles.
+    UpdateBucketResult:
+      type: object
+      properties:
+        bucket:
+          allOf:
+          - $ref: '#/components/schemas/Bucket'
+          description: An object that describes the bucket that is updated.
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    AccessType:
+      type: string
+      enum:
+      - public
+      - private
+    MetricPeriod:
+      type: integer
+      minimum: 60
+      maximum: 86400
+    DeleteBucketRequest:
+      type: object
+      properties:
+        bucketName:
+          allOf:
+          - $ref: '#/components/schemas/BucketName'
+          description: The name of the bucket to delete. Use the GetBuckets action to get a list of bucket names that you can specify.
+        forceDelete:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: 'A Boolean value that indicates whether to force delete the bucket. You must force delete the bucket if it has one of the following conditions: The bucket is the origin of a distribution. The bucket has instances that were granted access to it using the SetResourceAccessForBucket action. The bucket has objects. The bucket has access keys. Force deleting a bucket might impact other resources that rely on the bucket, such as instances, distributions, or software that use the issued access keys.'
+      required:
+      - bucketName
+    BucketMetricName:
+      type: string
+      enum:
+      - BucketSizeBytes
+      - NumberOfObjects
+    InvalidInputException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
+    MetricStatistic:
+      type: string
+      enum:
+      - Minimum
+      - Maximum
+      - Sum
+      - Average
+      - SampleCount
+    AccountLevelBpaSyncStatus:
+      type: string
+      enum:
+      - InSync
+      - Failed
+      - NeverSynced
+      - Defaulted
+    GetBucketMetricDataResult:
+      type: object
+      properties:
+        metricName:
+          allOf:
+          - $ref: '#/components/schemas/BucketMetricName'
+          description: The name of the metric returned.
+        metricData:
+          allOf:
+          - $ref: '#/components/schemas/MetricDatapointList'
+          description: An array of objects that describe the metric data returned.
+    SetResourceAccessForBucketRequest:
+      type: object
+      properties:
+        resourceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the Lightsail instance for which to set bucket access. The instance must be in a running or stopped state.
+        bucketName:
+          allOf:
+          - $ref: '#/components/schemas/BucketName'
+          description: The name of the bucket for which to set access to another Lightsail resource.
+        access:
+          allOf:
+          - $ref: '#/components/schemas/ResourceBucketAccess'
+          description: 'The access setting. The following access settings are available: allow - Allows access to the bucket and its objects. deny - Denies access to the bucket and its objects. Use this setting to remove access for a resource previously set to allow .'
+      required:
+      - resourceName
+      - bucketName
+      - access
+    Operation:
+      type: object
+      properties:
+        id:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The ID of the operation.
+        resourceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The resource name.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The resource type.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the operation was initialized ( 1479816991.349 ).
+        location:
+          allOf:
+          - $ref: '#/components/schemas/ResourceLocation'
+          description: The Amazon Web Services Region and Availability Zone.
+        isTerminal:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value indicating whether the operation is terminal.
+        operationDetails:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Details about the operation ( Debian-1GB-Ohio-1 ).
+        operationType:
+          allOf:
+          - $ref: '#/components/schemas/OperationType'
+          description: The type of operation.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/OperationStatus'
+          description: The status of the operation.
+        statusChangedAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the status was changed ( 1479816991.349 ).
+        errorCode:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The error code.
+        errorDetails:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The error details.
+      description: Describes the API operation.
+    MetricDatapointList:
+      type: array
+      items:
+        $ref: '#/components/schemas/MetricDatapoint'
+    BucketCorsRuleId:
+      type: string
+      minLength: 0
+      maxLength: 255
+    ResourceLocation:
+      type: object
+      properties:
+        availabilityZone:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The Availability Zone. Follows the format us-east-2a (case-sensitive).
+        regionName:
+          allOf:
+          - $ref: '#/components/schemas/RegionName'
+          description: The Amazon Web Services Region name.
+      description: Describes the resource location.
+    MetricUnit:
+      type: string
+      enum:
+      - Seconds
+      - Microseconds
+      - Milliseconds
+      - Bytes
+      - Kilobytes
+      - Megabytes
+      - Gigabytes
+      - Terabytes
+      - Bits
+      - Kilobits
+      - Megabits
+      - Gigabits
+      - Terabits
+      - Percent
+      - Count
+      - Bytes/Second
+      - Kilobytes/Second
+      - Megabytes/Second
+      - Gigabytes/Second
+      - Terabytes/Second
+      - Bits/Second
+      - Kilobits/Second
+      - Megabits/Second
+      - Gigabits/Second
+      - Terabits/Second
+      - Count/Second
+      - None
+    TagValue:
+      type: string
+    timestamp:
+      type: string
+      format: date-time
+    BucketCorsRules:
+      type: array
+      items:
+        $ref: '#/components/schemas/BucketCorsRule'
+    NonEmptyString:
+      type: string
+      pattern: \S
     UpdateBucketRequest:
       type: object
       properties:
@@ -1424,65 +1423,126 @@ components:
           description: Sets the cross-origin resource sharing (CORS) configuration for your bucket. If a CORS configuration exists, it is replaced with the specified configuration. For AWS CLI operations, this parameter can also be passed as a file. For more information, see Configuring cross-origin resource sharing (CORS) . CORS information is only returned in a response when you update the CORS policy.
       required:
       - bucketName
-    AccessKeyLastUsed:
+    GetBucketsResult:
       type: object
       properties:
-        lastUsedDate:
+        buckets:
           allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The date and time when the access key was most recently used. This value is null if the access key has not been used.
-        region:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The Amazon Web Services Region where this access key was most recently used. This value is N/A if the access key has not been used.
-        serviceName:
+          - $ref: '#/components/schemas/BucketList'
+          description: An array of objects that describe buckets.
+        nextPageToken:
           allOf:
           - $ref: '#/components/schemas/string'
-          description: The name of the Amazon Web Services service with which this access key was most recently used. This value is N/A if the access key has not been used.
-      description: Describes the last time an access key was used. This object does not include data in the response of a CreateBucketAccessKey action.
-    BucketList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Bucket'
-    DeleteBucketResult:
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetBuckets request and specify the next page token using the pageToken parameter.
+        accountLevelBpaSync:
+          allOf:
+          - $ref: '#/components/schemas/AccountLevelBpaSync'
+          description: An object that describes the synchronization status of the Amazon S3 account-level block public access feature for your Lightsail buckets. For more information about this feature and how it affects Lightsail buckets, see Block public access for buckets in Amazon Lightsail .
+    double:
+      type: number
+    ServiceException:
       type: object
       properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    BucketCorsAllowedMethods:
-      type: array
-      items:
-        $ref: '#/components/schemas/BucketCorsAllowedMethod'
-    GetBucketsRequest:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: A general service exception.
+    CreateBucketRequest:
       type: object
       properties:
         bucketName:
           allOf:
           - $ref: '#/components/schemas/BucketName'
-          description: The name of the bucket for which to return information. When omitted, the response includes all of your buckets in the Amazon Web Services Region where the request is made.
-        pageToken:
+          description: The name for the bucket. For more information about bucket names, see Bucket naming rules in Amazon Lightsail in the Amazon Lightsail Developer Guide .
+        bundleId:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The ID of the bundle to use for the bucket. A bucket bundle specifies the monthly cost, storage space, and data transfer quota for a bucket. Use the GetBucketBundles action to get a list of bundle IDs that you can specify. Use the UpdateBucketBundle action to change the bundle after the bucket is created.
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values to add to the bucket during creation. Use the TagResource action to tag the bucket after it's created.
+        enableObjectVersioning:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value that indicates whether to enable versioning of objects in the bucket. For more information about versioning, see Enabling and suspending object versioning in a bucket in Amazon Lightsail in the Amazon Lightsail Developer Guide .
+      required:
+      - bucketName
+      - bundleId
+    BucketList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Bucket'
+    ResourceName:
+      type: string
+      pattern: ^\w[\w\-]*\w$
+    IsoDate:
+      type: string
+      format: date-time
+    RegionSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
           allOf:
           - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetBuckets request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
-        includeConnectedResources:
+          description: Regions and Availability Zones for Lightsail
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
           allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value that indicates whether to include Lightsail instances that were given access to the bucket using the SetResourceAccessForBucket action.
-        includeCors:
+          - $ref: '#/components/schemas/string'
+          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
+      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
+    integer:
+      type: integer
+    BucketCorsAllowedMethods:
+      type: array
+      items:
+        $ref: '#/components/schemas/BucketCorsAllowedMethod'
+    UpdateBucketBundleRequest:
+      type: object
+      properties:
+        bucketName:
           allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value that indicates whether to include Lightsail bucket CORS configuration in the response. For more information, see Configuring cross-origin resource sharing (CORS) . This parameter is only supported when getting a single bucket with bucketName specified. The default value for this parameter is False .
-    TagKey:
+          - $ref: '#/components/schemas/BucketName'
+          description: The name of the bucket for which to update the bundle.
+        bundleId:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The ID of the new bundle to apply to the bucket. Use the GetBucketBundles action to get a list of bundle IDs that you can specify.
+      required:
+      - bucketName
+      - bundleId
+    RegionName:
       type: string
-    string:
-      type: string
-    IAMAccessKeyId:
-      type: string
-      pattern: ^[A-Z0-9]{20}$
-      minLength: 20
-      maxLength: 20
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-west-3
+      - eu-central-1
+      - eu-north-1
+      - eu-south-2
+      - ca-central-1
+      - ap-east-1
+      - ap-south-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+      - ap-northeast-2
+      - ap-southeast-3
+      - ap-southeast-5
+      - sa-east-1
     DeleteBucketAccessKeyResult:
       type: object
       properties:
@@ -1490,107 +1550,104 @@ components:
           allOf:
           - $ref: '#/components/schemas/OperationList'
           description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    DeleteBucketRequest:
+    BucketAccessLogConfig:
       type: object
       properties:
-        bucketName:
-          allOf:
-          - $ref: '#/components/schemas/BucketName'
-          description: The name of the bucket to delete. Use the GetBuckets action to get a list of bucket names that you can specify.
-        forceDelete:
+        enabled:
           allOf:
           - $ref: '#/components/schemas/boolean'
-          description: 'A Boolean value that indicates whether to force delete the bucket. You must force delete the bucket if it has one of the following conditions: The bucket is the origin of a distribution. The bucket has instances that were granted access to it using the SetResourceAccessForBucket action. The bucket has objects. The bucket has access keys. Force deleting a bucket might impact other resources that rely on the bucket, such as instances, distributions, or software that use the issued access keys.'
+          description: A Boolean value that indicates whether bucket access logging is enabled for the bucket.
+        destination:
+          allOf:
+          - $ref: '#/components/schemas/BucketName'
+          description: The name of the bucket where the access logs are saved. The destination can be a Lightsail bucket in the same account, and in the same Amazon Web Services Region as the source bucket. This parameter is required when enabling the access log for a bucket, and should be omitted when disabling the access log.
+        prefix:
+          allOf:
+          - $ref: '#/components/schemas/BucketAccessLogPrefix'
+          description: The optional object prefix for the bucket access log. The prefix is an optional addition to the object key that organizes your access log files in the destination bucket. For example, if you specify a logs/ prefix, then each log object will begin with the logs/ prefix in its key (for example, logs/2021-11-01-21-32-16-E568B2907131C0C0 ). This parameter can be optionally specified when enabling the access log for a bucket, and should be omitted when disabling the access log.
       required:
-      - bucketName
-    BucketCorsRules:
-      type: array
-      items:
-        $ref: '#/components/schemas/BucketCorsRule'
-    DeleteBucketAccessKeyRequest:
+      - enabled
+      description: Describes the access log configuration for a bucket in the Amazon Lightsail object storage service. For more information about bucket access logs, see Logging bucket requests using access logging in Amazon Lightsail in the Amazon Lightsail Developer Guide .
+    ResourceReceivingAccess:
+      type: object
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The name of the Lightsail instance.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Lightsail resource type (for example, Instance ).
+      description: Describes an Amazon Lightsail instance that has access to a Lightsail bucket.
+    AccessRules:
+      type: object
+      properties:
+        getObject:
+          allOf:
+          - $ref: '#/components/schemas/AccessType'
+          description: 'Specifies the anonymous access to all objects in a bucket. The following options can be specified: public - Sets all objects in the bucket to public (read-only), making them readable by anyone in the world. If the getObject value is set to public , then all objects in the bucket default to public regardless of the allowPublicOverrides value. private - Sets all objects in the bucket to private, making them readable only by you or anyone you give access to. If the getObject value is set to private , and the allowPublicOverrides value is set to true , then all objects in the bucket default to private unless they are configured with a public-read ACL. Individual objects with a public-read ACL are readable by anyone in the world.'
+        allowPublicOverrides:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value that indicates whether the access control list (ACL) permissions that are applied to individual objects override the getObject option that is currently specified. When this is true, you can use the PutObjectAcl Amazon S3 API action to set individual objects to public (read-only) using the public-read ACL, or to private using the private ACL.
+      description: Describes the anonymous access permissions for an Amazon Lightsail bucket and its objects. For more information about bucket access permissions, see Understanding bucket permissions in Amazon Lightsail in the Amazon Lightsail Developer Guide .
+    ResourceType:
+      type: string
+      enum:
+      - ContainerService
+      - Instance
+      - StaticIp
+      - KeyPair
+      - InstanceSnapshot
+      - Domain
+      - PeeredVpc
+      - LoadBalancer
+      - LoadBalancerTlsCertificate
+      - Disk
+      - DiskSnapshot
+      - RelationalDatabase
+      - RelationalDatabaseSnapshot
+      - ExportSnapshotRecord
+      - CloudFormationStackRecord
+      - Alarm
+      - ContactMethod
+      - Distribution
+      - Certificate
+      - Bucket
+    GetBucketAccessKeysRequest:
       type: object
       properties:
         bucketName:
           allOf:
           - $ref: '#/components/schemas/BucketName'
-          description: The name of the bucket that the access key belongs to.
-        accessKeyId:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The ID of the access key to delete. Use the GetBucketAccessKeys action to get a list of access key IDs that you can specify.
+          description: The name of the bucket for which to return access keys.
       required:
       - bucketName
-      - accessKeyId
+    string:
+      type: string
+    boolean:
+      type: boolean
+    CreateBucketResult:
+      type: object
+      properties:
+        bucket:
+          allOf:
+          - $ref: '#/components/schemas/Bucket'
+          description: An object that describes the bucket that is created.
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
     PartnerIdList:
       type: array
       items:
         $ref: '#/components/schemas/NonEmptyString'
-    float:
-      type: number
-    GetBucketMetricDataRequest:
-      type: object
-      properties:
-        bucketName:
-          allOf:
-          - $ref: '#/components/schemas/BucketName'
-          description: The name of the bucket for which to get metric data.
-        metricName:
-          allOf:
-          - $ref: '#/components/schemas/BucketMetricName'
-          description: 'The metric for which you want to return information. Valid bucket metric names are listed below, along with the most useful statistics to include in your request, and the published unit value. These bucket metrics are reported once per day. BucketSizeBytes - The amount of data in bytes stored in a bucket. This value is calculated by summing the size of all objects in the bucket (including object versions), including the size of all parts for all incomplete multipart uploads to the bucket. Statistics: The most useful statistic is Maximum . Unit: The published unit is Bytes . NumberOfObjects - The total number of objects stored in a bucket. This value is calculated by counting all objects in the bucket (including object versions) and the total number of parts for all incomplete multipart uploads to the bucket. Statistics: The most useful statistic is Average . Unit: The published unit is Count .'
-        startTime:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp indicating the earliest data to be returned.
-        endTime:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp indicating the latest data to be returned.
-        period:
-          allOf:
-          - $ref: '#/components/schemas/MetricPeriod'
-          description: The granularity, in seconds, of the returned data points. Bucket storage metrics are reported once per day. Therefore, you should specify a period of 86400 seconds, which is the number of seconds in a day.
-        statistics:
-          allOf:
-          - $ref: '#/components/schemas/MetricStatisticList'
-          description: 'The statistic for the metric. The following statistics are available: Minimum - The lowest value observed during the specified period. Use this value to determine low volumes of activity for your application. Maximum - The highest value observed during the specified period. Use this value to determine high volumes of activity for your application. Sum - The sum of all values submitted for the matching metric. You can use this statistic to determine the total volume of a metric. Average - The value of Sum / SampleCount during the specified period. By comparing this statistic with the Minimum and Maximum values, you can determine the full scope of a metric and how close the average use is to the Minimum and Maximum values. This comparison helps you to know when to increase or decrease your resources. SampleCount - The count, or number, of data points used for the statistical calculation.'
-        unit:
-          allOf:
-          - $ref: '#/components/schemas/MetricUnit'
-          description: The unit for the metric data request. Valid units depend on the metric data being requested. For the valid units with each available metric, see the metricName parameter.
-      required:
-      - bucketName
-      - metricName
-      - startTime
-      - endTime
-      - period
-      - statistics
-      - unit
-    BucketCorsAllowedHeaders:
-      type: array
-      items:
-        $ref: '#/components/schemas/string'
-    ResourceLocation:
-      type: object
-      properties:
-        availabilityZone:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The Availability Zone. Follows the format us-east-2a (case-sensitive).
-        regionName:
-          allOf:
-          - $ref: '#/components/schemas/RegionName'
-          description: The Amazon Web Services Region name.
-      description: Describes the resource location.
-    StatusType:
+    ResourceBucketAccess:
       type: string
       enum:
-      - Active
-      - Inactive
-    MetricPeriod:
-      type: integer
-      minimum: 60
-      maximum: 86400
+      - allow
+      - deny
     AccountLevelBpaSync:
       type: object
       properties:
@@ -1611,85 +1668,28 @@ components:
           - $ref: '#/components/schemas/boolean'
           description: A Boolean value that indicates whether account-level block public access is affecting your Lightsail buckets.
       description: Describes the synchronization status of the Amazon Simple Storage Service (Amazon S3) account-level block public access (BPA) feature for your Lightsail buckets. The account-level BPA feature of Amazon S3 provides centralized controls to limit public access to all Amazon S3 buckets in an account. BPA can make all Amazon S3 buckets in an Amazon Web Services account private regardless of the individual bucket and object permissions that are configured. Lightsail buckets take into account the Amazon S3 account-level BPA configuration when allowing or denying public access. To do this, Lightsail periodically fetches the account-level BPA configuration from Amazon S3. When the account-level BPA status is InSync , the Amazon S3 account-level BPA configuration is synchronized and it applies to your Lightsail buckets. For more information about Amazon Simple Storage Service account-level BPA and how it affects Lightsail buckets, see Block public access for buckets in Amazon Lightsail in the Amazon Lightsail Developer Guide .
-    BucketMetricName:
-      type: string
-      enum:
-      - BucketSizeBytes
-      - NumberOfObjects
-    CreateBucketResult:
-      type: object
-      properties:
-        bucket:
-          allOf:
-          - $ref: '#/components/schemas/Bucket'
-          description: An object that describes the bucket that is created.
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    OperationStatus:
-      type: string
-      enum:
-      - NotStarted
-      - Started
-      - Failed
-      - Completed
-      - Succeeded
-    AccessRules:
-      type: object
-      properties:
-        getObject:
-          allOf:
-          - $ref: '#/components/schemas/AccessType'
-          description: 'Specifies the anonymous access to all objects in a bucket. The following options can be specified: public - Sets all objects in the bucket to public (read-only), making them readable by anyone in the world. If the getObject value is set to public , then all objects in the bucket default to public regardless of the allowPublicOverrides value. private - Sets all objects in the bucket to private, making them readable only by you or anyone you give access to. If the getObject value is set to private , and the allowPublicOverrides value is set to true , then all objects in the bucket default to private unless they are configured with a public-read ACL. Individual objects with a public-read ACL are readable by anyone in the world.'
-        allowPublicOverrides:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value that indicates whether the access control list (ACL) permissions that are applied to individual objects override the getObject option that is currently specified. When this is true, you can use the PutObjectAcl Amazon S3 API action to set individual objects to public (read-only) using the public-read ACL, or to private using the private ACL.
-      description: Describes the anonymous access permissions for an Amazon Lightsail bucket and its objects. For more information about bucket access permissions, see Understanding bucket permissions in Amazon Lightsail in the Amazon Lightsail Developer Guide .
-    AccessDeniedException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
-    TagList:
+    BucketCorsExposeHeaders:
       type: array
       items:
-        $ref: '#/components/schemas/Tag'
-    NotFoundException:
+        $ref: '#/components/schemas/string'
+    GetBucketAccessKeysResult:
       type: object
       properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when it cannot find a resource.
-    GetBucketsResult:
+        accessKeys:
+          allOf:
+          - $ref: '#/components/schemas/AccessKeyList'
+          description: An object that describes the access keys for the specified bucket.
+    GetBucketBundlesRequest:
       type: object
       properties:
-        buckets:
+        includeInactive:
           allOf:
-          - $ref: '#/components/schemas/BucketList'
-          description: An array of objects that describe buckets.
-        nextPageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetBuckets request and specify the next page token using the pageToken parameter.
-        accountLevelBpaSync:
-          allOf:
-          - $ref: '#/components/schemas/AccountLevelBpaSync'
-          description: An object that describes the synchronization status of the Amazon S3 account-level block public access feature for your Lightsail buckets. For more information about this feature and how it affects Lightsail buckets, see Block public access for buckets in Amazon Lightsail .
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value that indicates whether to include inactive (unavailable) bundles in the response of your request.
+    BucketBundleList:
+      type: array
+      items:
+        $ref: '#/components/schemas/BucketBundle'
   securitySchemes:
     sigv4:
       type: apiKey

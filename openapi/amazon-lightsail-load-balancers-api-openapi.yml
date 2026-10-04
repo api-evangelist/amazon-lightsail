@@ -563,6 +563,382 @@ paths:
       x-amz-target: Lightsail_20161128.UpdateLoadBalancerAttribute
 components:
   schemas:
+    GetLoadBalancersResult:
+      type: object
+      properties:
+        loadBalancers:
+          allOf:
+          - $ref: '#/components/schemas/LoadBalancerList'
+          description: An array of LoadBalancer objects describing your load balancers.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetLoadBalancers request and specify the next page token using the pageToken parameter.
+    GetLoadBalancersRequest:
+      type: object
+      properties:
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetLoadBalancers request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+    AccessDeniedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
+    InstanceHealthSummaryList:
+      type: array
+      items:
+        $ref: '#/components/schemas/InstanceHealthSummary'
+    InstanceHealthState:
+      type: string
+      enum:
+      - initial
+      - healthy
+      - unhealthy
+      - unused
+      - draining
+      - unavailable
+    GetLoadBalancerMetricDataResult:
+      type: object
+      properties:
+        metricName:
+          allOf:
+          - $ref: '#/components/schemas/LoadBalancerMetricName'
+          description: The name of the metric returned.
+        metricData:
+          allOf:
+          - $ref: '#/components/schemas/MetricDatapointList'
+          description: An array of objects that describe the metric data returned.
+    LoadBalancerConfigurationOptions:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/string'
+    InstanceHealthSummary:
+      type: object
+      properties:
+        instanceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the Lightsail instance for which you are requesting health check data.
+        instanceHealth:
+          allOf:
+          - $ref: '#/components/schemas/InstanceHealthState'
+          description: Describes the overall instance health. Valid values are below.
+        instanceHealthReason:
+          allOf:
+          - $ref: '#/components/schemas/InstanceHealthReason'
+          description: 'More information about the instance health. If the instanceHealth is healthy , then an instanceHealthReason value is not provided. If instanceHealth is initial , the instanceHealthReason value can be one of the following: Lb.RegistrationInProgress - The target instance is in the process of being registered with the load balancer. Lb.InitialHealthChecking - The Lightsail load balancer is still sending the target instance the minimum number of health checks required to determine its health status. If instanceHealth is unhealthy , the instanceHealthReason value can be one of the following: Instance.ResponseCodeMismatch - The health checks did not return an expected HTTP code. Instance.Timeout - The health check requests timed out. Instance.FailedHealthChecks - The health checks failed because the connection to the target instance timed out, the target instance response was malformed, or the target instance failed the health check for an unknown reason. Lb.InternalError - The health checks failed due to an internal error. If instanceHealth is unused , the instanceHealthReason value can be one of the following: Instance.NotRegistered - The target instance is not registered with the target group. Instance.NotInUse - The target group is not used by any load balancer, or the target instance is in an Availability Zone that is not enabled for its load balancer. Instance.IpUnusable - The target IP address is reserved for use by a Lightsail load balancer. Instance.InvalidState - The target is in the stopped or terminated state. If instanceHealth is draining , the instanceHealthReason value can be one of the following: Instance.DeregistrationInProgress - The target instance is in the process of being deregistered and the deregistration delay period has not expired.'
+      description: Describes information about the health of the instance.
+    ResourceName:
+      type: string
+      pattern: ^\w[\w\-]*\w$
+    LoadBalancerMetricName:
+      type: string
+      enum:
+      - ClientTLSNegotiationErrorCount
+      - HealthyHostCount
+      - UnhealthyHostCount
+      - HTTPCode_LB_4XX_Count
+      - HTTPCode_LB_5XX_Count
+      - HTTPCode_Instance_2XX_Count
+      - HTTPCode_Instance_3XX_Count
+      - HTTPCode_Instance_4XX_Count
+      - HTTPCode_Instance_5XX_Count
+      - InstanceResponseTime
+      - RejectedConnectionCount
+      - RequestCount
+    MetricPeriod:
+      type: integer
+      minimum: 60
+      maximum: 86400
+    IsoDate:
+      type: string
+      format: date-time
+    DetachInstancesFromLoadBalancerRequest:
+      type: object
+      properties:
+        loadBalancerName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the Lightsail load balancer.
+        instanceNames:
+          allOf:
+          - $ref: '#/components/schemas/ResourceNameList'
+          description: An array of strings containing the names of the instances you want to detach from the load balancer.
+      required:
+      - loadBalancerName
+      - instanceNames
+    NotFoundException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when it cannot find a resource.
+    RegionSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Regions and Availability Zones for Lightsail
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
+      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
+    integer:
+      type: integer
+    AttachInstancesToLoadBalancerRequest:
+      type: object
+      properties:
+        loadBalancerName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the load balancer.
+        instanceNames:
+          allOf:
+          - $ref: '#/components/schemas/ResourceNameList'
+          description: An array of strings representing the instance name(s) you want to attach to your load balancer. An instance must be running before you can attach it to your load balancer. There are no additional limits on the number of instances you can attach to your load balancer, aside from the limit of Lightsail instances you can create in your account (20).
+      required:
+      - loadBalancerName
+      - instanceNames
+    OperationList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Operation'
+    MetricStatisticList:
+      type: array
+      items:
+        $ref: '#/components/schemas/MetricStatistic'
+    StringList:
+      type: array
+      items:
+        $ref: '#/components/schemas/string'
+    IpAddressType:
+      type: string
+      enum:
+      - dualstack
+      - ipv4
+      - ipv6
+    UpdateLoadBalancerAttributeResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    GetLoadBalancerRequest:
+      type: object
+      properties:
+        loadBalancerName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the load balancer.
+      required:
+      - loadBalancerName
+    CreateLoadBalancerRequest:
+      type: object
+      properties:
+        loadBalancerName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of your load balancer.
+        instancePort:
+          allOf:
+          - $ref: '#/components/schemas/Port'
+          description: The instance port where you're creating your load balancer.
+        healthCheckPath:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The path you provided to perform the load balancer health check. If you didn't specify a health check path, Lightsail uses the root path of your website ( "/" ). You may want to specify a custom health check path other than the root of your application if your home page loads slowly or has a lot of media or scripting on it.
+        certificateName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the SSL/TLS certificate. If you specify certificateName , then certificateDomainName is required (and vice-versa).
+        certificateDomainName:
+          allOf:
+          - $ref: '#/components/schemas/DomainName'
+          description: The domain name with which your certificate is associated ( example.com ). If you specify certificateDomainName , then certificateName is required (and vice-versa).
+        certificateAlternativeNames:
+          allOf:
+          - $ref: '#/components/schemas/DomainNameList'
+          description: The optional alternative domains and subdomains to use with your SSL/TLS certificate ( www.example.com , example.com , m.example.com , blog.example.com ).
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values to add to the resource during create. Use the TagResource action to tag a resource after it's created.
+        ipAddressType:
+          allOf:
+          - $ref: '#/components/schemas/IpAddressType'
+          description: The IP address type for the load balancer. The possible values are ipv4 for IPv4 only, ipv6 for IPv6 only, and dualstack for IPv4 and IPv6. The default value is dualstack .
+        tlsPolicyName:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The name of the TLS policy to apply to the load balancer. Use the GetLoadBalancerTlsPolicies action to get a list of TLS policy names that you can specify. For more information about load balancer TLS policies, see Configuring TLS security policies on your Amazon Lightsail load balancers in the Amazon Lightsail Developer Guide .
+      required:
+      - loadBalancerName
+      - instancePort
+    Port:
+      type: integer
+      minimum: -1
+      maximum: 65535
+    TagKey:
+      type: string
+    InvalidInputException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
+    InstanceHealthReason:
+      type: string
+      enum:
+      - Lb.RegistrationInProgress
+      - Lb.InitialHealthChecking
+      - Lb.InternalError
+      - Instance.ResponseCodeMismatch
+      - Instance.Timeout
+      - Instance.FailedHealthChecks
+      - Instance.NotRegistered
+      - Instance.NotInUse
+      - Instance.DeregistrationInProgress
+      - Instance.InvalidState
+      - Instance.IpUnusable
+    CreateLoadBalancerResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    OperationFailureException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an operation fails to execute.
+    DeleteLoadBalancerRequest:
+      type: object
+      properties:
+        loadBalancerName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the load balancer you want to delete.
+      required:
+      - loadBalancerName
+    UpdateLoadBalancerAttributeRequest:
+      type: object
+      properties:
+        loadBalancerName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the load balancer that you want to modify ( my-load-balancer .
+        attributeName:
+          allOf:
+          - $ref: '#/components/schemas/LoadBalancerAttributeName'
+          description: The name of the attribute you want to update.
+        attributeValue:
+          allOf:
+          - $ref: '#/components/schemas/StringMax256'
+          description: 'The value that you want to specify for the attribute name. The following values are supported depending on what you specify for the attributeName request parameter: If you specify HealthCheckPath for the attributeName request parameter, then the attributeValue request parameter must be the path to ping on the target (for example, /weather/us/wa/seattle ). If you specify SessionStickinessEnabled for the attributeName request parameter, then the attributeValue request parameter must be true to activate session stickiness or false to deactivate session stickiness. If you specify SessionStickiness_LB_CookieDurationSeconds for the attributeName request parameter, then the attributeValue request parameter must be an interger that represents the cookie duration in seconds. If you specify HttpsRedirectionEnabled for the attributeName request parameter, then the attributeValue request parameter must be true to activate HTTP to HTTPS redirection or false to deactivate HTTP to HTTPS redirection. If you specify TlsPolicyName for the attributeName request parameter, then the attributeValue request parameter must be the name of the TLS policy. Use the GetLoadBalancerTlsPolicies action to get a list of TLS policy names that you can specify.'
+      required:
+      - loadBalancerName
+      - attributeName
+      - attributeValue
+    MetricStatistic:
+      type: string
+      enum:
+      - Minimum
+      - Maximum
+      - Sum
+      - Average
+      - SampleCount
+    LoadBalancerTlsPolicy:
+      type: object
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the TLS security policy.
+        isDefault:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value that indicates whether the TLS security policy is the default.
+        description:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The description of the TLS security policy.
+        protocols:
+          allOf:
+          - $ref: '#/components/schemas/StringList'
+          description: The protocols used in a given TLS security policy.
+        ciphers:
+          allOf:
+          - $ref: '#/components/schemas/StringList'
+          description: The ciphers used by the TLS security policy. The ciphers are listed in order of preference.
+      description: Describes the TLS security policies that are available for Lightsail load balancers. For more information about load balancer TLS security policies, see Configuring TLS security policies on your Amazon Lightsail load balancers in the Amazon Lightsail Developer Guide .
+    ResourceNameList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ResourceName'
+    RegionName:
+      type: string
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-west-3
+      - eu-central-1
+      - eu-north-1
+      - eu-south-2
+      - ca-central-1
+      - ap-east-1
+      - ap-south-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+      - ap-northeast-2
+      - ap-southeast-3
+      - ap-southeast-5
+      - sa-east-1
+    LoadBalancerProtocol:
+      type: string
+      enum:
+      - HTTP_HTTPS
+      - HTTP
     MetricDatapoint:
       type: object
       properties:
@@ -595,120 +971,6 @@ components:
           - $ref: '#/components/schemas/MetricUnit'
           description: The unit.
       description: Describes the metric data point.
-    TagValue:
-      type: string
-    TagKey:
-      type: string
-    PortList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Port'
-    MetricUnit:
-      type: string
-      enum:
-      - Seconds
-      - Microseconds
-      - Milliseconds
-      - Bytes
-      - Kilobytes
-      - Megabytes
-      - Gigabytes
-      - Terabytes
-      - Bits
-      - Kilobits
-      - Megabits
-      - Gigabits
-      - Terabits
-      - Percent
-      - Count
-      - Bytes/Second
-      - Kilobytes/Second
-      - Megabytes/Second
-      - Gigabytes/Second
-      - Terabytes/Second
-      - Bits/Second
-      - Kilobits/Second
-      - Megabits/Second
-      - Gigabits/Second
-      - Terabits/Second
-      - Count/Second
-      - None
-    ServiceException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: A general service exception.
-    RegionSetupInProgressException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Regions and Availability Zones for Lightsail
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
-      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
-    DetachInstancesFromLoadBalancerRequest:
-      type: object
-      properties:
-        loadBalancerName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the Lightsail load balancer.
-        instanceNames:
-          allOf:
-          - $ref: '#/components/schemas/ResourceNameList'
-          description: An array of strings containing the names of the instances you want to detach from the load balancer.
-      required:
-      - loadBalancerName
-      - instanceNames
-    string:
-      type: string
-    double:
-      type: number
-    DomainNameList:
-      type: array
-      items:
-        $ref: '#/components/schemas/DomainName'
-    GetLoadBalancerTlsPoliciesResult:
-      type: object
-      properties:
-        tlsPolicies:
-          allOf:
-          - $ref: '#/components/schemas/LoadBalancerTlsPolicyList'
-          description: An array of objects that describe the TLS security policies that are available.
-        nextPageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetLoadBalancerTlsPolicies request and specify the next page token using the pageToken parameter.
-    LoadBalancerConfigurationOptions:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/string'
-    IsoDate:
-      type: string
-      format: date-time
-    LoadBalancerAttributeName:
-      type: string
-      enum:
-      - HealthCheckPath
-      - SessionStickinessEnabled
-      - SessionStickiness_LB_CookieDurationSeconds
-      - HttpsRedirectionEnabled
-      - TlsPolicyName
     GetLoadBalancerMetricDataRequest:
       type: object
       properties:
@@ -748,19 +1010,49 @@ components:
       - endTime
       - unit
       - statistics
-    ResourceName:
-      type: string
-      pattern: ^\w[\w\-]*\w$
-    IpAddressType:
+    ResourceType:
       type: string
       enum:
-      - dualstack
-      - ipv4
-      - ipv6
-    InstanceHealthSummaryList:
+      - ContainerService
+      - Instance
+      - StaticIp
+      - KeyPair
+      - InstanceSnapshot
+      - Domain
+      - PeeredVpc
+      - LoadBalancer
+      - LoadBalancerTlsCertificate
+      - Disk
+      - DiskSnapshot
+      - RelationalDatabase
+      - RelationalDatabaseSnapshot
+      - ExportSnapshotRecord
+      - CloudFormationStackRecord
+      - Alarm
+      - ContactMethod
+      - Distribution
+      - Certificate
+      - Bucket
+    TagList:
       type: array
       items:
-        $ref: '#/components/schemas/InstanceHealthSummary'
+        $ref: '#/components/schemas/Tag'
+    DomainNameList:
+      type: array
+      items:
+        $ref: '#/components/schemas/DomainName'
+    AccountSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an account is still in the setup in progress state.
     Operation:
       type: object
       properties:
@@ -813,24 +1105,10 @@ components:
           - $ref: '#/components/schemas/string'
           description: The error details.
       description: Describes the API operation.
-    DeleteLoadBalancerResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    MetricStatisticList:
-      type: array
-      items:
-        $ref: '#/components/schemas/MetricStatistic'
-    UpdateLoadBalancerAttributeResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    string:
+      type: string
+    boolean:
+      type: boolean
     UnauthenticatedException:
       type: object
       properties:
@@ -843,87 +1121,10 @@ components:
         tip:
           $ref: '#/components/schemas/string'
       description: Lightsail throws this exception when the user has not been authenticated.
-    OperationList:
+    MetricDatapointList:
       type: array
       items:
-        $ref: '#/components/schemas/Operation'
-    CreateLoadBalancerResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    timestamp:
-      type: string
-      format: date-time
-    UpdateLoadBalancerAttributeRequest:
-      type: object
-      properties:
-        loadBalancerName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the load balancer that you want to modify ( my-load-balancer .
-        attributeName:
-          allOf:
-          - $ref: '#/components/schemas/LoadBalancerAttributeName'
-          description: The name of the attribute you want to update.
-        attributeValue:
-          allOf:
-          - $ref: '#/components/schemas/StringMax256'
-          description: 'The value that you want to specify for the attribute name. The following values are supported depending on what you specify for the attributeName request parameter: If you specify HealthCheckPath for the attributeName request parameter, then the attributeValue request parameter must be the path to ping on the target (for example, /weather/us/wa/seattle ). If you specify SessionStickinessEnabled for the attributeName request parameter, then the attributeValue request parameter must be true to activate session stickiness or false to deactivate session stickiness. If you specify SessionStickiness_LB_CookieDurationSeconds for the attributeName request parameter, then the attributeValue request parameter must be an interger that represents the cookie duration in seconds. If you specify HttpsRedirectionEnabled for the attributeName request parameter, then the attributeValue request parameter must be true to activate HTTP to HTTPS redirection or false to deactivate HTTP to HTTPS redirection. If you specify TlsPolicyName for the attributeName request parameter, then the attributeValue request parameter must be the name of the TLS policy. Use the GetLoadBalancerTlsPolicies action to get a list of TLS policy names that you can specify.'
-      required:
-      - loadBalancerName
-      - attributeName
-      - attributeValue
-    OperationFailureException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when an operation fails to execute.
-    LoadBalancerTlsPolicy:
-      type: object
-      properties:
-        name:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the TLS security policy.
-        isDefault:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value that indicates whether the TLS security policy is the default.
-        description:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The description of the TLS security policy.
-        protocols:
-          allOf:
-          - $ref: '#/components/schemas/StringList'
-          description: The protocols used in a given TLS security policy.
-        ciphers:
-          allOf:
-          - $ref: '#/components/schemas/StringList'
-          description: The ciphers used by the TLS security policy. The ciphers are listed in order of preference.
-      description: Describes the TLS security policies that are available for Lightsail load balancers. For more information about load balancer TLS security policies, see Configuring TLS security policies on your Amazon Lightsail load balancers in the Amazon Lightsail Developer Guide .
-    StringList:
-      type: array
-      items:
-        $ref: '#/components/schemas/string'
-    LoadBalancerState:
-      type: string
-      enum:
-      - active
-      - provisioning
-      - active_impaired
-      - failed
-      - unknown
+        $ref: '#/components/schemas/MetricDatapoint'
     GetLoadBalancerResult:
       type: object
       properties:
@@ -931,110 +1132,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/LoadBalancer'
           description: An object containing information about your load balancer.
-    InstanceHealthState:
-      type: string
-      enum:
-      - initial
-      - healthy
-      - unhealthy
-      - unused
-      - draining
-      - unavailable
-    InstanceHealthReason:
-      type: string
-      enum:
-      - Lb.RegistrationInProgress
-      - Lb.InitialHealthChecking
-      - Lb.InternalError
-      - Instance.ResponseCodeMismatch
-      - Instance.Timeout
-      - Instance.FailedHealthChecks
-      - Instance.NotRegistered
-      - Instance.NotInUse
-      - Instance.DeregistrationInProgress
-      - Instance.InvalidState
-      - Instance.IpUnusable
-    integer:
-      type: integer
-    InvalidInputException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
-    CreateLoadBalancerRequest:
-      type: object
-      properties:
-        loadBalancerName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of your load balancer.
-        instancePort:
-          allOf:
-          - $ref: '#/components/schemas/Port'
-          description: The instance port where you're creating your load balancer.
-        healthCheckPath:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The path you provided to perform the load balancer health check. If you didn't specify a health check path, Lightsail uses the root path of your website ( "/" ). You may want to specify a custom health check path other than the root of your application if your home page loads slowly or has a lot of media or scripting on it.
-        certificateName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the SSL/TLS certificate. If you specify certificateName , then certificateDomainName is required (and vice-versa).
-        certificateDomainName:
-          allOf:
-          - $ref: '#/components/schemas/DomainName'
-          description: The domain name with which your certificate is associated ( example.com ). If you specify certificateDomainName , then certificateName is required (and vice-versa).
-        certificateAlternativeNames:
-          allOf:
-          - $ref: '#/components/schemas/DomainNameList'
-          description: The optional alternative domains and subdomains to use with your SSL/TLS certificate ( www.example.com , example.com , m.example.com , blog.example.com ).
-        tags:
-          allOf:
-          - $ref: '#/components/schemas/TagList'
-          description: The tag keys and optional values to add to the resource during create. Use the TagResource action to tag a resource after it's created.
-        ipAddressType:
-          allOf:
-          - $ref: '#/components/schemas/IpAddressType'
-          description: The IP address type for the load balancer. The possible values are ipv4 for IPv4 only, ipv6 for IPv6 only, and dualstack for IPv4 and IPv6. The default value is dualstack .
-        tlsPolicyName:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The name of the TLS policy to apply to the load balancer. Use the GetLoadBalancerTlsPolicies action to get a list of TLS policy names that you can specify. For more information about load balancer TLS policies, see Configuring TLS security policies on your Amazon Lightsail load balancers in the Amazon Lightsail Developer Guide .
-      required:
-      - loadBalancerName
-      - instancePort
-    LoadBalancerTlsCertificateSummaryList:
-      type: array
-      items:
-        $ref: '#/components/schemas/LoadBalancerTlsCertificateSummary'
-    LoadBalancerTlsPolicyList:
-      type: array
-      items:
-        $ref: '#/components/schemas/LoadBalancerTlsPolicy'
-    GetLoadBalancerMetricDataResult:
-      type: object
-      properties:
-        metricName:
-          allOf:
-          - $ref: '#/components/schemas/LoadBalancerMetricName'
-          description: The name of the metric returned.
-        metricData:
-          allOf:
-          - $ref: '#/components/schemas/MetricDatapointList'
-          description: An array of objects that describe the metric data returned.
-    boolean:
-      type: boolean
-    ResourceNameList:
-      type: array
-      items:
-        $ref: '#/components/schemas/ResourceName'
     ResourceLocation:
       type: object
       properties:
@@ -1047,10 +1144,190 @@ components:
           - $ref: '#/components/schemas/RegionName'
           description: The Amazon Web Services Region name.
       description: Describes the resource location.
-    MetricPeriod:
-      type: integer
-      minimum: 60
-      maximum: 86400
+    DetachInstancesFromLoadBalancerResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    LoadBalancerTlsCertificateSummaryList:
+      type: array
+      items:
+        $ref: '#/components/schemas/LoadBalancerTlsCertificateSummary'
+    LoadBalancerTlsCertificateSummary:
+      type: object
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the SSL/TLS certificate.
+        isAttached:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: When true , the SSL/TLS certificate is attached to the Lightsail load balancer.
+      description: Provides a summary of SSL/TLS certificate metadata.
+    TagValue:
+      type: string
+    LoadBalancer:
+      type: object
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the load balancer ( my-load-balancer ).
+        arn:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Amazon Resource Name (ARN) of the load balancer.
+        supportCode:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The support code. Include this code in your email to support when you have questions about your Lightsail load balancer. This code enables our support team to look up your Lightsail information more easily.
+        createdAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The date when your load balancer was created.
+        location:
+          allOf:
+          - $ref: '#/components/schemas/ResourceLocation'
+          description: The AWS Region where your load balancer was created ( us-east-2a ). Lightsail automatically creates your load balancer across Availability Zones.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The resource type ( LoadBalancer .
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag keys and optional values for the resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
+        dnsName:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The DNS name of your Lightsail load balancer.
+        state:
+          allOf:
+          - $ref: '#/components/schemas/LoadBalancerState'
+          description: The status of your load balancer. Valid values are below.
+        protocol:
+          allOf:
+          - $ref: '#/components/schemas/LoadBalancerProtocol'
+          description: The protocol you have enabled for your load balancer. Valid values are below. You can't just have HTTP_HTTPS , but you can have just HTTP .
+        publicPorts:
+          allOf:
+          - $ref: '#/components/schemas/PortList'
+          description: An array of public port settings for your load balancer. For HTTP, use port 80. For HTTPS, use port 443.
+        healthCheckPath:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The path you specified to perform your health checks. If no path is specified, the load balancer tries to make a request to the default (root) page.
+        instancePort:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The port where the load balancer will direct traffic to your Lightsail instances. For HTTP traffic, it's port 80. For HTTPS traffic, it's port 443.
+        instanceHealthSummary:
+          allOf:
+          - $ref: '#/components/schemas/InstanceHealthSummaryList'
+          description: An array of InstanceHealthSummary objects describing the health of the load balancer.
+        tlsCertificateSummaries:
+          allOf:
+          - $ref: '#/components/schemas/LoadBalancerTlsCertificateSummaryList'
+          description: An array of LoadBalancerTlsCertificateSummary objects that provide additional information about the SSL/TLS certificates. For example, if true , the certificate is attached to the load balancer.
+        configurationOptions:
+          allOf:
+          - $ref: '#/components/schemas/LoadBalancerConfigurationOptions'
+          description: A string to string map of the configuration options for your load balancer. Valid values are listed below.
+        ipAddressType:
+          allOf:
+          - $ref: '#/components/schemas/IpAddressType'
+          description: The IP address type of the load balancer. The possible values are ipv4 for IPv4 only, ipv6 for IPv6 only, and dualstack for IPv4 and IPv6.
+        httpsRedirectionEnabled:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: A Boolean value that indicates whether HTTPS redirection is enabled for the load balancer.
+        tlsPolicyName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the TLS security policy for the load balancer.
+      description: Describes a load balancer.
+    AttachInstancesToLoadBalancerResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    timestamp:
+      type: string
+      format: date-time
+    MetricUnit:
+      type: string
+      enum:
+      - Seconds
+      - Microseconds
+      - Milliseconds
+      - Bytes
+      - Kilobytes
+      - Megabytes
+      - Gigabytes
+      - Terabytes
+      - Bits
+      - Kilobits
+      - Megabits
+      - Gigabits
+      - Terabits
+      - Percent
+      - Count
+      - Bytes/Second
+      - Kilobytes/Second
+      - Megabytes/Second
+      - Gigabytes/Second
+      - Terabytes/Second
+      - Bits/Second
+      - Kilobits/Second
+      - Megabits/Second
+      - Gigabits/Second
+      - Terabits/Second
+      - Count/Second
+      - None
+    DomainName:
+      type: string
+    GetLoadBalancerTlsPoliciesRequest:
+      type: object
+      properties:
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetLoadBalancerTlsPolicies request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+    LoadBalancerList:
+      type: array
+      items:
+        $ref: '#/components/schemas/LoadBalancer'
+    Tag:
+      type: object
+      properties:
+        key:
+          allOf:
+          - $ref: '#/components/schemas/TagKey'
+          description: 'The key of the tag. Constraints: Tag keys accept a maximum of 128 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+        value:
+          allOf:
+          - $ref: '#/components/schemas/TagValue'
+          description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+      description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
+    GetLoadBalancerTlsPoliciesResult:
+      type: object
+      properties:
+        tlsPolicies:
+          allOf:
+          - $ref: '#/components/schemas/LoadBalancerTlsPolicyList'
+          description: An array of objects that describe the TLS security policies that are available.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetLoadBalancerTlsPolicies request and specify the next page token using the pageToken parameter.
+    NonEmptyString:
+      type: string
+      pattern: \S
     OperationType:
       type: string
       enum:
@@ -1138,24 +1415,14 @@ components:
       - StopGUISession
       - SetupInstanceHttps
       - GetProfile
-    DetachInstancesFromLoadBalancerResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    AttachInstancesToLoadBalancerResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    LoadBalancerList:
-      type: array
-      items:
-        $ref: '#/components/schemas/LoadBalancer'
+    LoadBalancerState:
+      type: string
+      enum:
+      - active
+      - provisioning
+      - active_impaired
+      - failed
+      - unknown
     OperationStatus:
       type: string
       enum:
@@ -1164,165 +1431,28 @@ components:
       - Failed
       - Completed
       - Succeeded
-    DomainName:
-      type: string
-    GetLoadBalancersResult:
-      type: object
-      properties:
-        loadBalancers:
-          allOf:
-          - $ref: '#/components/schemas/LoadBalancerList'
-          description: An array of LoadBalancer objects describing your load balancers.
-        nextPageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetLoadBalancers request and specify the next page token using the pageToken parameter.
-    LoadBalancerMetricName:
-      type: string
-      enum:
-      - ClientTLSNegotiationErrorCount
-      - HealthyHostCount
-      - UnhealthyHostCount
-      - HTTPCode_LB_4XX_Count
-      - HTTPCode_LB_5XX_Count
-      - HTTPCode_Instance_2XX_Count
-      - HTTPCode_Instance_3XX_Count
-      - HTTPCode_Instance_4XX_Count
-      - HTTPCode_Instance_5XX_Count
-      - InstanceResponseTime
-      - RejectedConnectionCount
-      - RequestCount
-    DeleteLoadBalancerRequest:
-      type: object
-      properties:
-        loadBalancerName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the load balancer you want to delete.
-      required:
-      - loadBalancerName
-    LoadBalancerTlsCertificateSummary:
-      type: object
-      properties:
-        name:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the SSL/TLS certificate.
-        isAttached:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: When true , the SSL/TLS certificate is attached to the Lightsail load balancer.
-      description: Provides a summary of SSL/TLS certificate metadata.
-    AttachInstancesToLoadBalancerRequest:
-      type: object
-      properties:
-        loadBalancerName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the load balancer.
-        instanceNames:
-          allOf:
-          - $ref: '#/components/schemas/ResourceNameList'
-          description: An array of strings representing the instance name(s) you want to attach to your load balancer. An instance must be running before you can attach it to your load balancer. There are no additional limits on the number of instances you can attach to your load balancer, aside from the limit of Lightsail instances you can create in your account (20).
-      required:
-      - loadBalancerName
-      - instanceNames
-    NonEmptyString:
-      type: string
-      pattern: \S
-    ResourceType:
-      type: string
-      enum:
-      - ContainerService
-      - Instance
-      - StaticIp
-      - KeyPair
-      - InstanceSnapshot
-      - Domain
-      - PeeredVpc
-      - LoadBalancer
-      - LoadBalancerTlsCertificate
-      - Disk
-      - DiskSnapshot
-      - RelationalDatabase
-      - RelationalDatabaseSnapshot
-      - ExportSnapshotRecord
-      - CloudFormationStackRecord
-      - Alarm
-      - ContactMethod
-      - Distribution
-      - Certificate
-      - Bucket
-    AccountSetupInProgressException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when an account is still in the setup in progress state.
-    Port:
-      type: integer
-      minimum: -1
-      maximum: 65535
-    AccessDeniedException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
-    GetLoadBalancerTlsPoliciesRequest:
-      type: object
-      properties:
-        pageToken:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetLoadBalancerTlsPolicies request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
-    TagList:
+    LoadBalancerTlsPolicyList:
       type: array
       items:
-        $ref: '#/components/schemas/Tag'
-    GetLoadBalancersRequest:
+        $ref: '#/components/schemas/LoadBalancerTlsPolicy'
+    DeleteLoadBalancerResult:
       type: object
       properties:
-        pageToken:
+        operations:
           allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetLoadBalancers request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
-    RegionName:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    double:
+      type: number
+    LoadBalancerAttributeName:
       type: string
       enum:
-      - us-east-1
-      - us-east-2
-      - us-west-1
-      - us-west-2
-      - eu-west-1
-      - eu-west-2
-      - eu-west-3
-      - eu-central-1
-      - eu-north-1
-      - eu-south-2
-      - ca-central-1
-      - ap-east-1
-      - ap-south-1
-      - ap-southeast-1
-      - ap-southeast-2
-      - ap-northeast-1
-      - ap-northeast-2
-      - ap-southeast-3
-      - ap-southeast-5
-      - sa-east-1
-    NotFoundException:
+      - HealthCheckPath
+      - SessionStickinessEnabled
+      - SessionStickiness_LB_CookieDurationSeconds
+      - HttpsRedirectionEnabled
+      - TlsPolicyName
+    ServiceException:
       type: object
       properties:
         code:
@@ -1333,145 +1463,15 @@ components:
           $ref: '#/components/schemas/string'
         tip:
           $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when it cannot find a resource.
+      description: A general service exception.
     StringMax256:
       type: string
       minLength: 1
       maxLength: 256
-    MetricDatapointList:
+    PortList:
       type: array
       items:
-        $ref: '#/components/schemas/MetricDatapoint'
-    MetricStatistic:
-      type: string
-      enum:
-      - Minimum
-      - Maximum
-      - Sum
-      - Average
-      - SampleCount
-    LoadBalancer:
-      type: object
-      properties:
-        name:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the load balancer ( my-load-balancer ).
-        arn:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The Amazon Resource Name (ARN) of the load balancer.
-        supportCode:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The support code. Include this code in your email to support when you have questions about your Lightsail load balancer. This code enables our support team to look up your Lightsail information more easily.
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The date when your load balancer was created.
-        location:
-          allOf:
-          - $ref: '#/components/schemas/ResourceLocation'
-          description: The AWS Region where your load balancer was created ( us-east-2a ). Lightsail automatically creates your load balancer across Availability Zones.
-        resourceType:
-          allOf:
-          - $ref: '#/components/schemas/ResourceType'
-          description: The resource type ( LoadBalancer .
-        tags:
-          allOf:
-          - $ref: '#/components/schemas/TagList'
-          description: The tag keys and optional values for the resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
-        dnsName:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The DNS name of your Lightsail load balancer.
-        state:
-          allOf:
-          - $ref: '#/components/schemas/LoadBalancerState'
-          description: The status of your load balancer. Valid values are below.
-        protocol:
-          allOf:
-          - $ref: '#/components/schemas/LoadBalancerProtocol'
-          description: The protocol you have enabled for your load balancer. Valid values are below. You can't just have HTTP_HTTPS , but you can have just HTTP .
-        publicPorts:
-          allOf:
-          - $ref: '#/components/schemas/PortList'
-          description: An array of public port settings for your load balancer. For HTTP, use port 80. For HTTPS, use port 443.
-        healthCheckPath:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The path you specified to perform your health checks. If no path is specified, the load balancer tries to make a request to the default (root) page.
-        instancePort:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The port where the load balancer will direct traffic to your Lightsail instances. For HTTP traffic, it's port 80. For HTTPS traffic, it's port 443.
-        instanceHealthSummary:
-          allOf:
-          - $ref: '#/components/schemas/InstanceHealthSummaryList'
-          description: An array of InstanceHealthSummary objects describing the health of the load balancer.
-        tlsCertificateSummaries:
-          allOf:
-          - $ref: '#/components/schemas/LoadBalancerTlsCertificateSummaryList'
-          description: An array of LoadBalancerTlsCertificateSummary objects that provide additional information about the SSL/TLS certificates. For example, if true , the certificate is attached to the load balancer.
-        configurationOptions:
-          allOf:
-          - $ref: '#/components/schemas/LoadBalancerConfigurationOptions'
-          description: A string to string map of the configuration options for your load balancer. Valid values are listed below.
-        ipAddressType:
-          allOf:
-          - $ref: '#/components/schemas/IpAddressType'
-          description: The IP address type of the load balancer. The possible values are ipv4 for IPv4 only, ipv6 for IPv6 only, and dualstack for IPv4 and IPv6.
-        httpsRedirectionEnabled:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: A Boolean value that indicates whether HTTPS redirection is enabled for the load balancer.
-        tlsPolicyName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the TLS security policy for the load balancer.
-      description: Describes a load balancer.
-    LoadBalancerProtocol:
-      type: string
-      enum:
-      - HTTP_HTTPS
-      - HTTP
-    GetLoadBalancerRequest:
-      type: object
-      properties:
-        loadBalancerName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the load balancer.
-      required:
-      - loadBalancerName
-    Tag:
-      type: object
-      properties:
-        key:
-          allOf:
-          - $ref: '#/components/schemas/TagKey'
-          description: 'The key of the tag. Constraints: Tag keys accept a maximum of 128 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
-        value:
-          allOf:
-          - $ref: '#/components/schemas/TagValue'
-          description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
-      description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
-    InstanceHealthSummary:
-      type: object
-      properties:
-        instanceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the Lightsail instance for which you are requesting health check data.
-        instanceHealth:
-          allOf:
-          - $ref: '#/components/schemas/InstanceHealthState'
-          description: Describes the overall instance health. Valid values are below.
-        instanceHealthReason:
-          allOf:
-          - $ref: '#/components/schemas/InstanceHealthReason'
-          description: 'More information about the instance health. If the instanceHealth is healthy , then an instanceHealthReason value is not provided. If instanceHealth is initial , the instanceHealthReason value can be one of the following: Lb.RegistrationInProgress - The target instance is in the process of being registered with the load balancer. Lb.InitialHealthChecking - The Lightsail load balancer is still sending the target instance the minimum number of health checks required to determine its health status. If instanceHealth is unhealthy , the instanceHealthReason value can be one of the following: Instance.ResponseCodeMismatch - The health checks did not return an expected HTTP code. Instance.Timeout - The health check requests timed out. Instance.FailedHealthChecks - The health checks failed because the connection to the target instance timed out, the target instance response was malformed, or the target instance failed the health check for an unknown reason. Lb.InternalError - The health checks failed due to an internal error. If instanceHealth is unused , the instanceHealthReason value can be one of the following: Instance.NotRegistered - The target instance is not registered with the target group. Instance.NotInUse - The target group is not used by any load balancer, or the target instance is in an Availability Zone that is not enabled for its load balancer. Instance.IpUnusable - The target IP address is reserved for use by a Lightsail load balancer. Instance.InvalidState - The target is in the stopped or terminated state. If instanceHealth is draining , the instanceHealthReason value can be one of the following: Instance.DeregistrationInProgress - The target instance is in the process of being deregistered and the deregistration delay period has not expired.'
-      description: Describes information about the health of the instance.
+        $ref: '#/components/schemas/Port'
   securitySchemes:
     sigv4:
       type: apiKey

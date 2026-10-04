@@ -826,6 +826,152 @@ paths:
       x-amz-target: Lightsail_20161128.StopGUISession
 components:
   schemas:
+    DestinationInfo:
+      type: object
+      properties:
+        id:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The ID of the resource created at the destination.
+        service:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The destination service of the record.
+      description: Describes the destination of a record.
+    CloudFormationStackRecordSourceInfo:
+      type: object
+      properties:
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/CloudFormationStackRecordSourceType'
+          description: The Lightsail resource type ( ExportSnapshotRecord ).
+        name:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The name of the record.
+        arn:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Amazon Resource Name (ARN) of the export snapshot record.
+      description: Describes the source of a CloudFormation stack record (i.e., the export snapshot record).
+    CreateGUISessionAccessDetailsResult:
+      type: object
+      properties:
+        resourceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The resource name.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status'
+          description: The status of the operation.
+        percentageComplete:
+          allOf:
+          - $ref: '#/components/schemas/integer'
+          description: The percentage of completion for the operation.
+        failureReason:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The reason the operation failed.
+        sessions:
+          allOf:
+          - $ref: '#/components/schemas/Sessions'
+          description: Returns information about the specified Amazon DCV GUI session.
+    PortInfoSourceType:
+      type: string
+      enum:
+      - DEFAULT
+      - INSTANCE
+      - NONE
+      - CLOSED
+    AccessDeniedException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
+    AddOnType:
+      type: string
+      enum:
+      - AutoSnapshot
+      - StopInstanceOnIdle
+    IsVpcPeeredResult:
+      type: object
+      properties:
+        isPeered:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: Returns true if the Lightsail VPC is peered; otherwise, false .
+    SetIpAddressTypeRequest:
+      type: object
+      properties:
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The resource type. The resource values are Distribution , Instance , and LoadBalancer . Distribution-related APIs are available only in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit distributions.
+        resourceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the resource for which to set the IP address type.
+        ipAddressType:
+          allOf:
+          - $ref: '#/components/schemas/IpAddressType'
+          description: The IP address type to set for the specified resource. The possible values are ipv4 for IPv4 only, ipv6 for IPv6 only, and dualstack for IPv4 and IPv6.
+        acceptBundleUpdate:
+          allOf:
+          - $ref: '#/components/schemas/boolean'
+          description: Required parameter to accept the instance bundle update when changing to, and from, IPv6-only. An instance bundle will change when switching from dual-stack or ipv4 , to ipv6 . It also changes when switching from ipv6 , to dual-stack or ipv4 . You must include this parameter in the command to update the bundle. For example, if you switch from dual-stack to ipv6 , the bundle will be updated, and billing for the IPv6-only instance bundle begins immediately.
+      required:
+      - resourceType
+      - resourceName
+      - ipAddressType
+    ResourceName:
+      type: string
+      pattern: ^\w[\w\-]*\w$
+    NotFoundException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when it cannot find a resource.
+    PartnerStatus:
+      type: string
+      enum:
+      - Active
+      - Suspended
+    IsoDate:
+      type: string
+      format: date-time
+    AddOnRequest:
+      type: object
+      properties:
+        addOnType:
+          allOf:
+          - $ref: '#/components/schemas/AddOnType'
+          description: The add-on type.
+        autoSnapshotAddOnRequest:
+          allOf:
+          - $ref: '#/components/schemas/AutoSnapshotAddOnRequest'
+          description: An object that represents additional parameters when enabling or modifying the automatic snapshot add-on.
+        stopInstanceOnIdleRequest:
+          allOf:
+          - $ref: '#/components/schemas/StopInstanceOnIdleRequest'
+          description: An object that represents additional parameters when enabling or modifying the StopInstanceOnIdle add-on. This object only applies to Lightsail for Research resources.
+      required:
+      - addOnType
+      description: Describes a request to enable, modify, or disable an add-on for an Amazon Lightsail resource. An additional cost may be associated with enabling add-ons. For more information, see the Lightsail pricing page .
     RegionSetupInProgressException:
       type: object
       properties:
@@ -842,62 +988,21 @@ components:
           - $ref: '#/components/schemas/string'
           description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
       description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
-    ServiceException:
+    integer:
+      type: integer
+    DeleteKnownHostKeysRequest:
       type: object
       properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: A general service exception.
-    InstanceEntry:
-      type: object
-      properties:
-        sourceName:
+        instanceName:
           allOf:
           - $ref: '#/components/schemas/ResourceName'
-          description: The name of the export snapshot record, which contains the exported Lightsail instance snapshot that will be used as the source of the new Amazon EC2 instance. Use the get export snapshot records operation to get a list of export snapshot records that you can use to create a CloudFormation stack.
-        instanceType:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The instance type ( t2.micro ) to use for the new Amazon EC2 instance.
-        portInfoSource:
-          allOf:
-          - $ref: '#/components/schemas/PortInfoSourceType'
-          description: 'The port configuration to use for the new Amazon EC2 instance. The following configuration options are available: DEFAULT - Use the default firewall settings from the Lightsail instance blueprint. If this is specified, then IPv4 and IPv6 will be configured for the new instance that is created in Amazon EC2. INSTANCE - Use the configured firewall settings from the source Lightsail instance. If this is specified, the new instance that is created in Amazon EC2 will be configured to match the configuration of the source Lightsail instance. For example, if the source instance is configured for dual-stack (IPv4 and IPv6), then IPv4 and IPv6 will be configured for the new instance that is created in Amazon EC2. If the source instance is configured for IPv4 only, then only IPv4 will be configured for the new instance that is created in Amazon EC2. NONE - Use the default Amazon EC2 security group. If this is specified, then only IPv4 will be configured for the new instance that is created in Amazon EC2. CLOSED - All ports closed. If this is specified, then only IPv4 will be configured for the new instance that is created in Amazon EC2. If you configured lightsail-connect as a cidrListAliases on your instance, or if you chose to allow the Lightsail browser-based SSH or RDP clients to connect to your instance, that configuration is not carried over to your new Amazon EC2 instance.'
-        userData:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: A launch script you can create that configures a server with additional user data. For example, you might want to run apt-get -y update . Depending on the machine image you choose, the command to get software on your instance varies. Amazon Linux and CentOS use yum , Debian and Ubuntu use apt-get , and FreeBSD uses pkg .
-        availabilityZone:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The Availability Zone for the new Amazon EC2 instance.
+          description: The name of the instance for which you want to reset the host key or certificate.
       required:
-      - sourceName
-      - instanceType
-      - portInfoSource
-      - availabilityZone
-      description: Describes the Amazon Elastic Compute Cloud instance and related resources to be created using the create cloud formation stack operation.
-    DestinationInfo:
-      type: object
-      properties:
-        id:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The ID of the resource created at the destination.
-        service:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The destination service of the record.
-      description: Describes the destination of a record.
-    TimeOfDay:
-      type: string
-      pattern: ^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$
+      - instanceName
+    OperationList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Operation'
     Session:
       type: object
       properties:
@@ -914,32 +1019,169 @@ components:
           - $ref: '#/components/schemas/boolean'
           description: When true, this Boolean value indicates the primary session for the specified resource.
       description: Describes a web-based, remote graphical user interface (GUI), Amazon DCV session. The session is used to access a virtual computer’s operating system or application.
-    TierName:
-      type: string
-      enum:
-      - Essential
-      - Growth
-      - Accelerate
-      - Premier
-    string:
-      type: string
-    GetCloudFormationStackRecordsResult:
+    StringList:
+      type: array
+      items:
+        $ref: '#/components/schemas/string'
+    GetActiveNamesRequest:
       type: object
       properties:
-        cloudFormationStackRecords:
-          allOf:
-          - $ref: '#/components/schemas/CloudFormationStackRecordList'
-          description: A list of objects describing the CloudFormation stack records.
-        nextPageToken:
+        pageToken:
           allOf:
           - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetCloudFormationStackRecords request and specify the next page token using the pageToken parameter.
-    RecordState:
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetActiveNames request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+    IpAddressType:
       type: string
       enum:
-      - Started
-      - Succeeded
-      - Failed
+      - dualstack
+      - ipv4
+      - ipv6
+    Status:
+      type: string
+      enum:
+      - startExpired
+      - notStarted
+      - started
+      - starting
+      - stopped
+      - stopping
+      - settingUpInstance
+      - failedInstanceCreation
+      - failedStartingGUISession
+      - failedStoppingGUISession
+    InvalidInputException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
+    PartnerInfo:
+      type: object
+      properties:
+        enrolledAt:
+          allOf:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The timestamp when the account was enrolled in the Lightsail partner program.
+        tierName:
+          allOf:
+          - $ref: '#/components/schemas/TierName'
+          description: The tier of the partner membership.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/PartnerStatus'
+          description: 'The status of the partner membership. The following statuses are possible: Active – The membership is active, and the benefits of the current tier are available to the account. Suspended – The membership is suspended, and the benefits of the tier are not available to the account.'
+      required:
+      - enrolledAt
+      - status
+      description: An object that contains information about the Lightsail partner program membership of an Amazon Lightsail account.
+    OperationFailureException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an operation fails to execute.
+    EnableAddOnRequest:
+      type: object
+      properties:
+        resourceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the source resource for which to enable or modify the add-on.
+        addOnRequest:
+          allOf:
+          - $ref: '#/components/schemas/AddOnRequest'
+          description: An array of strings representing the add-on to enable or modify.
+      required:
+      - resourceName
+      - addOnRequest
+    GetProfileResult:
+      type: object
+      properties:
+        profileType:
+          allOf:
+          - $ref: '#/components/schemas/ProfileType'
+          description: 'The type of the profile. The following profile types are possible: Lightsailor – The account is not enrolled in the Lightsail partner program. LightsailPartner – The account is enrolled in the Lightsail partner program.'
+        partner:
+          allOf:
+          - $ref: '#/components/schemas/PartnerInfo'
+          description: An object that describes the partner membership of the account, such as the tier of the membership, its status, and when the account was enrolled. This parameter is returned only for accounts that have a profileType of LightsailPartner .
+      required:
+      - profileType
+    CreateCloudFormationStackResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    StartGUISessionResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: The available API operations.
+    InstanceEntryList:
+      type: array
+      items:
+        $ref: '#/components/schemas/InstanceEntry'
+    StopGUISessionRequest:
+      type: object
+      properties:
+        resourceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The resource name.
+      required:
+      - resourceName
+    RegionName:
+      type: string
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-west-3
+      - eu-central-1
+      - eu-north-1
+      - eu-south-2
+      - ca-central-1
+      - ap-east-1
+      - ap-south-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+      - ap-northeast-2
+      - ap-southeast-3
+      - ap-southeast-5
+      - sa-east-1
+    CreateCloudFormationStackRequest:
+      type: object
+      properties:
+        instances:
+          allOf:
+          - $ref: '#/components/schemas/InstanceEntryList'
+          description: An array of parameters that will be used to create the new Amazon EC2 instance. You can only pass one instance entry at a time in this array. You will get an invalid parameter error if you pass more than one instance entry in this array.
+      required:
+      - instances
+    CloudFormationStackRecordList:
+      type: array
+      items:
+        $ref: '#/components/schemas/CloudFormationStackRecord'
     GetActiveNamesResult:
       type: object
       properties:
@@ -951,29 +1193,69 @@ components:
           allOf:
           - $ref: '#/components/schemas/string'
           description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetActiveNames request and specify the next page token using the pageToken parameter.
-    IsoDate:
-      type: string
-      format: date-time
-    InstanceEntryList:
-      type: array
-      items:
-        $ref: '#/components/schemas/InstanceEntry'
-    ResourceName:
-      type: string
-      pattern: ^\w[\w\-]*\w$
-    IpAddressType:
-      type: string
-      enum:
-      - dualstack
-      - ipv4
-      - ipv6
-    PortInfoSourceType:
+    StopInstanceOnIdleRequest:
+      type: object
+      properties:
+        threshold:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The value to compare with the duration.
+        duration:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The amount of idle time in minutes after which your virtual computer will automatically stop.
+      description: Describes a request to create or edit the StopInstanceOnIdle add-on. This add-on only applies to Lightsail for Research resources.
+    ResourceType:
       type: string
       enum:
-      - DEFAULT
-      - INSTANCE
-      - NONE
-      - CLOSED
+      - ContainerService
+      - Instance
+      - StaticIp
+      - KeyPair
+      - InstanceSnapshot
+      - Domain
+      - PeeredVpc
+      - LoadBalancer
+      - LoadBalancerTlsCertificate
+      - Disk
+      - DiskSnapshot
+      - RelationalDatabase
+      - RelationalDatabaseSnapshot
+      - ExportSnapshotRecord
+      - CloudFormationStackRecord
+      - Alarm
+      - ContactMethod
+      - Distribution
+      - Certificate
+      - Bucket
+    DisableAddOnRequest:
+      type: object
+      properties:
+        addOnType:
+          allOf:
+          - $ref: '#/components/schemas/AddOnType'
+          description: The add-on type to disable.
+        resourceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the source resource for which to disable the add-on.
+      required:
+      - addOnType
+      - resourceName
+    AccountSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an account is still in the setup in progress state.
+    string:
+      type: string
     Operation:
       type: object
       properties:
@@ -1026,18 +1308,8 @@ components:
           - $ref: '#/components/schemas/string'
           description: The error details.
       description: Describes the API operation.
-    AddOnType:
-      type: string
-      enum:
-      - AutoSnapshot
-      - StopInstanceOnIdle
-    PeerVpcResult:
-      type: object
-      properties:
-        operation:
-          allOf:
-          - $ref: '#/components/schemas/Operation'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    boolean:
+      type: boolean
     UnauthenticatedException:
       type: object
       properties:
@@ -1050,174 +1322,9 @@ components:
         tip:
           $ref: '#/components/schemas/string'
       description: Lightsail throws this exception when the user has not been authenticated.
-    IsVpcPeeredResult:
-      type: object
-      properties:
-        isPeered:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: Returns true if the Lightsail VPC is peered; otherwise, false .
-    OperationList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Operation'
-    CreateGUISessionAccessDetailsRequest:
-      type: object
-      properties:
-        resourceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The resource name.
-      required:
-      - resourceName
-    SetIpAddressTypeResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    GetProfileResult:
-      type: object
-      properties:
-        profileType:
-          allOf:
-          - $ref: '#/components/schemas/ProfileType'
-          description: 'The type of the profile. The following profile types are possible: Lightsailor – The account is not enrolled in the Lightsail partner program. LightsailPartner – The account is enrolled in the Lightsail partner program.'
-        partner:
-          allOf:
-          - $ref: '#/components/schemas/PartnerInfo'
-          description: An object that describes the partner membership of the account, such as the tier of the membership, its status, and when the account was enrolled. This parameter is returned only for accounts that have a profileType of LightsailPartner .
-      required:
-      - profileType
-    OperationFailureException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when an operation fails to execute.
-    StringList:
-      type: array
-      items:
-        $ref: '#/components/schemas/string'
-    Status:
+    SensitiveNonEmptyString:
       type: string
-      enum:
-      - startExpired
-      - notStarted
-      - started
-      - starting
-      - stopped
-      - stopping
-      - settingUpInstance
-      - failedInstanceCreation
-      - failedStartingGUISession
-      - failedStoppingGUISession
-    CloudFormationStackRecordList:
-      type: array
-      items:
-        $ref: '#/components/schemas/CloudFormationStackRecord'
-    DeleteKnownHostKeysRequest:
-      type: object
-      properties:
-        instanceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the instance for which you want to reset the host key or certificate.
-      required:
-      - instanceName
-    CreateCloudFormationStackResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    ProfileType:
-      type: string
-      enum:
-      - Lightsailor
-      - LightsailPartner
-    CloudFormationStackRecordSourceInfo:
-      type: object
-      properties:
-        resourceType:
-          allOf:
-          - $ref: '#/components/schemas/CloudFormationStackRecordSourceType'
-          description: The Lightsail resource type ( ExportSnapshotRecord ).
-        name:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The name of the record.
-        arn:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The Amazon Resource Name (ARN) of the export snapshot record.
-      description: Describes the source of a CloudFormation stack record (i.e., the export snapshot record).
-    StopGUISessionResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: The available API operations.
-    StopInstanceOnIdleRequest:
-      type: object
-      properties:
-        threshold:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The value to compare with the duration.
-        duration:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The amount of idle time in minutes after which your virtual computer will automatically stop.
-      description: Describes a request to create or edit the StopInstanceOnIdle add-on. This add-on only applies to Lightsail for Research resources.
-    CreateGUISessionAccessDetailsResult:
-      type: object
-      properties:
-        resourceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The resource name.
-        status:
-          allOf:
-          - $ref: '#/components/schemas/Status'
-          description: The status of the operation.
-        percentageComplete:
-          allOf:
-          - $ref: '#/components/schemas/integer'
-          description: The percentage of completion for the operation.
-        failureReason:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: The reason the operation failed.
-        sessions:
-          allOf:
-          - $ref: '#/components/schemas/Sessions'
-          description: Returns information about the specified Amazon DCV GUI session.
-    integer:
-      type: integer
-    InvalidInputException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
-    boolean:
-      type: boolean
+      pattern: \S
     ResourceLocation:
       type: object
       properties:
@@ -1230,73 +1337,95 @@ components:
           - $ref: '#/components/schemas/RegionName'
           description: The Amazon Web Services Region name.
       description: Describes the resource location.
-    SensitiveNonEmptyString:
-      type: string
-      pattern: \S
-    AutoSnapshotAddOnRequest:
-      type: object
-      properties:
-        snapshotTimeOfDay:
-          allOf:
-          - $ref: '#/components/schemas/TimeOfDay'
-          description: 'The daily time when an automatic snapshot will be created. Constraints: Must be in HH:00 format, and in an hourly increment. Specified in Coordinated Universal Time (UTC). The snapshot will be automatically created between the time specified and up to 45 minutes after.'
-      description: 'Describes a request to enable or modify the automatic snapshot add-on for an Amazon Lightsail instance or disk. When you modify the automatic snapshot time for a resource, it is typically effective immediately except under the following conditions: If an automatic snapshot has been created for the current day, and you change the snapshot time to a later time of day, then the new snapshot time will be effective the following day. This ensures that two snapshots are not created for the current day. If an automatic snapshot has not yet been created for the current day, and you change the snapshot time to an earlier time of day, then the new snapshot time will be effective the following day and a snapshot is automatically created at the previously set time for the current day. This ensures that a snapshot is created for the current day. If an automatic snapshot has not yet been created for the current day, and you change the snapshot time to a time that is within 30 minutes from your current time, then the new snapshot time will be effective the following day and a snapshot is automatically created at the previously set time for the current day. This ensures that a snapshot is created for the current day, because 30 minutes is required between your current time and the new snapshot time that you specify. If an automatic snapshot is scheduled to be created within 30 minutes from your current time and you change the snapshot time, then the new snapshot time will be effective the following day and a snapshot is automatically created at the previously set time for the current day. This ensures that a snapshot is created for the current day, because 30 minutes is required between your current time and the new snapshot time that you specify.'
-    CloudFormationStackRecord:
-      type: object
-      properties:
-        name:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the CloudFormation stack record. It starts with CloudFormationStackRecord followed by a GUID.
-        arn:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          description: The Amazon Resource Name (ARN) of the CloudFormation stack record.
-        createdAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The date when the CloudFormation stack record was created.
-        location:
-          allOf:
-          - $ref: '#/components/schemas/ResourceLocation'
-          description: A list of objects describing the Availability Zone and Amazon Web Services Region of the CloudFormation stack record.
-        resourceType:
-          allOf:
-          - $ref: '#/components/schemas/ResourceType'
-          description: The Lightsail resource type ( CloudFormationStackRecord ).
-        state:
-          allOf:
-          - $ref: '#/components/schemas/RecordState'
-          description: The current state of the CloudFormation stack record.
-        sourceInfo:
-          allOf:
-          - $ref: '#/components/schemas/CloudFormationStackRecordSourceInfoList'
-          description: A list of objects describing the source of the CloudFormation stack record.
-        destinationInfo:
-          allOf:
-          - $ref: '#/components/schemas/DestinationInfo'
-          description: A list of objects describing the destination service, which is AWS CloudFormation, and the Amazon Resource Name (ARN) of the AWS CloudFormation stack.
-      description: Describes a CloudFormation stack record created as a result of the create cloud formation stack action. A CloudFormation stack record provides information about the AWS CloudFormation stack used to create a new Amazon Elastic Compute Cloud instance from an exported Lightsail instance snapshot.
-    StartGUISessionRequest:
-      type: object
-      properties:
-        resourceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The resource name.
-      required:
-      - resourceName
-    DeleteKnownHostKeysResult:
+    DisableAddOnResult:
       type: object
       properties:
         operations:
           allOf:
           - $ref: '#/components/schemas/OperationList'
           description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    CloudFormationStackRecordSourceType:
+    InstanceEntry:
+      type: object
+      properties:
+        sourceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the export snapshot record, which contains the exported Lightsail instance snapshot that will be used as the source of the new Amazon EC2 instance. Use the get export snapshot records operation to get a list of export snapshot records that you can use to create a CloudFormation stack.
+        instanceType:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The instance type ( t2.micro ) to use for the new Amazon EC2 instance.
+        portInfoSource:
+          allOf:
+          - $ref: '#/components/schemas/PortInfoSourceType'
+          description: 'The port configuration to use for the new Amazon EC2 instance. The following configuration options are available: DEFAULT - Use the default firewall settings from the Lightsail instance blueprint. If this is specified, then IPv4 and IPv6 will be configured for the new instance that is created in Amazon EC2. INSTANCE - Use the configured firewall settings from the source Lightsail instance. If this is specified, the new instance that is created in Amazon EC2 will be configured to match the configuration of the source Lightsail instance. For example, if the source instance is configured for dual-stack (IPv4 and IPv6), then IPv4 and IPv6 will be configured for the new instance that is created in Amazon EC2. If the source instance is configured for IPv4 only, then only IPv4 will be configured for the new instance that is created in Amazon EC2. NONE - Use the default Amazon EC2 security group. If this is specified, then only IPv4 will be configured for the new instance that is created in Amazon EC2. CLOSED - All ports closed. If this is specified, then only IPv4 will be configured for the new instance that is created in Amazon EC2. If you configured lightsail-connect as a cidrListAliases on your instance, or if you chose to allow the Lightsail browser-based SSH or RDP clients to connect to your instance, that configuration is not carried over to your new Amazon EC2 instance.'
+        userData:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: A launch script you can create that configures a server with additional user data. For example, you might want to run apt-get -y update . Depending on the machine image you choose, the command to get software on your instance varies. Amazon Linux and CentOS use yum , Debian and Ubuntu use apt-get , and FreeBSD uses pkg .
+        availabilityZone:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The Availability Zone for the new Amazon EC2 instance.
+      required:
+      - sourceName
+      - instanceType
+      - portInfoSource
+      - availabilityZone
+      description: Describes the Amazon Elastic Compute Cloud instance and related resources to be created using the create cloud formation stack operation.
+    RecordState:
       type: string
       enum:
-      - ExportSnapshotRecord
+      - Started
+      - Succeeded
+      - Failed
+    StopGUISessionResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: The available API operations.
+    ProfileType:
+      type: string
+      enum:
+      - Lightsailor
+      - LightsailPartner
+    TierName:
+      type: string
+      enum:
+      - Essential
+      - Growth
+      - Accelerate
+      - Premier
+    CloudFormationStackRecordSourceInfoList:
+      type: array
+      items:
+        $ref: '#/components/schemas/CloudFormationStackRecordSourceInfo'
+    GetCloudFormationStackRecordsResult:
+      type: object
+      properties:
+        cloudFormationStackRecords:
+          allOf:
+          - $ref: '#/components/schemas/CloudFormationStackRecordList'
+          description: A list of objects describing the CloudFormation stack records.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetCloudFormationStackRecords request and specify the next page token using the pageToken parameter.
+    GetCloudFormationStackRecordsRequest:
+      type: object
+      properties:
+        pageToken:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetClouFormationStackRecords request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+    TimeOfDay:
+      type: string
+      pattern: ^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$
+    NonEmptyString:
+      type: string
+      pattern: \S
     OperationType:
       type: string
       enum:
@@ -1384,49 +1513,17 @@ components:
       - StopGUISession
       - SetupInstanceHttps
       - GetProfile
-    EnableAddOnResult:
+    UnpeerVpcResult:
       type: object
       properties:
-        operations:
+        operation:
           allOf:
-          - $ref: '#/components/schemas/OperationList'
+          - $ref: '#/components/schemas/Operation'
           description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    CreateCloudFormationStackRequest:
-      type: object
-      properties:
-        instances:
-          allOf:
-          - $ref: '#/components/schemas/InstanceEntryList'
-          description: An array of parameters that will be used to create the new Amazon EC2 instance. You can only pass one instance entry at a time in this array. You will get an invalid parameter error if you pass more than one instance entry in this array.
-      required:
-      - instances
     Sessions:
       type: array
       items:
         $ref: '#/components/schemas/Session'
-    EnableAddOnRequest:
-      type: object
-      properties:
-        resourceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the source resource for which to enable or modify the add-on.
-        addOnRequest:
-          allOf:
-          - $ref: '#/components/schemas/AddOnRequest'
-          description: An array of strings representing the add-on to enable or modify.
-      required:
-      - resourceName
-      - addOnRequest
-    StopGUISessionRequest:
-      type: object
-      properties:
-        resourceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The resource name.
-      required:
-      - resourceName
     OperationStatus:
       type: string
       enum:
@@ -1435,191 +1532,88 @@ components:
       - Failed
       - Completed
       - Succeeded
-    DisableAddOnRequest:
-      type: object
-      properties:
-        addOnType:
-          allOf:
-          - $ref: '#/components/schemas/AddOnType'
-          description: The add-on type to disable.
-        resourceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the source resource for which to disable the add-on.
-      required:
-      - addOnType
-      - resourceName
-    PartnerInfo:
-      type: object
-      properties:
-        enrolledAt:
-          allOf:
-          - $ref: '#/components/schemas/IsoDate'
-          description: The timestamp when the account was enrolled in the Lightsail partner program.
-        tierName:
-          allOf:
-          - $ref: '#/components/schemas/TierName'
-          description: The tier of the partner membership.
-        status:
-          allOf:
-          - $ref: '#/components/schemas/PartnerStatus'
-          description: 'The status of the partner membership. The following statuses are possible: Active – The membership is active, and the benefits of the current tier are available to the account. Suspended – The membership is suspended, and the benefits of the tier are not available to the account.'
-      required:
-      - enrolledAt
-      - status
-      description: An object that contains information about the Lightsail partner program membership of an Amazon Lightsail account.
-    SetIpAddressTypeRequest:
-      type: object
-      properties:
-        resourceType:
-          allOf:
-          - $ref: '#/components/schemas/ResourceType'
-          description: The resource type. The resource values are Distribution , Instance , and LoadBalancer . Distribution-related APIs are available only in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit distributions.
-        resourceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the resource for which to set the IP address type.
-        ipAddressType:
-          allOf:
-          - $ref: '#/components/schemas/IpAddressType'
-          description: The IP address type to set for the specified resource. The possible values are ipv4 for IPv4 only, ipv6 for IPv6 only, and dualstack for IPv4 and IPv6.
-        acceptBundleUpdate:
-          allOf:
-          - $ref: '#/components/schemas/boolean'
-          description: Required parameter to accept the instance bundle update when changing to, and from, IPv6-only. An instance bundle will change when switching from dual-stack or ipv4 , to ipv6 . It also changes when switching from ipv6 , to dual-stack or ipv4 . You must include this parameter in the command to update the bundle. For example, if you switch from dual-stack to ipv6 , the bundle will be updated, and billing for the IPv6-only instance bundle begins immediately.
-      required:
-      - resourceType
-      - resourceName
-      - ipAddressType
-    PartnerStatus:
-      type: string
-      enum:
-      - Active
-      - Suspended
-    DisableAddOnResult:
+    EnableAddOnResult:
       type: object
       properties:
         operations:
           allOf:
           - $ref: '#/components/schemas/OperationList'
           description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    ResourceType:
-      type: string
-      enum:
-      - ContainerService
-      - Instance
-      - StaticIp
-      - KeyPair
-      - InstanceSnapshot
-      - Domain
-      - PeeredVpc
-      - LoadBalancer
-      - LoadBalancerTlsCertificate
-      - Disk
-      - DiskSnapshot
-      - RelationalDatabase
-      - RelationalDatabaseSnapshot
-      - ExportSnapshotRecord
-      - CloudFormationStackRecord
-      - Alarm
-      - ContactMethod
-      - Distribution
-      - Certificate
-      - Bucket
-    NonEmptyString:
-      type: string
-      pattern: \S
-    CloudFormationStackRecordSourceInfoList:
-      type: array
-      items:
-        $ref: '#/components/schemas/CloudFormationStackRecordSourceInfo'
-    AccountSetupInProgressException:
+    StartGUISessionRequest:
       type: object
       properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when an account is still in the setup in progress state.
-    GetActiveNamesRequest:
-      type: object
-      properties:
-        pageToken:
+        resourceName:
           allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetActiveNames request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
-    StartGUISessionResult:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The resource name.
+      required:
+      - resourceName
+    DeleteKnownHostKeysResult:
       type: object
       properties:
         operations:
           allOf:
           - $ref: '#/components/schemas/OperationList'
-          description: The available API operations.
-    AccessDeniedException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
-    UnpeerVpcResult:
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    PeerVpcResult:
       type: object
       properties:
         operation:
           allOf:
           - $ref: '#/components/schemas/Operation'
           description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    RegionName:
-      type: string
-      enum:
-      - us-east-1
-      - us-east-2
-      - us-west-1
-      - us-west-2
-      - eu-west-1
-      - eu-west-2
-      - eu-west-3
-      - eu-central-1
-      - eu-north-1
-      - eu-south-2
-      - ca-central-1
-      - ap-east-1
-      - ap-south-1
-      - ap-southeast-1
-      - ap-southeast-2
-      - ap-northeast-1
-      - ap-northeast-2
-      - ap-southeast-3
-      - ap-southeast-5
-      - sa-east-1
-    AddOnRequest:
+    CloudFormationStackRecord:
       type: object
       properties:
-        addOnType:
+        name:
           allOf:
-          - $ref: '#/components/schemas/AddOnType'
-          description: The add-on type.
-        autoSnapshotAddOnRequest:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the CloudFormation stack record. It starts with CloudFormationStackRecord followed by a GUID.
+        arn:
           allOf:
-          - $ref: '#/components/schemas/AutoSnapshotAddOnRequest'
-          description: An object that represents additional parameters when enabling or modifying the automatic snapshot add-on.
-        stopInstanceOnIdleRequest:
+          - $ref: '#/components/schemas/NonEmptyString'
+          description: The Amazon Resource Name (ARN) of the CloudFormation stack record.
+        createdAt:
           allOf:
-          - $ref: '#/components/schemas/StopInstanceOnIdleRequest'
-          description: An object that represents additional parameters when enabling or modifying the StopInstanceOnIdle add-on. This object only applies to Lightsail for Research resources.
-      required:
-      - addOnType
-      description: Describes a request to enable, modify, or disable an add-on for an Amazon Lightsail resource. An additional cost may be associated with enabling add-ons. For more information, see the Lightsail pricing page .
-    NotFoundException:
+          - $ref: '#/components/schemas/IsoDate'
+          description: The date when the CloudFormation stack record was created.
+        location:
+          allOf:
+          - $ref: '#/components/schemas/ResourceLocation'
+          description: A list of objects describing the Availability Zone and Amazon Web Services Region of the CloudFormation stack record.
+        resourceType:
+          allOf:
+          - $ref: '#/components/schemas/ResourceType'
+          description: The Lightsail resource type ( CloudFormationStackRecord ).
+        state:
+          allOf:
+          - $ref: '#/components/schemas/RecordState'
+          description: The current state of the CloudFormation stack record.
+        sourceInfo:
+          allOf:
+          - $ref: '#/components/schemas/CloudFormationStackRecordSourceInfoList'
+          description: A list of objects describing the source of the CloudFormation stack record.
+        destinationInfo:
+          allOf:
+          - $ref: '#/components/schemas/DestinationInfo'
+          description: A list of objects describing the destination service, which is AWS CloudFormation, and the Amazon Resource Name (ARN) of the AWS CloudFormation stack.
+      description: Describes a CloudFormation stack record created as a result of the create cloud formation stack action. A CloudFormation stack record provides information about the AWS CloudFormation stack used to create a new Amazon Elastic Compute Cloud instance from an exported Lightsail instance snapshot.
+    AutoSnapshotAddOnRequest:
+      type: object
+      properties:
+        snapshotTimeOfDay:
+          allOf:
+          - $ref: '#/components/schemas/TimeOfDay'
+          description: 'The daily time when an automatic snapshot will be created. Constraints: Must be in HH:00 format, and in an hourly increment. Specified in Coordinated Universal Time (UTC). The snapshot will be automatically created between the time specified and up to 45 minutes after.'
+      description: 'Describes a request to enable or modify the automatic snapshot add-on for an Amazon Lightsail instance or disk. When you modify the automatic snapshot time for a resource, it is typically effective immediately except under the following conditions: If an automatic snapshot has been created for the current day, and you change the snapshot time to a later time of day, then the new snapshot time will be effective the following day. This ensures that two snapshots are not created for the current day. If an automatic snapshot has not yet been created for the current day, and you change the snapshot time to an earlier time of day, then the new snapshot time will be effective the following day and a snapshot is automatically created at the previously set time for the current day. This ensures that a snapshot is created for the current day. If an automatic snapshot has not yet been created for the current day, and you change the snapshot time to a time that is within 30 minutes from your current time, then the new snapshot time will be effective the following day and a snapshot is automatically created at the previously set time for the current day. This ensures that a snapshot is created for the current day, because 30 minutes is required between your current time and the new snapshot time that you specify. If an automatic snapshot is scheduled to be created within 30 minutes from your current time and you change the snapshot time, then the new snapshot time will be effective the following day and a snapshot is automatically created at the previously set time for the current day. This ensures that a snapshot is created for the current day, because 30 minutes is required between your current time and the new snapshot time that you specify.'
+    SetIpAddressTypeResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    ServiceException:
       type: object
       properties:
         code:
@@ -1630,14 +1624,20 @@ components:
           $ref: '#/components/schemas/string'
         tip:
           $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when it cannot find a resource.
-    GetCloudFormationStackRecordsRequest:
+      description: A general service exception.
+    CreateGUISessionAccessDetailsRequest:
       type: object
       properties:
-        pageToken:
+        resourceName:
           allOf:
-          - $ref: '#/components/schemas/string'
-          description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetClouFormationStackRecords request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
+          - $ref: '#/components/schemas/ResourceName'
+          description: The resource name.
+      required:
+      - resourceName
+    CloudFormationStackRecordSourceType:
+      type: string
+      enum:
+      - ExportSnapshotRecord
   securitySchemes:
     sigv4:
       type: apiKey

@@ -79,47 +79,6 @@ paths:
       x-amz-target: Lightsail_20161128.GetSetupHistory
 components:
   schemas:
-    RegionSetupInProgressException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Regions and Availability Zones for Lightsail
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          allOf:
-          - $ref: '#/components/schemas/string'
-          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
-      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
-    ServiceException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: A general service exception.
-    SetupDomainName:
-      type: string
-      pattern: ^[a-zA-Z0-9\-]{1,63}(\.[a-zA-Z0-9\-]{1,63}){0,8}(\.[a-zA-Z]{2,63})$
-      minLength: 4
-      maxLength: 253
-    string:
-      type: string
-    IsoDate:
-      type: string
-      format: date-time
-    ResourceName:
-      type: string
-      pattern: ^\w[\w\-]*\w$
     SetupHistoryResource:
       type: object
       properties:
@@ -142,7 +101,7 @@ components:
           - $ref: '#/components/schemas/ResourceType'
           description: The Lightsail resource type. For example, Instance .
       description: The Lightsail resource that SetupHistory was ran on.
-    UnauthenticatedException:
+    AccessDeniedException:
       type: object
       properties:
         code:
@@ -153,7 +112,18 @@ components:
           $ref: '#/components/schemas/string'
         tip:
           $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user has not been authenticated.
+      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
+    GetSetupHistoryResult:
+      type: object
+      properties:
+        setupHistory:
+          allOf:
+          - $ref: '#/components/schemas/setupHistoryList'
+          description: The historical information that's returned.
+        nextPageToken:
+          allOf:
+          - $ref: '#/components/schemas/SetupHistoryPageToken'
+          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetSetupHistory request and specify the next page token using the pageToken parameter.
     SetupExecutionDetails:
       type: object
       properties:
@@ -186,35 +156,10 @@ components:
           - $ref: '#/components/schemas/string'
           description: The current version of the script..
       description: Returns details about the commands that were run.
-    SetupRequest:
-      type: object
-      properties:
-        instanceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the Lightsail instance.
-        domainNames:
-          allOf:
-          - $ref: '#/components/schemas/SetupDomainNameList'
-          description: The name of the domain and subdomains that the SSL/TLS certificate secures.
-        certificateProvider:
-          allOf:
-          - $ref: '#/components/schemas/CertificateProvider'
-          description: The Certificate Authority (CA) that issues the SSL/TLS certificate.
-      description: Returns information that was submitted during the SetupInstanceHttps request. Email information is redacted for privacy.
-    SetupExecutionDetailsList:
-      type: array
-      items:
-        $ref: '#/components/schemas/SetupExecutionDetails'
-    SetupDomainNameList:
-      type: array
-      items:
-        $ref: '#/components/schemas/SetupDomainName'
-    setupHistoryList:
-      type: array
-      items:
-        $ref: '#/components/schemas/SetupHistory'
-    InvalidInputException:
+    ResourceName:
+      type: string
+      pattern: ^\w[\w\-]*\w$
+    NotFoundException:
       type: object
       properties:
         code:
@@ -225,7 +170,7 @@ components:
           $ref: '#/components/schemas/string'
         tip:
           $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
+      description: Lightsail throws this exception when it cannot find a resource.
     GetSetupHistoryRequest:
       type: object
       properties:
@@ -239,29 +184,77 @@ components:
           description: The token to advance to the next page of results from your request. To get a page token, perform an initial GetSetupHistory request. If your results are paginated, the response will return a next page token that you can specify as the page token in a subsequent request.
       required:
       - resourceName
-    ResourceLocation:
+    IsoDate:
+      type: string
+      format: date-time
+    RegionSetupInProgressException:
       type: object
       properties:
-        availabilityZone:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
           allOf:
           - $ref: '#/components/schemas/string'
-          description: The Availability Zone. Follows the format us-east-2a (case-sensitive).
-        regionName:
+          description: Regions and Availability Zones for Lightsail
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
           allOf:
-          - $ref: '#/components/schemas/RegionName'
-          description: The Amazon Web Services Region name.
-      description: Describes the resource location.
-    GetSetupHistoryResult:
+          - $ref: '#/components/schemas/string'
+          description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
+      description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
+    ServiceException:
       type: object
       properties:
-        setupHistory:
-          allOf:
-          - $ref: '#/components/schemas/setupHistoryList'
-          description: The historical information that's returned.
-        nextPageToken:
-          allOf:
-          - $ref: '#/components/schemas/SetupHistoryPageToken'
-          description: The token to advance to the next page of results from your request. A next page token is not returned if there are no more results to display. To get the next page of results, perform another GetSetupHistory request and specify the next page token using the pageToken parameter.
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: A general service exception.
+    InvalidInputException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
+    SetupDomainName:
+      type: string
+      pattern: ^[a-zA-Z0-9\-]{1,63}(\.[a-zA-Z0-9\-]{1,63}){0,8}(\.[a-zA-Z]{2,63})$
+      minLength: 4
+      maxLength: 253
+    RegionName:
+      type: string
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-west-3
+      - eu-central-1
+      - eu-north-1
+      - eu-south-2
+      - ca-central-1
+      - ap-east-1
+      - ap-south-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+      - ap-northeast-2
+      - ap-southeast-3
+      - ap-southeast-5
+      - sa-east-1
     ResourceType:
       type: string
       enum:
@@ -285,16 +278,18 @@ components:
       - Distribution
       - Certificate
       - Bucket
-    NonEmptyString:
+    SetupHistoryPageToken:
       type: string
-      pattern: \S
-    SetupStatus:
+      pattern: ^[A-Za-z0-9+/=]+$
+      minLength: 24
+      maxLength: 40
+    SetupDomainNameList:
+      type: array
+      items:
+        $ref: '#/components/schemas/SetupDomainName'
+    string:
       type: string
-      enum:
-      - succeeded
-      - failed
-      - inProgress
-    AccessDeniedException:
+    UnauthenticatedException:
       type: object
       properties:
         code:
@@ -305,7 +300,56 @@ components:
           $ref: '#/components/schemas/string'
         tip:
           $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
+      description: Lightsail throws this exception when the user has not been authenticated.
+    setupHistoryList:
+      type: array
+      items:
+        $ref: '#/components/schemas/SetupHistory'
+    ResourceLocation:
+      type: object
+      properties:
+        availabilityZone:
+          allOf:
+          - $ref: '#/components/schemas/string'
+          description: The Availability Zone. Follows the format us-east-2a (case-sensitive).
+        regionName:
+          allOf:
+          - $ref: '#/components/schemas/RegionName'
+          description: The Amazon Web Services Region name.
+      description: Describes the resource location.
+    NonEmptyString:
+      type: string
+      pattern: \S
+    SetupStatus:
+      type: string
+      enum:
+      - succeeded
+      - failed
+      - inProgress
+    CertificateProvider:
+      type: string
+      enum:
+      - LetsEncrypt
+    SetupExecutionDetailsList:
+      type: array
+      items:
+        $ref: '#/components/schemas/SetupExecutionDetails'
+    SetupRequest:
+      type: object
+      properties:
+        instanceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the Lightsail instance.
+        domainNames:
+          allOf:
+          - $ref: '#/components/schemas/SetupDomainNameList'
+          description: The name of the domain and subdomains that the SSL/TLS certificate secures.
+        certificateProvider:
+          allOf:
+          - $ref: '#/components/schemas/CertificateProvider'
+          description: The Certificate Authority (CA) that issues the SSL/TLS certificate.
+      description: Returns information that was submitted during the SetupInstanceHttps request. Email information is redacted for privacy.
     SetupHistory:
       type: object
       properties:
@@ -330,50 +374,6 @@ components:
           - $ref: '#/components/schemas/SetupStatus'
           description: The status of the request.
       description: Returns a list of the commands that were ran on the target resource. The status of each command is also returned.
-    RegionName:
-      type: string
-      enum:
-      - us-east-1
-      - us-east-2
-      - us-west-1
-      - us-west-2
-      - eu-west-1
-      - eu-west-2
-      - eu-west-3
-      - eu-central-1
-      - eu-north-1
-      - eu-south-2
-      - ca-central-1
-      - ap-east-1
-      - ap-south-1
-      - ap-southeast-1
-      - ap-southeast-2
-      - ap-northeast-1
-      - ap-northeast-2
-      - ap-southeast-3
-      - ap-southeast-5
-      - sa-east-1
-    CertificateProvider:
-      type: string
-      enum:
-      - LetsEncrypt
-    NotFoundException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when it cannot find a resource.
-    SetupHistoryPageToken:
-      type: string
-      pattern: ^[A-Za-z0-9+/=]+$
-      minLength: 24
-      maxLength: 40
   securitySchemes:
     sigv4:
       type: apiKey

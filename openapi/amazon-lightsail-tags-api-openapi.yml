@@ -144,15 +144,7 @@ paths:
       x-amz-target: Lightsail_20161128.UntagResource
 components:
   schemas:
-    TagValue:
-      type: string
-    TagKey:
-      type: string
-    TagKeyList:
-      type: array
-      items:
-        $ref: '#/components/schemas/TagKey'
-    ServiceException:
+    AccessDeniedException:
       type: object
       properties:
         code:
@@ -163,25 +155,25 @@ components:
           $ref: '#/components/schemas/string'
         tip:
           $ref: '#/components/schemas/string'
-      description: A general service exception.
-    UntagResourceRequest:
+      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
+    ResourceName:
+      type: string
+      pattern: ^\w[\w\-]*\w$
+    NotFoundException:
       type: object
       properties:
-        resourceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the resource from which you are removing a tag.
-        resourceArn:
-          allOf:
-          - $ref: '#/components/schemas/ResourceArn'
-          description: The Amazon Resource Name (ARN) of the resource from which you want to remove a tag.
-        tagKeys:
-          allOf:
-          - $ref: '#/components/schemas/TagKeyList'
-          description: The tag keys to delete from the specified resource.
-      required:
-      - resourceName
-      - tagKeys
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when it cannot find a resource.
+    IsoDate:
+      type: string
+      format: date-time
     RegionSetupInProgressException:
       type: object
       properties:
@@ -198,17 +190,121 @@ components:
           - $ref: '#/components/schemas/string'
           description: Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.
       description: Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.
-    string:
+    OperationList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Operation'
+    TagKey:
       type: string
-    IsoDate:
-      type: string
-      format: date-time
+    InvalidInputException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
+    UntagResourceResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    OperationFailureException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an operation fails to execute.
     ResourceArn:
       type: string
       pattern: ^arn:(aws[^:]*):([a-zA-Z0-9-]+):([a-z0-9-]+):([0-9]+):([a-zA-Z]+)/([a-zA-Z0-9-]+)$
-    ResourceName:
+    TagKeyList:
+      type: array
+      items:
+        $ref: '#/components/schemas/TagKey'
+    RegionName:
       type: string
-      pattern: ^\w[\w\-]*\w$
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - eu-west-1
+      - eu-west-2
+      - eu-west-3
+      - eu-central-1
+      - eu-north-1
+      - eu-south-2
+      - ca-central-1
+      - ap-east-1
+      - ap-south-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+      - ap-northeast-2
+      - ap-southeast-3
+      - ap-southeast-5
+      - sa-east-1
+    ResourceType:
+      type: string
+      enum:
+      - ContainerService
+      - Instance
+      - StaticIp
+      - KeyPair
+      - InstanceSnapshot
+      - Domain
+      - PeeredVpc
+      - LoadBalancer
+      - LoadBalancerTlsCertificate
+      - Disk
+      - DiskSnapshot
+      - RelationalDatabase
+      - RelationalDatabaseSnapshot
+      - ExportSnapshotRecord
+      - CloudFormationStackRecord
+      - Alarm
+      - ContactMethod
+      - Distribution
+      - Certificate
+      - Bucket
+    TagList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Tag'
+    TagResourceResult:
+      type: object
+      properties:
+        operations:
+          allOf:
+          - $ref: '#/components/schemas/OperationList'
+          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+    AccountSetupInProgressException:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/string'
+        docs:
+          $ref: '#/components/schemas/string'
+        message:
+          $ref: '#/components/schemas/string'
+        tip:
+          $ref: '#/components/schemas/string'
+      description: Lightsail throws this exception when an account is still in the setup in progress state.
+    string:
+      type: string
     Operation:
       type: object
       properties:
@@ -261,6 +357,8 @@ components:
           - $ref: '#/components/schemas/string'
           description: The error details.
       description: Describes the API operation.
+    boolean:
+      type: boolean
     UnauthenticatedException:
       type: object
       properties:
@@ -273,61 +371,6 @@ components:
         tip:
           $ref: '#/components/schemas/string'
       description: Lightsail throws this exception when the user has not been authenticated.
-    TagResourceRequest:
-      type: object
-      properties:
-        resourceName:
-          allOf:
-          - $ref: '#/components/schemas/ResourceName'
-          description: The name of the resource to which you are adding tags.
-        resourceArn:
-          allOf:
-          - $ref: '#/components/schemas/ResourceArn'
-          description: The Amazon Resource Name (ARN) of the resource to which you want to add a tag.
-        tags:
-          allOf:
-          - $ref: '#/components/schemas/TagList'
-          description: The tag key and optional value.
-      required:
-      - resourceName
-      - tags
-    OperationList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Operation'
-    TagResourceResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
-    OperationFailureException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when an operation fails to execute.
-    InvalidInputException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when user input does not conform to the validation rules of an input field. Domain and distribution APIs are only available in the N. Virginia ( us-east-1 ) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to us-east-1 to create, view, or edit these resources.
-    boolean:
-      type: boolean
     ResourceLocation:
       type: object
       properties:
@@ -340,6 +383,23 @@ components:
           - $ref: '#/components/schemas/RegionName'
           description: The Amazon Web Services Region name.
       description: Describes the resource location.
+    TagValue:
+      type: string
+    Tag:
+      type: object
+      properties:
+        key:
+          allOf:
+          - $ref: '#/components/schemas/TagKey'
+          description: 'The key of the tag. Constraints: Tag keys accept a maximum of 128 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+        value:
+          allOf:
+          - $ref: '#/components/schemas/TagValue'
+          description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
+      description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
+    NonEmptyString:
+      type: string
+      pattern: \S
     OperationType:
       type: string
       enum:
@@ -435,33 +495,43 @@ components:
       - Failed
       - Completed
       - Succeeded
-    NonEmptyString:
-      type: string
-      pattern: \S
-    ResourceType:
-      type: string
-      enum:
-      - ContainerService
-      - Instance
-      - StaticIp
-      - KeyPair
-      - InstanceSnapshot
-      - Domain
-      - PeeredVpc
-      - LoadBalancer
-      - LoadBalancerTlsCertificate
-      - Disk
-      - DiskSnapshot
-      - RelationalDatabase
-      - RelationalDatabaseSnapshot
-      - ExportSnapshotRecord
-      - CloudFormationStackRecord
-      - Alarm
-      - ContactMethod
-      - Distribution
-      - Certificate
-      - Bucket
-    AccountSetupInProgressException:
+    TagResourceRequest:
+      type: object
+      properties:
+        resourceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the resource to which you are adding tags.
+        resourceArn:
+          allOf:
+          - $ref: '#/components/schemas/ResourceArn'
+          description: The Amazon Resource Name (ARN) of the resource to which you want to add a tag.
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/TagList'
+          description: The tag key and optional value.
+      required:
+      - resourceName
+      - tags
+    UntagResourceRequest:
+      type: object
+      properties:
+        resourceName:
+          allOf:
+          - $ref: '#/components/schemas/ResourceName'
+          description: The name of the resource from which you are removing a tag.
+        resourceArn:
+          allOf:
+          - $ref: '#/components/schemas/ResourceArn'
+          description: The Amazon Resource Name (ARN) of the resource from which you want to remove a tag.
+        tagKeys:
+          allOf:
+          - $ref: '#/components/schemas/TagKeyList'
+          description: The tag keys to delete from the specified resource.
+      required:
+      - resourceName
+      - tagKeys
+    ServiceException:
       type: object
       properties:
         code:
@@ -472,77 +542,7 @@ components:
           $ref: '#/components/schemas/string'
         tip:
           $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when an account is still in the setup in progress state.
-    AccessDeniedException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.
-    TagList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Tag'
-    RegionName:
-      type: string
-      enum:
-      - us-east-1
-      - us-east-2
-      - us-west-1
-      - us-west-2
-      - eu-west-1
-      - eu-west-2
-      - eu-west-3
-      - eu-central-1
-      - eu-north-1
-      - eu-south-2
-      - ca-central-1
-      - ap-east-1
-      - ap-south-1
-      - ap-southeast-1
-      - ap-southeast-2
-      - ap-northeast-1
-      - ap-northeast-2
-      - ap-southeast-3
-      - ap-southeast-5
-      - sa-east-1
-    NotFoundException:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/string'
-        docs:
-          $ref: '#/components/schemas/string'
-        message:
-          $ref: '#/components/schemas/string'
-        tip:
-          $ref: '#/components/schemas/string'
-      description: Lightsail throws this exception when it cannot find a resource.
-    Tag:
-      type: object
-      properties:
-        key:
-          allOf:
-          - $ref: '#/components/schemas/TagKey'
-          description: 'The key of the tag. Constraints: Tag keys accept a maximum of 128 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
-        value:
-          allOf:
-          - $ref: '#/components/schemas/TagValue'
-          description: 'The value of the tag. Constraints: Tag values accept a maximum of 256 letters, numbers, spaces in UTF-8, or the following characters: + - = . _ : / @'
-      description: Describes a tag key and optional value assigned to an Amazon Lightsail resource. For more information about tags in Lightsail, see the Amazon Lightsail Developer Guide .
-    UntagResourceResult:
-      type: object
-      properties:
-        operations:
-          allOf:
-          - $ref: '#/components/schemas/OperationList'
-          description: An array of objects that describe the result of the action, such as the status of the request, the timestamp of the request, and the resources affected by the request.
+      description: A general service exception.
   securitySchemes:
     sigv4:
       type: apiKey
