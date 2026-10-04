@@ -354,6 +354,8 @@ apis:
   humanURL: https://aws.amazon.com/lightsail/
   baseURL: https://lightsail.us-east-1.amazonaws.com
   tags:
+  - Load Balancer
+  tags_raw:
   - Load Balancers
   properties:
   - type: OpenAPI
@@ -379,7 +381,8 @@ apis:
   description: The Operations API from Amazon Lightsail — 3 operation(s) for operations.
   humanURL: https://aws.amazon.com/lightsail/
   baseURL: https://lightsail.us-east-1.amazonaws.com
-  tags:
+  tags: []
+  tags_raw:
   - Operations
   properties:
   - type: OpenAPI
@@ -563,6 +566,8 @@ apis:
   humanURL: https://aws.amazon.com/lightsail/
   baseURL: https://lightsail.us-east-1.amazonaws.com
   tags:
+  - Block Storage
+  tags_raw:
   - blockstorage
   properties:
   - type: OpenAPI
@@ -610,6 +615,9 @@ apis:
   - type: JSONLD
     url: json-ld/amazon-lightsail-context.jsonld
 common:
+- type: CapabilityMap
+  url: capabilities/amazon-lightsail-capability-edges.yml
+  name: Amazon Lightsail Business Capability Map
 - type: Overlay
   url: overlays/amazon-lightsail-overlay.yaml
 - type: PostmanWorkspace
