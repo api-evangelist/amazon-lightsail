@@ -1133,3 +1133,710 @@ plans:
   memory: 144 GB
   storage: 1,280 GB
   data_transfer: 10 TB
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - subscription
+  units: []
+  plans:
+  - name: Nano-0.5GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Micro-1GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Small-2GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Medium-4GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Large-8GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Xlarge-16GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: 2Xlarge-32GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: 4Xlarge-64GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: 8Xlarge-128GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: 12Xlarge-192GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: 16Xlarge-256GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized Large-16GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized Xlarge-32GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized 2Xlarge-64GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized 4Xlarge-128GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized 8Xlarge-256GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized 12Xlarge-384GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized 16Xlarge-512GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized Large-4GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized Xlarge-8GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized 2Xlarge-16GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized 4Xlarge-32GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized 9Xlarge-72GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized 12Xlarge-96GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized 18Xlarge-144GB Linux with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Nano-0.5GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Micro-1GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Small-2GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Medium-4GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Large-8GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Xlarge-16GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: 2Xlarge-32GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: 4Xlarge-64GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: 8Xlarge-128GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: 12Xlarge-192GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: 16Xlarge-256GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized Large-16GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized Xlarge-32GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized 2Xlarge-64GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized 4Xlarge-128GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized 8Xlarge-256GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized 12Xlarge-384GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized 16Xlarge-512GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized Large-4GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized Xlarge-8GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized 2Xlarge-16GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized 4Xlarge-32GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized 9Xlarge-72GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized 12Xlarge-96GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized 18Xlarge-144GB Linux IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Nano-0.5GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Micro-1GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Small-2GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Medium-4GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Large-8GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Xlarge-16GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: 2Xlarge-32GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: 4Xlarge-64GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: 8Xlarge-128GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: 12Xlarge-192GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: 16Xlarge-256GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized Large-16GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized Xlarge-32GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized 2Xlarge-64GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized 4Xlarge-128GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized 8Xlarge-256GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized 12Xlarge-384GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized 16Xlarge-512GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized Large-4GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized Xlarge-8GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized 2Xlarge-16GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized 4Xlarge-32GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized 9Xlarge-72GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized 12Xlarge-96GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized 18Xlarge-144GB Windows with public IPv4
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Nano-0.5GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Micro-1GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Small-2GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Medium-4GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Large-8GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Xlarge-16GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: 2Xlarge-32GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: 4Xlarge-64GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: 8Xlarge-128GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: 12Xlarge-192GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: 16Xlarge-256GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized Large-16GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized Xlarge-32GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized 2Xlarge-64GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized 4Xlarge-128GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized 8Xlarge-256GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized 12Xlarge-384GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Memory-optimized 16Xlarge-512GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized Large-4GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized Xlarge-8GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized 2Xlarge-16GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized 4Xlarge-32GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized 9Xlarge-72GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized 12Xlarge-96GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Compute-optimized 18Xlarge-144GB Windows IPv6-only
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
