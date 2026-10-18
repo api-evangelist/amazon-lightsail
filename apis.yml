@@ -566,6 +566,8 @@ apis:
   humanURL: https://aws.amazon.com/lightsail/
   baseURL: https://lightsail.us-east-1.amazonaws.com
   tags:
+  - Block Storage
+  tags_raw:
   - blockstorage
   properties:
   - type: OpenAPI
