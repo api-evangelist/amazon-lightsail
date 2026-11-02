@@ -1,0 +1,276 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-28'
+method: searched
+source: https://aws.amazon.com/lightsail/pricing/
+sources:
+- https://aws.amazon.com/lightsail/pricing/
+provenance:
+  tool: engine/economics/harvest_pricing.py
+  run: 20261028T120612
+  grounding: every price_text was found verbatim in the fetched page text
+audience: developer-api
+pricing_basis: usage-other
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-28'
+  managed_tier: $3.50 USD/mo
+published: true
+note: AWS Lightsail pricing page; bundled monthly plans for instances, containers, storage, databases,
+  CDN, load balancer. Lightsail for Research hourly prices rendered dynamically and not present in text
+  (template placeholders).
+plan_count: 16
+currency: USD
+plans:
+- name: Linux/Unix General Purpose (IPv4) 0.5 GB
+  price_text: $5 USD/mo
+  price: 5
+  currency: USD
+  period: month
+  unit: instance
+  included_quota: 0.5 GB Memory, 2 vCPUs, 20 GB SSD Disk, 1 TB Transfer
+  overage: Only outbound data transfer in excess of your plan's data transfer allowance is subject to
+    overage charges
+- name: Linux/Unix General Purpose (IPv4) 1 GB
+  price_text: $7 USD/mo
+  price: 7
+  currency: USD
+  period: month
+  unit: instance
+  included_quota: 1 GB Memory, 2 vCPUs, 40 GB SSD Disk, 2 TB Transfer
+- name: Linux/Unix General Purpose (IPv4) 256 GB
+  price_text: $1,764 USD/mo
+  price: 1764
+  currency: USD
+  period: month
+  unit: instance
+  included_quota: 256 GB Memory, 64 vCPUs, 1280 GB SSD Disk, 10 TB Transfer
+- name: Windows General Purpose (IPv4) 0.5 GB
+  price_text: $9.50 USD/mo
+  price: 9.5
+  currency: USD
+  period: month
+  unit: instance
+  included_quota: 0.5 GB Memory, 2 vCPUs, 30 GB SSD Disk, 1 TB Transfer
+- name: Linux/Unix General Purpose (IPv6-only) 512 MB
+  price_text: $3.50 USD/mo
+  price: 3.5
+  currency: USD
+  period: month
+  unit: instance
+  included_quota: 512 MB Memory, 2 vCPUs, 20 GB SSD Disk, 1 TB Transfer
+- name: Container Nano
+  price_text: $7 USD/mo
+  price: 7
+  currency: USD
+  period: month
+  unit: node
+  included_quota: 'vCPU: 0.25 (shared), RAM: 512MB; 500 GB data transfer per month'
+  overage: starts at $0.09 USD per GB
+- name: Container XLarge
+  price_text: $160 USD/mo
+  price: 160
+  currency: USD
+  period: month
+  unit: node
+  included_quota: 'vCPU: 4, RAM: 8GB'
+- name: Object storage 5 GB
+  price_text: $1 USD/mo
+  price: 1
+  currency: USD
+  period: month
+  unit: bucket
+  included_quota: 'Storage: 5 GB, Transfer: 25 GB'
+  overage: Storage $0.023 USD/GB; Transfer $0.09 USD/GB (US East N. Virginia)
+- name: Object storage 250 GB
+  price_text: $5 USD/mo
+  price: 5
+  currency: USD
+  period: month
+  unit: bucket
+  included_quota: 'Storage: 250 GB, Transfer: 500 GB'
+- name: Managed database Standard 1 GB
+  price_text: $15 Standard plan USD/mo
+  price: 15
+  currency: USD
+  period: month
+  unit: database
+  included_quota: 1 GB Memory, 1 Core Processor, 40 GB SSD Disk, 100 GB Transfer, No Data encryption
+- name: Managed database High availability 32 GB
+  price_text: $980 High availability plan USD/mo
+  price: 980
+  currency: USD
+  period: month
+  unit: database
+  included_quota: 32 GB Memory, 8 Core Processor, 960 GB SSD Disk, 400 GB Transfer
+- name: CDN distribution 50 GB
+  price_text: $2.50 USD/month
+  price: 2.5
+  currency: USD
+  period: month
+  unit: distribution
+  included_quota: 50 GB Transfer
+- name: Load balancer
+  price_text: $18 USD/mo
+  price: 18
+  currency: USD
+  period: month
+  unit: load balancer
+- name: Block storage 8 GB
+  price_text: $0.80 USD/mo
+  price: 0.8
+  currency: USD
+  period: month
+  unit: 8 GB Storage
+  included_quota: Block storage starts at 8 GB and costs $0.10 USD per allocated GB per month
+- name: Snapshots
+  price_text: $0.05 USD GB/mo
+  price: 0.05
+  currency: USD
+  period: month
+  unit: GB
+- name: Lightsail for Research stopped bundle
+  price_text: $0.00685 USD/hr
+  price: 0.00685
+  currency: USD
+  period: per-use
+  unit: hour
+  included_quota: charged when instance is stopped
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - hybrid
+  - subscription
+  units:
+  - compute
+  - data
+  plans:
+  - name: Linux/Unix General Purpose (IPv4) 0.5 GB
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - month
+  - name: Linux/Unix General Purpose (IPv4) 1 GB
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - month
+  - name: Linux/Unix General Purpose (IPv4) 256 GB
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - month
+  - name: Windows General Purpose (IPv4) 0.5 GB
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - month
+  - name: Linux/Unix General Purpose (IPv6-only) 512 MB
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - month
+  - name: Container Nano
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - month
+  - name: Container XLarge
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - month
+  - name: Object storage 5 GB
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Object storage 250 GB
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Managed database Standard 1 GB
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Managed database High availability 32 GB
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: CDN distribution 50 GB
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Load balancer
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Block storage 8 GB
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - data
+    periods:
+    - month
+  - name: Snapshots
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - data
+    periods:
+    - month
+  - name: Lightsail for Research stopped bundle
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
