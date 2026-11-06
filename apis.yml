@@ -29,7 +29,7 @@ accessModel:
   - authentication
   - rate-limits
   - security
-  generated: '2026-11-02'
+  generated: '2026-11-06'
   method: derived
 image: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
 url: https://apis.io/amazon-lightsail
